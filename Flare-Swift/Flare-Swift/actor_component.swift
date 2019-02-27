@@ -13,17 +13,19 @@ class ActorComponent: Equatable, Hashable {
     
     // Hashable Protocol
     func hash(into hasher: inout Hasher) {
-        hasher.combine(self)
+        hasher.combine(idx)
+        hasher.combine(_parentIdx)
+        hasher.combine(name)
+        hasher.combine(parent)
     }
-    
+
     static func == (lhs: ActorComponent, rhs: ActorComponent) -> Bool {
         // Same reference
-        return lhs === rhs
-//        return lhs.parent == rhs.parent &&
-//            lhs._parentIdx == rhs._parentIdx &&
-//            lhs.name == rhs.name &&
-//            lhs.idx == rhs.idx &&
-//            lhs.dependents == rhs.dependents
+//        return lhs === rhs
+        return lhs.parent == rhs.parent &&
+            lhs._parentIdx == rhs._parentIdx &&
+            lhs.name == rhs.name &&
+            lhs.idx == rhs.idx
     }
     
     init () {
@@ -74,12 +76,10 @@ class ActorComponent: Equatable, Hashable {
         preconditionFailure("This method must be overridden")
     }
     
-    class func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: ActorComponent) -> ActorComponent {
-        component.artboard = artboard;
-        component._name = reader.readString(label: "name");
-        component._parentIdx = reader.readId(label: "parent");
-    
-        return component;
+    func readComponent(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.artboard = artboard
+        self._name = reader.readString(label: "name")
+        self._parentIdx = reader.readId(label: "parent")
     }
     
     func copyComponent(_ component: ActorComponent, _ resetArtboard: ActorArtboard) {

@@ -29,13 +29,13 @@ class ActorSkinnable: ActorNode {
         return !cb.isEmpty
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ node: inout ActorSkinnable) -> ActorSkinnable {
-        _ = ActorNode.read(artboard, reader, node)
+    func readSkinnable(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
         
         reader.openArray(label: "bones")
         let numConnectedBones = Int(reader.readUint8Length())
         if numConnectedBones != 0 {
-            node._connectedBones = Array<SkinnedBone>()
+            self._connectedBones = Array<SkinnedBone>()
             
             for i in 0 ..< numConnectedBones {
                 var bc = SkinnedBone()
@@ -44,17 +44,15 @@ class ActorSkinnable: ActorNode {
                 reader.readFloat32ArrayOffset(ar: &bc.bind.values, length: 6, offset: 0, label: "bind")
                 reader.closeObject()
                 _ = Mat2D.invert(bc.inverseBind, bc.bind)
-                node._connectedBones?.insert(bc, at: i)
+                self._connectedBones?.insert(bc, at: i)
             }
             reader.closeArray()
             let worldOverride = Mat2D()
             reader.readFloat32ArrayOffset(ar: &worldOverride.values, length: 6, offset: 0, label: "worldTransform")
-            node.worldTransformOverride = worldOverride
+            self.worldTransformOverride = worldOverride
         } else {
             reader.closeArray()
         }
-        
-        return node
     }
     
     override func resolveComponentIndices(components: [ActorComponent]) {

@@ -56,7 +56,7 @@ class Flare_SwiftTests: XCTestCase {
         } catch {
             print("ERROR: ENUMERATING FILES \(error.localizedDescription)")
         }
-        guard let path = bundle.path(forResource: "Filip", ofType: "flr") else {
+        guard let path = bundle.path(forResource: "Circle", ofType: "flr") else {
             return
         }
         
@@ -69,6 +69,19 @@ class Flare_SwiftTests: XCTestCase {
         
         let reader = ReaderFactory.factory(data: data)
         assert(reader is BinaryReader)
+    }
+    
+    func testLoad() {
+        let bundle = Bundle(for: Flare_SwiftTests.self)
+        guard let path = bundle.path(forResource: "Circle", ofType: "flr") else {
+            return
+        }
+        guard let data = FileManager.default.contents(atPath: path) else {
+            print("NO DATA??")
+            return
+        }
+        let f = FlareActor()
+        f.loadData(data)
     }
 
     func testPerformanceExample() {

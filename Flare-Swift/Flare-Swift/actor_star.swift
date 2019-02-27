@@ -20,22 +20,18 @@ class ActorStar: ActorProceduralPath {
         return star
     }
     
-    private func copyStar(_ node: ActorStar, _ ab: ActorArtboard) {
+    func copyStar(_ node: ActorStar, _ ab: ActorArtboard) {
         copyPath(node, ab)
         _numPoints = node._numPoints
         _innerRadius = node._innerRadius
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorStar?) -> ActorStar {
-        if component == nil {
-            component = ActorStar()
-        }
-        _ = ActorNode.read(artboard, reader, component!)
-        component!.width = Double(reader.readFloat32(label: "width"))
-        component!.height = Double(reader.readFloat32(label: "height"))
-        component!._numPoints = Int(reader.readUint32(label: "points"))
-        component!._innerRadius = Double(reader.readFloat32(label: "innerRadius"))
-        return component!
+    func readStar(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
+        self._numPoints = Int(reader.readUint32(label: "points"))
+        self._innerRadius = Double(reader.readFloat32(label: "innerRadius"))
     }
     
     override var points: [PathPoint] {

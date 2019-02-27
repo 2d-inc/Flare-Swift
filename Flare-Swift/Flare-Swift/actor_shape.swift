@@ -12,12 +12,12 @@ class ActorShape: ActorNode , ActorDrawable {
     var _isHidden: Bool = false
     var _strokes = [ActorStroke]()
     var _fills = [ActorFill]()
-    var _clipShapes: [[ActorShape]]?
+    var _clipShapes = [[ActorShape]]()
     
     var _drawOrder: Int = -1
     var drawIndex: Int = -1
     
-    var clipShapes: [[ActorShape]]? {
+    var clipShapes: [[ActorShape]] {
         return _clipShapes
     }
     
@@ -62,7 +62,7 @@ class ActorShape: ActorNode , ActorDrawable {
         invalidateShape()
     }
     
-    private func copyShape(_ shape: ActorShape, _ ab: ActorArtboard) {
+    func copyShape(_ shape: ActorShape, _ ab: ActorArtboard) {
         copyNode(shape, ab)
         self.drawOrder = shape.drawOrder
         self._isHidden = shape._isHidden
@@ -76,27 +76,23 @@ class ActorShape: ActorNode , ActorDrawable {
     
     func computeAABB() -> AABB {
         var aabb: AABB? = nil
-//        for (List<ActorShape> clips in _clipShapes) {
-        //            for (ActorShape node in clips) {
-        if let allClips = _clipShapes {
-            for clips in allClips {
-                for node in clips {
-                    let bounds = node.computeAABB()
-                    if aabb == nil {
-                        aabb = bounds;
-                    } else {
-                        if (bounds[0] < aabb![0]) {
-                            aabb![0] = bounds[0];
-                        }
-                        if (bounds[1] < aabb![1]) {
-                            aabb![1] = bounds[1];
-                        }
-                        if (bounds[2] > aabb![2]) {
-                            aabb![2] = bounds[2];
-                        }
-                        if (bounds[3] > aabb![3]) {
-                            aabb![3] = bounds[3];
-                        }
+        for clips in _clipShapes {
+            for node in clips {
+                let bounds = node.computeAABB()
+                if aabb == nil {
+                    aabb = bounds;
+                } else {
+                    if (bounds[0] < aabb![0]) {
+                        aabb![0] = bounds[0];
+                    }
+                    if (bounds[1] < aabb![1]) {
+                        aabb![1] = bounds[1];
+                    }
+                    if (bounds[2] > aabb![2]) {
+                        aabb![2] = bounds[2];
+                    }
+                    if (bounds[3] > aabb![3]) {
+                        aabb![3] = bounds[3];
                     }
                 }
             }
@@ -187,16 +183,11 @@ class ActorShape: ActorNode , ActorDrawable {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorShape?) -> ActorShape {
-        if component == nil {
-            component = ActorShape()
-        }
-        
-        _ = ActorNode.read(artboard, reader, component!)
-        component!._isHidden = !reader.readBool(label: "isVisible")
+    func readShape(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        _isHidden = !reader.readBool(label: "isVisible")
         _ = reader.readUint8(label: "blendMode") // Necessary read to keep it aligned
-        component!.drawOrder = Int(reader.readUint16(label: "drawOrder"))
-        return component!
+        drawOrder = Int(reader.readUint16(label: "drawOrder"))
     }
     
     func addStroke(_ stroke: ActorStroke) {
@@ -222,7 +213,7 @@ class ActorShape: ActorNode , ActorDrawable {
                 }
             }
             if shapes.count > 0 {
-                _clipShapes!.append(shapes)
+                _clipShapes.append(shapes)
             }
         }
     }

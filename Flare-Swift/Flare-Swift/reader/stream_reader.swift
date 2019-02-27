@@ -51,14 +51,16 @@ protocol StreamReader {
 class ReaderFactory {
     static func factory(data: Data) -> StreamReader? {
         let signature = String(data: data[0...4], encoding: String.Encoding.utf8)
-        print("FILE SIGNATURE: \(signature)")
+        print("FILE SIGNATURE: \(signature ?? "NO SIGNATURE")")
         var r: StreamReader? = nil
         if signature == "FLARE" {
             r = BinaryReader(data: Array(data))
+            (r as! BinaryReader)._readIndex = 5
         } else {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                r = JSONReader(data: json!)
+                let jsonObject = [ "container": json ]
+                r = JSONReader(data: jsonObject)
             } catch let err {
                 print(err)
             }

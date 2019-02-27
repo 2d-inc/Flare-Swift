@@ -223,7 +223,7 @@ class ActorPath: ActorSkinnable, ActorBasePath {
         return self.isConnectedToBones
     }
     
-    var deformedPoints: [PathPoint] {
+    var deformedPoints: [PathPoint]? {
         if !isConnectedToBones || skin == nil {
             return _points
         }
@@ -327,19 +327,15 @@ class ActorPath: ActorSkinnable, ActorBasePath {
         super.update(dirt: dirt)
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorPath?) -> ActorPath {
-        if component == nil {
-            component = ActorPath()
-        }
+    func readPath(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readSkinnable(artboard, reader)
         
-        _ = ActorSkinnable.read(artboard, reader, component!)
-        
-        component!._isHidden = !reader.readBool(label: "isVisible")
-        component!._isClosed = reader.readBool(label: "isClosed")
+        self._isHidden = !reader.readBool(label: "isVisible")
+        self._isClosed = reader.readBool(label: "isClosed")
         
         reader.openArray(label: "points")
         let pointCount = Int(reader.readUint16Length())
-        component!._points = Array<PathPoint>()
+        self._points = Array<PathPoint>()
         
         for i in 0 ..< pointCount {
             reader.openObject(label: "point")
@@ -356,14 +352,13 @@ class ActorPath: ActorSkinnable, ActorBasePath {
             if point == nil {
                 fatalError("Invalid point type: \(type)")
             } else {
-                point!.read(reader: reader, isConnectedToBones: component!.isConnectedToBones)
+                point!.read(reader: reader, isConnectedToBones: self.isConnectedToBones)
             }
             reader.closeObject()
             
-            component!._points[i] = point!
+            self._points[i] = point!
         }
-        reader.closeArray();
-        return component!
+        reader.closeArray()
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {

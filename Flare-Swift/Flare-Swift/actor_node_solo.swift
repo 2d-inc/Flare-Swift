@@ -44,14 +44,9 @@ class ActorNodeSolo: ActorNode {
         self._activeChildIndex = node._activeChildIndex
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ node: inout ActorNodeSolo?) -> ActorNodeSolo {
-        if node == nil {
-            node = ActorNodeSolo()
-        }
-        
-        _ = ActorNode.read(artboard, reader, node!)
-        node!._activeChildIndex = Int(reader.readUint32(label: "activeChild"))
-        return node!
+    func read(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        self._activeChildIndex = Int(reader.readUint32(label: "activeChild"))
     }
     
     override func completeResolve() {

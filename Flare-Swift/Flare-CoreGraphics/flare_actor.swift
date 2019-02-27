@@ -1,5 +1,5 @@
 //
-//  flare.swift
+//  flare_actor.swift
 //  Flare-Swift
 //
 //  Created by Umberto Sonnino on 2/22/19.
@@ -8,37 +8,41 @@
 
 import Foundation
 
-class CoreGraphicsActor: Actor {
+class FlareActor: Actor {
     var maxTextureIndex: Int = 0
     var _version: Int = -1
     var _artboardCount: Int = 0
     var _artboards: [ActorArtboard?] = []
-    
+
     func makeImageNode() -> ActorImage {
-        <#code#>
+        return ActorImage()
     }
-    
+
     func makeColorFill() -> ColorFill {
-        <#code#>
+        return ColorFill()
     }
-    
+
     func makeColorStroke() -> ColorStroke {
-        <#code#>
+        return ColorStroke()
     }
-    
+
     func makeGradientFill() -> GradientFill {
-        <#code#>
+        return GradientFill()
     }
-    
+
     func makeGradientStroke() -> GradientStroke {
-        <#code#>
+        return GradientStroke()
     }
-    
+
     func makeRadialFill() -> RadialGradientFill {
-        <#code#>
+        return RadialGradientFill()
+    }
+
+    func makeRadialStroke() -> RadialGradientStroke {
+        return RadialGradientStroke()
     }
     
-    func makeRadialStroke() -> RadialGradientStroke {
-        <#code#>
+    func loadData(_ data: Data) {
+        self.load(data: data)
     }
 }

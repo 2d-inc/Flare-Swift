@@ -141,7 +141,9 @@ class BinaryReader : StreamReader {
     func readString(label: String? = nil) -> String {
         let length = Int(readUint32())
         let end = _readIndex + length
-        return String(bytes: _raw[_readIndex ..< end], encoding: String.Encoding.utf8)!
+        let s = String(bytes: _raw[_readIndex ..< end], encoding: String.Encoding.utf8)!
+        _readIndex += length
+        return s
         
     }
     

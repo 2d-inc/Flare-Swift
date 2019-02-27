@@ -240,24 +240,23 @@ class ActorNode: ActorComponent {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ node: inout ActorNode) -> ActorNode {
-        _ = ActorComponent.read(artboard, reader, node)
-        reader.readFloat32ArrayOffset(ar: &node._translation.values, length: 2, offset: 0, label: "translation")
-        node._rotation = Double(reader.readFloat32(label: "rotation"))
-        reader.readFloat32ArrayOffset(ar: &node._scale.values, length: 2, offset: 0, label: "scale")
-        node._opacity = Double(reader.readFloat32(label: "opacity"))
-        node._isCollapsedVisibility = reader.readBool(label: "isCollapsed")
+    func readNode(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readComponent(artboard, reader)
+        reader.readFloat32ArrayOffset(ar: &self._translation.values, length: 2, offset: 0, label: "translation")
+        self._rotation = Double(reader.readFloat32(label: "rotation"))
+        reader.readFloat32ArrayOffset(ar: &self._scale.values, length: 2, offset: 0, label: "scale")
+        self._opacity = Double(reader.readFloat32(label: "opacity"))
+        self._isCollapsedVisibility = reader.readBool(label: "isCollapsed")
         
         reader.openArray(label: "clips")
         let clipCount: Int = Int(reader.readUint8Length())
         if clipCount > 0 {
-            node._clips = Array<ActorClip>()
+            self._clips = Array<ActorClip>()
             for i in 0 ..< clipCount {
-                node._clips!.insert(ActorClip(reader.readId(label: "clip")), at: i)
+                self._clips!.insert(ActorClip(reader.readId(label: "clip")), at: i)
             }
         }
         reader.closeArray()
-        return node
     }
     
     func addChild(_ node: ActorNode) {

@@ -17,15 +17,10 @@ class ActorTriangle: ActorProceduralPath {
         return triangle
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorTriangle?) -> ActorTriangle {
-        if component == nil {
-            component = ActorTriangle()
-        }
-        
-        _ = ActorNode.read(artboard, reader, component!)
-        component!.width = Double(reader.readFloat32(label: "width"))
-        component!.height = Double(reader.readFloat32(label: "height"))
-        return component!
+    func readTriangle(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
     }
     
     override var points: [PathPoint] {

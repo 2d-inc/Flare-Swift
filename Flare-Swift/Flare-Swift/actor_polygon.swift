@@ -19,21 +19,16 @@ class ActorPolygon: ActorProceduralPath {
         return polygon
     }
     
-    private func copyPolygon(_ node: ActorPolygon, _ ab: ActorArtboard) {
+    func copyPolygon(_ node: ActorPolygon, _ ab: ActorArtboard) {
         copyPath(node, ab)
         sides = node.sides
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorPolygon?) -> ActorPolygon {
-        if component == nil {
-            component = ActorPolygon()
-        }
-        
-        _ = ActorNode.read(artboard, reader, component!)
-        component!.width = Double(reader.readFloat32(label: "width"))
-        component!.height = Double(reader.readFloat32(label: "height"))
-        component!.sides = Int(reader.readUint32(label: "sides"))
-        return component!
+    func readPolygon(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
+        self.sides = Int(reader.readUint32(label: "sides"))
     }
     
     override var points: [PathPoint] {

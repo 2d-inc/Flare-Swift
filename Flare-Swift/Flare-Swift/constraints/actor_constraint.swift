@@ -62,11 +62,11 @@ class ActorConstraint: ActorComponent {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: ActorConstraint) -> ActorConstraint {
-        _ = ActorComponent.read(artboard, reader, component)
-        component._strength = Double(reader.readFloat32(label: "strength"))
-        component._isEnabled = reader.readBool(label: "isEnabled")
-        return component
+    func readConstraint(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = ActorComponent.read(artboard, reader, component)
+        self.readComponent(artboard, reader)
+        self._strength = Double(reader.readFloat32(label: "strength"))
+        self._isEnabled = reader.readBool(label: "isEnabled")
     }
     
     func copyConstraint(_ node: ActorConstraint, _ resetArtboard: ActorArtboard) {

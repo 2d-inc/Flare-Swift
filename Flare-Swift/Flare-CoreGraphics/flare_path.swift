@@ -27,7 +27,7 @@ extension FlarePath {
         return self.makePath()
     }
     
-    private func makePath()  -> CGMutablePath {
+    func makePath()  -> CGMutablePath {
         _isValid = true
         
         guard let pts = self.deformedPoints else {

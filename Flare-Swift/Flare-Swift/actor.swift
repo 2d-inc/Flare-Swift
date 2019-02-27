@@ -55,7 +55,9 @@ extension Actor {
             fatalError("NOT A VALID FLARE FILE.")
         }
         if let reader = ReaderFactory.factory(data: data) {
+            dump(data)
             _version = reader.readVersion()
+            print("JUST GOT VERSION \(self._version)")
             while var block = reader.readNextBlock(blockTypes: BlockTypesMap) {
                 switch block.blockType {
                 case BlockTypes.Artboards:
@@ -91,11 +93,10 @@ extension Actor {
     }
     
     func readArtboardsBlock(block: StreamReader) {
-        _ = Int(block.readUint16Length())
+        let abCount = Int(block.readUint16Length())
         _artboards = [ActorArtboard]()
         
-        let end = _artboards.count
-        for artboardIndex in 0 ..< end {
+        for artboardIndex in 0 ..< abCount {
             if let artboardBlock = block.readNextBlock(blockTypes: BlockTypesMap) {
                 switch (artboardBlock.blockType) {
                 case BlockTypes.ActorArtboard:

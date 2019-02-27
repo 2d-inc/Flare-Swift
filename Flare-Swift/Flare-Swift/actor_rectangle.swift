@@ -19,21 +19,17 @@ class ActorRectangle: ActorProceduralPath {
         return rectangle
     }
     
-    private func copyRectangle(_ node: ActorRectangle, _ ab: ActorArtboard) {
+    func copyRectangle(_ node: ActorRectangle, _ ab: ActorArtboard) {
         copyPath(node, ab)
         _radius = node._radius
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorRectangle?) -> ActorRectangle {
-        if component == nil {
-            component = ActorRectangle()
-        }
-        
-        _ = ActorNode.read(artboard, reader, component!)
-        component!.width = Double(reader.readFloat32(label: "width"))
-        component!.height = Double(reader.readFloat32(label: "height"))
-        component!._radius = Double(reader.readFloat32(label: "cornerRadius"))
-        return component!
+    func readRectangle(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = ActorNode.read(artboard, reader, component!)
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
+        self._radius = Double(reader.readFloat32(label: "cornerRadius"))
     }
     
     override var points: [PathPoint] {

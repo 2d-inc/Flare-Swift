@@ -18,15 +18,11 @@ class ActorEllipse: ActorProceduralPath {
         return ellipse
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorEllipse?) -> ActorEllipse {
-        if component == nil {
-            component = ActorEllipse()
-        }
-        
-        _ = ActorNode.read(artboard, reader, component!)
-        component!.width = Double(reader.readFloat32(label: "width"))
-        component!.height = Double(reader.readFloat32(label: "height"))
-        return component!
+    func readEllipse(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = ActorNode.read(artboard, reader, component!)
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
     }
     
     override var points: [PathPoint] {

@@ -52,10 +52,9 @@ class ActorPaint: ActorComponent {
         _ = artboard?.addDependency(self, parent!)
     }
     
-    static func readPaint(_ artboard: ActorArtboard, _ reader: StreamReader, _ paint: ActorPaint) -> ActorPaint {
-        _ = ActorComponent.read(artboard, reader, paint)
-        paint.opacity = Double(reader.readFloat32(label: "opacity"))
-        return paint
+    func readPaint(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readComponent(artboard, reader)
+        self.opacity = Double(reader.readFloat32(label: "opacity"))
     }
 }
 
@@ -89,10 +88,9 @@ class ActorColor: ActorPaint {
     override func onDirty(_ dirt: UInt8) {}
     override func update(dirt: UInt8) {}
     
-    static func readColor(_ artboard: ActorArtboard, _ reader: StreamReader, _ color: ActorColor) -> ActorColor {
-        _ = ActorPaint.readPaint(artboard, reader, color)
-        reader.readFloat32ArrayOffset(ar: &color._color, length: 4, offset: 0, label: "color")
-        return color
+    func readColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readPaint(artboard, reader)
+        reader.readFloat32ArrayOffset(ar: &self._color, length: 4, offset: 0, label: "color")
     }
 }
 
@@ -103,7 +101,7 @@ protocol ActorFill: class {
     func copyFill(_ node: ActorFill, _ resetArtboard: ActorArtboard)
     func initializeGraphics()
     
-    static func readFill(_ artboard: ActorArtboard, _ reader: StreamReader, _ fill: ActorFill)
+    func readFill(_ artboard: ActorArtboard, _ reader: StreamReader)
 }
 
 extension ActorFill {
@@ -115,9 +113,9 @@ extension ActorFill {
         _fillRule = node._fillRule
     }
     
-    static func readFill(_ artboard: ActorArtboard, _ reader: StreamReader, _ fill: ActorFill) {
+    func readFill(_ artboard: ActorArtboard, _ reader: StreamReader) {
         let fr = reader.readUint8(label: "fillRule")
-        fill._fillRule = FillRule(rawValue: fr)!
+        self._fillRule = FillRule(rawValue: fr)!
     }
 }
 
@@ -142,7 +140,7 @@ protocol ActorStroke: class {
     func copyStroke(_ node: ActorStroke, _ resetArtboard: ActorArtboard)
     func initializeGraphics()
     
-    static func readStroke(_ artboard: ActorArtboard, _ reader: StreamReader, _ fill: ActorStroke)
+    func readStroke(_ artboard: ActorArtboard, _ reader: StreamReader)
 }
 
 extension ActorStroke {
@@ -215,21 +213,21 @@ extension ActorStroke {
 
     }
     
-    static func readStroke(_ artboard: ActorArtboard, _ reader: StreamReader, _ stroke: ActorStroke) {
-        stroke.width = Double(reader.readFloat32(label: "width"))
+    func readStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.width = Double(reader.readFloat32(label: "width"))
         let version = artboard.actor.version
         if version >= 19 {
             let c = reader.readUint8(label: "cap")
             let j = reader.readUint8(label: "join")
-            stroke._cap = StrokeCap(rawValue: c)!
-            stroke._join = StrokeJoin(rawValue: j)!
+            self._cap = StrokeCap(rawValue: c)!
+            self._join = StrokeJoin(rawValue: j)!
             if version >= 20 {
                 let t = reader.readUint8(label: "trim")
-                stroke._trim = TrimPath(rawValue: t) ?? TrimPath.Off
-                if stroke._trim != .Off {
-                    stroke._trimStart = Double(reader.readFloat32(label: "start"))
-                    stroke._trimEnd = Double(reader.readFloat32(label: "end"))
-                    stroke._trimOffset = Double(reader.readFloat32(label: "offset"))
+                self._trim = TrimPath(rawValue: t) ?? TrimPath.Off
+                if self._trim != .Off {
+                    self._trimStart = Double(reader.readFloat32(label: "start"))
+                    self._trimEnd = Double(reader.readFloat32(label: "end"))
+                    self._trimOffset = Double(reader.readFloat32(label: "offset"))
                 }
             }
         }
@@ -253,6 +251,15 @@ class ColorFill: ActorColor, ActorFill {
         }
     }
     
+    func copyColorFill(_ node: ColorFill, _ resetArtboard: ActorArtboard) {
+        copyColor(node, resetArtboard)
+        copyFill(node, resetArtboard)
+    }
+    
+    func readColorFill(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readColor(artboard, reader)
+        self.readFill(artboard, reader)
+    }
 }
 
 class ColorStroke: ActorColor, ActorStroke {
@@ -264,7 +271,7 @@ class ColorStroke: ActorColor, ActorStroke {
     var _trimEnd: Double?
     var _trimOffset: Double?
     
-    private func copyColorStroke(_ node: ColorStroke, _ resetArtboard: ActorArtboard) {
+    func copyColorStroke(_ node: ColorStroke, _ resetArtboard: ActorArtboard) {
         self.copyColor(node, resetArtboard)
         self.copyStroke(node, resetArtboard)
     }
@@ -280,10 +287,9 @@ class ColorStroke: ActorColor, ActorStroke {
     
     func initializeGraphics() {}
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: ColorStroke) -> ColorStroke {
-        _ = ColorStroke.readColor(artboard, reader, component)
-        _ = ColorStroke.readStroke(artboard, reader, component)
-        return component
+    func readColorStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readColor(artboard, reader)
+        self.readStroke(artboard, reader)
     }
 }
 
@@ -323,18 +329,17 @@ class GradientColor: ActorPaint {
         _ = Vec2D.transformMat2D(renderEnd, end, world)
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: GradientColor) -> GradientColor {
-        _ = ActorPaint.readPaint(artboard, reader, component)
+    func readGradientColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = ActorPaint.readPaint(artboard, reader, component)
+        self.readPaint(artboard, reader)
         
         let numStops = Int(reader.readUint8(label: "numColorStops"))
         var stops = Array<Float32>.init(repeating: 0.0, count: numStops * 5)
         reader.readFloat32ArrayOffset(ar: &stops, length: numStops * 5, offset: 0, label: "colorStops")
-        component.colorStops = stops
+        self.colorStops = stops
         
-        reader.readFloat32ArrayOffset(ar: &component.start.values, length: 2, offset: 0, label: "start")
-        reader.readFloat32ArrayOffset(ar: &component.end.values, length: 2, offset: 0, label: "end")
-        
-        return component
+        reader.readFloat32ArrayOffset(ar: &self.start.values, length: 2, offset: 0, label: "start")
+        reader.readFloat32ArrayOffset(ar: &self.end.values, length: 2, offset: 0, label: "end")
     }
 }
 
@@ -359,10 +364,9 @@ class GradientFill: GradientColor, ActorFill {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: GradientFill) -> GradientFill {
-        _ = GradientColor.read(artboard, reader, component)
-        component._fillRule = FillRule(rawValue: reader.readUint8(label: "fillRule"))!
-        return component
+    func readGradientFill(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readGradientColor(artboard, reader)
+        self._fillRule = FillRule(rawValue: reader.readUint8(label: "fillRule"))!
     }
 }
 
@@ -391,10 +395,9 @@ class GradientStroke: GradientColor, ActorStroke {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: GradientStroke) -> GradientStroke {
-        _ = GradientColor.read(artboard, reader, component)
-        _ = GradientStroke.readStroke(artboard, reader, component)
-        return component
+    func readGradientStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readGradientColor(artboard, reader)
+        self.readGradientStroke(artboard, reader)
     }
 }
 
@@ -406,10 +409,10 @@ class RadialGradientColor: GradientColor {
         secondaryRadiusScale = node.secondaryRadiusScale
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: RadialGradientColor) -> RadialGradientColor {
-        _ = GradientColor.read(artboard, reader, component)
-        component.secondaryRadiusScale = Double(reader.readFloat32(label: "secondaryRadiusScale"))
-        return component
+    func readRadialGradientColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = GradientColor.read(artboard, reader, component)
+        self.readGradientColor(artboard, reader)
+        self.secondaryRadiusScale = Double(reader.readFloat32(label: "secondaryRadiusScale"))
     }
 }
 
@@ -431,10 +434,12 @@ class RadialGradientFill: RadialGradientColor, ActorFill {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: RadialGradientFill) -> RadialGradientFill {
-        _ = RadialGradientColor.read(artboard, reader, component)
-        _ = RadialGradientFill.readFill(artboard, reader, component)
-        return component
+    func readRadialGradientFill(_ artboard: ActorArtboard, _ reader: StreamReader) {
+//        _ = RadialGradientColor.read(artboard, reader, component)
+//        _ = RadialGradientFill.readFill(artboard, reader, component)
+//        return component
+        self.readGradientColor(artboard, reader)
+        self.readRadialGradientFill(artboard, reader)
     }
 }
 
@@ -463,9 +468,8 @@ class RadialGradientStroke: RadialGradientColor, ActorStroke {
         }
     }
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: RadialGradientStroke) -> RadialGradientStroke {
-        _ = RadialGradientColor.read(artboard, reader, component)
-        _ = RadialGradientStroke.readStroke(artboard, reader, component)
-        return component
+    func readRadialGradientStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readRadialGradientColor(artboard, reader)
+        self.readRadialGradientStroke(artboard, reader)
     }
 }

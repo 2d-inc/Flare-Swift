@@ -10,10 +10,8 @@ import Foundation
 
 class ActorEvent: ActorComponent {
     
-    static func read(_ artboard: ActorArtboard, _ reader: StreamReader, _ component: inout ActorEvent) ->  ActorComponent {
-        _ = ActorComponent.read(artboard, reader, component);
-        
-        return component
+    func readEvent(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readComponent(artboard, reader)
     }
     
     func makeInstance(resetArtboard: ActorArtboard) -> ActorComponent {
