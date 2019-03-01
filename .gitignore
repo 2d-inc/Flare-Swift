@@ -1,2 +1,4 @@
 .DS_Store
-Flare-Swift.xcworkspace/xcuserdata
+xcuserdata/
+Build/
+Index/

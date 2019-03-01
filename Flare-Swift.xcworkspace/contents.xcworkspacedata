@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:Flare-Swift/Flare-Swift.xcodeproj">
+      location = "group:BasicExample/BasicExample.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:FlareSwift/FlareSwift.xcodeproj">
    </FileRef>
 </Workspace>
