@@ -15,6 +15,10 @@ class FlareActorPath: ActorPath, FlarePath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
     
+    override func invalidatePath() {
+        _isValid = false
+    }
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let cgPath = FlareActorPath()
         cgPath.copyPath(self, resetArtboard)
@@ -27,6 +31,10 @@ class FlareEllipse: ActorEllipse, FlarePath {
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
+    }
+    
+    override func invalidatePath() {
+        _isValid = false
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
@@ -43,6 +51,10 @@ class FlareTriangle: ActorTriangle, FlarePath {
         return points
     }
     
+    override func invalidatePath() {
+        _isValid = false
+    }
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let cgTriangle = FlareTriangle()
         cgTriangle.copyPath(self, resetArtboard)
@@ -55,6 +67,10 @@ class FlareRectangle: ActorRectangle, FlarePath {
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
+    }
+    
+    override func invalidatePath() {
+        _isValid = false
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
@@ -70,6 +86,10 @@ class FlareStar: ActorStar, FlarePath {
     var deformedPoints: [PathPoint]? {
         return points
     }
+ 
+    override func invalidatePath() {
+        _isValid = false
+    }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let cgStar = FlareStar()
@@ -83,6 +103,10 @@ class FlarePolygon: ActorPolygon, FlarePath {
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
+    }
+    
+    override func invalidatePath() {
+        _isValid = false
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
