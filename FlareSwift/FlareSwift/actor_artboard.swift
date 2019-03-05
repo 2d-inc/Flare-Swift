@@ -216,7 +216,7 @@ public class ActorArtboard {
         return true
     }
     
-    func getAnimation(name: String) -> ActorAnimation? {
+    public func getAnimation(name: String) -> ActorAnimation? {
         guard let anims = _animations else {
             print("getAnimation(\(name)): animations array is nil!")
             return nil
@@ -229,7 +229,7 @@ public class ActorArtboard {
         return nil
     }
     
-    func getNode(name: String) -> ActorNode? {
+    public func getNode(name: String) -> ActorNode? {
         for node in _nodes! {
             if node != nil && node!.name == name {
                 return node
@@ -354,7 +354,6 @@ public class ActorArtboard {
             while (_flags & ActorFlags.IsDirty) != 0 && step < MaxSteps {
                 _flags &= ~ActorFlags.IsDirty;
                 // Track dirt depth here so that if something else marks dirty, we restart.
-//                for (int i = 0; i < count; i++) {
                 for i in 0 ..< count {
                     let component = _dependencyOrder![i]
                     _dirtDepth = i
@@ -375,20 +374,13 @@ public class ActorArtboard {
         if (_flags & ActorFlags.IsDrawOrderDirty) != 0 {
             _flags &= ~ActorFlags.IsDrawOrderDirty
             
-        _drawableNodes.sort{ $0.drawOrder > $1.drawOrder }
-        for i in 0..<_drawableNodes.count {
-            _drawableNodes[i].drawIndex = i
-        }
-//            if (_drawableNodes != null) {
-//                _drawableNodes.sort((a, b) => a.drawOrder.compareTo(b.drawOrder));
-//                for (int i = 0; i < _drawableNodes.length; i++) {
-//                    _drawableNodes[i].drawIndex = i;
-//                }
-//            }
+            _drawableNodes.sort{ $0.drawOrder > $1.drawOrder }
+            for i in 0..<_drawableNodes.count {
+                _drawableNodes[i].drawIndex = i
+            }
         }
         if (_flags & ActorFlags.IsVertexDeformDirty) != 0 {
             _flags &= ~ActorFlags.IsVertexDeformDirty
-//            for (int i = 0; i < _drawableNodeCount; i++) {
             for i in 0 ..< _drawableNodeCount {
                 let drawable = _drawableNodes[i]
                 
@@ -396,7 +388,6 @@ public class ActorArtboard {
                     if image.isVertexDeformDirty {
                         image.isVertexDeformDirty = false;
                     }
-                    //updateVertexDeform(drawable);
                 }
             }
         }

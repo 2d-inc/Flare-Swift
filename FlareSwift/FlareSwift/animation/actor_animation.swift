@@ -37,119 +37,6 @@ public class PropertyAnimation {
         // {
         propertyAnimation._type = type;
         
-        var keyFrame: KeyFrame? = nil
-        switch (propertyAnimation._type) {
-            case PropertyTypes.PosX:
-                keyFrame = KeyFramePosX()
-                break;
-            case PropertyTypes.PosY:
-                keyFrame = KeyFramePosY()
-                break;
-            case PropertyTypes.ScaleX:
-                keyFrame = KeyFrameScaleX()
-                break;
-            case PropertyTypes.ScaleY:
-                keyFrame = KeyFrameScaleY()
-                break;
-            case PropertyTypes.Rotation:
-                keyFrame = KeyFrameRotation()
-                break;
-            case PropertyTypes.Opacity:
-                keyFrame = KeyFrameOpacity()
-                break;
-            case PropertyTypes.DrawOrder:
-                keyFrame = KeyFrameDrawOrder()
-                break;
-            case PropertyTypes.Length:
-                keyFrame = KeyFrameLength()
-                break;
-            case PropertyTypes.VertexDeform:
-                keyFrame = KeyFrameVertexDeform()
-                break;
-            case PropertyTypes.ConstraintStrength:
-                keyFrame = KeyFrameConstraintStrength()
-                break;
-            case PropertyTypes.Trigger:
-                keyFrame = KeyFrameTrigger()
-                break;
-            case PropertyTypes.IntProperty:
-                keyFrame = KeyFrameIntProperty()
-                break;
-            case PropertyTypes.FloatProperty:
-                keyFrame = KeyFrameFloatProperty()
-                break;
-            case PropertyTypes.StringProperty:
-                keyFrame = KeyFrameStringProperty()
-                break;
-            case PropertyTypes.BooleanProperty:
-                keyFrame = KeyFrameBooleanProperty()
-                break;
-            case PropertyTypes.CollisionEnabled:
-                keyFrame = KeyFrameCollisionEnabledProperty()
-                break;
-            case PropertyTypes.ActiveChildIndex:
-                keyFrame = KeyFrameActiveChild()
-                break;
-            case PropertyTypes.Sequence:
-                keyFrame = KeyFrameSequence()
-                break;
-            case PropertyTypes.PathVertices:
-                keyFrame = KeyFramePathVertices(component: component)
-                break;
-            case PropertyTypes.FillColor:
-                keyFrame = KeyFrameFillColor()
-                break;
-            case PropertyTypes.FillGradient:
-                keyFrame = KeyFrameGradient()
-                break;
-            case PropertyTypes.StrokeGradient:
-                keyFrame = KeyFrameGradient()
-                break;
-            case PropertyTypes.FillRadial:
-                keyFrame = KeyFrameRadial()
-                break;
-            case PropertyTypes.StrokeRadial:
-                keyFrame = KeyFrameRadial()
-                break;
-            case PropertyTypes.StrokeColor:
-                keyFrame = KeyFrameStrokeColor()
-                break;
-            case PropertyTypes.StrokeWidth:
-                keyFrame = KeyFrameStrokeWidth()
-                break;
-            case PropertyTypes.StrokeOpacity,
-                PropertyTypes.FillOpacity:
-                keyFrame = KeyFramePaintOpacity()
-                break;
-            case PropertyTypes.ShapeWidth:
-                keyFrame = KeyFrameShapeWidth()
-                break;
-            case PropertyTypes.ShapeHeight:
-                keyFrame = KeyFrameShapeHeight()
-                break;
-            case PropertyTypes.CornerRadius:
-                keyFrame = KeyFrameCornerRadius()
-                break;
-            case PropertyTypes.InnerRadius:
-                keyFrame = KeyFrameInnerRadius()
-                break;
-            case PropertyTypes.StrokeStart:
-                keyFrame = KeyFrameStrokeStart()
-                break;
-            case PropertyTypes.StrokeEnd:
-                keyFrame = KeyFrameStrokeEnd()
-                break;
-            case PropertyTypes.StrokeOffset:
-                keyFrame = KeyFrameStrokeOffset()
-                break;
-            default:
-                break
-        }
-        
-        guard let frame = keyFrame else {
-            return nil
-        }
-        
         propertyBlock.openArray(label: "frames");
         let keyFrameCount = Int(propertyBlock.readUint16Length())
 //        propertyAnimation._keyFrames = List<KeyFrame>(keyFrameCount);
@@ -159,21 +46,100 @@ public class PropertyAnimation {
         for i in 0 ..< keyFrameCount {
             propertyBlock.openObject(label: "frame");
 //            let frame = keyFrame!(propertyBlock, &component);
-            if !frame.read(propertyBlock) {
+            guard let keyFrame = keyFrameFactory(type: type, component: component) else {
+                return nil
+            }
+            if !keyFrame.read(propertyBlock) {
                 fatalError("Failed to read a KeyFrame! \(type)")
             }
 //            propertyAnimation._keyFrames[i] = frame;
-            propertyAnimation._keyFrames!.insert(frame, at: i)
+            propertyAnimation._keyFrames!.insert(keyFrame, at: i)
             if let lk = lastKeyFrame {
-                lk.setNext(frame);
+                lk.setNext(keyFrame);
             }
-            lastKeyFrame = frame
+            lastKeyFrame = keyFrame
             propertyBlock.closeObject();
         }
         propertyBlock.closeArray();
         //}
         
         return propertyAnimation;
+    }
+    
+    static func keyFrameFactory(type: Int, component: ActorComponent) ->  KeyFrame? {
+        switch type {
+        case PropertyTypes.PosX:
+            return KeyFramePosX()
+        case PropertyTypes.PosY:
+            return KeyFramePosY()
+        case PropertyTypes.ScaleX:
+            return KeyFrameScaleX()
+        case PropertyTypes.ScaleY:
+            return KeyFrameScaleY()
+        case PropertyTypes.Rotation:
+            return KeyFrameRotation()
+        case PropertyTypes.Opacity:
+            return KeyFrameOpacity()
+        case PropertyTypes.DrawOrder:
+            return KeyFrameDrawOrder()
+        case PropertyTypes.Length:
+            return KeyFrameLength()
+        case PropertyTypes.VertexDeform:
+            return KeyFrameVertexDeform()
+        case PropertyTypes.ConstraintStrength:
+            return KeyFrameConstraintStrength()
+        case PropertyTypes.Trigger:
+            return KeyFrameTrigger()
+        case PropertyTypes.IntProperty:
+            return KeyFrameIntProperty()
+        case PropertyTypes.FloatProperty:
+            return KeyFrameFloatProperty()
+        case PropertyTypes.StringProperty:
+            return KeyFrameStringProperty()
+        case PropertyTypes.BooleanProperty:
+            return KeyFrameBooleanProperty()
+        case PropertyTypes.CollisionEnabled:
+            return KeyFrameCollisionEnabledProperty()
+        case PropertyTypes.ActiveChildIndex:
+            return KeyFrameActiveChild()
+        case PropertyTypes.Sequence:
+            return KeyFrameSequence()
+        case PropertyTypes.PathVertices:
+            return KeyFramePathVertices(component: component)
+        case PropertyTypes.FillColor:
+            return KeyFrameFillColor()
+        case PropertyTypes.FillGradient:
+            return KeyFrameGradient()
+        case PropertyTypes.StrokeGradient:
+            return KeyFrameGradient()
+        case PropertyTypes.FillRadial:
+            return KeyFrameRadial()
+        case PropertyTypes.StrokeRadial:
+            return KeyFrameRadial()
+        case PropertyTypes.StrokeColor:
+            return KeyFrameStrokeColor()
+        case PropertyTypes.StrokeWidth:
+            return KeyFrameStrokeWidth()
+        case PropertyTypes.StrokeOpacity,
+             PropertyTypes.FillOpacity:
+            return KeyFramePaintOpacity()
+        case PropertyTypes.ShapeWidth:
+            return KeyFrameShapeWidth()
+        case PropertyTypes.ShapeHeight:
+            return KeyFrameShapeHeight()
+        case PropertyTypes.CornerRadius:
+            return KeyFrameCornerRadius()
+        case PropertyTypes.InnerRadius:
+            return KeyFrameInnerRadius()
+        case PropertyTypes.StrokeStart:
+            return KeyFrameStrokeStart()
+        case PropertyTypes.StrokeEnd:
+            return KeyFrameStrokeEnd()
+        case PropertyTypes.StrokeOffset:
+            return KeyFrameStrokeOffset()
+        default:
+            return nil
+        }
     }
     
     func apply(time: Double, component: ActorComponent, mix: Double) {

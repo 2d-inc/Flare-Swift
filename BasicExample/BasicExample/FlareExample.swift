@@ -19,6 +19,8 @@ class FlareExample: UIView {
     private var animationName = "Test"
     private var setupAABB: AABB!
     private var artboard: FlareArtboard!
+    private var animation: ActorAnimation!
+    private var animationTime = 0.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,6 +53,8 @@ class FlareExample: UIView {
                 if artboard != nil {
                     artboard.initializeGraphics()
                     // TODO: artboard.overrideColor =
+                    animation = artboard.getAnimation(name: "Test")
+                    animation.apply(time: 0.0, artboard: artboard, mix: 1.0)
                     artboard.advance(seconds: 0.0)
                     updateBounds()
                     
@@ -83,9 +87,11 @@ class FlareExample: UIView {
         let currentTime = displayLink.timestamp
         let delta = currentTime - lastTime
         lastTime = currentTime
-        duration += delta
-//            displayLink.invalidate()
+        duration = (duration + delta).truncatingRemainder(dividingBy: animation.duration)
+        animation.apply(time: duration, artboard: artboard, mix: 1.0)
+        artboard.advance(seconds: delta)
         setNeedsDisplay()
+        //            displayLink.invalidate() // Stops loop.
     }
     
     override func draw(_ rect: CGRect) {
