@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E41D08AE222E8E6600AC8687 /* flare_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D08AD222E8E6600AC8687 /* flare_gradient_radial_stroke.swift */; };
 		E453591622282EC900981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E453590C22282EC900981BD7 /* FlareSwift.framework */; };
 		E453591B22282EC900981BD7 /* FlareSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453591A22282EC900981BD7 /* FlareSwiftTests.swift */; };
 		E453591D22282EC900981BD7 /* FlareSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = E453590F22282EC900981BD7 /* FlareSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -87,6 +88,7 @@
 		E4535A2B2228370600981BD7 /* flare_gradient_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A212228370600981BD7 /* flare_gradient_fill.swift */; };
 		E4535A2D222838ED00981BD7 /* flare_color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2C222838ED00981BD7 /* flare_color.swift */; };
 		E4535A2F222D839000981BD7 /* flare_gradient_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2E222D839000981BD7 /* flare_gradient_stroke.swift */; };
+		E48A648A222E778D00726F7D /* flare_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E41D08AD222E8E6600AC8687 /* flare_gradient_radial_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_stroke.swift; sourceTree = "<group>"; };
 		E453590C22282EC900981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E453590F22282EC900981BD7 /* FlareSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareSwift.h; sourceTree = "<group>"; };
 		E453591022282EC900981BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -183,6 +186,7 @@
 		E4535A212228370600981BD7 /* flare_gradient_fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_gradient_fill.swift; sourceTree = "<group>"; };
 		E4535A2C222838ED00981BD7 /* flare_color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_color.swift; sourceTree = "<group>"; };
 		E4535A2E222D839000981BD7 /* flare_gradient_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_stroke.swift; sourceTree = "<group>"; };
+		E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_fill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,7 +368,9 @@
 				E4535A1C2228370500981BD7 /* flare_color_stroke.swift */,
 				E4535A192228370500981BD7 /* flare_fill.swift */,
 				E4535A212228370600981BD7 /* flare_gradient_fill.swift */,
+				E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */,
 				E4535A2E222D839000981BD7 /* flare_gradient_stroke.swift */,
+				E41D08AD222E8E6600AC8687 /* flare_gradient_radial_stroke.swift */,
 				E4535A1E2228370500981BD7 /* flare_path.swift */,
 				E4535A202228370600981BD7 /* flare_shape.swift */,
 				E4535A182228370500981BD7 /* flare_stroke.swift */,
@@ -532,6 +538,7 @@
 				E4535A252228370600981BD7 /* flare_artboard.swift in Sources */,
 				E453599622282EF200981BD7 /* keyframe_stroke.swift in Sources */,
 				E4535A2A2228370600981BD7 /* flare_shape.swift in Sources */,
+				E48A648A222E778D00726F7D /* flare_gradient_radial_fill.swift in Sources */,
 				E453597C22282EF200981BD7 /* actor_node.swift in Sources */,
 				E453598322282EF200981BD7 /* path_point.swift in Sources */,
 				E4535A292228370600981BD7 /* flare_color_fill.swift in Sources */,
@@ -551,6 +558,7 @@
 				E45359AC22282EF200981BD7 /* actor_shape.swift in Sources */,
 				E45359A122282EF200981BD7 /* hold.swift in Sources */,
 				E453599422282EF200981BD7 /* keyframe_radius.swift in Sources */,
+				E41D08AE222E8E6600AC8687 /* flare_gradient_radial_stroke.swift in Sources */,
 				E45359AB22282EF200981BD7 /* binary_reader.swift in Sources */,
 				E45359A722282EF200981BD7 /* transform_components.swift in Sources */,
 				E453597A22282EF200981BD7 /* actor_rectangle.swift in Sources */,

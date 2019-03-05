@@ -1,28 +1,29 @@
 //
-//  flare_gradient_fill.swift
-//  Flare-Swift
+//  flare_gradient_radial_fill.swift
+//  FlareSwift
 //
-//  Created by Umberto Sonnino on 2/26/19.
+//  Created by Umberto Sonnino on 3/5/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
 
-class FlareGradientFill: GradientFill, FlareFill {
-    var _fillColor = CGColor.black
+class FlareRadialFill: RadialGradientFill, FlareFill {
+    var _fillColor: CGColor = CGColor.black
     var _gradient: CGGradient!
     private let _colorSpace = CGColorSpaceCreateDeviceRGB()
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceGradientFill = FlareGradientFill()
-        instanceGradientFill.copyGradientFill(self, resetArtboard)
-        return instanceGradientFill
+        let radialNode = FlareRadialFill()
+        radialNode.copyRadialFill(self, resetArtboard)
+        return radialNode
     }
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
-        
+
         let numStops = Int(round( Double(colorStops.count)/5 ))
+
         var colors = [CGFloat]()
         var locations = [CGFloat]()
         
@@ -52,17 +53,18 @@ class FlareGradientFill: GradientFill, FlareFill {
             paintColor = CGColor.cgColor(red: 1, green: 1, blue: 1, alpha: CGFloat(alpha)) // White w/ custom alpha.
         }
         
+        
         _fillColor = paintColor
         _gradient = CGGradient(colorSpace: _colorSpace, colorComponents: colors, locations: locations, count: locations.count)
     }
     
     func paint(fill: ActorFill, context: CGContext, path: CGPath) {
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
-
+        let radius = CGFloat(Vec2D.distance(renderStart, renderEnd))
+        let center = CGPoint(x: renderStart[0], y: renderStart[1])
+        
         context.addPath(path)
         context.setFillColor(_fillColor)
         context.clip()
-        context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
+        context.drawRadialGradient(_gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
     }
 }

@@ -1,22 +1,25 @@
 //
-//  flare_gradient_fill.swift
-//  Flare-Swift
+//  flare_gradient_radial_stroke.swift
+//  FlareSwift
 //
-//  Created by Umberto Sonnino on 2/26/19.
+//  Created by Umberto Sonnino on 3/5/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
 
-class FlareGradientFill: GradientFill, FlareFill {
-    var _fillColor = CGColor.black
+class FlareRadialStroke: RadialGradientStroke, FlareStroke {
+    var _color: CGColor = CGColor.black
+    var _strokeCap: CGLineCap = .butt
+    var _strokeJoin: CGLineJoin = .miter
+    var _strokeWidth: CGFloat = 0.0
+    
     var _gradient: CGGradient!
-    private let _colorSpace = CGColorSpaceCreateDeviceRGB()
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceGradientFill = FlareGradientFill()
-        instanceGradientFill.copyGradientFill(self, resetArtboard)
-        return instanceGradientFill
+        let radialStrokeNode = FlareRadialStroke()
+        radialStrokeNode.copyRadialStroke(self, resetArtboard)
+        return radialStrokeNode
     }
     
     override func update(dirt: UInt8) {
@@ -40,7 +43,7 @@ class FlareGradientFill: GradientFill, FlareFill {
             idx += 5
         }
         
-        var paintColor: CGColor!
+        var paintColor: CGColor
         if let overrideColor = artboard!.overrideColor {
             let r = CGFloat(round(overrideColor[0]))
             let g = CGFloat(round(overrideColor[1]))
@@ -52,17 +55,24 @@ class FlareGradientFill: GradientFill, FlareFill {
             paintColor = CGColor.cgColor(red: 1, green: 1, blue: 1, alpha: CGFloat(alpha)) // White w/ custom alpha.
         }
         
-        _fillColor = paintColor
-        _gradient = CGGradient(colorSpace: _colorSpace, colorComponents: colors, locations: locations, count: locations.count)
+        _color = paintColor
+        _gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: colors, locations: locations, count: locations.count)
+        _strokeWidth = CGFloat(width)
+        
     }
     
-    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
-
+    
+    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
+        let radius = CGFloat(Vec2D.distance(renderStart, renderEnd))
+        let center = CGPoint(x: renderStart[0], y: renderStart[1])
+        
         context.addPath(path)
-        context.setFillColor(_fillColor)
+        context.setFillColor(_color)
+        context.setLineWidth(_strokeWidth)
+        context.setLineCap(_strokeCap)
+        context.setLineJoin(_strokeJoin)
+        context.replacePathWithStrokedPath()
         context.clip()
-        context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
+        context.drawRadialGradient(_gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
     }
 }

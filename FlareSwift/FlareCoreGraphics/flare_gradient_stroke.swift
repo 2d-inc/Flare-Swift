@@ -61,6 +61,9 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
     }
     
     func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
+        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
+        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
+
         context.addPath(path)
         context.setFillColor(_color)
         context.setLineWidth(_strokeWidth)
@@ -68,8 +71,6 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
         context.setLineJoin(_strokeJoin)
         context.replacePathWithStrokedPath()
         context.clip()
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
         context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
     }
     

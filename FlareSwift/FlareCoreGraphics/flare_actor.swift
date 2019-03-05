@@ -68,13 +68,11 @@ public class FlareActor: Actor {
     }
 
     public func makeRadialFill() -> RadialGradientFill {
-//        TODO: Update to Flare Object
-        return RadialGradientFill()
+        return FlareRadialFill()
     }
 
     public func makeRadialStroke() -> RadialGradientStroke {
-//        TODO: Update to Flare Object
-        return RadialGradientStroke()
+        return FlareRadialStroke()
     }
     
     func loadData(_ data: Data) {

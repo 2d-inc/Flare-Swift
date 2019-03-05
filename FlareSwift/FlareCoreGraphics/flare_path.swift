@@ -78,7 +78,7 @@ extension FlarePath {
                         renderPoints.append(CubicPathPoint.init(fromValues: translation, translation, Vec2D.scaleAndAdd(Vec2D(), pos, toPrev, iarcConstant * renderRadius)))
                         
                         translation = Vec2D.scaleAndAdd(Vec2D(), pos, toNext, renderRadius)
-                        renderPoints.append(CubicPathPoint.init(fromValues: translation, Vec2D.scaleAndAdd(Vec2D(), pos, toNext, iarcConstant * renderRadius), translation))
+                        previous = CubicPathPoint.init(fromValues: translation, Vec2D.scaleAndAdd(Vec2D(), pos, toNext, iarcConstant * renderRadius), translation)
                         renderPoints.append(previous!)
                     }
                 } else {
