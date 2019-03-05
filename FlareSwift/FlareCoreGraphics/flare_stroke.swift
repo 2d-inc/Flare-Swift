@@ -9,8 +9,7 @@
 import Foundation
 
 protocol FlareStroke: class {
-    var _strokeColor: CGColor { get set }
-    var _effectPath: CGPath { get set }
+    var _color: CGColor { get set }
     var _strokeCap: CGLineCap { get set }
     var _strokeJoin: CGLineJoin { get set }
     var _strokeWidth: CGFloat { get set }
@@ -23,14 +22,15 @@ extension FlareStroke {
     
     func initializeGraphics() {
         let stroke = self as! ActorStroke
-        _strokeColor = CGColor.black
-        _strokeCap = getStrokeCap(cap: stroke.cap)
-        _strokeJoin = getStrokeJoin(join: stroke.join)
+        _color = CGColor.black
+        _strokeCap = self.strokeCap
+        _strokeJoin = self.strokeJoin
         _strokeWidth = CGFloat(stroke.width)
     }
     
-    func getStrokeCap(cap: StrokeCap) -> CGLineCap {
-        switch cap {
+    var strokeCap: CGLineCap {
+        let stroke = self as! ActorStroke
+        switch stroke.cap {
         case .Butt:
             return CGLineCap.butt
         case .Round:
@@ -40,8 +40,9 @@ extension FlareStroke {
         }
     }
     
-    func getStrokeJoin(join: StrokeJoin) -> CGLineJoin {
-        switch join {
+    var strokeJoin: CGLineJoin {
+        let stroke = self as! ActorStroke
+        switch stroke.join {
         case .Bevel:
             return CGLineJoin.bevel
         case .Miter:
@@ -49,49 +50,5 @@ extension FlareStroke {
         case .Round:
             return CGLineJoin.round
         }
-    }
-    
-    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
-        guard _strokeWidth > 0 else {
-            return
-        }
-        
-        if stroke.isTrimmed {
-            // TODO:
-        }
-        context.saveGState()
-        context.setLineCap(_strokeCap)
-        context.setLineJoin(_strokeJoin)
-        context.setLineWidth(_strokeWidth)
-        context.setStrokeColor(_strokeColor)
-        context.addPath(path)
-        context.strokePath()
-        context.restoreGState()
-    }
-}
-
-protocol FlareStrokeLinearGradient: FlareStroke {
-    var _strokeGradient: CGGradient { get set }
-    var _start: CGPoint { get set }
-    var _end: CGPoint { get set }
-    func paintStrokeGradient()
-}
-
-extension FlareStrokeLinearGradient {
-    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
-        guard _strokeWidth > 0 else {
-            return
-        }
-        
-        context.saveGState() // ==
-        context.setLineCap(_strokeCap)
-        context.setLineJoin(_strokeJoin)
-        context.setLineWidth(_strokeWidth)
-        context.setStrokeColor(_strokeColor)
-        context.addPath(path)
-        context.replacePathWithStrokedPath()
-        context.clip()
-        context.drawLinearGradient(_strokeGradient, start: _start, end: _end, options: [])
-        context.restoreGState() // ==
     }
 }

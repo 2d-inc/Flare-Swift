@@ -10,8 +10,7 @@ import Foundation
 import CoreGraphics
 
 class FlareColorStroke: ColorStroke, FlareStroke {
-    var _strokeColor: CGColor = CGColor.black
-    var _effectPath: CGPath = CGMutablePath()
+    var _color: CGColor = CGColor.black
     var _strokeCap: CGLineCap = CGLineCap.butt
     var _strokeJoin: CGLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
@@ -43,7 +42,24 @@ class FlareColorStroke: ColorStroke, FlareStroke {
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
-        _strokeColor = cgColor
+        _color = cgColor
         _strokeWidth = CGFloat(width)
+    }
+    
+    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
+        guard _strokeWidth > 0 else {
+            return
+        }
+        
+        if stroke.isTrimmed {
+            // TODO:
+        }
+        
+        context.setLineCap(_strokeCap)
+        context.setLineJoin(_strokeJoin)
+        context.setLineWidth(_strokeWidth)
+        context.setStrokeColor(_color)
+        context.addPath(path)
+        context.drawPath(using: .stroke)
     }
 }

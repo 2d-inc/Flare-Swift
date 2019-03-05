@@ -9,7 +9,7 @@
 import Foundation
 
 class FlareColorFill: ColorFill, FlareFill {
-    var _paint = CGColor.black
+    var _fillColor = CGColor.black
     
     var uiColor: CGColor {
         get {
@@ -30,6 +30,10 @@ class FlareColorFill: ColorFill, FlareFill {
         }
     }
     
+    override func initializeGraphics() {
+        _fillColor = self.uiColor
+    }
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceFill = FlareColorFill()
         instanceFill.copyColorFill(self, resetArtboard)
@@ -38,6 +42,13 @@ class FlareColorFill: ColorFill, FlareFill {
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
-        _paint = self.uiColor
+        _fillColor = self.uiColor
+    }
+    
+    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
+        context.addPath(path)
+        context.setFillColor(_fillColor)
+        context.fillPath(using: cgFillRule)
+        context.drawPath(using: .fill)
     }
 }

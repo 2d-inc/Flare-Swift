@@ -41,12 +41,10 @@ class FlareExample: UIView {
     }
     
     private func setupView() {
-        print("INIT!")
-        let path = Bundle.main.path(forResource: "Circle", ofType: "flr")
+        let path = Bundle.main.path(forResource: "Testing", ofType: "flr")
         if (path != nil) {
             print("FILE EXISTS! \(String(describing: path))")
             if let data = FileManager.default.contents(atPath: path!) {
-//                _ = String(data: data[0...4], encoding: String.Encoding.utf8) as! String
                 flareActor = FlareActor()
                 flareActor.load(data: data)
                 artboard = flareActor.artboard
@@ -64,14 +62,14 @@ class FlareExample: UIView {
             }
         }
         else {
-            print("HAVEN'T GOTTEN IT! =(")
+            print("NO FILE HERE")
             let fileManager = FileManager.default
             let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
             do {
                 let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
                 print(fileURLs)
             } catch {
-                print("ERROR ENUMMING FILES: \(documentsURL.path), \(error.localizedDescription)")
+                print("ERROR ENUMING FILES: \(documentsURL.path), \(error.localizedDescription)")
             }
         }
     }
@@ -86,21 +84,18 @@ class FlareExample: UIView {
         let delta = currentTime - lastTime
         lastTime = currentTime
         duration += delta
-//        print("TRYING THIS OUT: \(delta), \(lastTime)")
-//        if duration > 2.0 {
 //            displayLink.invalidate()
-//        }
         setNeedsDisplay()
     }
     
     override func draw(_ rect: CGRect) {
-        guard let artboard = flareActor.artboard else {
+        guard let artboard = flareActor?.artboard else {
             return
         }
         guard let ctx = UIGraphicsGetCurrentContext() else {
             return
         }
-//
+
 //        let path = UIBezierPath(ovalIn: rect)
 //        UIColor.red.setFill()
 //        path.fill()
@@ -123,6 +118,5 @@ class FlareExample: UIView {
             artboard.draw(context: ctx)
             ctx.restoreGState()
         }
-//        print("HERE! \(duration)")
     }
 }

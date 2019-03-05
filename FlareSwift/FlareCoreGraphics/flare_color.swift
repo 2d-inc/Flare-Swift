@@ -8,6 +8,8 @@
 
 import Foundation
 
+// Helper class to integrate a static factory constructor for the two different SDKs
+
 extension CGColor {
     #if os(iOS)
     static var black: CGColor = UIColor.black.cgColor

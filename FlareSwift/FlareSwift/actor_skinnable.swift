@@ -55,8 +55,8 @@ public class ActorSkinnable: ActorNode {
         }
     }
     
-    override func resolveComponentIndices(components: [ActorComponent]) {
-        super.resolveComponentIndices(components: components)
+    override func resolveComponentIndices(_ components: [ActorComponent?]) {
+        super.resolveComponentIndices(components)
         
         if let cb = _connectedBones {
             for i in 0 ..< cb.count {

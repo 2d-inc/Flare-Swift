@@ -10,31 +10,19 @@ import Foundation
 import CoreGraphics
 
 protocol FlareFill: class {
-    var _paint: CGColor { get set }
+    var _fillRule: FillRule { get set }
+    var _fillColor: CGColor { get set }
     func initializeGraphics()
     func paint(fill: ActorFill, context: CGContext, path: CGPath)
 }
 
 extension FlareFill {
-    
-    func initializeGraphics() {
-        _paint = CGColor.black
-    }
-    
-    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
-        var pathFillRule: CGPathFillRule
-        switch fill.fillRule {
+    var cgFillRule: CGPathFillRule {
+        switch _fillRule {
         case .EvenOdd:
-            pathFillRule = .evenOdd
-            break
+            return .evenOdd
         case .NonZero:
-            pathFillRule = .winding
-            break
+            return .winding
         }
-        context.saveGState()
-        context.setFillColor(_paint)
-        context.addPath(path)
-        context.fillPath(using: pathFillRule)
-        context.restoreGState()
     }
 }

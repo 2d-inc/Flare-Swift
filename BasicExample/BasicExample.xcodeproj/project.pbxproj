@@ -17,6 +17,7 @@
 		E45359D62228340F00981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; };
 		E45359D72228341300981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; };
 		E45359D82228341300981BD7 /* FlareSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4535A31222DD22300981BD7 /* Testing.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4535A30222DD18B00981BD7 /* Testing.flr */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,7 @@
 		E45359D02228329400981BD7 /* Circle.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Circle.flr; sourceTree = "<group>"; };
 		E45359D2222832D500981BD7 /* FlareExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlareExample.swift; sourceTree = "<group>"; };
 		E45359D52228340F00981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4535A30222DD18B00981BD7 /* Testing.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Testing.flr; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		E45359BD2228328500981BD7 /* BasicExample */ = {
 			isa = PBXGroup;
 			children = (
+				E4535A30222DD18B00981BD7 /* Testing.flr */,
 				E45359D02228329400981BD7 /* Circle.flr */,
 				E45359BE2228328500981BD7 /* AppDelegate.swift */,
 				E45359C02228328500981BD7 /* ViewController.swift */,
@@ -158,6 +161,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4535A31222DD22300981BD7 /* Testing.flr in Resources */,
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
 				E45359C62228328600981BD7 /* Assets.xcassets in Resources */,
 				E45359D12228329900981BD7 /* Circle.flr in Resources */,

@@ -232,10 +232,6 @@ extension ActorStroke {
 public class ColorFill: ActorColor, ActorFill {
     public var _fillRule: FillRule = .EvenOdd
     
-    var fillRule: FillRule {
-        return _fillRule
-    }
-    
     public func initializeGraphics() {}
     
     override func completeResolve() {
@@ -340,10 +336,6 @@ public class GradientColor: ActorPaint {
 
 public class GradientFill: GradientColor, ActorFill {
     public var _fillRule: FillRule = .EvenOdd
-    
-    var fillRule: FillRule {
-        return _fillRule
-    }
     
     public func initializeGraphics() {}
     

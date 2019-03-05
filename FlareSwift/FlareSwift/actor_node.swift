@@ -348,7 +348,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    func resolveComponentIndices(components: [ActorComponent]) {
+    override func resolveComponentIndices(_ components: [ActorComponent?]) {
         super.resolveComponentIndices(components)
     
         if let clips = _clips {

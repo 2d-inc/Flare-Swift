@@ -1,26 +1,30 @@
 //
-//  flare_gradient_fill.swift
-//  Flare-Swift
+//  flare_gradient_stroke.swift
+//  FlareSwift
 //
-//  Created by Umberto Sonnino on 2/26/19.
+//  Created by Umberto Sonnino on 3/4/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
 
-class FlareGradientFill: GradientFill, FlareFill {
-    var _fillColor = UIColor.black.cgColor
+class FlareGradientStroke: GradientStroke, FlareStroke {
+    var _color: CGColor = CGColor.black
+    var _strokeCap: CGLineCap = .butt
+    var _strokeJoin: CGLineJoin = .miter
+    var _strokeWidth: CGFloat = 0.0
+    
     var _gradient: CGGradient!
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceGradientFill = FlareGradientFill()
-        instanceGradientFill.copyGradientFill(self, resetArtboard)
-        return instanceGradientFill
+        let instanceGradientStroke = FlareGradientStroke()
+        instanceGradientStroke.copyGradientStroke(self, resetArtboard)
+        return instanceGradientStroke
     }
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
-        
+
         let numStops = Int(round( Double(colorStops.count)/5 ))
         var colors = [CGFloat]()
         var locations = [CGFloat]()
@@ -51,16 +55,23 @@ class FlareGradientFill: GradientFill, FlareFill {
             paintColor = CGColor.cgColor(red: 1, green: 1, blue: 1, alpha: CGFloat(alpha)) // White w/ custom alpha.
         }
         
-        _fillColor = paintColor
+        _color = paintColor
         _gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: colors, locations: locations, count: locations.count)
+        _strokeWidth = CGFloat(width)
     }
     
-    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
+    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
         context.addPath(path)
-        context.setFillColor(_fillColor)
+        context.setFillColor(_color)
+        context.setLineWidth(_strokeWidth)
+        context.setLineCap(_strokeCap)
+        context.setLineJoin(_strokeJoin)
+        context.replacePathWithStrokedPath()
         context.clip()
         let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
         let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
         context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
     }
+    
+    
 }

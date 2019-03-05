@@ -56,8 +56,9 @@ class FlareShape: ActorShape {
         for clips in clipShapes {
             let clippingPath = CGMutablePath()
             for clipShape in clips {
-                clippingPath.addPath((clipShape as! FlareShape).path, transform: .identity)
+                clippingPath.addPath((clipShape as! FlareShape).path)
             }
+            context.addPath(clippingPath)
             context.clip()
         }
         

@@ -33,8 +33,8 @@ public class ActorRectangle: ActorProceduralPath {
     }
     
     override public var points: [PathPoint] {
-        let hw = Float32(self._width)
-        let hh = Float32(self._height)
+        let hw = Float32(self._width/2)
+        let hh = Float32(self._height/2)
         
         return [
             StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, y: -hh), _radius),
