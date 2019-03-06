@@ -30,24 +30,24 @@ public class ActorEllipse: ActorProceduralPath {
         let fry = Float32(self.radiusY)
         return [
             CubicPathPoint.init(fromValues:
-                Vec2D.init(fromValues: 0.0, y: -fry),
-                Vec2D.init(fromValues: -frx * CircleConstant, y: -fry),
-                Vec2D.init(fromValues: frx * CircleConstant, y: -fry)
+                Vec2D.init(fromValues: 0.0, -fry),
+                Vec2D.init(fromValues: -frx * CircleConstant, -fry),
+                Vec2D.init(fromValues: frx * CircleConstant, -fry)
             ),
             CubicPathPoint.init(fromValues:
-                Vec2D.init(fromValues: frx, y: 0.0),
-                Vec2D.init(fromValues: frx, y: CircleConstant * -fry),
-                Vec2D.init(fromValues: frx, y: CircleConstant * fry)
+                Vec2D.init(fromValues: frx, 0.0),
+                Vec2D.init(fromValues: frx, CircleConstant * -fry),
+                Vec2D.init(fromValues: frx, CircleConstant * fry)
             ),
             CubicPathPoint.init(fromValues:
-                Vec2D.init(fromValues: 0.0, y: fry),
-                Vec2D.init(fromValues: frx * CircleConstant, y: fry),
-                Vec2D.init(fromValues: -frx * CircleConstant, y: fry)
+                Vec2D.init(fromValues: 0.0, fry),
+                Vec2D.init(fromValues: frx * CircleConstant, fry),
+                Vec2D.init(fromValues: -frx * CircleConstant, fry)
             ),
             CubicPathPoint.init(fromValues:
-                Vec2D.init(fromValues: -frx, y: 0.0),
-                Vec2D.init(fromValues: -frx, y: fry * CircleConstant),
-                Vec2D.init(fromValues: -frx, y: -fry * CircleConstant)
+                Vec2D.init(fromValues: -frx, 0.0),
+                Vec2D.init(fromValues: -frx, fry * CircleConstant),
+                Vec2D.init(fromValues: -frx, -fry * CircleConstant)
             )
         ]
     }

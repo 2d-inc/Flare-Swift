@@ -129,7 +129,6 @@ public class ActorShape: ActorNode , ActorDrawable {
         var maxY = -Float32.greatestFiniteMagnitude;
         
         if (aabb == nil) {
-//            return AABB.fromValues(minX, minY, maxX, maxY);
             return AABB.init(fromValues: minX, minY, maxX, maxY)
         }
         
@@ -148,10 +147,10 @@ public class ActorShape: ActorNode , ActorDrawable {
         aabb![3] += padStroke;
         
         let points = [
-            Vec2D.init(fromValues: aabb![0], y: aabb![1]),
-            Vec2D.init(fromValues: aabb![2], y: aabb![1]),
-            Vec2D.init(fromValues: aabb![2], y: aabb![3]),
-            Vec2D.init(fromValues: aabb![0], y: aabb![3])
+            Vec2D.init(fromValues: aabb![0], aabb![1]),
+            Vec2D.init(fromValues: aabb![2], aabb![1]),
+            Vec2D.init(fromValues: aabb![2], aabb![3]),
+            Vec2D.init(fromValues: aabb![0], aabb![3])
         ]
         
 //        for (var i = 0; i < points.length; i++) {

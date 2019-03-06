@@ -27,9 +27,9 @@ public class ActorTriangle: ActorProceduralPath {
         var _trianglePoints = [PathPoint]()
         let frx = Float32(self.radiusX)
         let fry = Float32(self.radiusY)
-        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: 0.0, y: -fry)))
-        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: frx, y: fry)))
-        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: -frx, y: fry)))
+        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: 0.0, -fry)))
+        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: frx, fry)))
+        _trianglePoints.append(StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: -frx, fry)))
         return _trianglePoints
     }
     

@@ -39,16 +39,16 @@ public class ActorStar: ActorProceduralPath {
         let frx = Float32(radiusX)
         
         var _starPoints = [
-            StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: 0.0, y: -fry))
+            StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: 0.0, -fry))
         ]
         var angle = -Float.pi / 2.0
         let inc = (Float.pi * 2.0) / Float32(sides)
-        let sx = Vec2D.init(fromValues: frx, y: frx * Float32(_innerRadius))
-        let sy = Vec2D.init(fromValues: fry, y: fry * Float32(_innerRadius))
+        let sx = Vec2D.init(fromValues: frx, frx * Float32(_innerRadius))
+        let sy = Vec2D.init(fromValues: fry, fry * Float32(_innerRadius))
         
         for i in 0 ..< sides {
             _starPoints.append(
-                StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: cos(angle) * sx[i % 2], y: sin(angle) * sy[i % 2]))
+                StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: cos(angle) * sx[i % 2], sin(angle) * sy[i % 2]))
             )
             angle += inc
         }

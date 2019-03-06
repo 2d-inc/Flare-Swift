@@ -40,7 +40,7 @@ public class ActorPolygon: ActorProceduralPath {
         
         for _ in 0 ..< sides {
             _polygonPoints.append(
-                StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: cos(angle) * frx, y: sin(angle) * fry))
+                StraightPathPoint.init(fromTranslation: Vec2D.init(fromValues: cos(angle) * frx, sin(angle) * fry))
             )
             angle += inc
         }

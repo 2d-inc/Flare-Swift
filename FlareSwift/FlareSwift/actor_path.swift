@@ -100,10 +100,10 @@ public extension ActorBasePath {
         let obb = getPathOBB()
         
         let pts = [
-            Vec2D.init(fromValues: obb[0], y: obb[1]),
-            Vec2D.init(fromValues: obb[2], y: obb[1]),
-            Vec2D.init(fromValues: obb[2], y: obb[3]),
-            Vec2D.init(fromValues: obb[0], y: obb[3])
+            Vec2D.init(fromValues: obb[0], obb[1]),
+            Vec2D.init(fromValues: obb[2], obb[1]),
+            Vec2D.init(fromValues: obb[2], obb[3]),
+            Vec2D.init(fromValues: obb[0], obb[3])
         ]
         
         var localTransform: Mat2D

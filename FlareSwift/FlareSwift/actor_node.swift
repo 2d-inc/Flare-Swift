@@ -25,7 +25,7 @@ public class ActorNode: ActorComponent {
     var _transform = Mat2D()
     var _worldTransform = Mat2D()
     var _translation = Vec2D()
-    var _scale: Vec2D = Vec2D(fromValues: 1.0, y: 1.0)
+    var _scale: Vec2D = Vec2D(fromValues: 1.0, 1.0)
     var _rotation = 0.0
     var _opacity = 1.0
     var _renderOpacity = 1.0
@@ -326,8 +326,8 @@ public class ActorNode: ActorComponent {
     
     var allConstraints: [ActorConstraint]? {
         get {
-            return _constraints == nil ? _peerConstraints! :
-                _peerConstraints == nil ? _constraints! :
+            return _constraints == nil ? _peerConstraints :
+                _peerConstraints == nil ? _constraints :
                  _constraints == nil && _peerConstraints == nil ? [] : _constraints! + _peerConstraints!
         }
     }

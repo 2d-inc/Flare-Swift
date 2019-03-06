@@ -37,10 +37,10 @@ public class ActorRectangle: ActorProceduralPath {
         let hh = Float32(self._height/2)
         
         return [
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, y: -hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, y: -hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, y: hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, y: hh), _radius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, -hh), _radius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, -hh), _radius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, hh), _radius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, hh), _radius),
         ]
         
     }

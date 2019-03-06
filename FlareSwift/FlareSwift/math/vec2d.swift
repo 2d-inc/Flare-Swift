@@ -38,7 +38,7 @@ public class Vec2D: Equatable, Hashable {
         _buffer = copy.values
     }
     
-    public init(fromValues x: Float32, y: Float32) {
+    public init(fromValues x: Float32, _ y: Float32) {
         self._buffer = [x, y]
     }
     

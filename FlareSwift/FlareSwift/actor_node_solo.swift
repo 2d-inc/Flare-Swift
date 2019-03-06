@@ -44,7 +44,7 @@ class ActorNodeSolo: ActorNode {
         self._activeChildIndex = node._activeChildIndex
     }
     
-    func read(_ artboard: ActorArtboard, _ reader: StreamReader) {
+    func readSolo(_ artboard: ActorArtboard, _ reader: StreamReader) {
         self.readNode(artboard, reader)
         self._activeChildIndex = Int(reader.readUint32(label: "activeChild"))
     }

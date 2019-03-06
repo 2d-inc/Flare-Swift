@@ -20,8 +20,6 @@ public class ActorComponent: Equatable, Hashable {
     }
 
     public static func == (lhs: ActorComponent, rhs: ActorComponent) -> Bool {
-        // Same reference
-//        return lhs === rhs
         return lhs.parent == rhs.parent &&
             lhs._parentIdx == rhs._parentIdx &&
             lhs.name == rhs.name &&

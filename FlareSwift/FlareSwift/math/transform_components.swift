@@ -91,13 +91,13 @@ class TransformComponents {
     
     var translation : Vec2D {
         get {
-            return Vec2D(fromValues: self._buffer[0], y: self._buffer[1])
+            return Vec2D(fromValues: self._buffer[0], self._buffer[1])
         }
     }
     
     var scale : Vec2D {
         get {
-            return Vec2D(fromValues: self._buffer[2], y: self._buffer[3])
+            return Vec2D(fromValues: self._buffer[2], self._buffer[3])
         }
     }
 }
