@@ -43,7 +43,7 @@ class FlareExample: UIView {
     }
     
     private func setupView() {
-        let path = Bundle.main.path(forResource: "Testing", ofType: "flr")
+        let path = Bundle.main.path(forResource: "Constraints", ofType: "flr")
         if (path != nil) {
             print("FILE EXISTS! \(String(describing: path))")
             if let data = FileManager.default.contents(atPath: path!) {

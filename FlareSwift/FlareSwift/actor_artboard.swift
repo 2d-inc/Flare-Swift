@@ -438,10 +438,14 @@ public class ActorArtboard {
                     
                 case BlockTypes.ActorBone:
 //                    component = ActorBone.read(self, nodeBlock, nil);
+                    component = ActorBone()
+                    (component as! ActorBone).readActorBone(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorRootBone:
 //                    component = ActorRootBone.read(self, nodeBlock, nil);
+                    component = ActorRootBone()
+                    (component as! ActorRootBone).readRootBone(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorImageSequence:
@@ -455,10 +459,6 @@ public class ActorArtboard {
 //                    if ((component as ActorImage).textureIndex > actor.maxTextureIndex) {
 //                        actor.maxTextureIndex = (component as ActorImage).textureIndex;
 //                    }
-                    break;
-                    
-                case BlockTypes.ActorIKTarget:
-                    //component = ActorIKTarget.Read(self, nodeBlock);
                     break;
                     
                 case BlockTypes.ActorEvent:
@@ -504,43 +504,52 @@ public class ActorArtboard {
                     break;
                     
                 case BlockTypes.ActorNodeSolo:
-//                    component = ActorNodeSolo.read(self, nodeBlock, nil);
+                    component = ActorNodeSolo()
+                    (component as! ActorNodeSolo).readSolo(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorJellyBone:
-//                    component = ActorJellyBone.read(self, nodeBlock, nil);
+                    component = ActorJellyBone()
+                    (component as! ActorJellyBone).readJellyBone(self, nodeBlock)
                     break;
                     
                 case BlockTypes.JellyComponent:
-//                    component = JellyComponent.read(self, nodeBlock, nil);
+                    component = JellyComponent()
+                    (component as! JellyComponent).readJellyComponent(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorIKConstraint:
-//                    component = ActorIKConstraint.read(self, nodeBlock, nil);
+                    component = ActorIKConstraint()
+                    (component as! ActorIKConstraint).readIKConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorDistanceConstraint:
-//                    component = ActorDistanceConstraint.read(self, nodeBlock, nil);
+                    component = ActorDistanceConstraint()
+                    (component as! ActorDistanceConstraint).readDistanceConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorTranslationConstraint:
-//                    component = ActorTranslationConstraint.read(self, nodeBlock, nil);
+                    component = ActorTranslationConstraint()
+                    (component as! ActorTranslationConstraint).readTranslationConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorScaleConstraint:
-//                    component = ActorScaleConstraint.read(self, nodeBlock, nil);
+                    component = ActorScaleConstraint()
+                    (component as! ActorScaleConstraint).readScaleConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorRotationConstraint:
-//                    component = ActorRotationConstraint.read(self, nodeBlock, nil);
+                    component = ActorRotationConstraint()
+                    (component as! ActorRotationConstraint).readRotationConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorTransformConstraint:
-//                    component = ActorTransformConstraint.read(self, nodeBlock, nil);
+                    component = ActorTransformConstraint()
+                    (component as! ActorTransformConstraint).readTransformConstraint(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorShape:
-//                    component = ActorShape.read(self, nodeBlock, actor.makeShapeNode());
+//                    component = ActorShape.read(self, nodeBlock, actor.makeShapeNode())
                     component = actor.makeShapeNode()
                     (component as! ActorShape).readShape(self, nodeBlock)
                     break;

@@ -10,11 +10,13 @@ import Foundation
 
 /*abstract*/
 class ActorConstraint: ActorComponent {
+    static let PI2 = Float.pi * 2.0
     
     override init() {
         super.init()
         assert(type(of: self) != ActorConstraint.self, "Abstract Class")
     }
+    
     var _isEnabled : Bool = false
     var _strength: Double = 0.0
     
@@ -54,7 +56,7 @@ class ActorConstraint: ActorComponent {
         preconditionFailure("This method must be overridden")
     }
     
-    func resolveComponentIndices(_ components: [ActorComponent]) {
+    override func resolveComponentIndices(_ components: [ActorComponent?]) {
         super.resolveComponentIndices(components)
         if let p = parent {
             // This works because nodes are exported in hierarchy order, so we are assured constraints get added in order as we resolve indices.
@@ -63,7 +65,6 @@ class ActorConstraint: ActorComponent {
     }
     
     func readConstraint(_ artboard: ActorArtboard, _ reader: StreamReader) {
-//        _ = ActorComponent.read(artboard, reader, component)
         self.readComponent(artboard, reader)
         self._strength = Double(reader.readFloat32(label: "strength"))
         self._isEnabled = reader.readBool(label: "isEnabled")

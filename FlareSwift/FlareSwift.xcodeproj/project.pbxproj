@@ -13,7 +13,7 @@
 		E453591D22282EC900981BD7 /* FlareSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = E453590F22282EC900981BD7 /* FlareSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E453596D22282EF200981BD7 /* actor_rotation_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592722282EF000981BD7 /* actor_rotation_constraint.swift */; };
 		E453596E22282EF200981BD7 /* actor_targeted_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592822282EF000981BD7 /* actor_targeted_constraint.swift */; };
-		E453596F22282EF200981BD7 /* actork_ik_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592922282EF000981BD7 /* actork_ik_constraint.swift */; };
+		E453596F22282EF200981BD7 /* actor_ik_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592922282EF000981BD7 /* actor_ik_constraint.swift */; };
 		E453597022282EF200981BD7 /* actor_transform_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592A22282EF000981BD7 /* actor_transform_constraint.swift */; };
 		E453597122282EF200981BD7 /* actor_scale_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592B22282EF000981BD7 /* actor_scale_constraint.swift */; };
 		E453597222282EF200981BD7 /* actor_axis_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592C22282EF000981BD7 /* actor_axis_constraint.swift */; };
@@ -88,6 +88,11 @@
 		E4535A2B2228370600981BD7 /* flare_gradient_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A212228370600981BD7 /* flare_gradient_fill.swift */; };
 		E4535A2D222838ED00981BD7 /* flare_color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2C222838ED00981BD7 /* flare_color.swift */; };
 		E4535A2F222D839000981BD7 /* flare_gradient_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2E222D839000981BD7 /* flare_gradient_stroke.swift */; };
+		E46CDC9A222FE031002C40A1 /* actor_bone_base.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC99222FE031002C40A1 /* actor_bone_base.swift */; };
+		E46CDC9C222FE15F002C40A1 /* actor_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC9B222FE15F002C40A1 /* actor_bone.swift */; };
+		E46CDC9F222FE1E7002C40A1 /* jelly_component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */; };
+		E46CDCA122300883002C40A1 /* actor_root_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA022300883002C40A1 /* actor_root_bone.swift */; };
+		E46CDCA32230097C002C40A1 /* actor_jelly_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */; };
 		E48A648A222E778D00726F7D /* flare_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */; };
 /* End PBXBuildFile section */
 
@@ -111,7 +116,7 @@
 		E453591C22282EC900981BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E453592722282EF000981BD7 /* actor_rotation_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_rotation_constraint.swift; sourceTree = "<group>"; };
 		E453592822282EF000981BD7 /* actor_targeted_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_targeted_constraint.swift; sourceTree = "<group>"; };
-		E453592922282EF000981BD7 /* actork_ik_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actork_ik_constraint.swift; sourceTree = "<group>"; };
+		E453592922282EF000981BD7 /* actor_ik_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_ik_constraint.swift; sourceTree = "<group>"; };
 		E453592A22282EF000981BD7 /* actor_transform_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_transform_constraint.swift; sourceTree = "<group>"; };
 		E453592B22282EF000981BD7 /* actor_scale_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_scale_constraint.swift; sourceTree = "<group>"; };
 		E453592C22282EF000981BD7 /* actor_axis_constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_axis_constraint.swift; sourceTree = "<group>"; };
@@ -186,6 +191,11 @@
 		E4535A212228370600981BD7 /* flare_gradient_fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_gradient_fill.swift; sourceTree = "<group>"; };
 		E4535A2C222838ED00981BD7 /* flare_color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_color.swift; sourceTree = "<group>"; };
 		E4535A2E222D839000981BD7 /* flare_gradient_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_stroke.swift; sourceTree = "<group>"; };
+		E46CDC99222FE031002C40A1 /* actor_bone_base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_bone_base.swift; sourceTree = "<group>"; };
+		E46CDC9B222FE15F002C40A1 /* actor_bone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_bone.swift; sourceTree = "<group>"; };
+		E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jelly_component.swift; sourceTree = "<group>"; };
+		E46CDCA022300883002C40A1 /* actor_root_bone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_root_bone.swift; sourceTree = "<group>"; };
+		E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_jelly_bone.swift; sourceTree = "<group>"; };
 		E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_fill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +240,7 @@
 		E453590E22282EC900981BD7 /* FlareSwift */ = {
 			isa = PBXGroup;
 			children = (
+				E46CDC9D222FE1D5002C40A1 /* Bones */,
 				E453593F22282EF100981BD7 /* actor_artboard.swift */,
 				E453593C22282EF100981BD7 /* actor_color.swift */,
 				E453593922282EF100981BD7 /* actor_component.swift */,
@@ -275,15 +286,15 @@
 		E453592622282EF000981BD7 /* constraints */ = {
 			isa = PBXGroup;
 			children = (
-				E453592722282EF000981BD7 /* actor_rotation_constraint.swift */,
-				E453592822282EF000981BD7 /* actor_targeted_constraint.swift */,
-				E453592922282EF000981BD7 /* actork_ik_constraint.swift */,
-				E453592A22282EF000981BD7 /* actor_transform_constraint.swift */,
-				E453592B22282EF000981BD7 /* actor_scale_constraint.swift */,
 				E453592C22282EF000981BD7 /* actor_axis_constraint.swift */,
 				E453592D22282EF000981BD7 /* actor_constraint.swift */,
-				E453592E22282EF000981BD7 /* actor_translation_constraint.swift */,
 				E453592F22282EF000981BD7 /* actor_distance_constraint.swift */,
+				E453592722282EF000981BD7 /* actor_rotation_constraint.swift */,
+				E453592B22282EF000981BD7 /* actor_scale_constraint.swift */,
+				E453592822282EF000981BD7 /* actor_targeted_constraint.swift */,
+				E453592A22282EF000981BD7 /* actor_transform_constraint.swift */,
+				E453592E22282EF000981BD7 /* actor_translation_constraint.swift */,
+				E453592922282EF000981BD7 /* actor_ik_constraint.swift */,
 			);
 			path = constraints;
 			sourceTree = "<group>";
@@ -377,6 +388,18 @@
 				E4535A2C222838ED00981BD7 /* flare_color.swift */,
 			);
 			path = FlareCoreGraphics;
+			sourceTree = "<group>";
+		};
+		E46CDC9D222FE1D5002C40A1 /* Bones */ = {
+			isa = PBXGroup;
+			children = (
+				E46CDC99222FE031002C40A1 /* actor_bone_base.swift */,
+				E46CDC9B222FE15F002C40A1 /* actor_bone.swift */,
+				E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */,
+				E46CDCA022300883002C40A1 /* actor_root_bone.swift */,
+				E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */,
+			);
+			path = Bones;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,10 +517,13 @@
 				E453598822282EF200981BD7 /* actor_path.swift in Sources */,
 				E45359A022282EF200981BD7 /* cubic_ease.swift in Sources */,
 				E453599722282EF200981BD7 /* keyframe_trigger.swift in Sources */,
+				E46CDC9F222FE1E7002C40A1 /* jelly_component.swift in Sources */,
 				E4535A242228370600981BD7 /* flare_actor.swift in Sources */,
 				E453597422282EF200981BD7 /* actor_translation_constraint.swift in Sources */,
 				E4535A2D222838ED00981BD7 /* flare_color.swift in Sources */,
 				E453598A22282EF200981BD7 /* actor_animation.swift in Sources */,
+				E46CDCA122300883002C40A1 /* actor_root_bone.swift in Sources */,
+				E46CDC9C222FE15F002C40A1 /* actor_bone.swift in Sources */,
 				E453599822282EF200981BD7 /* keyframe_opacity.swift in Sources */,
 				E453598722282EF200981BD7 /* actor_node_solo.swift in Sources */,
 				E453598C22282EF200981BD7 /* keyframe_vertex_deform.swift in Sources */,
@@ -520,7 +546,7 @@
 				E45359A322282EF200981BD7 /* actor_flags.swift in Sources */,
 				E45359A622282EF200981BD7 /* aabb.swift in Sources */,
 				E453599022282EF200981BD7 /* keyframe_draworder.swift in Sources */,
-				E453596F22282EF200981BD7 /* actork_ik_constraint.swift in Sources */,
+				E453596F22282EF200981BD7 /* actor_ik_constraint.swift in Sources */,
 				E453598B22282EF200981BD7 /* keyframe_length.swift in Sources */,
 				E453598422282EF200981BD7 /* dependency_sorter.swift in Sources */,
 				E453597722282EF200981BD7 /* transform_space.swift in Sources */,
@@ -533,6 +559,7 @@
 				E4535A262228370600981BD7 /* flare_color_stroke.swift in Sources */,
 				E4535A2F222D839000981BD7 /* flare_gradient_stroke.swift in Sources */,
 				E453597022282EF200981BD7 /* actor_transform_constraint.swift in Sources */,
+				E46CDCA32230097C002C40A1 /* actor_jelly_bone.swift in Sources */,
 				E4535A272228370600981BD7 /* flare_actor_paths.swift in Sources */,
 				E453597122282EF200981BD7 /* actor_scale_constraint.swift in Sources */,
 				E4535A252228370600981BD7 /* flare_artboard.swift in Sources */,
@@ -542,6 +569,7 @@
 				E453597C22282EF200981BD7 /* actor_node.swift in Sources */,
 				E453598322282EF200981BD7 /* path_point.swift in Sources */,
 				E4535A292228370600981BD7 /* flare_color_fill.swift in Sources */,
+				E46CDC9A222FE031002C40A1 /* actor_bone_base.swift in Sources */,
 				E453599A22282EF200981BD7 /* keyframe_int.swift in Sources */,
 				E45359A422282EF200981BD7 /* mat2d.swift in Sources */,
 				E453599F22282EF200981BD7 /* interpolator.swift in Sources */,
