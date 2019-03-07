@@ -93,6 +93,12 @@
 		E46CDC9F222FE1E7002C40A1 /* jelly_component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */; };
 		E46CDCA122300883002C40A1 /* actor_root_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA022300883002C40A1 /* actor_root_bone.swift */; };
 		E46CDCA32230097C002C40A1 /* actor_jelly_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */; };
+		E46CDCA822311089002C40A1 /* bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA722311089002C40A1 /* bezier.swift */; };
+		E46CDCAB223116DB002C40A1 /* quadratic_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAA223116DB002C40A1 /* quadratic_bezier.swift */; };
+		E46CDCAD22312C14002C40A1 /* bezier_tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAC22312C14002C40A1 /* bezier_tools.swift */; };
+		E46CDCAF2231376F002C40A1 /* bezier_slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAE2231376F002C40A1 /* bezier_slice.swift */; };
+		E46CDCB122313843002C40A1 /* intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB022313843002C40A1 /* intersection.swift */; };
+		E46CDCB322316FB6002C40A1 /* cubic_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */; };
 		E48A648A222E778D00726F7D /* flare_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */; };
 /* End PBXBuildFile section */
 
@@ -196,6 +202,12 @@
 		E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jelly_component.swift; sourceTree = "<group>"; };
 		E46CDCA022300883002C40A1 /* actor_root_bone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_root_bone.swift; sourceTree = "<group>"; };
 		E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_jelly_bone.swift; sourceTree = "<group>"; };
+		E46CDCA722311089002C40A1 /* bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bezier.swift; sourceTree = "<group>"; };
+		E46CDCAA223116DB002C40A1 /* quadratic_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = quadratic_bezier.swift; sourceTree = "<group>"; };
+		E46CDCAC22312C14002C40A1 /* bezier_tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bezier_tools.swift; sourceTree = "<group>"; };
+		E46CDCAE2231376F002C40A1 /* bezier_slice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bezier_slice.swift; sourceTree = "<group>"; };
+		E46CDCB022313843002C40A1 /* intersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = intersection.swift; sourceTree = "<group>"; };
+		E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cubic_bezier.swift; sourceTree = "<group>"; };
 		E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_fill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -372,6 +384,7 @@
 		E4535A17222836D700981BD7 /* FlareCoreGraphics */ = {
 			isa = PBXGroup;
 			children = (
+				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E4535A1D2228370500981BD7 /* flare_actor_paths.swift */,
 				E4535A1A2228370500981BD7 /* flare_actor.swift */,
 				E4535A1B2228370500981BD7 /* flare_artboard.swift */,
@@ -400,6 +413,19 @@
 				E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */,
 			);
 			path = Bones;
+			sourceTree = "<group>";
+		};
+		E46CDCA9223116C6002C40A1 /* Bezier */ = {
+			isa = PBXGroup;
+			children = (
+				E46CDCA722311089002C40A1 /* bezier.swift */,
+				E46CDCAA223116DB002C40A1 /* quadratic_bezier.swift */,
+				E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */,
+				E46CDCAC22312C14002C40A1 /* bezier_tools.swift */,
+				E46CDCAE2231376F002C40A1 /* bezier_slice.swift */,
+				E46CDCB022313843002C40A1 /* intersection.swift */,
+			);
+			path = Bezier;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -530,6 +556,7 @@
 				E453597622282EF200981BD7 /* actor_drawable.swift in Sources */,
 				E4535A222228370600981BD7 /* flare_stroke.swift in Sources */,
 				E453597922282EF200981BD7 /* actor.swift in Sources */,
+				E46CDCB122313843002C40A1 /* intersection.swift in Sources */,
 				E453596E22282EF200981BD7 /* actor_targeted_constraint.swift in Sources */,
 				E453597522282EF200981BD7 /* actor_distance_constraint.swift in Sources */,
 				E4535A232228370600981BD7 /* flare_fill.swift in Sources */,
@@ -553,6 +580,7 @@
 				E453598F22282EF200981BD7 /* keyframe.swift in Sources */,
 				E453599322282EF200981BD7 /* keyframe_transformations.swift in Sources */,
 				E453597D22282EF200981BD7 /* actor_star.swift in Sources */,
+				E46CDCA822311089002C40A1 /* bezier.swift in Sources */,
 				E453598D22282EF200981BD7 /* keyframe_gradient.swift in Sources */,
 				E453598522282EF200981BD7 /* actor_artboard.swift in Sources */,
 				E453599E22282EF200981BD7 /* cubic.swift in Sources */,
@@ -561,14 +589,17 @@
 				E453597022282EF200981BD7 /* actor_transform_constraint.swift in Sources */,
 				E46CDCA32230097C002C40A1 /* actor_jelly_bone.swift in Sources */,
 				E4535A272228370600981BD7 /* flare_actor_paths.swift in Sources */,
+				E46CDCAB223116DB002C40A1 /* quadratic_bezier.swift in Sources */,
 				E453597122282EF200981BD7 /* actor_scale_constraint.swift in Sources */,
 				E4535A252228370600981BD7 /* flare_artboard.swift in Sources */,
+				E46CDCAD22312C14002C40A1 /* bezier_tools.swift in Sources */,
 				E453599622282EF200981BD7 /* keyframe_stroke.swift in Sources */,
 				E4535A2A2228370600981BD7 /* flare_shape.swift in Sources */,
 				E48A648A222E778D00726F7D /* flare_gradient_radial_fill.swift in Sources */,
 				E453597C22282EF200981BD7 /* actor_node.swift in Sources */,
 				E453598322282EF200981BD7 /* path_point.swift in Sources */,
 				E4535A292228370600981BD7 /* flare_color_fill.swift in Sources */,
+				E46CDCAF2231376F002C40A1 /* bezier_slice.swift in Sources */,
 				E46CDC9A222FE031002C40A1 /* actor_bone_base.swift in Sources */,
 				E453599A22282EF200981BD7 /* keyframe_int.swift in Sources */,
 				E45359A422282EF200981BD7 /* mat2d.swift in Sources */,
@@ -583,6 +614,7 @@
 				E453597B22282EF200981BD7 /* actor_triangle.swift in Sources */,
 				E453598022282EF200981BD7 /* actor_event.swift in Sources */,
 				E453596D22282EF200981BD7 /* actor_rotation_constraint.swift in Sources */,
+				E46CDCB322316FB6002C40A1 /* cubic_bezier.swift in Sources */,
 				E45359AC22282EF200981BD7 /* actor_shape.swift in Sources */,
 				E45359A122282EF200981BD7 /* hold.swift in Sources */,
 				E453599422282EF200981BD7 /* keyframe_radius.swift in Sources */,
