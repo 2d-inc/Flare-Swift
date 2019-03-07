@@ -139,4 +139,11 @@ public class AABB: Equatable, Hashable {
         
         return true
     }
+    
+    static func intersectsWithVec2D(_ aabb: AABB, _ vec: Vec2D) -> Bool {
+        return aabb[0] <= vec[0] &&
+                aabb[1] <= vec[1] &&
+                aabb[2] >= vec[0] &&
+                aabb[3] >= vec[1]
+    }
 }

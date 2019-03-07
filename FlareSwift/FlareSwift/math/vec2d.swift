@@ -124,6 +124,12 @@ public class Vec2D: Equatable, Hashable {
         return sqrt(x * x + y * y)
     }
     
+    static func distanceSquared(_ a: Vec2D, _ b: Vec2D) -> Float32 {
+        let x = b[0] - a[0]
+        let y = b[1] - a[1]
+        return x * x + y * y
+    }
+    
     static func negate(_ result: Vec2D, _ a: Vec2D) -> Vec2D {
         result[0] = -a[0]
         result[1] = -a[1]
@@ -145,9 +151,40 @@ public class Vec2D: Equatable, Hashable {
         return a[0] * b[0] + a[1] * b[1]
     }
     
+    static func cross(_ a: Vec2D, _ b: Vec2D) -> Float32 {
+        return a[0] * b[1] - a[1] * b[0]
+    }
+    
     static func scaleAndAdd(_ result: Vec2D, _ a: Vec2D, _ b: Vec2D, _ scale: Float32) -> Vec2D {
         result[0] = a[0] + (b[0] * scale)
         result[1] = a[1] + (b[1] * scale)
         return result
     }
+    
+    static func min(_ result: Vec2D, _ a: Vec2D, _ b: Vec2D) {
+        result[0] = Swift.min(a[0], b[0])
+        result[1] = Swift.min(a[1], b[1])
+    }
+    
+    static func max(_ result: Vec2D, _ a: Vec2D, _ b: Vec2D) {
+        result[0] = Swift.max(a[0], b[0])
+        result[1] = Swift.max(a[1], b[1])
+    }
+    
+    static func mix(_ result: Vec2D, _ min: Vec2D, _ max: Vec2D, _ a: Float) {
+        result[0] = min[0] + a * (max[0] - min[0])
+        result[1] = min[1] + a * (max[1] - min[1])
+    }
+    
+    static func angleToSigned(_ a: Vec2D, _ b: Vec2D) -> Float {
+        if a[0] == b[0] && a[1] == b[1] {
+            return 0.0
+        }
+        
+        let s = Vec2D.cross(a,b)
+        let c = Vec2D.dot(a,b)
+        
+        return atan2(s, c)
+    }
+    
 }

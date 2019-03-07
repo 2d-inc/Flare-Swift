@@ -102,8 +102,6 @@ class ActorDistanceConstraint: ActorTargetedConstraint {
     }
     
     override func update(dirt: UInt8) {}
-    override func completeResolve() {
-        super.completeResolve()
-    }
+    override func completeResolve() {}
 }
 
