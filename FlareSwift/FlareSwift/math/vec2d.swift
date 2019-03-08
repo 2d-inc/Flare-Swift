@@ -187,4 +187,5 @@ public class Vec2D: Equatable, Hashable {
         return atan2(s, c)
     }
     
+    public var description : String { return "Vec2D: (\(_buffer[0]), \(_buffer[1]))" }
 }

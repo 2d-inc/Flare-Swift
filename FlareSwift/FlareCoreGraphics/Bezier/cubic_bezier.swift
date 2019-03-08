@@ -57,6 +57,6 @@ class CubicBezier: Bezier {
         return localDerivative;
     }
     
-    public var description: String { return "BDCubicBezier([\(points[0]), \(points[1]), \(points[2]), \(points[3])])" }
+    public var description: String { return "CubicBezier([\(points[0].description), \(points[1].description), \(points[2].description), \(points[3].description)])" }
 
 }

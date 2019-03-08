@@ -11,7 +11,7 @@ import Foundation
 import Foundation
 
 class CubicInterpolator: Interpolator {
-    
+    var _cubic: CubicEase!
     static let _instance = CubicInterpolator()
     
     class var instance: CubicInterpolator {
@@ -19,6 +19,16 @@ class CubicInterpolator: Interpolator {
     }
     
     func getEasedMix(mix: Double) -> Double {
-        return mix
+        return _cubic.ease(t: mix)
+    }
+    
+    func read(_ reader: StreamReader) -> Bool {
+        _cubic = EaseFactory.make(
+            x1: Double(reader.readFloat32(label: "cubicX1")),
+            y1: Double(reader.readFloat32(label: "cubicY1")),
+            x2: Double(reader.readFloat32(label: "cubicX2")),
+            y2: Double(reader.readFloat32(label: "cubicY2"))
+        )
+        return true
     }
 }

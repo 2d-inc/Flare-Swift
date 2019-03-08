@@ -122,12 +122,12 @@ protocol ActorStroke: class {
     var cap: StrokeCap { get }
     var join: StrokeJoin { get }
     var _trim: TrimPath { get set }
-    var _trimStart: Double? { get set }
-    var trimStart: Double? { get set }
-    var _trimEnd: Double? { get set }
-    var trimEnd: Double? { get set }
-    var _trimOffset: Double? { get set }
-    var trimOffset: Double? { get set }
+    var _trimStart: Double { get set }
+    var trimStart: Double { get set }
+    var _trimEnd: Double { get set }
+    var trimEnd: Double { get set }
+    var _trimOffset: Double { get set }
+    var trimOffset: Double { get set }
     var isTrimmed: Bool { get } // i.e. when _trim != TrimPath.Off
     
     func markPaintDirty()
@@ -160,7 +160,7 @@ extension ActorStroke {
         return _join
     }
     
-    var trimStart: Double? {
+    var trimStart: Double {
         get {
             return _trimStart
         }
@@ -178,7 +178,7 @@ extension ActorStroke {
         _join = node._join
     }
     
-    var trimOffset: Double? {
+    var trimOffset: Double {
         get {
             return _trimOffset
         }
@@ -195,7 +195,7 @@ extension ActorStroke {
         return _trim != .Off
     }
     
-    var trimEnd: Double? {
+    var trimEnd: Double {
         get {
             return _trimEnd
         }
@@ -258,9 +258,9 @@ public class ColorStroke: ActorColor, ActorStroke {
     var _cap: StrokeCap = .Butt
     var _join: StrokeJoin = .Miter
     var _trim: TrimPath = .Off
-    var _trimStart: Double?
-    var _trimEnd: Double?
-    var _trimOffset: Double?
+    var _trimStart: Double = 0.0
+    var _trimEnd: Double = 0.0
+    var _trimOffset: Double = 0.0
     
     func copyColorStroke(_ node: ColorStroke, _ resetArtboard: ActorArtboard) {
         self.copyColor(node, resetArtboard)
@@ -362,9 +362,9 @@ public class GradientStroke: GradientColor, ActorStroke {
     var _cap: StrokeCap = .Butt
     var _join: StrokeJoin = .Miter
     var _trim: TrimPath = .Off
-    var _trimStart: Double?
-    var _trimEnd: Double?
-    var _trimOffset: Double?
+    var _trimStart: Double = 0.0
+    var _trimEnd: Double = 0.0
+    var _trimOffset: Double = 0.0
     
     func markPathEffectsDirty() {}
     
@@ -432,9 +432,9 @@ public class RadialGradientStroke: RadialGradientColor, ActorStroke {
     var _cap: StrokeCap = .Butt
     var _join: StrokeJoin = .Miter
     var _trim: TrimPath = .Off
-    var _trimStart: Double?
-    var _trimEnd: Double?
-    var _trimOffset: Double?
+    var _trimStart: Double = 0.0
+    var _trimEnd: Double = 0.0
+    var _trimOffset: Double = 0.0
     
     func markPathEffectsDirty() {}
     func initializeGraphics() {}

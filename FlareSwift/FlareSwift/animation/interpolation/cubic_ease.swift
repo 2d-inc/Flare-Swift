@@ -39,11 +39,11 @@ func newtonRaphsonIterate(_ aX: Double, _ aGuessT: inout Double, _ mX1: Double, 
     return aGuessT;
 }
 
-protocol CubicEase {
+protocol CubicEase: class {
     func ease(t: Double) -> Double
 }
 
-extension CubicEase {
+class EaseFactory {
     static func make(x1: Double, y1: Double, x2: Double, y2: Double) -> CubicEase {
         if x1 == y1 && x2 == y2 {
             return LinearCubicEase()

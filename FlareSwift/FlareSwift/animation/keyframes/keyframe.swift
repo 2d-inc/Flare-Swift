@@ -52,12 +52,19 @@ extension Interpolated {
         switch actualType {
         case .Hold?:
             _interpolator = HoldInterpolator.instance
+            break
         case .Linear?:
             _interpolator = LinearInterpolator.instance
+            break
         case .Cubic?:
-            _interpolator = CubicInterpolator.instance
+            let cubicInterpolator = CubicInterpolator.instance
+            if cubicInterpolator.read(reader) {
+                self._interpolator = cubicInterpolator
+            }
+            break
         default:
             _interpolator = nil
+            break
         }
         return true
     }

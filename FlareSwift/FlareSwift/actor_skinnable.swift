@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SkinnedBone {
+class SkinnedBone {
     var boneIdx: Int = 0
     var node: ActorNode?
     var bind: Mat2D = Mat2D()

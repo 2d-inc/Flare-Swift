@@ -69,5 +69,5 @@ class QuadraticBezier: Bezier {
         return CubicBezier(cubicCurvePoints);
     }
     
-    public var description : String { return "BDQuadraticBezier([\(points[0]), \(points[1]), \(points[2])])" }
+    public var description : String { return "BDQuadraticBezier([\(points[0].description), \(points[1].description), \(points[2].description)])" }
 }

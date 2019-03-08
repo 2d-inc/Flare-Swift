@@ -96,7 +96,7 @@ class KeyFrameStrokeStart: KeyFrameNumeric {
     
     override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
         let stroke = component as! ActorStroke
-        stroke.trimStart! = stroke.trimStart! * (1.0 - mix) + value * mix
+        stroke.trimStart = stroke.trimStart * (1.0 - mix) + value * mix
     }
 }
 
@@ -110,7 +110,7 @@ class KeyFrameStrokeEnd: KeyFrameNumeric {
     
     override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
         let stroke = component as! ActorStroke
-        stroke.trimEnd! = stroke.trimEnd! * (1.0 - mix) + value * mix
+        stroke.trimEnd = stroke.trimEnd * (1.0 - mix) + value * mix
     }
 }
 
@@ -124,6 +124,6 @@ class KeyFrameStrokeOffset: KeyFrameNumeric {
     
     override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
         let stroke = component as! ActorStroke
-        stroke.trimOffset! = stroke.trimOffset! * (1.0 - mix) + value * mix
+        stroke.trimOffset = stroke.trimOffset * (1.0 - mix) + value * mix
     }
 }

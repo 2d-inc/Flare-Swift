@@ -27,11 +27,10 @@ import Foundation
  }
 
 protocol Bezier: class {
-    var linearTolerance: Float { get }
-    var originIntersectionTestDistance: Float { get }
     var points: [Vec2D] { get set }
     var order: Int { get }
     
+    var originIntersectionTestDistance: Float { get }
     var startPoint: Vec2D { get }
     var endPoint: Vec2D { get }
     var firstOrderDerivativePoints: [Vec2D] { get }
@@ -39,18 +38,30 @@ protocol Bezier: class {
     var isLinear: Bool { get }
     var length: Float { get }
     var boundingBox: AABB { get }
+    var extremaOnX: [Float] { get }
+    var extremaOnY: [Float] { get }
+    var extrema: [Float] { get }
+    var isSimple: Bool { get }
     
     func pointAt(_ t: Float) -> Vec2D
-    func derivativePoints(_ derivativeOrder: Int) -> [Vec2D]
     func derivativeAt(_ t: Float, _ cachedFirstOrderDerivativePoints: [Vec2D]?) -> Vec2D
-    func _interpolatedPoints(_ pointsToInterpolate: [Vec2D], _ t: Float) -> [Vec2D]
-    func _interpolateRecursively(_ pointsToInterpolate: [Vec2D], _ t: Float) -> [Vec2D]
+    
+    func derivativePoints(_ derivativeOrder: Int) -> [Vec2D]
     func hullPointsAt(_ t: Float) -> [Vec2D]
     func normalAt(_ t: Float, _ cachedFirstOrderDerivativePoints: [Vec2D]?) -> Vec2D
     func overlaps(_ curve: Bezier) -> Bool
     func leftSubcurveAt(_ t: Float) -> Bezier
     func rightSubcurveAt(_ t: Float) -> Bezier
     func subcurveBetween(_ t1: Float, _ t2: Float) -> Bezier
+    func simpleSlices(stepSize: Float) -> [BezierSlice]
+    func offsetPointAt(_ t: Float, _ distance: Float, cachedFirstOrderDerivativePoints: [Vec2D]?) -> Vec2D
+    func offsetCurve(_ distance: Float, stepSize: Float) -> [Bezier]
+    func scaledCurve(_ distance: Float) -> Bezier
+    func intersectionsWithCurve(_ curve: Bezier, _ curveIntersectionThreshold: Float, _ minTValueDifference: Float) -> [Intersection]
+    func intersectionsWithSelf(_ curveIntersectionThreshold: Float, _ minTValueDifference: Float) -> [Intersection]
+    func intersectionsWithLineSegment(_ lineStartPoint: Vec2D, _ lineEndPoint: Vec2D) -> [Float]
+    func positionLookUpTable(_ intervalsCount: Int) -> [Vec2D]
+    func nearestTValue(_ point: Vec2D, _ cachedPositionLookUpTable: [Vec2D]?, _ stepSize: Float) -> Float
 }
 
 extension Bezier {
