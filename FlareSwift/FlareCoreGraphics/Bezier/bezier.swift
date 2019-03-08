@@ -185,7 +185,7 @@ extension Bezier {
         if pointsToInterpolate.count > 1 {
             var result = pointsToInterpolate
             let interpolatedPoints = _interpolatedPoints(pointsToInterpolate, t)
-            result.append(contentsOf: interpolatedPoints)
+            result.append(contentsOf: _interpolateRecursively(interpolatedPoints, t))
             return result
         } else {
             return pointsToInterpolate
