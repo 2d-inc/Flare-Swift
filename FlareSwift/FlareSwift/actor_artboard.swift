@@ -334,8 +334,8 @@ public class ActorArtboard {
         sortDependencies();
 
         _drawableNodes.sort{ $0.drawOrder > $1.drawOrder }
-            for i in 0..<_drawableNodes.count {
-                _drawableNodes[i].drawIndex = i
+        for i in 0..<_drawableNodes.count {
+            _drawableNodes[i].drawIndex = i
         }
         
 //        if (_drawableNodes != null) {
@@ -373,8 +373,7 @@ public class ActorArtboard {
         
         if (_flags & ActorFlags.IsDrawOrderDirty) != 0 {
             _flags &= ~ActorFlags.IsDrawOrderDirty
-            
-            _drawableNodes.sort{ $0.drawOrder > $1.drawOrder }
+            _drawableNodes.sort{ $0.drawOrder < $1.drawOrder }
             for i in 0..<_drawableNodes.count {
                 _drawableNodes[i].drawIndex = i
             }

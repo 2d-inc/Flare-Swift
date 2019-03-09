@@ -67,7 +67,7 @@ public class ActorColor: ActorPaint {
             _color[0] = newValue[0]
             _color[1] = newValue[1]
             _color[2] = newValue[2]
-            _color[4] = newValue[3]
+            _color[3] = newValue[3]
             markPaintDirty()
         }
     }
@@ -77,7 +77,7 @@ public class ActorColor: ActorPaint {
         _color[0] = component._color[0]
         _color[1] = component._color[1]
         _color[2] = component._color[2]
-        _color[4] = component._color[3]
+        _color[3] = component._color[3]
     }
     
     override func onDirty(_ dirt: UInt8) {}
