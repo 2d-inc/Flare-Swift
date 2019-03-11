@@ -23,13 +23,13 @@ class KeyFramePathVertices: Interpolated {
         _vertices = []
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let path = _component as! ActorPath
         let to = (toFrame as! KeyFramePathVertices)
         let c = _vertices.count
         
-        let fMix = Float32(mix)
-        let f: Float32 = Float32((time - _time) / (toFrame._time - _time))
+        let fMix = Float(mix)
+        let f: Float = Float((time - _time) / (toFrame._time - _time))
         let fi = 1.0 - f
         if (mix == 1.0) {
             for i in 0 ..< c {
@@ -47,10 +47,10 @@ class KeyFramePathVertices: Interpolated {
         path.markVertexDeformDirty();
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let path = _component as! ActorPath
         let l = _vertices.count
-        let fMix: Float32 = Float32(mix)
+        let fMix: Float = Float(mix)
         
         if fMix == 1.0 {
             for i in 0 ..< l {
@@ -82,7 +82,7 @@ class KeyFramePathVertices: Interpolated {
             length += 2 + (point.type == .Straight ? 1 : 4)
         }
         
-        self._vertices = Array<Float32>(repeating: 0.0, count: length)
+        self._vertices = Array<Float>(repeating: 0.0, count: length)
         var readIdx = 0
         reader.openArray(label: "value")
         for point in pathNode.points {
@@ -106,6 +106,9 @@ class KeyFramePathVertices: Interpolated {
                 readIdx += 1
             }
         }
+//        for p in _vertices {
+//            print("VERTICES \(_vertices)")
+//        }
         reader.closeArray()
         
         pathNode.makeVertexDeform()

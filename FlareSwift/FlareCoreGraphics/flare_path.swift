@@ -17,6 +17,7 @@ protocol FlarePath: class {
     var _isValid: Bool { get set }
     var isClosed: Bool { get }
     var deformedPoints: [PathPoint]? { get }
+    var beziers: [Bezier] { get }
     
     func makePath() -> CGMutablePath
 }
@@ -29,15 +30,12 @@ extension FlarePath {
         return self.makePath()
     }
     
-    func makePath()  -> CGMutablePath {
-        _isValid = true
-        
-        self._path = CGMutablePath() // reset.
+    func _getRenderPoints() -> [PathPoint] {
         guard let pts = self.deformedPoints else {
-            return self._path
+            return []
         }
         guard pts.count > 0 else {
-            return self._path
+            return []
         }
         
         var renderPoints = [PathPoint]()
@@ -93,12 +91,24 @@ extension FlarePath {
             }
         }
         
+        return renderPoints
+    }
+    
+    func makePath()  -> CGMutablePath {
+        _isValid = true
+        
+        self._path = CGMutablePath() // reset.
+        
+        let renderPoints = _getRenderPoints()
+        guard !renderPoints.isEmpty else {
+            return self._path
+        }
+        
         let firstPoint = renderPoints.first!
         self._path.move(to: CGPoint(x: firstPoint.translation[0], y: firstPoint.translation[1]))
         
         let c = isClosed ? renderPoints.count : renderPoints.count - 1
         let rpc = renderPoints.count
-        
         for i in 0 ..< c {
             let point = renderPoints[i]
             let nextPoint = renderPoints[(i+1)%rpc]
@@ -128,9 +138,54 @@ extension FlarePath {
             _path.closeSubpath()
         }
         
+//        _=piecewiseBezier() // TODO: remove.
+        
         return _path
     }
     
+    var beziers: [Bezier] {
+        let renderPoints = _getRenderPoints()
+        guard !renderPoints.isEmpty else {
+            return []
+        }
+        
+        var beziers = [Bezier]()
+        
+        let c = isClosed ? renderPoints.count : renderPoints.count - 1
+        let rpc = renderPoints.count
+        
+        for i in 0 ..< c {
+            let point = renderPoints[i]
+            let nextPoint = renderPoints[(i+1)%rpc]
+            var cin = nextPoint is CubicPathPoint ? (nextPoint as! CubicPathPoint).inPoint : nil
+            var cout = point is CubicPathPoint ? (point as! CubicPathPoint).outPoint : nil
+            if cin == nil && cout == nil {
+                let s = Segment([
+                        Vec2D.init(clone: point.translation),
+                        Vec2D.init(clone: nextPoint.translation)
+                    ])
+                beziers.append(s)
+//                print("SEGMENT \(s.description)")
+            } else {
+                if cout == nil {
+                    cout = point.translation
+                }
+                if cin == nil {
+                    cin = nextPoint.translation
+                }
+                let cb = CubicBezier([
+                        Vec2D.init(clone: point.translation),
+                        Vec2D.init(clone: cout!),
+                        Vec2D.init(clone: cin!),
+                        Vec2D(clone: nextPoint.translation)
+                    ])
+//                print("CUBIC:\(cb.description)")
+                beziers.append(cb)
+            }
+        }
+        
+        return beziers
+    }
 }
 
 extension CGPoint {

@@ -16,7 +16,7 @@ class LinearInterpolator: Interpolator {
         return _instance
     }
     
-    func getEasedMix(mix: Double) -> Double {
+    func getEasedMix(mix: Float) -> Float {
         return mix
     }
 }

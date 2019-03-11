@@ -16,8 +16,8 @@ class KeyFrameConstraintStrength: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let constraint = component as! ActorConstraint
-        constraint.strength = constraint.strength * (1.0 - mix) + value * mix
+        constraint.strength = Double(Float(constraint.strength) * (1.0 - mix) + value * mix)
     }
 }

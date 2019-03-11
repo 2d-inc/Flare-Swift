@@ -42,6 +42,7 @@ protocol Bezier: class {
     var extremaOnY: [Float] { get }
     var extrema: [Float] { get }
     var isSimple: Bool { get }
+    var description: String { get }
     
     func pointAt(_ t: Float) -> Vec2D
     func derivativeAt(_ t: Float, _ cachedFirstOrderDerivativePoints: [Vec2D]?) -> Vec2D
@@ -228,7 +229,7 @@ extension Bezier {
     }
     
     func leftSubcurveAt(_ t: Float) -> Bezier {
-        if t <= 0.0 {
+        if t < 0.0 {
             fatalError("Cannot split a curve left of a start point!")
         }
         
@@ -236,6 +237,8 @@ extension Bezier {
         
         let hullPoints = hullPointsAt(tt)
         switch order {
+        case 1:
+            return Segment([hullPoints[0], hullPoints[2]])
         case 2:
             return QuadraticBezier([hullPoints[0], hullPoints[3], hullPoints[5]])
         case 3:
@@ -246,7 +249,7 @@ extension Bezier {
     }
     
     func rightSubcurveAt(_ t: Float) -> Bezier {
-        if t >= 1.0 {
+        if t > 1.0 {
             fatalError("Cannot split a curve left of a start point!")
         }
         
@@ -254,6 +257,8 @@ extension Bezier {
         
         let hullPoints = hullPointsAt(tt)
         switch order {
+        case 1:
+            return Segment([hullPoints[2], hullPoints[1]])
         case 2:
             return QuadraticBezier([hullPoints[5], hullPoints[4], hullPoints[2]])
         case 3:

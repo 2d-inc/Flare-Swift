@@ -134,13 +134,13 @@ public class ActorShape: ActorNode , ActorDrawable {
         
         let world = worldTransform;
         
-        var maxStroke = 0.0;
+        var maxStroke: Float = 0.0;
         for stroke in _strokes {
             if stroke.width > maxStroke {
                 maxStroke = stroke.width;
             }
         }
-        let padStroke = Float32(maxStroke) / 2.0;
+        let padStroke = maxStroke / 2.0;
         aabb![0] -= padStroke;
         aabb![2] += padStroke;
         aabb![1] -= padStroke;

@@ -13,44 +13,42 @@ class KeyFrameFillColor: Interpolated {
     
     var _time: Double = 0.0
     
-    private var _value = [Float32].init(repeating: 0, count: 4)
+    private var _value = [Float].init(repeating: 0, count: 4)
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let ac = component as! ActorColor
         let to = (toFrame as! KeyFrameFillColor)._value
         let l = _value.count
         
-        let fmix = Float32(mix)
-        let f: Float32 = Float32((time - _time) / (toFrame._time - _time))
-        let fi: Float32 = 1.0 - f
-        if fmix == 1.0 {
+        let f: Float = Float((time - _time) / (toFrame._time - _time))
+        let fi: Float = 1.0 - f
+        if mix == 1.0 {
             for i in 0 ..< l {
                 ac.color[i] = _value[i] * fi + to[i] * f
             }
         } else {
-            let mixi = 1.0 - fmix
+            let mixi = 1.0 - mix
             for i in 0 ..< l {
                 let v = _value[i] * fi + to[i] * f
-                ac.color[i] = ac.color[i] * mixi + v * fmix
+                ac.color[i] = ac.color[i] * mixi + v * mix
             }
         }
         
         ac.markPaintDirty()
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let ac = component as! ActorColor
         let l = _value.count
-        let fmix = Float32(mix)
         
-        if fmix == 1.0 {
+        if mix == 1.0 {
             for i in 0 ..< l {
                 ac.color[i] = _value[i];
             }
         } else {
-            let mixi: Float32 = 1.0 - fmix;
+            let mixi: Float = 1.0 - mix;
             for i in 0 ..< l {
-                ac.color[i] = ac.color[i] * mixi + _value[i] * fmix;
+                ac.color[i] = ac.color[i] * mixi + _value[i] * mix;
             }
         }
         ac.markPaintDirty();

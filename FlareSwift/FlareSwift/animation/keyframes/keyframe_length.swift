@@ -16,7 +16,7 @@ class KeyFrameLength: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         // TODO: 
 //        if let bone = component as ActorBoneBase {
 //            bone.length = bone.length * (1.0 - mix) + value * mix

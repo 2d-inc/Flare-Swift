@@ -18,16 +18,16 @@ class CubicInterpolator: Interpolator {
         return _instance
     }
     
-    func getEasedMix(mix: Double) -> Double {
+    func getEasedMix(mix: Float) -> Float {
         return _cubic.ease(t: mix)
     }
     
     func read(_ reader: StreamReader) -> Bool {
         _cubic = EaseFactory.make(
-            x1: Double(reader.readFloat32(label: "cubicX1")),
-            y1: Double(reader.readFloat32(label: "cubicY1")),
-            x2: Double(reader.readFloat32(label: "cubicX2")),
-            y2: Double(reader.readFloat32(label: "cubicY2"))
+            x1: reader.readFloat32(label: "cubicX1"),
+            y1: reader.readFloat32(label: "cubicY1"),
+            x2: reader.readFloat32(label: "cubicX2"),
+            y2: reader.readFloat32(label: "cubicY2")
         )
         return true
     }

@@ -16,9 +16,9 @@ class KeyFrameCornerRadius: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let rect = component as! ActorRectangle
-        rect.radius = rect.radius * (1.0 - mix) + value * mix
+        rect.radius = Double(Float(rect.radius) * (1.0 - mix) + value * mix)
     }
 }
 
@@ -30,8 +30,8 @@ class KeyFrameInnerRadius: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let rect = component as! ActorStar
-        rect.innerRadius = rect.innerRadius * (1.0 - mix) + value * mix
+        rect.innerRadius = Double(Float(rect.innerRadius) * (1.0 - mix) + value * mix)
     }
 }

@@ -18,7 +18,7 @@ class HoldInterpolator: Interpolator {
         return _instance
     }
     
-    func getEasedMix(mix: Double) -> Double {
+    func getEasedMix(mix: Float) -> Float {
         return 0.0
     }
 }

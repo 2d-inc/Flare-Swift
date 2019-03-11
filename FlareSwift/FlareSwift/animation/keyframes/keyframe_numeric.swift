@@ -13,8 +13,8 @@ class KeyFrameNumeric: Interpolated {
     
     var _interpolator: Interpolator?
     
-    var _value: Double
-    var value: Double {
+    var _value: Float
+    var value: Float {
         return _value
     }
     
@@ -23,16 +23,16 @@ class KeyFrameNumeric: Interpolated {
         self._value = 0
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let to = toFrame as! KeyFrameNumeric
-        var f = (time - self._time) / (to._time - self._time)
+        var f = Float((time - self._time) / (to._time - self._time))
         if let interpolator = self._interpolator {
             f = interpolator.getEasedMix(mix: f)
         }
         setValue(component, _value * (1.0 - f) + to._value * f, mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         setValue(component, _value, mix)
     }
     
@@ -42,11 +42,11 @@ class KeyFrameNumeric: Interpolated {
         if !self.readInterpolation(reader) {
             return false
         }
-        self._value = Double(reader.readFloat32(label: "value"))
+        self._value = reader.readFloat32(label: "value")
         return true
     }
     
-    func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         preconditionFailure("KeyFrameNumeric::setValue()")
     }
 }

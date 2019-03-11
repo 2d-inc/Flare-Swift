@@ -14,6 +14,11 @@ class FlareColorStroke: ColorStroke, FlareStroke {
     var _strokeCap: CGLineCap = CGLineCap.butt
     var _strokeJoin: CGLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
+    var effectPath: CGPath? = nil
+    
+    override func markPathEffectsDirty() {
+        effectPath = nil
+    }
     
     private var cgColor: CGColor {
         get {
@@ -51,12 +56,8 @@ class FlareColorStroke: ColorStroke, FlareStroke {
             return
         }
         
-        if stroke.isTrimmed {
-            // TODO:
-        }
-        
-        context.setLineCap(_strokeCap)
-        context.setLineJoin(_strokeJoin)
+        context.setLineCap(strokeCap)
+        context.setLineJoin(strokeJoin)
         context.setLineWidth(_strokeWidth)
         context.setStrokeColor(_color)
         context.addPath(path)

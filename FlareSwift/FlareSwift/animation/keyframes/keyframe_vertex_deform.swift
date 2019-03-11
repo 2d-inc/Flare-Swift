@@ -13,17 +13,17 @@ class KeyFrameVertexDeform: Interpolated {
     
     var _time: Double = 0.0
     
-    var _vertices: [Float32]?
+    var _vertices: [Float]?
     
-    var vertices: [Float32]? {
+    var vertices: [Float]? {
         return _vertices
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         // TODO:
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         // TODO:
     }
     

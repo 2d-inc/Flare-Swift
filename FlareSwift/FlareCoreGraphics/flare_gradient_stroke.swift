@@ -13,8 +13,13 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
     var _strokeCap: CGLineCap = .butt
     var _strokeJoin: CGLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
+    var effectPath: CGPath? = nil    
     
     var _gradient: CGGradient!
+    
+    override func markPathEffectsDirty() {
+        effectPath = nil
+    }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceGradientStroke = FlareGradientStroke()
@@ -67,8 +72,8 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
         context.addPath(path)
         context.setFillColor(_color)
         context.setLineWidth(_strokeWidth)
-        context.setLineCap(_strokeCap)
-        context.setLineJoin(_strokeJoin)
+        context.setLineCap(strokeCap)
+        context.setLineJoin(strokeJoin)
         context.replacePathWithStrokedPath()
         context.clip()
         context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])

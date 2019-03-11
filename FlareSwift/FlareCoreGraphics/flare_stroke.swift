@@ -13,6 +13,7 @@ protocol FlareStroke: class {
     var _strokeCap: CGLineCap { get set }
     var _strokeJoin: CGLineJoin { get set }
     var _strokeWidth: CGFloat { get set }
+    var effectPath: CGPath? { get set }
     
     func initializeGraphics()
     func paint(stroke: ActorStroke, context: CGContext, path: CGPath)
@@ -50,5 +51,9 @@ extension FlareStroke {
         case .Round:
             return CGLineJoin.round
         }
+    }
+    
+    func markPathEffectsDirty() {
+        effectPath = nil
     }
 }

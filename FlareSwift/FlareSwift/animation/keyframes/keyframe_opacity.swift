@@ -16,9 +16,9 @@ class KeyFrameOpacity: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        node.opacity = node.opacity * (1.0 - mix) + value * mix
+        node.opacity = Double(Float(node.opacity) * (1.0 - mix) + value * mix)
     }
 }
 
@@ -30,8 +30,8 @@ class KeyFramePaintOpacity: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorPaint
-        node.opacity = node.opacity * (1.0 - mix) + value * mix
+        node.opacity = Double(Float(node.opacity) * (1.0 - mix) + value * mix)
     }
 }

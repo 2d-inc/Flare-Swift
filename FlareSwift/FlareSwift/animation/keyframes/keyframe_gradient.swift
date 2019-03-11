@@ -17,12 +17,11 @@ class KeyFrameGradient: Interpolated {
         return _value
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let gradient = component as! GradientColor
         let kfg = (toFrame as! KeyFrameGradient)
         
-        let fMix = Float32(mix)
-        var f = (time - _time) / (toFrame._time - _time)
+        var f = Float((time - _time) / (toFrame._time - _time))
         if let interpolator = _interpolator {
             f = interpolator.getEasedMix(mix: f)
         }
@@ -33,7 +32,7 @@ class KeyFrameGradient: Interpolated {
         var ridx = 0;
         var wi = 0;
         
-        if (fMix == 1.0) {
+        if (mix == 1.0) {
             gradient.start[0] = _value[ridx] * fi + kfg._value[ridx] * ff
             ridx += 1
             gradient.start[1] = _value[ridx] * fi + kfg._value[ridx] * ff
@@ -49,28 +48,28 @@ class KeyFrameGradient: Interpolated {
                 ridx += 1
             }
         } else {
-            let imix = 1.0 - fMix
+            let imix = 1.0 - mix
             
             // Mix : first interpolate the KeyFrames, and then mix on top of the current value.
             var val = _value[ridx] * fi + kfg._value[ridx] * ff
-            gradient.start[0] = gradient.start[0] * imix + val * fMix
+            gradient.start[0] = gradient.start[0] * imix + val * mix
             ridx += 1
             
             val = _value[ridx] * fi + kfg._value[ridx] * ff
-            gradient.start[1] = gradient.start[1] * imix + val * fMix
+            gradient.start[1] = gradient.start[1] * imix + val * mix
             ridx += 1
             
             val = _value[ridx] * fi + kfg._value[ridx] * ff
-            gradient.end[0] = gradient.end[0] * imix + val * fMix
+            gradient.end[0] = gradient.end[0] * imix + val * mix
             ridx += 1
             
             val = _value[ridx] * fi + kfg._value[ridx] * ff
-            gradient.end[1] = gradient.end[1] * imix + val * fMix
+            gradient.end[1] = gradient.end[1] * imix + val * mix
             ridx += 1
             
             while ridx < kfg._value.count && wi < gradient.colorStops.count {
                 val = _value[ridx] * fi + kfg._value[ridx] * ff
-                gradient.colorStops[wi] = gradient.colorStops[wi] * imix + val * fMix
+                gradient.colorStops[wi] = gradient.colorStops[wi] * imix + val * mix
                 
                     ridx += 1
                 wi += 1
@@ -79,14 +78,13 @@ class KeyFrameGradient: Interpolated {
         gradient.markPaintDirty()
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let gradient = component as! GradientColor
         
         var ridx = 0
         var wi = 0
-        let fMix = Float32(mix)
         
-        if fMix == 1.0 {
+        if mix == 1.0 {
             gradient.start[0] = _value[ridx]
             ridx += 1
             gradient.start[1] = _value[ridx]
@@ -102,14 +100,14 @@ class KeyFrameGradient: Interpolated {
                 ridx += 1
             }
         } else {
-            let imix = 1.0 - fMix
-            gradient.start[0] = gradient.start[0] * imix + _value[ridx] * fMix
+            let imix = 1.0 - mix
+            gradient.start[0] = gradient.start[0] * imix + _value[ridx] * mix
             ridx += 1
-            gradient.start[1] = gradient.start[1] * imix + _value[ridx] * fMix
+            gradient.start[1] = gradient.start[1] * imix + _value[ridx] * mix
             ridx += 1
-            gradient.end[0] = gradient.end[0] * imix + _value[ridx] * fMix
+            gradient.end[0] = gradient.end[0] * imix + _value[ridx] * mix
             ridx += 1
-            gradient.end[1] = gradient.end[1] * imix + _value[ridx] * fMix
+            gradient.end[1] = gradient.end[1] * imix + _value[ridx] * mix
             ridx += 1
             
             while (ridx < _value.count && wi < gradient.colorStops.count) {
@@ -146,23 +144,22 @@ class KeyFrameRadial: Interpolated {
         return _value
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let radial = component as! RadialGradientColor
         let kfr = toFrame as! KeyFrameRadial
         
-        var f = (time - _time) / (toFrame._time - _time)
+        var f = Float((time - _time) / (toFrame._time - _time))
         if let ip = _interpolator {
             f = ip.getEasedMix(mix: f)
         }
         
-        let fMix = Float32(mix)
         let ff = Float32(f)
         let fi = 1.0 - ff
         
         var ridx = 0
         var wi = 0
         
-        if fMix == 1.0 {
+        if mix == 1.0 {
             radial.secondaryRadiusScale = Double(_value[ridx] * fi + kfr._value[ridx] * ff)
             ridx += 1
             radial.start[0] = _value[ridx] * fi + kfr._value[ridx] * ff
@@ -180,28 +177,28 @@ class KeyFrameRadial: Interpolated {
                 ridx += 1
             }
         } else {
-            let imix = 1.0 - fMix
+            let imix = 1.0 - mix
             
             // Mix : first interpolate the KeyFrames, and then mix on top of the current value.
             var val = _value[ridx] * fi + kfr._value[ridx] * ff
             radial.secondaryRadiusScale = Double(_value[ridx] * fi + kfr._value[ridx] * ff)
             ridx += 1
             val = _value[ridx] * fi + kfr._value[ridx] * ff
-            radial.start[0] = _value[ridx] * imix + val * fMix
+            radial.start[0] = _value[ridx] * imix + val * mix
             ridx += 1
             val = _value[ridx] * fi + kfr._value[ridx] * ff
-            radial.start[1] = _value[ridx] * imix + val * fMix
+            radial.start[1] = _value[ridx] * imix + val * mix
             ridx += 1
             val = _value[ridx] * fi + kfr._value[ridx] * ff
-            radial.end[0] = _value[ridx] * imix + val * fMix
+            radial.end[0] = _value[ridx] * imix + val * mix
             ridx += 1
             val = _value[ridx] * fi + kfr._value[ridx] * ff
-            radial.end[1] = _value[ridx] * imix + val * fMix
+            radial.end[1] = _value[ridx] * imix + val * mix
             ridx += 1
             
             while ridx < kfr._value.count && wi < radial.colorStops.count {
                 val = _value[ridx] * fi + kfr._value[ridx] * ff
-                radial.colorStops[wi] = radial.colorStops[wi] * imix + val * fMix
+                radial.colorStops[wi] = radial.colorStops[wi] * imix + val * mix
                 
                 ridx += 1
                 wi += 1
@@ -210,15 +207,14 @@ class KeyFrameRadial: Interpolated {
         radial.markPaintDirty()
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let radial = component as! RadialGradientColor
         
         var ridx = 0
         var wi = 0
         
-        let fMix = Float32(mix)
         
-        if fMix == 1.0 {
+        if mix == 1.0 {
             radial.secondaryRadiusScale = Double(value[ridx])
             ridx += 1
             radial.start[0] = _value[ridx]
@@ -236,16 +232,16 @@ class KeyFrameRadial: Interpolated {
                 ridx += 1
             }
         } else {
-            let imix = 1.0 - fMix
-            radial.secondaryRadiusScale = radial.secondaryRadiusScale * Double(imix) + Double(_value[ridx] * fMix)
+            let imix = 1.0 - mix
+            radial.secondaryRadiusScale = radial.secondaryRadiusScale * Double(imix) + Double(_value[ridx] * mix)
             ridx += 1
-            radial.start[0] = radial.start[0] * imix + _value[ridx] * fMix
+            radial.start[0] = radial.start[0] * imix + _value[ridx] * mix
             ridx += 1
-            radial.start[1] = radial.start[1] * imix + _value[ridx] * fMix
+            radial.start[1] = radial.start[1] * imix + _value[ridx] * mix
             ridx += 1
-            radial.end[0] = radial.end[0] * imix + _value[ridx] * fMix
+            radial.end[0] = radial.end[0] * imix + _value[ridx] * mix
             ridx += 1
-            radial.end[1] = radial.end[1] * imix + _value[ridx] * fMix
+            radial.end[1] = radial.end[1] * imix + _value[ridx] * mix
             ridx += 1
             
             while ridx < _value.count && wi < radial.colorStops.count {

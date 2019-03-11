@@ -9,21 +9,21 @@
 import Foundation
 
 class KeyFrameStrokeColor: Interpolated {
-    private var _value: [Float32] = []
+    private var _value: [Float] = []
     var _interpolator: Interpolator?
     var _time: Double = 0.0
     
-    var value: [Float32] {
+    var value: [Float] {
         return _value
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         let cs = component as! ColorStroke
         let to = (toFrame as! KeyFrameStrokeColor)
         let len = _value.count
         
-        let fMix: Float32 = Float32(mix)
-        let f = Float32((time - _time) / (toFrame._time - _time))
+        let fMix: Float = Float(mix)
+        let f = Float((time - _time) / (toFrame._time - _time))
         let fi = 1.0 - f
         if fMix == 1.0 {
             for i in 0 ..< len {
@@ -40,10 +40,10 @@ class KeyFrameStrokeColor: Interpolated {
         cs.markPaintDirty();
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let node = component as! ColorStroke
         let len = node.color.count
-        let fMix: Float32 = Float32(mix)
+        let fMix: Float = Float(mix)
         
         if fMix == 1.0 {
             for i in 0 ..< len {
@@ -80,7 +80,7 @@ class KeyFrameStrokeWidth: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let stroke = component as! ActorStroke
         stroke.width = stroke.width * (1.0 - mix) + value * mix
     }
@@ -94,7 +94,7 @@ class KeyFrameStrokeStart: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let stroke = component as! ActorStroke
         stroke.trimStart = stroke.trimStart * (1.0 - mix) + value * mix
     }
@@ -108,7 +108,7 @@ class KeyFrameStrokeEnd: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let stroke = component as! ActorStroke
         stroke.trimEnd = stroke.trimEnd * (1.0 - mix) + value * mix
     }
@@ -122,7 +122,7 @@ class KeyFrameStrokeOffset: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let stroke = component as! ActorStroke
         stroke.trimOffset = stroke.trimOffset * (1.0 - mix) + value * mix
     }

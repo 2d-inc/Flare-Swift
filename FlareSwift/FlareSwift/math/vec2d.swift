@@ -20,6 +20,14 @@ public class Vec2D: Equatable, Hashable {
         }
     }
     
+    public var x: Float {
+        return self._buffer[0]
+    }
+    
+    public var y: Float {
+        return self._buffer[1]
+    }
+    
     // Overload [] operator for this class
     subscript(index: Int) -> Float32 {
         get {
@@ -185,6 +193,10 @@ public class Vec2D: Equatable, Hashable {
         let c = Vec2D.dot(a,b)
         
         return atan2(s, c)
+    }
+
+    static func toCGPoint(_ vec: Vec2D) -> CGPoint {
+        return CGPoint(x: vec.x, y: vec.y)
     }
     
     public var description : String { return "Vec2D: (\(_buffer[0]), \(_buffer[1]))" }

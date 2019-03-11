@@ -20,8 +20,8 @@ let interpolationTypesLookup = [
 
 protocol KeyFrame: class {
     var _time: Double { get set }
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double)
-    func apply(component: ActorComponent, mix: Double)
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float)
+    func apply(component: ActorComponent, mix: Float)
     func setNext(_ frame: KeyFrame)
     func read(_ reader: StreamReader) -> Bool
 }

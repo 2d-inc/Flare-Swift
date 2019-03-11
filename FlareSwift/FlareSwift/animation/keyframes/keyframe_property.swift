@@ -17,7 +17,7 @@ class KeyFrameIntProperty : KeyFrameInt {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         // TODO:
         //var node = component as CustomIntProperty;
         //node.value = (node.value * (1.0 - mix) + value * mix).round();
@@ -32,7 +32,7 @@ class KeyFrameFloatProperty: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         // TODO:
         //var node = component as CustomIntProperty;
         //node.value = (node.value * (1.0 - mix) + value * mix).round();
@@ -43,11 +43,11 @@ class KeyFrameStringProperty: KeyFrame {
     var _time: Double = 0.0
     var _value: String = ""
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         apply(component: component, mix: mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         // var prop = component as CustomStringProperty;
         // prop.value = _value;
     }
@@ -70,11 +70,11 @@ class KeyFrameBooleanProperty: KeyFrame {
     var _time: Double = 0.0
     var _value: Bool = false
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         apply(component: component, mix: mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         // var prop = component as CustomBooleanProperty;
         // prop.value = _value;
     }
@@ -96,11 +96,11 @@ class KeyFrameCollisionEnabledProperty: KeyFrame {
     var _time: Double = 0.0
     var _value: Bool = false
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         apply(component: component, mix: mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         // var prop = component as CustomBooleanProperty;
         // prop.value = _value;
     }

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol Interpolator {
-    func getEasedMix(mix: Double) -> Double
+    func getEasedMix(mix: Float) -> Float
 }

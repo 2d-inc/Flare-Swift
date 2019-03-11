@@ -18,10 +18,10 @@ class KeyFramePosX: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        let x = Double(node.x)
-        node.x = Float32(x * (1.0 - mix) + value * mix)
+        let x = node.x
+        node.x = x * (1.0 - mix) + value * mix
     }
 }
 
@@ -33,10 +33,10 @@ class KeyFramePosY: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        let y = Double(node.y)
-        node.y = Float32(y * (1.0 - mix) + value * mix)
+        let y = node.y
+        node.y = y * (1.0 - mix) + value * mix
     }
 }
 
@@ -48,10 +48,10 @@ class KeyFrameScaleX: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        let scaleX = Double(node.scaleX)
-        node.scaleX = Float32(scaleX * (1.0 - mix) + value * mix)
+        let scaleX = node.scaleX
+        node.scaleX = scaleX * (1.0 - mix) + value * mix
     }
 }
 
@@ -63,10 +63,10 @@ class KeyFrameScaleY: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        let scaleY = Double(node.scaleY)
-        node.scaleY = Float32(scaleY * (1.0 - mix) + value * mix)
+        let scaleY = node.scaleY
+        node.scaleY = scaleY * (1.0 - mix) + value * mix
     }
 }
 
@@ -78,9 +78,9 @@ class KeyFrameRotation: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorNode
-        node.rotation = node.rotation * (1.0 - mix) + value * mix
+        node.rotation = Double(Float(node.rotation) * (1.0 - mix) + value * mix)
     }
 }
 

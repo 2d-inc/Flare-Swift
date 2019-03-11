@@ -12,11 +12,11 @@ class KeyFrameActiveChild: KeyFrame {
     var _time: Double = 0.0
     var _value: Int = -1
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         self.apply(component: component, mix: mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         let solo = component as! ActorNodeSolo
         solo.activeChildIndex = _value
     }

@@ -142,7 +142,7 @@ public class PropertyAnimation {
         }
     }
     
-    func apply(time: Double, component: ActorComponent, mix: Double) {
+    func apply(time: Double, component: ActorComponent, mix: Float) {
         guard let kf = _keyFrames, kf.count > 0 else {
             print("apply(): _keyFrames is nil, or has no elements!")
             return
@@ -220,7 +220,7 @@ public class ComponentAnimation {
         return componentAnimation;
     }
     
-    func apply(time: Double, components: Array<ActorComponent>, mix: Double) {
+    func apply(time: Double, components: Array<ActorComponent>, mix: Float) {
         guard let p = _properties else {
             print("apply(): nil _properties")
             return
@@ -369,7 +369,7 @@ public class ActorAnimation {
         }
     }
     
-    public func apply(time: Double, artboard: ActorArtboard, mix: Double) {
+    public func apply(time: Double, artboard: ActorArtboard, mix: Float) {
         guard let components = _components else {
             print("apply(): no components??")
             return

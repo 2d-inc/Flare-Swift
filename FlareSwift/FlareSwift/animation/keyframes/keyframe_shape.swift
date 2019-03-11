@@ -16,9 +16,9 @@ class KeyFrameShapeWidth: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let shape = component as! ActorProceduralPath
-        shape.width = shape.width * (1.0 - mix) + value * mix
+        shape.width = Double(Float(shape.width) * (1.0 - mix) + value * mix)
     }
 }
 
@@ -30,8 +30,8 @@ class KeyFrameShapeHeight: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let shape = component as! ActorProceduralPath
-        shape.height = shape.height * (1.0 - mix) + value * mix
+        shape.height = Double(Float(shape.height) * (1.0 - mix) + value * mix)
     }
 }

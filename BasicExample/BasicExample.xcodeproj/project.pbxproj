@@ -19,6 +19,8 @@
 		E45359D82228341300981BD7 /* FlareSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E4535A31222DD22300981BD7 /* Testing.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4535A30222DD18B00981BD7 /* Testing.flr */; };
 		E46CDCA522302090002C40A1 /* Constraints.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCA422302090002C40A1 /* Constraints.flr */; };
+		E46CDCB72232B96E002C40A1 /* Beziers.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCB62232B96E002C40A1 /* Beziers.flr */; };
+		E46CDCBB2232ED0D002C40A1 /* Amelia.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCBA2232ED0D002C40A1 /* Amelia.flr */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +50,8 @@
 		E45359D52228340F00981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4535A30222DD18B00981BD7 /* Testing.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Testing.flr; sourceTree = "<group>"; };
 		E46CDCA422302090002C40A1 /* Constraints.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Constraints.flr; sourceTree = "<group>"; };
+		E46CDCB62232B96E002C40A1 /* Beziers.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Beziers.flr; sourceTree = "<group>"; };
+		E46CDCBA2232ED0D002C40A1 /* Amelia.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Amelia.flr; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,8 @@
 		E45359BD2228328500981BD7 /* BasicExample */ = {
 			isa = PBXGroup;
 			children = (
+				E46CDCBA2232ED0D002C40A1 /* Amelia.flr */,
+				E46CDCB62232B96E002C40A1 /* Beziers.flr */,
 				E46CDCA422302090002C40A1 /* Constraints.flr */,
 				E4535A30222DD18B00981BD7 /* Testing.flr */,
 				E45359D02228329400981BD7 /* Circle.flr */,
@@ -164,10 +170,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E46CDCB72232B96E002C40A1 /* Beziers.flr in Resources */,
 				E4535A31222DD22300981BD7 /* Testing.flr in Resources */,
 				E46CDCA522302090002C40A1 /* Constraints.flr in Resources */,
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
 				E45359C62228328600981BD7 /* Assets.xcassets in Resources */,
+				E46CDCBB2232ED0D002C40A1 /* Amelia.flr in Resources */,
 				E45359D12228329900981BD7 /* Circle.flr in Resources */,
 				E45359C42228328500981BD7 /* Main.storyboard in Resources */,
 			);

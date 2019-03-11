@@ -40,11 +40,11 @@ class KeyFrameDrawOrder: KeyFrame {
         return true
     }
     
-    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
+    func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
         apply(component: component, mix: mix)
     }
     
-    func apply(component: ActorComponent, mix: Double) {
+    func apply(component: ActorComponent, mix: Float) {
         guard let artboard = component.artboard else {
             fatalError("NO ARTBOARD FOR COMPONENT??")
         }

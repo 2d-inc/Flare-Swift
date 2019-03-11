@@ -16,7 +16,7 @@ class KeyFrameSequence: KeyFrameNumeric {
         return false
     }
     
-    override func setValue(_ component: ActorComponent, _ value: Double, _ mix: Double) {
+    override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
         let node = component as! ActorImage
         var frameIndex = Int(floor(value)) % node.sequenceFrames!.count
         if frameIndex < 0 {

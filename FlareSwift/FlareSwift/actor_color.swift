@@ -115,19 +115,19 @@ public extension ActorFill {
 }
 
 protocol ActorStroke: class {
-    var _width: Double { get set }
-    var width: Double { get set }
-    var _cap: StrokeCap { get set }
-    var _join: StrokeJoin { get set }
+    var _width: Float { get set }
+    var width: Float { get set }
+    var _cap: UInt8 { get set }
+    var _join: UInt8 { get set }
     var cap: StrokeCap { get }
     var join: StrokeJoin { get }
     var _trim: TrimPath { get set }
-    var _trimStart: Double { get set }
-    var trimStart: Double { get set }
-    var _trimEnd: Double { get set }
-    var trimEnd: Double { get set }
-    var _trimOffset: Double { get set }
-    var trimOffset: Double { get set }
+    var _trimStart: Float { get set }
+    var trimStart: Float { get set }
+    var _trimEnd: Float { get set }
+    var trimEnd: Float { get set }
+    var _trimOffset: Float { get set }
+    var trimOffset: Float { get set }
     var isTrimmed: Bool { get } // i.e. when _trim != TrimPath.Off
     
     func markPaintDirty()
@@ -140,7 +140,7 @@ protocol ActorStroke: class {
 
 extension ActorStroke {
     
-    var width: Double {
+    var width: Float {
         get {
             return _width
         }
@@ -153,14 +153,14 @@ extension ActorStroke {
     }
     
     var cap: StrokeCap {
-        return _cap
+        return StrokeCap.init(rawValue: _cap)!
     }
     
     var join: StrokeJoin {
-        return _join
+        return StrokeJoin.init(rawValue: _join)!
     }
     
-    var trimStart: Double {
+    var trimStart: Float {
         get {
             return _trimStart
         }
@@ -178,7 +178,7 @@ extension ActorStroke {
         _join = node._join
     }
     
-    var trimOffset: Double {
+    var trimOffset: Float {
         get {
             return _trimOffset
         }
@@ -195,7 +195,7 @@ extension ActorStroke {
         return _trim != .Off
     }
     
-    var trimEnd: Double {
+    var trimEnd: Float {
         get {
             return _trimEnd
         }
@@ -209,20 +209,18 @@ extension ActorStroke {
     }
     
     func readStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {
-        self.width = Double(reader.readFloat32(label: "width"))
+        self.width = reader.readFloat32(label: "width")
         let version = artboard.actor.version
         if version >= 19 {
-            let c = reader.readUint8(label: "cap")
-            let j = reader.readUint8(label: "join")
-            self._cap = StrokeCap(rawValue: c)!
-            self._join = StrokeJoin(rawValue: j)!
+            self._cap = reader.readUint8(label: "cap")
+            self._join = reader.readUint8(label: "join")
             if version >= 20 {
                 let t = reader.readUint8(label: "trim")
                 self._trim = TrimPath(rawValue: t) ?? TrimPath.Off
                 if self._trim != .Off {
-                    self._trimStart = Double(reader.readFloat32(label: "start"))
-                    self._trimEnd = Double(reader.readFloat32(label: "end"))
-                    self._trimOffset = Double(reader.readFloat32(label: "offset"))
+                    self._trimStart = reader.readFloat32(label: "start")
+                    self._trimEnd = reader.readFloat32(label: "end")
+                    self._trimOffset = reader.readFloat32(label: "offset")
                 }
             }
         }
@@ -254,13 +252,13 @@ public class ColorFill: ActorColor, ActorFill {
 }
 
 public class ColorStroke: ActorColor, ActorStroke {
-    var _width: Double = 1.0
-    var _cap: StrokeCap = .Butt
-    var _join: StrokeJoin = .Miter
+    var _width: Float = 1.0
+    var _cap: UInt8 = 0
+    var _join: UInt8 = 0
     var _trim: TrimPath = .Off
-    var _trimStart: Double = 0.0
-    var _trimEnd: Double = 0.0
-    var _trimOffset: Double = 0.0
+    var _trimStart: Float = 0.0
+    var _trimEnd: Float = 0.0
+    var _trimOffset: Float = 0.0
     
     func copyColorStroke(_ node: ColorStroke, _ resetArtboard: ActorArtboard) {
         self.copyColor(node, resetArtboard)
@@ -358,13 +356,13 @@ public class GradientFill: GradientColor, ActorFill {
 }
 
 public class GradientStroke: GradientColor, ActorStroke {
-    var _width: Double = 1.0
-    var _cap: StrokeCap = .Butt
-    var _join: StrokeJoin = .Miter
+    var _width: Float = 1.0
+    var _cap: UInt8 = 0
+    var _join: UInt8 = 0
     var _trim: TrimPath = .Off
-    var _trimStart: Double = 0.0
-    var _trimEnd: Double = 0.0
-    var _trimOffset: Double = 0.0
+    var _trimStart: Float = 0.0
+    var _trimEnd: Float = 0.0
+    var _trimOffset: Float = 0.0
     
     func markPathEffectsDirty() {}
     
@@ -428,13 +426,13 @@ public class RadialGradientFill: RadialGradientColor, ActorFill {
 }
 
 public class RadialGradientStroke: RadialGradientColor, ActorStroke {
-    var _width: Double = 1.0
-    var _cap: StrokeCap = .Butt
-    var _join: StrokeJoin = .Miter
+    var _width: Float = 1.0
+    var _cap: UInt8 = 0
+    var _join: UInt8 = 0
     var _trim: TrimPath = .Off
-    var _trimStart: Double = 0.0
-    var _trimEnd: Double = 0.0
-    var _trimOffset: Double = 0.0
+    var _trimStart: Float = 0.0
+    var _trimEnd: Float = 0.0
+    var _trimOffset: Float = 0.0
     
     func markPathEffectsDirty() {}
     func initializeGraphics() {}
