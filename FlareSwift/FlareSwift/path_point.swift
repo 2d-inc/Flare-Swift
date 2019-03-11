@@ -39,8 +39,9 @@ public extension PathPoint {
     func read(reader: StreamReader, isConnectedToBones: Bool) {
         reader.readFloat32ArrayOffset(ar: &translation.values, length: 2, offset: 0, label: "translation")
         readPoint(reader: reader, isConnectedToBones: isConnectedToBones)
-        if var w = weights {
-            reader.readFloat32Array(ar: &w, label: "weights")
+//        if var w = weights {
+        if weights != nil {
+            reader.readFloat32Array(ar: &weights!, label: "weights")
         }
     }
     

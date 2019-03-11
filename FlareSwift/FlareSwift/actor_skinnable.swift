@@ -38,7 +38,7 @@ public class ActorSkinnable: ActorNode {
             self._connectedBones = Array<SkinnedBone>()
             
             for i in 0 ..< numConnectedBones {
-                var bc = SkinnedBone()
+                let bc = SkinnedBone()
                 reader.openObject(label: "bone")
                 bc.boneIdx = reader.readId(label: "component")
                 reader.readFloat32ArrayOffset(ar: &bc.bind.values, length: 6, offset: 0, label: "bind")
@@ -60,7 +60,7 @@ public class ActorSkinnable: ActorNode {
         
         if let cb = _connectedBones {
             for i in 0 ..< cb.count {
-                var bc = cb[i]
+                let bc = cb[i]
                 bc.node = (components[bc.boneIdx] as! ActorNode)
             }
         }
@@ -73,7 +73,7 @@ public class ActorSkinnable: ActorNode {
             _connectedBones = [SkinnedBone]()
             for i in 0 ..< cb.count {
                 let from = cb[i]
-                var bc = SkinnedBone()
+                let bc = SkinnedBone()
                 bc.boneIdx = from.boneIdx
                 Mat2D.copy(bc.bind, from.bind)
                 Mat2D.copy(bc.inverseBind, from.inverseBind)

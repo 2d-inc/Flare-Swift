@@ -25,22 +25,19 @@ class KeyFramePathVertices: Interpolated {
     
     func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Double) {
         let path = _component as! ActorPath
-//        let wr = path.vertexDeform;
         let to = (toFrame as! KeyFramePathVertices)
-        let l = _vertices.count
+        let c = _vertices.count
         
         let fMix = Float32(mix)
         let f: Float32 = Float32((time - _time) / (toFrame._time - _time))
         let fi = 1.0 - f
         if (mix == 1.0) {
-//            for (int i = 0; i < l; i++) {
-            for i in 0 ..< l {
+            for i in 0 ..< c {
                 path.vertexDeform![i] = _vertices[i] * fi + to._vertices[i] * f
             }
         } else {
             let mixi = 1.0 - fMix;
-//            for (int i = 0; i < l; i++) {
-            for i in 0 ..< l {
+            for i in 0 ..< c {
                 let v = _vertices[i] * fi + to._vertices[i] * f;
                 
                 path.vertexDeform![i] = path.vertexDeform![i] * mixi + v * fMix
