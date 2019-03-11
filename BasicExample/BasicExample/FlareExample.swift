@@ -25,7 +25,6 @@ class FlareExample: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -43,7 +42,7 @@ class FlareExample: UIView {
     }
     
     private func setupView() {
-        let path = Bundle.main.path(forResource: "Constraints", ofType: "flr")
+        let path = Bundle.main.path(forResource: "Switch", ofType: "flr")
         if (path != nil) {
             print("FILE EXISTS! \(String(describing: path))")
             if let data = FileManager.default.contents(atPath: path!) {
@@ -53,7 +52,8 @@ class FlareExample: UIView {
                 if artboard != nil {
                     artboard.initializeGraphics()
                     // TODO: artboard.overrideColor =
-                    animation = artboard.getAnimation(name: "Test")
+//                    animation = artboard.getAnimation(name: "walk")
+                    animation = artboard.animations?.first
                     animation.apply(time: 0.0, artboard: artboard, mix: 1.0)
                     artboard.advance(seconds: 0.0)
                     updateBounds()
@@ -87,11 +87,17 @@ class FlareExample: UIView {
         let currentTime = displayLink.timestamp
         let delta = currentTime - lastTime
         lastTime = currentTime
-        duration = (duration + delta).truncatingRemainder(dividingBy: animation.duration)
+        duration = (duration + delta)
+        if animation.isLooping {
+            duration = duration.truncatingRemainder(dividingBy: animation.duration)
+        }
         animation.apply(time: duration, artboard: artboard, mix: 1.0)
         artboard.advance(seconds: delta)
         setNeedsDisplay()
-        //            displayLink.invalidate() // Stops loop.
+//            print("CUR: \(duration)/\(animation.duration)")
+//        if duration > animation.duration {
+//            displayLink.invalidate() // Stops loop.
+//        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -102,23 +108,24 @@ class FlareExample: UIView {
             return
         }
 
-//        let path = UIBezierPath(ovalIn: rect)
-//        UIColor.red.setFill()
-//        path.fill()
-        backgroundColor = UIColor.lightGray
+//        backgroundColor = UIColor.red
+        backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
         if let bounds = setupAABB {
-            let contentWidth = bounds[2] - bounds[0]
-            let contentHeight = bounds[3] - bounds[1]
+            let contentWidth = CGFloat(bounds[2] - bounds[0])
+            let contentHeight = CGFloat(bounds[3] - bounds[1])
 //            let x = bounds[0] - contentWidth / 2
 //            let y = bounds[1] - contentHeight / 2
+            let x = contentWidth * CGFloat(artboard.origin.x)
+            let y = contentHeight * CGFloat(artboard.origin.y)
             
             // Contain the artboard
-            let scaleX = rect.width / CGFloat(contentWidth)
-            let scaleY = rect.height / CGFloat(contentHeight)
+            let scaleX = rect.width / contentWidth
+            let scaleY = rect.height / contentHeight
             let scale = min(scaleX, scaleY)
+            
             ctx.saveGState()
             ctx.scaleBy(x: scale, y: scale)
-//            ctx.translateBy(x: 5, y: 5)
+            ctx.translateBy(x: x, y: y)
 //            ctx.setFillColor(UIColor.red.cgColor)
 //            ctx.fill(CGRect(x: 0, y: 0, width: Double(contentWidth), height: Double(contentHeight)))
             artboard.draw(context: ctx)
