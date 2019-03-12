@@ -213,6 +213,7 @@
 		E46CDCB42232AB0C002C40A1 /* segment_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = segment_bezier.swift; sourceTree = "<group>"; };
 		E46CDCB82232C3D8002C40A1 /* trim_path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trim_path.swift; sourceTree = "<group>"; };
 		E48A6489222E778D00726F7D /* flare_gradient_radial_fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_fill.swift; sourceTree = "<group>"; };
+		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -423,6 +424,7 @@
 		E46CDCA9223116C6002C40A1 /* Bezier */ = {
 			isa = PBXGroup;
 			children = (
+				E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */,
 				E46CDCA722311089002C40A1 /* bezier.swift */,
 				E46CDCB42232AB0C002C40A1 /* segment_bezier.swift */,
 				E46CDCAA223116DB002C40A1 /* quadratic_bezier.swift */,

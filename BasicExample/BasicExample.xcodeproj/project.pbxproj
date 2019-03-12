@@ -7,20 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */ = {isa = PBXBuildFile; fileRef = E44CBFB722382B05008F6DFE /* Notification Bell.flr */; };
 		E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359BE2228328500981BD7 /* AppDelegate.swift */; };
 		E45359C12228328500981BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359C02228328500981BD7 /* ViewController.swift */; };
 		E45359C42228328500981BD7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E45359C22228328500981BD7 /* Main.storyboard */; };
 		E45359C62228328600981BD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E45359C52228328600981BD7 /* Assets.xcassets */; };
 		E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E45359C72228328600981BD7 /* LaunchScreen.storyboard */; };
-		E45359D12228329900981BD7 /* Circle.flr in Resources */ = {isa = PBXBuildFile; fileRef = E45359D02228329400981BD7 /* Circle.flr */; };
 		E45359D3222832D500981BD7 /* FlareExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359D2222832D500981BD7 /* FlareExample.swift */; };
 		E45359D62228340F00981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; };
 		E45359D72228341300981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; };
 		E45359D82228341300981BD7 /* FlareSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E4535A31222DD22300981BD7 /* Testing.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4535A30222DD18B00981BD7 /* Testing.flr */; };
-		E46CDCA522302090002C40A1 /* Constraints.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCA422302090002C40A1 /* Constraints.flr */; };
-		E46CDCB72232B96E002C40A1 /* Beziers.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCB62232B96E002C40A1 /* Beziers.flr */; };
-		E46CDCBB2232ED0D002C40A1 /* Amelia.flr in Resources */ = {isa = PBXBuildFile; fileRef = E46CDCBA2232ED0D002C40A1 /* Amelia.flr */; };
 		E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4C7F5C32236D735004F62F4 /* Switch.flr */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E44CBFB722382B05008F6DFE /* Notification Bell.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Notification Bell.flr"; sourceTree = "<group>"; };
 		E45359BB2228328500981BD7 /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E45359BE2228328500981BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E45359C02228328500981BD7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,13 +43,8 @@
 		E45359C52228328600981BD7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E45359C82228328600981BD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E45359CA2228328600981BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E45359D02228329400981BD7 /* Circle.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Circle.flr; sourceTree = "<group>"; };
 		E45359D2222832D500981BD7 /* FlareExample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlareExample.swift; sourceTree = "<group>"; };
 		E45359D52228340F00981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4535A30222DD18B00981BD7 /* Testing.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Testing.flr; sourceTree = "<group>"; };
-		E46CDCA422302090002C40A1 /* Constraints.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Constraints.flr; sourceTree = "<group>"; };
-		E46CDCB62232B96E002C40A1 /* Beziers.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Beziers.flr; sourceTree = "<group>"; };
-		E46CDCBA2232ED0D002C40A1 /* Amelia.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Amelia.flr; sourceTree = "<group>"; };
 		E4C7F5C32236D735004F62F4 /* Switch.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Switch.flr; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,11 +81,7 @@
 		E45359BD2228328500981BD7 /* BasicExample */ = {
 			isa = PBXGroup;
 			children = (
-				E46CDCBA2232ED0D002C40A1 /* Amelia.flr */,
-				E46CDCB62232B96E002C40A1 /* Beziers.flr */,
-				E46CDCA422302090002C40A1 /* Constraints.flr */,
-				E4535A30222DD18B00981BD7 /* Testing.flr */,
-				E45359D02228329400981BD7 /* Circle.flr */,
+				E44CBFB722382B05008F6DFE /* Notification Bell.flr */,
 				E4C7F5C32236D735004F62F4 /* Switch.flr */,
 				E45359BE2228328500981BD7 /* AppDelegate.swift */,
 				E45359C02228328500981BD7 /* ViewController.swift */,
@@ -173,14 +161,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E46CDCB72232B96E002C40A1 /* Beziers.flr in Resources */,
-				E4535A31222DD22300981BD7 /* Testing.flr in Resources */,
-				E46CDCA522302090002C40A1 /* Constraints.flr in Resources */,
 				E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */,
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
+				E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */,
 				E45359C62228328600981BD7 /* Assets.xcassets in Resources */,
-				E46CDCBB2232ED0D002C40A1 /* Amelia.flr in Resources */,
-				E45359D12228329900981BD7 /* Circle.flr in Resources */,
 				E45359C42228328500981BD7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

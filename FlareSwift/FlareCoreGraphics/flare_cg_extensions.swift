@@ -23,6 +23,18 @@ extension CGColor {
         return CGColor(red: red, green: gree, blue: blue, alpha: alpha)
     }
     #endif
+ 
+    static func toFloatArray(color: CGColor?) -> [Float]? {
+        if let c = color {
+            if let components = c.components {
+                return [Float(components[0]),
+                        Float(components[1]),
+                        Float(components[2]),
+                        Float(components[3])]
+            }
+        }
+        return nil
+    }
     
 }
 

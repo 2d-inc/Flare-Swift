@@ -11,26 +11,99 @@ import FlareSwift
 
 @IBDesignable
 class FlareExample: UIView {
+    private var displayLink: CADisplayLink?
+    
+    private var _filename: String = ""
     
     private var flareActor: FlareActor!
-    private var displayLink: CADisplayLink!
+    private var artboard: FlareArtboard?
+    private var animation: ActorAnimation?
+    private var setupAABB: AABB!
+    private var animationName: String?
+    
     private var lastTime = 0.0
     private var duration = 0.0
-    private var animationName = "Test"
-    private var setupAABB: AABB!
-    private var artboard: FlareArtboard!
-    private var animation: ActorAnimation!
     private var animationTime = 0.0
+    private var isPlaying = true
+    private var shouldClip = true
+    
+    private var _color: CGColor?
+    // TODO: animation layers
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        //        fatalError("init(coder:) has not been implemented")
-        setupView()
+    }
+    
+    
+    public var filename: String {
+        get {
+            return _filename
+        }
+        set {
+            if newValue != _filename {
+                _filename = newValue
+                if flareActor != nil {
+                    flareActor.dispose()
+                    flareActor = nil
+                    artboard = nil
+                }
+//                animationLayers.removeAll()
+                
+                if _filename.isEmpty || !_filename.hasSuffix(".flr") {
+                    setNeedsDisplay()
+                    return
+                }
+                
+                let fActor = FlareActor()
+                if fActor.loadFromBundle(filename: _filename) {
+                    flareActor = fActor
+                    artboard = fActor.artboard
+                    if let ab = artboard {
+                        ab.initializeGraphics()
+                        ab.overrideColor = self.colorArray
+                        ab.advance(seconds: 0.0)
+                        updateBounds()
+                    }
+                    
+                    updateAnimation(onlyWhenMissing: true)
+                    setNeedsDisplay()
+                    updatePlayState()
+                }
+            }
+        }
+    }
+    
+    public var color: CGColor? {
+        get {
+            return _color
+        }
+        set {
+            if newValue != _color {
+                _color = newValue
+                if let ab = artboard {
+                    ab.overrideColor = self.colorArray
+                }
+                setNeedsDisplay()
+            }
+        }
+    }
+    
+    private var colorArray: [Float]? {
+        get {
+            if let c = _color {
+                if let components = c.components {
+                    return [Float(components[0]),
+                            Float(components[1]),
+                            Float(components[2]),
+                            Float(components[3])]
+                }
+            }
+            return nil
+        }
     }
     
     private func updateBounds() {
@@ -41,63 +114,52 @@ class FlareExample: UIView {
         setupAABB = actor.artboard?.artboardAABB()
     }
     
-    private func setupView() {
-        let path = Bundle.main.path(forResource: "Switch", ofType: "flr")
-        if (path != nil) {
-            print("FILE EXISTS! \(String(describing: path))")
-            if let data = FileManager.default.contents(atPath: path!) {
-                flareActor = FlareActor()
-                flareActor.load(data: data)
-                artboard = flareActor.artboard
-                if artboard != nil {
-                    artboard.initializeGraphics()
-                    // TODO: artboard.overrideColor =
-//                    animation = artboard.getAnimation(name: "walk")
-                    animation = artboard.animations?.first
-                    animation.apply(time: 0.0, artboard: artboard, mix: 1.0)
-                    artboard.advance(seconds: 0.0)
-                    updateBounds()
-                    
-                    lastTime = CACurrentMediaTime()
-                    displayLink = CADisplayLink(target: self, selector: #selector(beginFrame))
-                    displayLink.add(to: .current, forMode: .common)
-                }
-                
+    private func updateAnimation(onlyWhenMissing: Bool = false) {
+//        if let aName = animationName, let ab = artboard {
+//            if let a = ab.getAnimation(name: aName) {
+        if let ab = artboard {
+            if let a = ab.animations?.first {
+                self.animation = a
+                a.apply(time: 0.0, artboard: ab, mix: 1.0)
+                ab.advance(seconds: 0.0)
             }
+            updatePlayState()
         }
-        else {
-            print("NO FILE HERE")
-            let fileManager = FileManager.default
-            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            do {
-                let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
-                print(fileURLs)
-            } catch {
-                print("ERROR ENUMING FILES: \(documentsURL.path), \(error.localizedDescription)")
+    }
+    
+    private func updatePlayState() {
+        if isPlaying && !isHidden {
+            if displayLink == nil {
+                displayLink = CADisplayLink(target: self, selector: #selector(beginFrame))
+                displayLink!.add(to: .current, forMode: .common)
             }
+        } else {
+            if let dl = displayLink {
+                dl.invalidate()
+                displayLink = nil
+            }
+            lastTime = 0.0
         }
     }
     
     @objc private func beginFrame() {
         guard flareActor != nil else {
-//          TODO: updatePlayState()
+            updatePlayState()
             return
         }
         
-        let currentTime = displayLink.timestamp
-        let delta = currentTime - lastTime
-        lastTime = currentTime
-        duration = (duration + delta)
-        if animation.isLooping {
-            duration = duration.truncatingRemainder(dividingBy: animation.duration)
+        if let animation = self.animation, let artboard = self.artboard, let displayLink = self.displayLink {
+            let currentTime = displayLink.timestamp
+            let delta = currentTime - lastTime
+            lastTime = currentTime
+            duration = (duration + delta)
+            if animation.isLooping {
+                duration = duration.truncatingRemainder(dividingBy: animation.duration)
+            }
+            animation.apply(time: duration, artboard: artboard, mix: 1.0)
+            artboard.advance(seconds: delta)
+            setNeedsDisplay()
         }
-        animation.apply(time: duration, artboard: artboard, mix: 1.0)
-        artboard.advance(seconds: delta)
-        setNeedsDisplay()
-//            print("CUR: \(duration)/\(animation.duration)")
-//        if duration > animation.duration {
-//            displayLink.invalidate() // Stops loop.
-//        }
     }
     
     override func draw(_ rect: CGRect) {
@@ -108,13 +170,11 @@ class FlareExample: UIView {
             return
         }
 
-//        backgroundColor = UIColor.red
         backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
         if let bounds = setupAABB {
             let contentWidth = CGFloat(bounds[2] - bounds[0])
             let contentHeight = CGFloat(bounds[3] - bounds[1])
-//            let x = bounds[0] - contentWidth / 2
-//            let y = bounds[1] - contentHeight / 2
+
             let x = contentWidth * CGFloat(artboard.origin.x)
             let y = contentHeight * CGFloat(artboard.origin.y)
             
@@ -126,9 +186,9 @@ class FlareExample: UIView {
             ctx.saveGState()
             ctx.scaleBy(x: scale, y: scale)
             ctx.translateBy(x: x, y: y)
-//            ctx.setFillColor(UIColor.red.cgColor)
-//            ctx.fill(CGRect(x: 0, y: 0, width: Double(contentWidth), height: Double(contentHeight)))
+            
             artboard.draw(context: ctx)
+            
             ctx.restoreGState()
         }
     }

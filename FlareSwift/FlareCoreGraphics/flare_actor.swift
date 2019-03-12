@@ -78,4 +78,18 @@ public class FlareActor: Actor {
     func loadData(_ data: Data) {
         self.load(data: data)
     }
+    
+    public func dispose(){}
+    
+    public func loadFromBundle(filename: String) -> Bool {
+        let endIndex = filename.index(filename.endIndex, offsetBy: -4)
+        let fname = String(filename.prefix(upTo: endIndex))
+        if let path = Bundle.main.path(forResource: fname, ofType: "flr") {
+            if let data = FileManager.default.contents(atPath: path) {
+                self.load(data: data)
+                return true
+            }
+        }
+        return false
+    }
 }
