@@ -90,11 +90,19 @@ class PiecewiseBezier {
             beziers.append(end.curve)
 //            print("ADDING: \(end.curve.description)")
         } else {
+            let idx = start.index
             let length = self.length
-            let currentCurve = self.curves[start.index]
+            let currentCurve = self.curves[idx]
             let currentCurveLength = currentCurve.length
-            let startPosition = length * startT
-            let endPosition = length * endT
+            var startPosition = length * startT
+            var endPosition = length * endT
+            
+            for i in 0 ..< idx {
+                let len = self.curves[i].length
+                startPosition -= len
+                endPosition -= len
+            }
+            
             let ccStart = startPosition/currentCurveLength
             let ccEnd = endPosition/currentCurveLength
             let curveBetween = currentCurve.subcurveBetween(ccStart, ccEnd)
