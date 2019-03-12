@@ -7,7 +7,7 @@
 
 Swift runtime for Flare.
 
-Export Flare files with the _Export to Engine_ menu. In the Engine dropdown, choose _Flutter_ and pick _Binary_.
+Export Flare files with the _Export to Engine_ picking _Binary_ format. (JSON support is in the works)
 
 ## _Alpha Release Notes_
 
