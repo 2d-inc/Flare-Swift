@@ -38,7 +38,6 @@ class FlareExample: UIView {
         super.init(coder: aDecoder)
     }
     
-    
     public var filename: String {
         get {
             return _filename
@@ -94,15 +93,30 @@ class FlareExample: UIView {
     
     private var colorArray: [Float]? {
         get {
-            if let c = _color {
-                if let components = c.components {
-                    return [Float(components[0]),
-                            Float(components[1]),
-                            Float(components[2]),
-                            Float(components[3])]
-                }
+            guard
+                let c = _color,
+                let colorSpaceModel = c.colorSpace?.model,
+                let components = c.components
+            else {
+                return nil
             }
-            return nil
+
+            let fComponents = components.map { Float($0) }
+
+            switch colorSpaceModel {
+            case .rgb:
+                return [fComponents[0],
+                        fComponents[1],
+                        fComponents[2],
+                        fComponents[3]]
+            case .monochrome:
+                return [fComponents[0],
+                        fComponents[0],
+                        fComponents[0],
+                        fComponents[1]]
+            default:
+                return nil
+            }
         }
     }
     
@@ -170,7 +184,6 @@ class FlareExample: UIView {
             return
         }
 
-        backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
         if let bounds = setupAABB {
             let contentWidth = CGFloat(bounds[2] - bounds[0])
             let contentHeight = CGFloat(bounds[3] - bounds[1])

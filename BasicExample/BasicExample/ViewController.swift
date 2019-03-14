@@ -15,6 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
+        flareExample.backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
         // Initiate Flare file load with the filename setter
         flareExample.filename = "Notification Bell.flr"
     }
