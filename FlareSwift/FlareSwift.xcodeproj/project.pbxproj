@@ -289,7 +289,6 @@
 				E453593122282EF000981BD7 /* transform_space.swift */,
 				E453590F22282EC900981BD7 /* FlareSwift.h */,
 				E453591022282EC900981BD7 /* Info.plist */,
-				0BBA0F56223BCD7700B93465 /* FlareView.swift */,
 			);
 			path = FlareSwift;
 			sourceTree = "<group>";
@@ -392,6 +391,7 @@
 		E4535A17222836D700981BD7 /* FlareCoreGraphics */ = {
 			isa = PBXGroup;
 			children = (
+				0BBA0F56223BCD7700B93465 /* FlareView.swift */,
 				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E4535A1D2228370500981BD7 /* flare_actor_paths.swift */,
 				E4535A1A2228370500981BD7 /* flare_actor.swift */,
