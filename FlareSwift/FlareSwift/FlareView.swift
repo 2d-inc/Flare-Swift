@@ -1,43 +1,42 @@
 //
-//  FlareExample.swift
-//  example
+//  FlareView.swift
+//  FlareSwift
 //
-//  Created by Umberto Sonnino on 2/8/19.
+//  Created by Artur Rymarz on 15/03/2019.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import UIKit
-import FlareSwift
 
 @IBDesignable
-class FlareExample: UIView {
+public class FlareView: UIView {
     private var displayLink: CADisplayLink?
-    
+
     private var _filename: String = ""
-    
+
     private var flareActor: FlareActor!
     private var artboard: FlareArtboard?
     private var animation: ActorAnimation?
     private var setupAABB: AABB!
     private var animationName: String?
-    
+
     private var lastTime = 0.0
     private var duration = 0.0
     private var animationTime = 0.0
     private var isPlaying = true
     private var shouldClip = true
-    
+
     private var _color: CGColor?
     // TODO: animation layers
-    
-    override init(frame: CGRect) {
+
+    public override init(frame: CGRect) {
         super.init(frame: frame)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public var filename: String {
         get {
             return _filename
@@ -50,13 +49,13 @@ class FlareExample: UIView {
                     flareActor = nil
                     artboard = nil
                 }
-//                animationLayers.removeAll()
-                
+                //                animationLayers.removeAll()
+
                 if _filename.isEmpty || !_filename.hasSuffix(".flr") {
                     setNeedsDisplay()
                     return
                 }
-                
+
                 let fActor = FlareActor()
                 if fActor.loadFromBundle(filename: _filename) {
                     flareActor = fActor
@@ -67,7 +66,7 @@ class FlareExample: UIView {
                         ab.advance(seconds: 0.0)
                         updateBounds()
                     }
-                    
+
                     updateAnimation(onlyWhenMissing: true)
                     setNeedsDisplay()
                     updatePlayState()
@@ -75,7 +74,7 @@ class FlareExample: UIView {
             }
         }
     }
-    
+
     public var color: CGColor? {
         get {
             return _color
@@ -90,7 +89,7 @@ class FlareExample: UIView {
             }
         }
     }
-    
+
     private var colorArray: [Float]? {
         get {
             guard
@@ -119,18 +118,18 @@ class FlareExample: UIView {
             }
         }
     }
-    
+
     private func updateBounds() {
         guard let actor = flareActor else {
             return
         }
-        
+
         setupAABB = actor.artboard?.artboardAABB()
     }
-    
+
     private func updateAnimation(onlyWhenMissing: Bool = false) {
-//        if let aName = animationName, let ab = artboard {
-//            if let a = ab.getAnimation(name: aName) {
+        //        if let aName = animationName, let ab = artboard {
+        //            if let a = ab.getAnimation(name: aName) {
         if let ab = artboard {
             if let a = ab.animations?.first {
                 self.animation = a
@@ -140,7 +139,7 @@ class FlareExample: UIView {
             updatePlayState()
         }
     }
-    
+
     private func updatePlayState() {
         if isPlaying && !isHidden {
             if displayLink == nil {
@@ -155,13 +154,13 @@ class FlareExample: UIView {
             lastTime = 0.0
         }
     }
-    
+
     @objc private func beginFrame() {
         guard flareActor != nil else {
             updatePlayState()
             return
         }
-        
+
         if let animation = self.animation, let artboard = self.artboard, let displayLink = self.displayLink {
             let currentTime = displayLink.timestamp
             let delta = currentTime - lastTime
@@ -175,34 +174,34 @@ class FlareExample: UIView {
             setNeedsDisplay()
         }
     }
-    
-    override func draw(_ rect: CGRect) {
-        guard let artboard = flareActor?.artboard else {
-            return
-        }
-        guard let ctx = UIGraphicsGetCurrentContext() else {
+
+    override public func draw(_ rect: CGRect) {
+        guard
+            let ctx = UIGraphicsGetCurrentContext(),
+            let artboard = flareActor?.artboard,
+            let bounds = setupAABB
+        else {
             return
         }
 
-        if let bounds = setupAABB {
-            let contentWidth = CGFloat(bounds[2] - bounds[0])
-            let contentHeight = CGFloat(bounds[3] - bounds[1])
+        let contentWidth = CGFloat(bounds[2] - bounds[0])
+        let contentHeight = CGFloat(bounds[3] - bounds[1])
 
-            let x = contentWidth * CGFloat(artboard.origin.x)
-            let y = contentHeight * CGFloat(artboard.origin.y)
-            
-            // Contain the artboard
-            let scaleX = rect.width / contentWidth
-            let scaleY = rect.height / contentHeight
-            let scale = min(scaleX, scaleY)
-            
-            ctx.saveGState()
-            ctx.scaleBy(x: scale, y: scale)
-            ctx.translateBy(x: x, y: y)
-            
-            artboard.draw(context: ctx)
-            
-            ctx.restoreGState()
-        }
+        let x = contentWidth * CGFloat(artboard.origin.x)
+        let y = contentHeight * CGFloat(artboard.origin.y)
+
+        // Contain the artboard
+        let scaleX = rect.width / contentWidth
+        let scaleY = rect.height / contentHeight
+        let scale = min(scaleX, scaleY)
+
+        ctx.saveGState()
+        ctx.scaleBy(x: scale, y: scale)
+        ctx.translateBy(x: x, y: y)
+
+        artboard.draw(context: ctx)
+
+        ctx.restoreGState()
     }
+    
 }

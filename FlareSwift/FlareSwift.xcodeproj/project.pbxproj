@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BBA0F57223BCD7700B93465 /* FlareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBA0F56223BCD7700B93465 /* FlareView.swift */; };
 		E41D08AE222E8E6600AC8687 /* flare_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D08AD222E8E6600AC8687 /* flare_gradient_radial_stroke.swift */; };
 		E453591622282EC900981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E453590C22282EC900981BD7 /* FlareSwift.framework */; };
 		E453591B22282EC900981BD7 /* FlareSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453591A22282EC900981BD7 /* FlareSwiftTests.swift */; };
@@ -115,6 +116,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0BBA0F56223BCD7700B93465 /* FlareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareView.swift; sourceTree = "<group>"; };
 		E41D08AD222E8E6600AC8687 /* flare_gradient_radial_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_gradient_radial_stroke.swift; sourceTree = "<group>"; };
 		E453590C22282EC900981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E453590F22282EC900981BD7 /* FlareSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareSwift.h; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				E453593122282EF000981BD7 /* transform_space.swift */,
 				E453590F22282EC900981BD7 /* FlareSwift.h */,
 				E453591022282EC900981BD7 /* Info.plist */,
+				0BBA0F56223BCD7700B93465 /* FlareView.swift */,
 			);
 			path = FlareSwift;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				E453597B22282EF200981BD7 /* actor_triangle.swift in Sources */,
 				E453598022282EF200981BD7 /* actor_event.swift in Sources */,
 				E453596D22282EF200981BD7 /* actor_rotation_constraint.swift in Sources */,
+				0BBA0F57223BCD7700B93465 /* FlareView.swift in Sources */,
 				E46CDCB322316FB6002C40A1 /* cubic_bezier.swift in Sources */,
 				E45359AC22282EF200981BD7 /* actor_shape.swift in Sources */,
 				E45359A122282EF200981BD7 /* hold.swift in Sources */,
