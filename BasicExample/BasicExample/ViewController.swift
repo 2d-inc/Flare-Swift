@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import FlareSwift
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var flareExample: FlareExample!
+    @IBOutlet weak var flareExample: FlareView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
