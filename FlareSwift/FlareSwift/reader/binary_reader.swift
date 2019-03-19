@@ -155,6 +155,13 @@ class BinaryReader : StreamReader {
         return Int(readUint16(label: label))
     }
     
+    func readAsset() -> [UInt8] {
+        let length = Int(readUint32())
+        var bytes = [UInt8](repeating: UInt8(0), count: length)
+        readUint8Array(list: &bytes, length: length, offset: 0)
+        return bytes
+    }
+    
     func openArray(label: String? = nil) {}
     
     func closeArray() {}

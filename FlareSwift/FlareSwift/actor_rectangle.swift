@@ -58,7 +58,7 @@ public class ActorRectangle: ActorProceduralPath {
         set {
             if newValue != _radius {
                 _radius = newValue
-                markPathDirty()
+                invalidateDrawable()
             }
         }
     }

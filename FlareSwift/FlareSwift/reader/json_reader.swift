@@ -218,6 +218,12 @@ class JSONReader : StreamReader {
         return r != nil ? r! + 1 : 0
     }
     
+    func readAsset() -> [UInt8] {
+        let encodedAsset = readString(label: "data")
+        let decodedData = Data(base64Encoded: encodedAsset)!
+        return Array<UInt8>(decodedData)
+    }
+    
     func openArray(label: String?) {
         let r: Array<Any> = readProp(label)!
         _context.insert(r, at: 0)

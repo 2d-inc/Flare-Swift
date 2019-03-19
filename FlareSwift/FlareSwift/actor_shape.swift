@@ -8,17 +8,19 @@
 
 import Foundation
 
-public class ActorShape: ActorNode , ActorDrawable {
-    var _isHidden: Bool = false
+public class ActorShape: ActorNode, ActorDrawable {
+    
     var _strokes = [ActorStroke]()
     var _fills = [ActorFill]()
-    var _clipShapes = [[ActorShape]]()
     
+    public var isHidden: Bool = false
+    public var _clipShapes: [[ActorShape]]?
     public var _drawOrder: Int = -1
     public var drawIndex: Int = -1
+    public var blendModeId: Int = -1
     
     public var clipShapes: [[ActorShape]] {
-        return _clipShapes
+        return _clipShapes ?? []
     }
     
     public var fill: ActorFill? {
@@ -37,35 +39,13 @@ public class ActorShape: ActorNode , ActorDrawable {
         return _strokes
     }
     
-    public var drawOrder: Int {
-        get {
-            return _drawOrder
-        }
-        set {
-            if _drawOrder != newValue {
-                _drawOrder = newValue
-                artboard!.markDrawOrderDirty()
-            }
-        }
-    }
-    
-    public var isHidden: Bool {
-        return _isHidden
-    }
-    
-    public var doesDraw: Bool {
-        return !_isHidden && !self.renderCollapsed
-    }
-    
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
         invalidateShape()
     }
     
     func copyShape(_ shape: ActorShape, _ ab: ActorArtboard) {
-        copyNode(shape, ab)
-        self.drawOrder = shape.drawOrder
-        self._isHidden = shape._isHidden
+        self.copyDrawable(shape, ab)
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
@@ -76,23 +56,25 @@ public class ActorShape: ActorNode , ActorDrawable {
     
     public func computeAABB() -> AABB {
         var aabb: AABB? = nil
-        for clips in _clipShapes {
-            for node in clips {
-                let bounds = node.computeAABB()
-                if aabb == nil {
-                    aabb = bounds;
-                } else {
-                    if (bounds[0] < aabb![0]) {
-                        aabb![0] = bounds[0];
-                    }
-                    if (bounds[1] < aabb![1]) {
-                        aabb![1] = bounds[1];
-                    }
-                    if (bounds[2] > aabb![2]) {
-                        aabb![2] = bounds[2];
-                    }
-                    if (bounds[3] > aabb![3]) {
-                        aabb![3] = bounds[3];
+        if let cs = _clipShapes {
+            for clips in cs {
+                for node in clips {
+                    let bounds = node.computeAABB()
+                    if aabb == nil {
+                        aabb = bounds;
+                    } else {
+                        if (bounds[0] < aabb![0]) {
+                            aabb![0] = bounds[0];
+                        }
+                        if (bounds[1] < aabb![1]) {
+                            aabb![1] = bounds[1];
+                        }
+                        if (bounds[2] > aabb![2]) {
+                            aabb![2] = bounds[2];
+                        }
+                        if (bounds[3] > aabb![3]) {
+                            aabb![3] = bounds[3];
+                        }
                     }
                 }
             }
@@ -183,10 +165,7 @@ public class ActorShape: ActorNode , ActorDrawable {
     }
     
     func readShape(_ artboard: ActorArtboard, _ reader: StreamReader) {
-        self.readNode(artboard, reader)
-        _isHidden = !reader.readBool(label: "isVisible")
-        _ = reader.readUint8(label: "blendMode") // Necessary read to keep it aligned
-        drawOrder = Int(reader.readUint16(label: "drawOrder"))
+        self.readDrawable(artboard, reader)
     }
     
     func addStroke(_ stroke: ActorStroke) {
@@ -195,26 +174,5 @@ public class ActorShape: ActorNode , ActorDrawable {
     
     func addFill(_ fill: ActorFill) {
         _fills.append(fill)
-    }
-    
-    override func completeResolve() {
-        _clipShapes = [[ActorShape]]()
-        let clippers = self.allClips
-        for clips in clippers {
-            var shapes = [ActorShape]()
-            for clip in clips {
-                _ = clip.node!.all {
-                    (n: ActorNode) -> Bool in
-                        if let shape = n as? ActorShape {
-                            shapes.append(shape)
-                        }
-                        return true
-                }
-            }
-            if shapes.count > 0 {
-                _clipShapes.append(shapes)
-            }
-        }
-    }
-    
+    }    
 }

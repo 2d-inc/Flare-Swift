@@ -1,5 +1,5 @@
 //
-//  flare_cg_extensions.swift
+//  CoreGraphics+Flare.swift
 //  FlareSwift
 //
 //  Created by Umberto Sonnino on 2/28/19.
@@ -8,21 +8,27 @@
 
 import Foundation
 
-// Helper class to integrate a static factory constructor for the two different SDKs
+/// Cross Platform Images.
+/// Credit to: https://gist.github.com/JohnSundell/05f837a3f901630e65e3652945424ba5
+#if os(macOS)
+import Cocoa
+typealias UIImage = NSImage
+#endif
 
+/// Helper class extension to integrate a static factory constructor for the two different SDKs
 extension CGColor {
-    #if os(iOS)
+#if os(iOS)
     static var black: CGColor = UIColor.black.cgColor
     static var white: CGColor = UIColor.white.cgColor
     static var clear: CGColor = UIColor.clear.cgColor
     static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
         return UIColor.init(red: red, green: green, blue: blue, alpha: alpha).cgColor
     }
-    #elseif os(OSX)
+#elseif os(macOS)
     static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
         return CGColor(red: red, green: gree, blue: blue, alpha: alpha)
     }
-    #endif
+#endif
  
     static func toFloatArray(color: CGColor?) -> [Float]? {
         if let c = color {
@@ -38,6 +44,8 @@ extension CGColor {
     
 }
 
+/// Additional functionality added to CGPath for debugging purposes.
+/// Credit to: https://stackoverflow.com/a/36374209
 extension CGPath {
     func forEach( body: @escaping @convention(block) (CGPathElement) -> Void) {
         typealias Body = @convention(block) (CGPathElement) -> Void

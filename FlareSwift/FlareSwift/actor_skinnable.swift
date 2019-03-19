@@ -9,14 +9,25 @@
 import Foundation
 
 class SkinnedBone {
-    var boneIdx: Int = 0
-    var node: ActorNode?
+    var boneIdx: Int!
+    var node: ActorNode!
     var bind: Mat2D = Mat2D()
     var inverseBind = Mat2D()
 }
 
-public class ActorSkinnable: ActorNode {
-    var _connectedBones: [SkinnedBone]?
+protocol ActorSkinnable: class {
+    var skin: ActorSkin? { get set }
+    var _connectedBones: [SkinnedBone]? { get set }
+    
+    func invalidateDrawable()
+    
+    // From ActorNode
+    var worldTransformOverride: Mat2D? { get set }
+    
+    func readNode(_ artboard: ActorArtboard, _ reader: StreamReader)
+}
+
+extension ActorSkinnable {
     
     var connectedBones: [SkinnedBone]? {
         return _connectedBones
@@ -55,9 +66,7 @@ public class ActorSkinnable: ActorNode {
         }
     }
     
-    override func resolveComponentIndices(_ components: [ActorComponent?]) {
-        super.resolveComponentIndices(components)
-        
+    func resolveSkinnable(_ components: [ActorComponent?]) {
         if let cb = _connectedBones {
             for i in 0 ..< cb.count {
                 let bc = cb[i]
@@ -67,8 +76,6 @@ public class ActorSkinnable: ActorNode {
     }
     
     func copySkinnable(_ node: ActorSkinnable, _ resetArtboard: ActorArtboard) {
-        copyNode(node, resetArtboard)
-        
         if let cb = node._connectedBones {
             _connectedBones = [SkinnedBone]()
             for i in 0 ..< cb.count {

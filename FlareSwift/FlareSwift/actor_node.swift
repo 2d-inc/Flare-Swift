@@ -162,7 +162,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var renderCollapsed: Bool {
+    public var renderCollapsed: Bool {
         get {
             return self._renderCollapsed
         }
@@ -240,7 +240,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    func readNode(_ artboard: ActorArtboard, _ reader: StreamReader) {
+    public func readNode(_ artboard: ActorArtboard, _ reader: StreamReader) {
         self.readComponent(artboard, reader)
         reader.readFloat32ArrayOffset(ar: &self._translation.values, length: 2, offset: 0, label: "translation")
         self._rotation = Double(reader.readFloat32(label: "rotation"))
@@ -273,7 +273,7 @@ public class ActorNode: ActorComponent {
         _children!.append(node)
     }
     
-    func copyNode(_ node: ActorNode, _ resetArtboard: ActorArtboard) {
+    public func copyNode(_ node: ActorNode, _ resetArtboard: ActorArtboard) {
         copyComponent(node, resetArtboard)
         _transform = Mat2D(clone: node._transform)
         _worldTransform = Mat2D(clone: node._worldTransform)

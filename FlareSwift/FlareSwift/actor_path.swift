@@ -133,10 +133,10 @@ public extension ActorBasePath {
         return AABB.init(fromValues: minX, minY, maxX, maxY)
     }
     
-    func markPathDirty() {
-        invalidatePath()
+    func invalidateDrawable() {
+        self.invalidatePath()
         if parent is ActorShape {
-            parent!.invalidateShape()
+            parent?.invalidateShape()
         }
     }
 }
@@ -161,7 +161,7 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
         set {
             if newValue != _width {
                 _width = newValue
-                markPathDirty()
+                invalidateDrawable()
             }
         }
     }
@@ -173,7 +173,7 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
         set {
             if newValue != _height {
                 _height = newValue
-                markPathDirty()
+                invalidateDrawable()
             }
         }
     }
@@ -198,30 +198,27 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
         super.onDirty(dirt)
         // We transformed, make sure parent is invalidated.
         if parent is ActorShape {
-            parent?.invalidateShape()
+            parent!.invalidateShape()
         }
     }
 }
 
-public class ActorPath: ActorSkinnable, ActorBasePath {
-    var _isHidden: Bool = false
-    var _isClosed: Bool = false
+public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
+    public var isHidden: Bool = false
+    private(set) var _isClosed: Bool = false
     var _points: [PathPoint] = []
     var vertexDeform: [Float32]?
     var skin: ActorSkin?
     let VertexDeformDirty: UInt8 = 1 << 1
+    var _connectedBones: [SkinnedBone]?
     
     public var points: [PathPoint] {
         return _points
     }
     
-    public var pathTransform: Mat2D? {
-        return self.isConnectedToBones ? nil : worldTransform
-    }
+    public var pathTransform: Mat2D? { return self.isConnectedToBones ? nil : worldTransform }
     
-    var isPathInWorldSpace: Bool {
-        return self.isConnectedToBones
-    }
+    var isPathInWorldSpace: Bool { return self.isConnectedToBones }
     
     var deformedPoints: [PathPoint]? {
         if !isConnectedToBones || skin == nil {
@@ -236,14 +233,12 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
         return deformed
     }
     
-    public override init() {
-        
-    }
+    public override init() {}
     
     override func onDirty(_ dirt: UInt8) {
         super.onDirty(dirt)
         if parent is ActorShape {
-            parent?.invalidateShape()
+            parent!.invalidateShape()
         }
     }
     
@@ -281,7 +276,7 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
                 readIdx += 1
             }
         }
-        vertexDeform = vertices;
+        vertexDeform = vertices
     }
     
     public func invalidatePath() {
@@ -322,7 +317,7 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
                 }
             }
         }
-        markPathDirty()
+        invalidateDrawable()
         
         super.update(dirt: dirt)
     }
@@ -330,7 +325,7 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
     func readPath(_ artboard: ActorArtboard, _ reader: StreamReader) {
         self.readSkinnable(artboard, reader)
         
-        self._isHidden = !reader.readBool(label: "isVisible")
+        self.isHidden = !reader.readBool(label: "isVisible")
         self._isClosed = reader.readBool(label: "isClosed")
         
         reader.openArray(label: "points")
@@ -370,7 +365,7 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
     func copyPath(_ node: ActorBasePath, _ resetArtboard: ActorArtboard) {
         let nodePath = node as! ActorPath
         copySkinnable(nodePath, resetArtboard)
-        _isHidden = nodePath._isHidden
+        isHidden = nodePath.isHidden
         _isClosed = nodePath._isClosed
         
         let pointCount = nodePath._points.count
@@ -381,7 +376,7 @@ public class ActorPath: ActorSkinnable, ActorBasePath {
         }
         
         if let vd = nodePath.vertexDeform {
-            vertexDeform = vd // TODO: Test copy b/c Array is a value type?
+            vertexDeform = vd
         }
     }
     

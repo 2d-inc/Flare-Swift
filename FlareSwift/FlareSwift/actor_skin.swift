@@ -20,13 +20,10 @@ class ActorSkin: ActorComponent {
     }
     
     override func update(dirt: UInt8) {
-        guard let path = parent as? ActorPath else {
-            print("SKIN PARENT WASN'T AN ACTORPATH!")
-            return
-        }
+        let skinnable = parent as! ActorSkinnable
         
-        if path.isConnectedToBones {
-            let connectedBones = path.connectedBones
+        if skinnable.isConnectedToBones {
+            let connectedBones = skinnable.connectedBones
             let length = (connectedBones!.count + 1) * 6
             if _boneMatrices == nil || _boneMatrices!.count != length {
                 _boneMatrices = Array<Float32>(repeating: 0.0, count: length)
@@ -77,18 +74,16 @@ class ActorSkin: ActorComponent {
             }
         }
         
-        path.markPathDirty();
+        skinnable.invalidateDrawable()
     }
     
     override func completeResolve() {
-        guard let path = parent as? ActorPath else {
-            return
-        }
+        let skinnable = parent as! ActorSkinnable
         
-        path.skin = self
-        _ = artboard!.addDependency(self, path)
-        if path.isConnectedToBones {
-            let connectedBones = path.connectedBones
+        skinnable.skin = self
+        _ = artboard!.addDependency(self, skinnable as! ActorComponent)
+        if skinnable.isConnectedToBones {
+            let connectedBones = skinnable.connectedBones
             for skinnedBone in connectedBones! {
                 _ = artboard!.addDependency(self, skinnedBone.node!)
                 

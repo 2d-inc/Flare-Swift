@@ -50,7 +50,7 @@ class KeyFrameDrawOrder: KeyFrame {
         }
         
         for doi in _orderedNodes! {
-            if var drawable = artboard[doi.componentIndex] as? ActorDrawable {
+            if let drawable = artboard[doi.componentIndex] as? ActorDrawable {
                 drawable.drawOrder = doi.order
             } else {
                 fatalError("Not a drawable?? \(artboard[doi.componentIndex]?.name ?? "UNKNOWN COMPONENT")")

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StreamReader {
+public protocol StreamReader: class {
     var blockType: Int { get set }
     
     
@@ -38,6 +38,8 @@ public protocol StreamReader {
     func readBool(label: String?) -> Bool
     
     func readId(label: String?) -> Int
+    
+    func readAsset() -> [UInt8]
     
     func openArray(label: String?)
     func closeArray()

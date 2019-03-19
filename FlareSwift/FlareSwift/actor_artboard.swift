@@ -454,6 +454,12 @@ public class ActorArtboard {
                     break;
                     
                 case BlockTypes.ActorImage:
+                    component = actor.makeImageNode()
+                    let image = component as! ActorImage
+                    image.readImage(self, nodeBlock)
+                    if image._textureIndex > actor.maxTextureIndex {
+                        actor.maxTextureIndex = image._textureIndex
+                    }
 //                    component = ActorImage.read(self, nodeBlock, actor.makeImageNode());
 //                    if ((component as ActorImage).textureIndex > actor.maxTextureIndex) {
 //                        actor.maxTextureIndex = (component as ActorImage).textureIndex;

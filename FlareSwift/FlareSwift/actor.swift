@@ -13,10 +13,12 @@ public protocol Actor: class {
     var _version: Int { get set }
     var _artboardCount: Int { get set }
     var _artboards: [ActorArtboard?] { get set }
+    var images: [Data]? { get set }
     
     func load(data: Data)
     func copyActor(actor: Actor)
     func readArtboardsBlock(block: StreamReader)
+    func readAtlasesBlock(block: StreamReader) -> [Data]
     
     func makeArtboard() -> ActorArtboard
     func makeNode() -> ActorNode
@@ -55,14 +57,18 @@ public extension Actor {
             fatalError("NOT A VALID FLARE FILE.")
         }
         if let reader = ReaderFactory.factory(data: data) {
-            dump(data)
             _version = reader.readVersion()
-            print("JUST GOT VERSION \(self._version)")
-            while var block = reader.readNextBlock(blockTypes: BlockTypesMap) {
+            
+            while let block = reader.readNextBlock(blockTypes: BlockTypesMap) {
                 switch block.blockType {
                 case BlockTypes.Artboards:
                     readArtboardsBlock(block: block)
                     break
+                    
+                case BlockTypes.Atlases:
+                    self.images = readAtlasesBlock(block: block)
+                    break
+                    
                 default:
                     print("BlockType \(block.blockType), while reading Actor!")
                     break
@@ -110,6 +116,37 @@ public extension Actor {
             }
         }
     }
+    
+    func readAtlasesBlock(block: StreamReader) -> [Data] {
+        let isOOB = block.readBool(label: "isOOB")
+        block.openArray(label: "data")
+        let numAtlases = block.readUint16Length()
+        if isOOB {
+            var atlases = [Data]()
+            for _ in 0 ..< numAtlases {
+                let filename = block.readString(label: "data")
+                let dotIdx = filename.lastIndex(of: ".")!
+                let extIdx = filename.index(dotIdx, offsetBy: 1)
+                let fname = String(filename.prefix(upTo: dotIdx))
+                let type = String(filename.suffix(from: extIdx))
+                let path = Bundle.main.path(forResource: fname, ofType: type)!
+                let data = FileManager.default.contents(atPath: path)!
+                atlases.append(data)
+            }
+            
+            return atlases
+        } else {
+            var inBandAssets = [Data]()
+            for _ in 0 ..< numAtlases {
+                let bytes = block.readAsset()
+                let data = Data(bytes: bytes)
+                inBandAssets.append(data)
+            }
+            
+            return inBandAssets
+        }
+    }
+    
     func makeArtboard() -> ActorArtboard {
         return ActorArtboard(actor: self)
     }

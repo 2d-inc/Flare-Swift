@@ -63,7 +63,7 @@ public class ActorStar: ActorProceduralPath {
         set {
             if newValue != _innerRadius {
                 _innerRadius = newValue
-                markPathDirty()
+                invalidateDrawable()
             }
         }
     }

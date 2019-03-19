@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FlareShape: ActorShape {
+class FlareShape: ActorShape, FlareDrawable {
     private var _isValid = false
     private var _path = CGMutablePath()
     
@@ -32,7 +32,6 @@ class FlareShape: ActorShape {
                         let tx = CGFloat(pathTransform[4])
                         let ty = CGFloat(pathTransform[5])
                         let cgAffine = CGAffineTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
-//                        _path.addPath(flarePath.path, transform: cgAffine)
                         piecewise.transform = cgAffine
                     }
                     
