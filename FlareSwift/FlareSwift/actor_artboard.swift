@@ -401,7 +401,7 @@ public class ActorArtboard {
         _clipContents = reader.readBool(label: "clipContents");
         reader.readFloat32Array(ar: &_color, label: "color");
         
-        while var block = reader.readNextBlock(blockTypes: BlockTypesMap) {
+        while let block = reader.readNextBlock(blockTypes: BlockTypesMap) {
             switch (block.blockType) {
             case BlockTypes.Components:
                 readComponentsBlock(block)
