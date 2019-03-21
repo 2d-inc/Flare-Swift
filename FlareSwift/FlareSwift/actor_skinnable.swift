@@ -41,8 +41,6 @@ extension ActorSkinnable {
     }
     
     func readSkinnable(_ artboard: ActorArtboard, _ reader: StreamReader) {
-        self.readNode(artboard, reader)
-        
         reader.openArray(label: "bones")
         let numConnectedBones = Int(reader.readUint8Length())
         if numConnectedBones != 0 {

@@ -226,4 +226,19 @@ public class Mat2D: Equatable, Hashable {
         }
     }
     
+    public var description: String {
+        var res = ""
+        
+        let cols = 3
+        let rows = 2
+        
+        for i in 0..<rows {
+            for j in 0..<cols {
+                res += String(_buffer[i * cols + j])
+            }
+        }
+        
+        return res
+    }
+    
 }

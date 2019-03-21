@@ -7,26 +7,18 @@
 //
 
 import Foundation
+import CoreGraphics
 import MetalKit
 
-class Vertex {
-    var x,y: Float
-    var s,t: Float
-    
-    init(_ x: Float, _ y: Float, _ s: Float, _ t: Float) {
-        self.x = x
-        self.y = y
-        self.s = s
-        self.t = t
-    }
-    
-}
 
 class FlareImage: ActorImage, FlareDrawable {
-    let device: MTLDevice
-    let _textureLoader: MTKTextureLoader
-    var _samplerState: MTLSamplerState
-    var _mtlBuffer: MTLBuffer!
+    
+    let _metalController: MetalController
+    let _samplerState: MTLSamplerState
+    let _metalLayer: CAMetalLayer!
+    
+    var _metalVertexBuffer: MTLBuffer!
+    var _metalIndexBuffer: MTLBuffer!
     var _texture: MTLTexture!
     
     var _vertexBuffer: [Float]?
@@ -34,9 +26,14 @@ class FlareImage: ActorImage, FlareDrawable {
     var _indices: [Int32]?
     var _metalVertices: [Float]?
     
-    init(device: MTLDevice, textureLoader: MTKTextureLoader) {
-        self.device = device
-        self._textureLoader = textureLoader
+    init(_ metalController: MetalController) {
+        self._metalController = metalController
+
+        _metalLayer = CAMetalLayer()
+        _metalLayer.device = self._metalController.device!
+        _metalLayer.pixelFormat = .bgra8Unorm
+        _metalLayer.framebufferOnly = true
+        
         let samplerDesc = MTLSamplerDescriptor()
         samplerDesc.minFilter = .nearest
         samplerDesc.magFilter = .nearest
@@ -48,11 +45,11 @@ class FlareImage: ActorImage, FlareDrawable {
         samplerDesc.normalizedCoordinates = true
         samplerDesc.lodMinClamp = 0
         samplerDesc.lodMaxClamp = .greatestFiniteMagnitude
-        _samplerState = device.makeSamplerState(descriptor: samplerDesc)!
+        _samplerState = _metalController.device.makeSamplerState(descriptor: samplerDesc)!
         super.init()
     }
     
-    var _identityMatrix: [Float64] = [
+    let _identityMatrix: [Float64] = [
         1,0,0,0,
         0,1,0,0,
         0,0,1,0,
@@ -74,8 +71,54 @@ class FlareImage: ActorImage, FlareDrawable {
         _indices = nil
     }
     
-    func draw(context: CGContext) {
-        // TODO:
+    private func render(_ on: CALayer) {
+        guard self.updateVertices() else {
+            return
+        }
+        
+        guard let drawable = _metalLayer.nextDrawable() else {
+            return
+        }
+        
+        on.addSublayer(_metalLayer)
+        
+        let commandQ = _metalController.commandQueue!
+        let pipelineState = _metalController.pipelineState!
+        
+        let renderDescriptor = MTLRenderPassDescriptor()
+        renderDescriptor.colorAttachments[0].texture = drawable.texture
+        renderDescriptor.colorAttachments[0].loadAction = .clear
+        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.25, green: 0.85, blue: 0.6, alpha: 1.0)
+//        renderDescriptor.colorAttachments[0].storeAction = .store
+        
+        let commandBuffer = commandQ.makeCommandBuffer()!
+        
+        let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
+        renderEncoder.setRenderPipelineState(pipelineState)
+        renderEncoder.setVertexBuffer(_metalVertexBuffer, offset: 0, index: 0)
+        renderEncoder.setFragmentTexture(_texture, index: 0)
+        renderEncoder.setFragmentSamplerState(_samplerState, index: 0)
+        
+        // TODO: MVP matrices into Uniform buffer
+        renderEncoder.drawIndexedPrimitives(
+            type: .triangle,
+            indexCount: triangles!.count,
+            indexType: .uint16,
+            indexBuffer: self._metalIndexBuffer,
+            indexBufferOffset: 0
+        )
+        renderEncoder.endEncoding()
+        
+        commandBuffer.present(drawable)
+        UIGraphicsGetCurrentContext()
+        commandBuffer.commit()
+    }
+    
+//    func draw(context: CGContext) {
+    func draw(on: CALayer) {
+        autoreleasepool{
+            self.render(on)
+        }
     }
     
     override func initializeGraphics() {
@@ -83,45 +126,25 @@ class FlareImage: ActorImage, FlareDrawable {
             return
         }
         
-        _vertexBuffer = makeVertexPositionBuffer()
+//        _vertexBuffer = makeVertexPositionBuffer()
         _uvBuffer = makeVertexUVBuffer()
         _indices = tris.map({ Int32($0) })
         updateVertexUVBuffer(buffer: &_uvBuffer!)
+        _ = self.updateVertices()
 //        let count = vertexCount
 //        var idx = 0
         
         // Create Texture
         let actor = (artboard!.actor as! FlareActor)
         let currentTextureData = actor.images![textureIndex]
-        self._texture = try! _textureLoader.newTexture(data: currentTextureData, options:[MTKTextureLoader.Option.SRGB: 0])
+        let loader = self._metalController.textureLoader!
+        self._texture = try! loader.newTexture(data: currentTextureData, options:[
+            MTKTextureLoader.Option.generateMipmaps: true,
+            MTKTextureLoader.Option.allocateMipmaps: true
+            ]
+        )
         
         // TODO: set blendMode
-/*        ui.Image image = (artboard.actor as FlutterActor).images[textureIndex];
-        
-        // SKIA requires texture coordinates in full image space, not traditional normalized uv coordinates.
-        for (int i = 0; i < count; i++) {
-            _uvBuffer[idx] = _uvBuffer[idx] * image.width;
-            _uvBuffer[idx + 1] = _uvBuffer[idx + 1] * image.height;
-            idx += 2;
-        }
-        
-        if (this.sequenceUVs != null) {
-            for (int i = 0; i < this.sequenceUVs.length; i++) {
-                this.sequenceUVs[i++] *= image.width;
-                this.sequenceUVs[i] *= image.height;
-            }
-        }
-        
-        _paint = ui.Paint()
-            ..blendMode = blendMode
-            ..shader = ui.ImageShader(
-            (artboard.actor as FlutterActor).images[textureIndex],
-            ui.TileMode.clamp,
-            ui.TileMode.clamp,
-            _identityMatrix);
-            _paint.filterQuality = ui.FilterQuality.low;
-            _paint.isAntiAlias = true;
- */
     }
     
     override func invalidateDrawable() {
@@ -129,72 +152,100 @@ class FlareImage: ActorImage, FlareDrawable {
     }
     
     func updateVertices() -> Bool {
-        guard triangles != nil else {
+        guard let tris = triangles else {
             return false
         }
         
+        guard self._vertexBuffer == nil else {
+            // Still valid.
+            return true
+        }
+        
+        self._vertexBuffer = makeVertexPositionBuffer()
         self.updateVertexPositionBuffer(buffer: &_vertexBuffer!, isSkinnedDeformInWorld: false)
         
         var readIdx = 0
         let vb = _vertexBuffer!
         let ub = _uvBuffer!
         
-        self._metalVertices = [Float]()
+        let bounds = self.bounds
+        let width = bounds[2] - bounds[0]
+        let height = bounds[3] - bounds[1]
+        
+        var vertices = [Float]()
         for _ in 0 ..< vertexCount {
-            self._metalVertices! += [
-                vb[readIdx], vb[readIdx+1], // x,y
-                ub[readIdx], ub[readIdx+1]  // u,v
-            ]
+            let x = vb[readIdx]/width
+            let y = vb[readIdx+1]/height
+            let u = ub[readIdx],
+                v = ub[readIdx+1]
+            vertices += [ x, y, u, v ]
             
             readIdx += 2
         }
         
+        // TODO: optimize this w/ swapping buffers.
         // Create vertex buffer
-        let bufferLength = self._metalVertices!.count * MemoryLayout.size(ofValue: self._metalVertices![0])
-        self._mtlBuffer = device.makeBuffer(bytes: self._metalVertices!, length: bufferLength, options: [])!
+        let bufferLength = vertices.count * MemoryLayout.size(ofValue: vertices[0])
+        let device = self._metalController.device!
+        self._metalVertexBuffer = device.makeBuffer(bytes: vertices, length: bufferLength, options: [])!
+        self._metalVertices = vertices
+        
+        let indexBufferSize = tris.count * MemoryLayout.size(ofValue: tris[0])
+        print(tris)
+        self._metalIndexBuffer = device.makeBuffer(bytes: tris, length: indexBufferSize, options: [])
+       
+        print("TRANSLATION AT: \(self.translation.description) ADDING A FRAME OF WIDTH:\(width), HEIGHT:\(height)")
+        
+//        print("WILL NEED TO BE TRANSFORMED BY: \(self.worldTransform.description)")
+        self._metalLayer.frame = CGRect(x: CGFloat(50), y: CGFloat(50), width: CGFloat(width), height: CGFloat(height/2.1))
         
         return true
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceNode = FlareImage(device: self.device, textureLoader: self._textureLoader)
+        let instanceNode = FlareImage(self._metalController)
         instanceNode.copyImage(self, resetArtboard)
         return instanceNode
     }
     
-    override func computeAABB() -> AABB {
-        _ = self.updateVertices()
-        
-        var minX = Float.greatestFiniteMagnitude
-        var minY = Float.greatestFiniteMagnitude
-        var maxX = -Float.greatestFiniteMagnitude
-        var maxY = -Float.greatestFiniteMagnitude
-        
-        var readIdx = 0
-        
-        if let vb = _vertexBuffer {
-            let nv = vb.count / 2
-            for _ in 0 ..< nv {
-                let x = _vertexBuffer![readIdx]
-                readIdx += 1
-                let y = _vertexBuffer![readIdx]
-                readIdx += 1
-                if x < minX {
-                    minX = x
-                }
-                if y < minY {
-                    minY = y
-                }
-                if x > maxX {
-                    maxX = x
-                }
-                if y > maxY {
-                    maxY = y
+    private var bounds: AABB {
+        get {
+            var minX = Float.greatestFiniteMagnitude
+            var minY = Float.greatestFiniteMagnitude
+            var maxX = -Float.greatestFiniteMagnitude
+            var maxY = -Float.greatestFiniteMagnitude
+            
+            var readIdx = 0
+            
+            if let vb = _vertexBuffer {
+                let nv = vb.count / 2
+                for _ in 0 ..< nv {
+                    let x = _vertexBuffer![readIdx]
+                    readIdx += 1
+                    let y = _vertexBuffer![readIdx]
+                    readIdx += 1
+                    if x < minX {
+                        minX = x
+                    }
+                    if y < minY {
+                        minY = y
+                    }
+                    if x > maxX {
+                        maxX = x
+                    }
+                    if y > maxY {
+                        maxY = y
+                    }
                 }
             }
+            
+            return AABB.init(fromValues: minX, minY, maxX, maxY)
         }
-        
-        return AABB.init(fromValues: minX, minY, maxX, maxY)
+    }
+    
+    override func computeAABB() -> AABB {
+        _ = self.updateVertices()
+        return self.bounds
     }
     
 }

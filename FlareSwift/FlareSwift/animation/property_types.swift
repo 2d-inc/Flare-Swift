@@ -18,7 +18,7 @@ class PropertyTypes {
     static let Opacity = 6
     static let DrawOrder = 7
     static let Length = 8
-    static let VertexDeform = 9
+    static let ImageVertices = 9
     static let ConstraintStrength = 10
     static let Trigger = 11
     static let IntProperty = 12
@@ -57,7 +57,7 @@ let PropertyTypesMap = [
     "opacity": PropertyTypes.Opacity,
     "drawOrder": PropertyTypes.DrawOrder,
     "length": PropertyTypes.Length,
-    "vertices": PropertyTypes.VertexDeform,
+    "vertices": PropertyTypes.ImageVertices,
     "strength": PropertyTypes.ConstraintStrength,
     "trigger": PropertyTypes.Trigger,
     "intValue": PropertyTypes.IntProperty,

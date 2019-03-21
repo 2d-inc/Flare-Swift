@@ -84,8 +84,8 @@ public class PropertyAnimation {
             return KeyFrameDrawOrder()
         case PropertyTypes.Length:
             return KeyFrameLength()
-        case PropertyTypes.VertexDeform:
-            return KeyFrameVertexDeform()
+        case PropertyTypes.ImageVertices:
+            return KeyFrameImageVertices(component: component)
         case PropertyTypes.ConstraintStrength:
             return KeyFrameConstraintStrength()
         case PropertyTypes.Trigger:

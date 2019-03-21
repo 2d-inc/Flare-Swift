@@ -9,6 +9,7 @@
 import Foundation
 
 protocol FlareDrawable: class {
-    func draw(context: CGContext)
+//    func draw(context: CGContext)
+    func draw(on: CALayer)
     // TODO: Blending
 }

@@ -199,7 +199,8 @@ public class FlareView: UIView {
         ctx.scaleBy(x: scale, y: scale)
         ctx.translateBy(x: x, y: y)
 
-        artboard.draw(context: ctx)
+//        artboard.draw(context: ctx)
+        artboard.draw(on: layer)
 
         ctx.restoreGState()
     }

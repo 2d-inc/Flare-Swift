@@ -107,7 +107,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
         self.readDrawable(artboard, reader)
         self.readSkinnable(artboard, reader)
         
-        if self.isHidden {
+        if !self.isHidden {
             self._textureIndex = Int(reader.readUint8(label: "atlas"))
             let numVerts = Int(reader.readUint32(label: "numVertices"))
             

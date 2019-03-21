@@ -11,6 +11,7 @@ import Foundation
 class FlareShape: ActorShape, FlareDrawable {
     private var _isValid = false
     private var _path = CGMutablePath()
+    private var _layer = CAShapeLayer()
     
     override func invalidateShape() {
         _isValid = false
@@ -73,12 +74,13 @@ class FlareShape: ActorShape, FlareDrawable {
         return _path
     }
     
-    func draw(context: CGContext) {
+//    func draw(context: CGContext) {
+    func draw(on: CALayer) {
         guard self.doesDraw else {
             return
         }
         
-        context.saveGState()
+//        context.saveGState()
         
         let renderPath = self.path
 
@@ -88,13 +90,13 @@ class FlareShape: ActorShape, FlareDrawable {
             for clipShape in clips {
                 clippingPath.addPath((clipShape as! FlareShape).path)
             }
-            context.addPath(clippingPath)
-            context.clip()
+//            context.addPath(clippingPath)
+//            context.clip()
         }
         
         for actorFill in fills {
             let fill = actorFill as! FlareFill
-            fill.paint(fill: actorFill, context: context, path: renderPath)
+//            fill.paint(fill: actorFill, context: context, path: renderPath)
         }
         
         var strokePath = renderPath
@@ -137,10 +139,10 @@ class FlareShape: ActorShape, FlareDrawable {
                 }
                 strokePath = stroke.effectPath!
             }
-            stroke.paint(stroke: actorStroke, context: context, path: strokePath)
+//            stroke.paint(stroke: actorStroke, context: context, path: strokePath)
         }
         
-        context.restoreGState()
+//        context.restoreGState()
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
