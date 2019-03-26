@@ -96,15 +96,15 @@ public class ActorArtboard {
         }
     }
     
-    private var _width = 0.0
-    public var width: Double {
+    private var _width: Float = 0.0
+    public var width: Float {
         get {
             return self._width
         }
     }
     
-    private var _height = 0.0
-    public var height: Double {
+    private var _height: Float = 0.0
+    public var height: Float {
         get {
             return self._height
         }
@@ -395,8 +395,8 @@ public class ActorArtboard {
     func read(_ reader: StreamReader) {
         _name = reader.readString(label: "name");
         reader.readFloat32Array(ar: &_translation.values, label: "translation");
-        _width = Double(reader.readFloat32(label: "width"))
-        _height = Double(reader.readFloat32(label: "height"))
+        _width = reader.readFloat32(label: "width")
+        _height = reader.readFloat32(label: "height")
         reader.readFloat32Array(ar: &_origin.values, label: "origin");
         _clipContents = reader.readBool(label: "clipContents");
         reader.readFloat32Array(ar: &_color, label: "color");
