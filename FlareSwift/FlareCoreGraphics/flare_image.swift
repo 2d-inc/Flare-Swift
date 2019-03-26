@@ -19,6 +19,7 @@ class FlareImage: ActorImage, FlareDrawable {
     
     var _metalVertexBuffer: MTLBuffer!
     var _metalIndexBuffer: MTLBuffer!
+    var _metalUniformsBuffer: MTLBuffer!
     var _texture: MTLTexture!
     
     var _vertexBuffer: [Float]?
@@ -27,12 +28,13 @@ class FlareImage: ActorImage, FlareDrawable {
     var _metalVertices: [Float]?
     
     init(_ metalController: MetalController) {
-        self._metalController = metalController
+        _metalController = metalController
 
         _metalLayer = CAMetalLayer()
-        _metalLayer.device = self._metalController.device!
-        _metalLayer.pixelFormat = .bgra8Unorm
-        _metalLayer.framebufferOnly = true
+        _metalLayer.device = _metalController.device!
+        _metalLayer.pixelFormat = .bgra8Unorm_srgb
+        _metalLayer.framebufferOnly = false
+        _metalLayer.isOpaque = false
         
         let samplerDesc = MTLSamplerDescriptor()
         samplerDesc.minFilter = .nearest
@@ -80,22 +82,24 @@ class FlareImage: ActorImage, FlareDrawable {
             return
         }
         
-        on.addSublayer(_metalLayer)
-        
         let commandQ = _metalController.commandQueue!
         let pipelineState = _metalController.pipelineState!
+        
+        self.updateWorldTransform()
         
         let renderDescriptor = MTLRenderPassDescriptor()
         renderDescriptor.colorAttachments[0].texture = drawable.texture
         renderDescriptor.colorAttachments[0].loadAction = .clear
-        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0.25, green: 0.85, blue: 0.6, alpha: 1.0)
-//        renderDescriptor.colorAttachments[0].storeAction = .store
+        
+        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0.5, blue: 0, alpha: 0.5)
+        
+        renderDescriptor.colorAttachments[0].storeAction = .store
         
         let commandBuffer = commandQ.makeCommandBuffer()!
-        
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(_metalVertexBuffer, offset: 0, index: 0)
+        renderEncoder.setVertexBuffer(_metalUniformsBuffer, offset: 0, index: 1)
         renderEncoder.setFragmentTexture(_texture, index: 0)
         renderEncoder.setFragmentSamplerState(_samplerState, index: 0)
         
@@ -117,6 +121,18 @@ class FlareImage: ActorImage, FlareDrawable {
 //    func draw(context: CGContext) {
     func draw(on: CALayer) {
         autoreleasepool{
+            if !_metalLayer.bounds.equalTo(on.bounds) {
+                self.invalidateDrawable()
+                _metalLayer.frame = on.bounds
+                _metalLayer.removeFromSuperlayer()
+                on.addSublayer(_metalLayer)
+                let width = self.artboard!.width
+                let height = self.artboard!.height
+                _metalController.setViewportSize(width: width, height: height)
+                _metalController.setViewMatrixTranslation(x: 0, y: Float(height))
+                _metalController.prepare(transform: self.worldTransform)
+                self.invalidateDrawable()
+            }
             self.render(on)
         }
     }
@@ -126,18 +142,14 @@ class FlareImage: ActorImage, FlareDrawable {
             return
         }
         
-//        _vertexBuffer = makeVertexPositionBuffer()
         _uvBuffer = makeVertexUVBuffer()
         _indices = tris.map({ Int32($0) })
         updateVertexUVBuffer(buffer: &_uvBuffer!)
-        _ = self.updateVertices()
-//        let count = vertexCount
-//        var idx = 0
         
         // Create Texture
         let actor = (artboard!.actor as! FlareActor)
         let currentTextureData = actor.images![textureIndex]
-        let loader = self._metalController.textureLoader!
+        let loader = _metalController.textureLoader!
         self._texture = try! loader.newTexture(data: currentTextureData, options:[
             MTKTextureLoader.Option.generateMipmaps: true,
             MTKTextureLoader.Option.allocateMipmaps: true
@@ -152,10 +164,13 @@ class FlareImage: ActorImage, FlareDrawable {
     }
     
     func updateVertices() -> Bool {
-        guard let tris = triangles else {
+        guard
+            let tris = triangles,
+            !_metalLayer.frame.equalTo(CGRect.zero)
+        else {
             return false
         }
-        
+
         guard self._vertexBuffer == nil else {
             // Still valid.
             return true
@@ -168,14 +183,10 @@ class FlareImage: ActorImage, FlareDrawable {
         let vb = _vertexBuffer!
         let ub = _uvBuffer!
         
-        let bounds = self.bounds
-        let width = bounds[2] - bounds[0]
-        let height = bounds[3] - bounds[1]
-        
         var vertices = [Float]()
         for _ in 0 ..< vertexCount {
-            let x = vb[readIdx]/width
-            let y = vb[readIdx+1]/height
+            let x = vb[readIdx]
+            let y = vb[readIdx+1]
             let u = ub[readIdx],
                 v = ub[readIdx+1]
             vertices += [ x, y, u, v ]
@@ -186,24 +197,32 @@ class FlareImage: ActorImage, FlareDrawable {
         // TODO: optimize this w/ swapping buffers.
         // Create vertex buffer
         let bufferLength = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let device = self._metalController.device!
+        let device = _metalController.device!
         self._metalVertexBuffer = device.makeBuffer(bytes: vertices, length: bufferLength, options: [])!
         self._metalVertices = vertices
         
         let indexBufferSize = tris.count * MemoryLayout.size(ofValue: tris[0])
-        print(tris)
         self._metalIndexBuffer = device.makeBuffer(bytes: tris, length: indexBufferSize, options: [])
        
-        print("TRANSLATION AT: \(self.translation.description) ADDING A FRAME OF WIDTH:\(width), HEIGHT:\(height)")
+        let matrixSize = MemoryLayout<Float>.size * 16
+        // MVP: Three 4x4 matrices.
+        self._metalUniformsBuffer = device.makeBuffer(length: matrixSize * 3, options: [])!
+        let bufPointer = _metalUniformsBuffer.contents()
+        
+        let worldMatrix = _metalController.transformMatrix
+        let viewMatrix = _metalController.viewMatrix
+        let projectionMatrix = _metalController.projectionMatrix
+        memcpy(bufPointer, worldMatrix, matrixSize)
+        memcpy(bufPointer + matrixSize, viewMatrix, matrixSize)
+        memcpy(bufPointer + (matrixSize*2), projectionMatrix, matrixSize)
         
 //        print("WILL NEED TO BE TRANSFORMED BY: \(self.worldTransform.description)")
-        self._metalLayer.frame = CGRect(x: CGFloat(50), y: CGFloat(50), width: CGFloat(width), height: CGFloat(height/2.1))
         
         return true
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceNode = FlareImage(self._metalController)
+        let instanceNode = FlareImage(_metalController)
         instanceNode.copyImage(self, resetArtboard)
         return instanceNode
     }

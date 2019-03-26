@@ -40,7 +40,7 @@ public protocol Actor: class {
 }
 
 public extension Actor {
-    public var artboard: ActorArtboard? {
+    var artboard: ActorArtboard? {
         return (_artboards.count > 0) ? _artboards.first as? ActorArtboard : nil
     }
     

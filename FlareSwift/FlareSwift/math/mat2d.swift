@@ -235,6 +235,7 @@ public class Mat2D: Equatable, Hashable {
         for i in 0..<rows {
             for j in 0..<cols {
                 res += String(_buffer[i * cols + j])
+                res += " "
             }
         }
         

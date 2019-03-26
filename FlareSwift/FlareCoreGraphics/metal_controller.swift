@@ -13,9 +13,13 @@ class MetalController {
     private(set) var device: MTLDevice!
     private(set) var pipelineState: MTLRenderPipelineState!
     private(set) var commandQueue: MTLCommandQueue!
+    
     private(set) var viewMatrix: [Float]!
     private(set) var transformMatrix: [Float]!
     private(set) var projectionMatrix: [Float]!
+    
+    private var viewportWidth: Float = 0.0
+    private var viewportHeight: Float = 0.0
 
     private(set) var textureLoader: MTKTextureLoader! = nil
     
@@ -47,7 +51,13 @@ class MetalController {
         device = MTLCreateSystemDefaultDevice()
         textureLoader = MTKTextureLoader(device: device)
         
-        projectionMatrix = [Float](repeating: 0, count: 16)
+//        projectionMatrix = [Float](repeating: 0, count: 16)
+        projectionMatrix = [
+            1, 0, 0, 0,
+            0, 1, 0, 0,
+            0, 0, 1, 0,
+            0, 0, 0, 1
+        ]
         viewMatrix = [
             1, 0, 0, 0,
             0, 1, 0, 0,
@@ -62,34 +72,71 @@ class MetalController {
         ]
         
         let frameworkBundle = Bundle(for: type(of: self))
-//        let defaultLibrary = device.makeDefaultLibrary()!
         let defaultLibrary = try! device.makeDefaultLibrary(bundle: frameworkBundle)
-//        print("GOT THE FUNCTIONS? \(defaultLibrary.functionNames)")
+//        let fragmentProgram = defaultLibrary.makeFunction(name: "fragment_interpolation")
         let fragmentProgram = defaultLibrary.makeFunction(name: "textured_simple")
         let vertexProgram = defaultLibrary.makeFunction(name: "regular_vertex")
-//        let fragmentProgram = defaultLibrary.makeFunction(name: "fragment_interpolation")
         
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexProgram
         pipelineDescriptor.fragmentFunction = fragmentProgram
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
+
+        // TODO: blending options
         pipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
         pipelineDescriptor.colorAttachments[0].rgbBlendOperation = .add
         pipelineDescriptor.colorAttachments[0].alphaBlendOperation = .add
-        pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .destinationAlpha
-        pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .destinationAlpha
+        pipelineDescriptor.colorAttachments[0].sourceRGBBlendFactor = .sourceAlpha
+        pipelineDescriptor.colorAttachments[0].sourceAlphaBlendFactor = .sourceAlpha
         pipelineDescriptor.colorAttachments[0].destinationRGBBlendFactor = .oneMinusSourceAlpha
-        pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusBlendAlpha
-        // TODO: blending options
+        pipelineDescriptor.colorAttachments[0].destinationAlphaBlendFactor = .oneMinusSourceAlpha
         
         pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineDescriptor)
         commandQueue = device.makeCommandQueue()
     }
     
-    func setViewportSize(width: Int, height: Int) {
-        MetalController.ortho(matrix: &projectionMatrix, left: 0, right: Float(width), bottom: 0, top: Float(height), near: 0, far: 100)
+    func prepare(transform: Mat2D) {
+        transformMatrix[0] = transform[0]
+        transformMatrix[1] = transform[1]
+        transformMatrix[4] = transform[2]
+        transformMatrix[5] = transform[3]
+        transformMatrix[12] = transform[4]
+        transformMatrix[13] = -transform[5]
     }
     
+    func setViewportSize(width: Float, height: Float) {
+        if width != viewportWidth || height != viewportHeight {
+            viewportWidth = width
+            viewportHeight = height
+            MetalController.ortho(matrix: &projectionMatrix, left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
+        }
+    }
+    
+    func setViewMatrixTranslation(x: Float, y: Float) {
+        if viewMatrix[12] != x || viewMatrix[13] != y {
+            viewMatrix[12] = x
+            viewMatrix[13] = y
+        }
+    }
+    
+    func setViewMatrix(_ view: Mat2D) {
+        if viewMatrix[0] == view[0] &&
+            viewMatrix[1] == view[1] &&
+            viewMatrix[4] == view[2] &&
+            viewMatrix[5] == view[3] &&
+            viewMatrix[12] == view[4] &&
+            viewMatrix[13] == view[5]
+        {
+            return;
+        }
+        
+        viewMatrix[0] = view[0];
+        viewMatrix[1] = view[1];
+        viewMatrix[4] = view[2];
+        viewMatrix[5] = view[3];
+        viewMatrix[12] = view[4];
+        viewMatrix[13] = view[5];
+    }
     
     func setBlendMode(/*_ mode: BlendMode*/) {
         // TODO:

@@ -45,10 +45,9 @@ vertex VertexOut regular_vertex(
     VertexIn vin = vertices[vid];
     
     VertexOut vout;
-//    vout.position = vUniforms.ProjectionMatrix * vUniforms.ViewMatrix * vUniforms.WorldMatrix * float4(vin.position, 0, 1);
     float x = vin.position[0];
-    float y = vin.position[1] * -1;
-    vout.position = float4(x, y, 0, 1);
+    float y = vin.position[1] * -1; // Invert y
+    vout.position = vUniforms.ProjectionMatrix * vUniforms.ViewMatrix * vUniforms.WorldMatrix * float4(x, y, 0, 1);
     vout.texCoord = vin.uvs;
     return vout;
 }
