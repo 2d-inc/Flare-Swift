@@ -97,6 +97,7 @@ class FlareImage: ActorImage, FlareDrawable {
         
         let commandBuffer = commandQ.makeCommandBuffer()!
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
+        renderEncoder.setViewport(_metalController.viewport)
         renderEncoder.setRenderPipelineState(pipelineState)
         renderEncoder.setVertexBuffer(_metalVertexBuffer, offset: 0, index: 0)
         renderEncoder.setVertexBuffer(_metalUniformsBuffer, offset: 0, index: 1)
@@ -126,10 +127,11 @@ class FlareImage: ActorImage, FlareDrawable {
                 _metalLayer.frame = on.bounds
                 _metalLayer.removeFromSuperlayer()
                 on.addSublayer(_metalLayer)
-                let width = self.artboard!.width
-                let height = self.artboard!.height
+                let width = Float(on.bounds.width)
+                let height = Float(on.bounds.height)
                 _metalController.setViewportSize(width: width, height: height)
-                _metalController.setViewMatrixTranslation(x: 0, y: Float(height))
+                let scale = min(width/artboard!.width, height/artboard!.height)
+                _metalController.setViewMatrix(x: 0, y: Float(height), scale: scale)
                 _metalController.prepare(transform: self.worldTransform)
                 self.invalidateDrawable()
             }
@@ -151,8 +153,8 @@ class FlareImage: ActorImage, FlareDrawable {
         let currentTextureData = actor.images![textureIndex]
         let loader = _metalController.textureLoader!
         self._texture = try! loader.newTexture(data: currentTextureData, options:[
-            MTKTextureLoader.Option.generateMipmaps: true,
-            MTKTextureLoader.Option.allocateMipmaps: true
+            .generateMipmaps: true,
+            .allocateMipmaps: true
             ]
         )
         
@@ -215,9 +217,7 @@ class FlareImage: ActorImage, FlareDrawable {
         memcpy(bufPointer, worldMatrix, matrixSize)
         memcpy(bufPointer + matrixSize, viewMatrix, matrixSize)
         memcpy(bufPointer + (matrixSize*2), projectionMatrix, matrixSize)
-        
-//        print("WILL NEED TO BE TRANSFORMED BY: \(self.worldTransform.description)")
-        
+
         return true
     }
     

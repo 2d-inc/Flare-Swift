@@ -13,6 +13,7 @@ class MetalController {
     private(set) var device: MTLDevice!
     private(set) var pipelineState: MTLRenderPipelineState!
     private(set) var commandQueue: MTLCommandQueue!
+    private(set) var viewport: MTLViewport!
     
     private(set) var viewMatrix: [Float]!
     private(set) var transformMatrix: [Float]!
@@ -108,12 +109,18 @@ class MetalController {
         if width != viewportWidth || height != viewportHeight {
             viewportWidth = width
             viewportHeight = height
+            viewport = MTLViewport(originX: 0, originY: 0, width: Double(width), height: Double(height), znear: 0, zfar: 100)
             MetalController.ortho(matrix: &projectionMatrix, left: 0, right: width, bottom: 0, top: height, near: -1, far: 1)
         }
     }
     
-    func setViewMatrixTranslation(x: Float, y: Float) {
-        if viewMatrix[12] != x || viewMatrix[13] != y {
+    func setViewMatrix(x: Float, y: Float, scale: Float) {
+        if  viewMatrix[0] != scale ||
+            viewMatrix[5] != scale ||
+            viewMatrix[12] != x ||
+            viewMatrix[13] != y {
+            viewMatrix[0] = scale
+            viewMatrix[5] = scale
             viewMatrix[12] = x
             viewMatrix[13] = y
         }

@@ -53,7 +53,6 @@ public protocol StreamReader: class {
 class ReaderFactory {
     static func factory(data: Data) -> StreamReader? {
         let signature = String(data: data[0...4], encoding: String.Encoding.utf8)
-        print("FILE SIGNATURE: \(signature ?? "NO SIGNATURE")")
         var r: StreamReader? = nil
         if signature == "FLARE" {
             r = BinaryReader(data: Array(data))
