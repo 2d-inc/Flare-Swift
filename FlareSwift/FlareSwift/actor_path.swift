@@ -228,7 +228,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
         let boneMatrices = skin!.boneMatrices
         var deformed = [PathPoint]()
         for point in _points {
-            deformed.append(point.skin(world: worldTransform, bones: boneMatrices!)!)
+            deformed.append(point.skin(world: worldTransform, bones: boneMatrices)!)
         }
         return deformed
     }

@@ -226,7 +226,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
                     let boneTransformIndex = boneIndex * 6
                     if boneIndex <= connectedBones!.count {
                         for j in 0 ..< 6 {
-                            influenceMatrix[j] += boneTransforms![boneTransformIndex + j] * weight
+                            influenceMatrix[j] += boneTransforms[boneTransformIndex + j] * weight
                         }
                     } else {
                         print("BAD BONE INDEX \(boneIndex) \(connectedBones!.count) \(name)");
