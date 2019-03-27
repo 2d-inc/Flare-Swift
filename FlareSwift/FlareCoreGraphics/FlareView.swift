@@ -49,7 +49,6 @@ public class FlareView: UIView {
                     flareActor = nil
                     artboard = nil
                 }
-                //                animationLayers.removeAll()
 
                 if _filename.isEmpty || !_filename.hasSuffix(".flr") {
                     setNeedsDisplay()
@@ -69,7 +68,6 @@ public class FlareView: UIView {
 
                     updateAnimation(onlyWhenMissing: true)
                     setNeedsDisplay()
-                    updatePlayState()
                 }
             }
         }
@@ -144,6 +142,7 @@ public class FlareView: UIView {
         if isPlaying && !isHidden {
             if displayLink == nil {
                 displayLink = CADisplayLink(target: self, selector: #selector(beginFrame))
+                lastTime = CACurrentMediaTime()
                 displayLink!.add(to: .current, forMode: .common)
             }
         } else {
@@ -161,8 +160,8 @@ public class FlareView: UIView {
             return
         }
 
-        if let animation = self.animation, let artboard = self.artboard, let displayLink = self.displayLink {
-            let currentTime = displayLink.timestamp
+        if let animation = self.animation, let artboard = self.artboard {
+            let currentTime = CACurrentMediaTime()
             let delta = currentTime - lastTime
             lastTime = currentTime
             duration = (duration + delta)
