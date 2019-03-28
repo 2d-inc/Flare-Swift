@@ -77,7 +77,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
         }
         set {
             if newValue {
-                if animationDeformedVertices != nil || animationDeformedVertices!.count != vertexCount * 2 {
+                if animationDeformedVertices == nil || animationDeformedVertices!.count != vertexCount * 2 {
                     animationDeformedVertices = [Float]()
                     var writeIdx = 0
                     var readIdx = 0
