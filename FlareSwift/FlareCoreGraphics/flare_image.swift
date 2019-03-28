@@ -27,6 +27,8 @@ class FlareImage: ActorImage, FlareDrawable {
     var _indices: [Int32]?
     var _metalVertices: [Float]?
     
+    var _isValid: Bool = false
+    
     init(_ metalController: MetalController) {
         _metalController = metalController
 
@@ -134,7 +136,9 @@ class FlareImage: ActorImage, FlareDrawable {
                 _metalController.setViewMatrix(x: 0, y: Float(height), scale: scale)
                 self.invalidateDrawable()
             }
-//            _metalController.prepare(transform: self.worldTransform)
+            if !isConnectedToBones {
+                _metalController.prepare(transform: self.worldTransform)                
+            }
             self.render(on)
         }
     }
@@ -161,20 +165,18 @@ class FlareImage: ActorImage, FlareDrawable {
         let ubl = MemoryLayout<Float>.stride * 16 * 3
         _metalUniformsBuffer = device.makeBuffer(length: ubl, options: [])!
         
-        updateVertices()
+        _ = updateVertices()
         
         _texture = _metalController.generateTexture(actor.images![textureIndex])
         
         _uvBuffer = makeVertexUVBuffer()
         _indices = tris.map({ Int32($0) })
-        updateVertexUVBuffer(buffer: &_uvBuffer!)
-        
         
         // TODO: set blendMode
     }
     
     override func invalidateDrawable() {
-        self._vertexBuffer = nil
+        self._isValid = false
     }
     
     func updateVertices() -> Bool {
@@ -185,13 +187,15 @@ class FlareImage: ActorImage, FlareDrawable {
             return false
         }
 
-        guard self._vertexBuffer == nil else {
+        guard !self._isValid else {
             // Still valid.
             return true
         }
         
+        self._isValid = true
         _vertexBuffer = makeVertexPositionBuffer()
         self.updateVertexPositionBuffer(buffer: &_vertexBuffer!, isSkinnedDeformInWorld: false)
+        self.updateVertexUVBuffer(buffer: &_uvBuffer!)
         
         var readIdx = 0
         let vb = _vertexBuffer!
