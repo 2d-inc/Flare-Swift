@@ -81,7 +81,7 @@ class MetalController {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexProgram
         pipelineDescriptor.fragmentFunction = fragmentProgram
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
 
         // TODO: blending options
         pipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
@@ -143,6 +143,14 @@ class MetalController {
         viewMatrix[5] = view[3];
         viewMatrix[12] = view[4];
         viewMatrix[13] = view[5];
+    }
+    
+    func generateTexture(_ textureData: Data) ->  MTLTexture {
+        return try! textureLoader.newTexture(data: textureData, options:[
+            .generateMipmaps: true,
+            .allocateMipmaps: true
+            ]
+        )
     }
     
     func setBlendMode(/*_ mode: BlendMode*/) {

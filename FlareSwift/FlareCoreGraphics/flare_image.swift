@@ -132,9 +132,9 @@ class FlareImage: ActorImage, FlareDrawable {
                 _metalController.setViewportSize(width: width, height: height)
                 let scale = min(width/artboard!.width, height/artboard!.height)
                 _metalController.setViewMatrix(x: 0, y: Float(height), scale: scale)
-                _metalController.prepare(transform: self.worldTransform)
                 self.invalidateDrawable()
             }
+//            _metalController.prepare(transform: self.worldTransform)
             self.render(on)
         }
     }
@@ -144,19 +144,31 @@ class FlareImage: ActorImage, FlareDrawable {
             return
         }
         
+        // TODO: move Weights Calculations to the GPU
+
+        // TODO: optimize this w/ swapping buffers.
+        // Create vertex buffer
+        let device = _metalController.device!
+        let actor = (artboard!.actor as! FlareActor)
+        
+        // Each Vertex has (x,y) coordinates.
+        let vbl = vertexCount * 2 * MemoryLayout<Float>.stride
+        _metalVertexBuffer = device.makeBuffer(length: vbl, options: [])!
+        // Create Texture
+        let ibl = tris.count * MemoryLayout.stride(ofValue: tris[0])
+        _metalIndexBuffer = device.makeBuffer(length: ibl, options: [])
+        // MVP: Three 4x4 matrices.
+        let ubl = MemoryLayout<Float>.stride * 16 * 3
+        _metalUniformsBuffer = device.makeBuffer(length: ubl, options: [])!
+        
+        updateVertices()
+        
+        _texture = _metalController.generateTexture(actor.images![textureIndex])
+        
         _uvBuffer = makeVertexUVBuffer()
         _indices = tris.map({ Int32($0) })
         updateVertexUVBuffer(buffer: &_uvBuffer!)
         
-        // Create Texture
-        let actor = (artboard!.actor as! FlareActor)
-        let currentTextureData = actor.images![textureIndex]
-        let loader = _metalController.textureLoader!
-        self._texture = try! loader.newTexture(data: currentTextureData, options:[
-            .generateMipmaps: true,
-            .allocateMipmaps: true
-            ]
-        )
         
         // TODO: set blendMode
     }
@@ -178,7 +190,7 @@ class FlareImage: ActorImage, FlareDrawable {
             return true
         }
         
-        self._vertexBuffer = makeVertexPositionBuffer()
+        _vertexBuffer = makeVertexPositionBuffer()
         self.updateVertexPositionBuffer(buffer: &_vertexBuffer!, isSkinnedDeformInWorld: false)
         
         var readIdx = 0
@@ -187,8 +199,8 @@ class FlareImage: ActorImage, FlareDrawable {
         
         var vertices = [Float]()
         for _ in 0 ..< vertexCount {
-            let x = vb[readIdx]
-            let y = vb[readIdx+1]
+            let x = vb[readIdx],
+                y = vb[readIdx+1]
             let u = ub[readIdx],
                 v = ub[readIdx+1]
             vertices += [ x, y, u, v ]
@@ -196,24 +208,22 @@ class FlareImage: ActorImage, FlareDrawable {
             readIdx += 2
         }
         
-        // TODO: optimize this w/ swapping buffers.
-        // Create vertex buffer
-        let bufferLength = vertices.count * MemoryLayout.size(ofValue: vertices[0])
-        let device = _metalController.device!
-        self._metalVertexBuffer = device.makeBuffer(bytes: vertices, length: bufferLength, options: [])!
         self._metalVertices = vertices
+        let vbc = vertices.count * MemoryLayout.stride(ofValue: vertices[0])
+        _metalVertexBuffer.contents()
+            .copyMemory(from: vertices, byteCount: vbc)
         
-        let indexBufferSize = tris.count * MemoryLayout.size(ofValue: tris[0])
-        self._metalIndexBuffer = device.makeBuffer(bytes: tris, length: indexBufferSize, options: [])
-       
-        let matrixSize = MemoryLayout<Float>.size * 16
-        // MVP: Three 4x4 matrices.
-        self._metalUniformsBuffer = device.makeBuffer(length: matrixSize * 3, options: [])!
+        let ibc = tris.count * MemoryLayout.stride(ofValue: tris[0])
+        _metalIndexBuffer.contents()
+            .copyMemory(from: tris, byteCount: ibc)
+        
+        
         let bufPointer = _metalUniformsBuffer.contents()
-        
         let worldMatrix = _metalController.transformMatrix
         let viewMatrix = _metalController.viewMatrix
         let projectionMatrix = _metalController.projectionMatrix
+        
+        let matrixSize = MemoryLayout<Float>.stride * 16
         memcpy(bufPointer, worldMatrix, matrixSize)
         memcpy(bufPointer + matrixSize, viewMatrix, matrixSize)
         memcpy(bufPointer + (matrixSize*2), projectionMatrix, matrixSize)
