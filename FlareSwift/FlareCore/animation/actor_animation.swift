@@ -364,6 +364,9 @@ public class ActorAnimation {
     }
     
     public func apply(time: Double, artboard: ActorArtboard, mix: Float) {
+        guard time <= duration else {
+            return
+        }
         guard let components = _components else {
             print("apply(): no components??")
             return
