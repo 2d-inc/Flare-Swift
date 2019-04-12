@@ -1,6 +1,6 @@
 //
-//  flare_color_fill.swift
-//  Flare-Swift
+//  flare_cg_color_fill.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FlareColorFill: ColorFill, FlareFill {
+class FlareCGColorFill: ColorFill, FlareCGFill {
     var _fillColor = CGColor.black
     
     var uiColor: CGColor {
@@ -35,7 +35,7 @@ class FlareColorFill: ColorFill, FlareFill {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceFill = FlareColorFill()
+        let instanceFill = FlareCGColorFill()
         instanceFill.copyColorFill(self, resetArtboard)
         return instanceFill
     }

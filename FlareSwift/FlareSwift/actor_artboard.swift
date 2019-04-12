@@ -747,7 +747,4 @@ public class ActorArtboard {
         }
         return aabb
     }
-    
-//    public func draw(context: CGContext) {}
-    public func draw(on layer: CALayer) {}
 }

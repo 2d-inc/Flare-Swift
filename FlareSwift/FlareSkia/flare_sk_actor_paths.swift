@@ -1,18 +1,19 @@
 //
-//  flare_actor_paths.swift
-//  Flare-Swift
+//  flare_sk_actor_paths.swift
+//  FlareSkia
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
+import Skia
 
-class FlareActorPath: ActorPath, FlarePath {
+class FlareSkActorPath: ActorPath, FlareSkPath {
     var isClosed: Bool {
         return _isClosed
     }
-    var _path: CGMutablePath = CGMutablePath()
+    var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     
     override func invalidatePath() {
@@ -20,32 +21,14 @@ class FlareActorPath: ActorPath, FlarePath {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgPath = FlareActorPath()
-        cgPath.copyPath(self, resetArtboard)
-        return cgPath
+        let path = FlareSkActorPath()
+        path.copyPath(self, resetArtboard)
+        return path
     }
 }
 
-class FlareEllipse: ActorEllipse, FlarePath {
-    var _path: CGMutablePath = CGMutablePath()
-    var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
-    
-    override func invalidatePath() {
-        _isValid = false
-    }
-    
-    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgEllipse = FlareEllipse()
-        cgEllipse.copyPath(self, resetArtboard)
-        return cgEllipse
-    }
-}
-
-class FlareTriangle: ActorTriangle, FlarePath {
-    var _path: CGMutablePath = CGMutablePath()
+class FlareSkEllipse: ActorEllipse, FlareSkPath {
+    var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
@@ -56,14 +39,14 @@ class FlareTriangle: ActorTriangle, FlarePath {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgTriangle = FlareTriangle()
-        cgTriangle.copyPath(self, resetArtboard)
-        return cgTriangle
+        let ellipse = FlareSkEllipse()
+        ellipse.copyPath(self, resetArtboard)
+        return ellipse
     }
 }
 
-class FlareRectangle: ActorRectangle, FlarePath {
-    var _path: CGMutablePath = CGMutablePath()
+class FlareSkTriangle: ActorTriangle, FlareSkPath {
+    var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
@@ -74,14 +57,32 @@ class FlareRectangle: ActorRectangle, FlarePath {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgRectangle = FlareRectangle()
-        cgRectangle.copyRectangle(self, resetArtboard)
-        return cgRectangle
+        let triangle = FlareSkTriangle()
+        triangle.copyPath(self, resetArtboard)
+        return triangle
     }
 }
 
-class FlareStar: ActorStar, FlarePath {
-    var _path: CGMutablePath = CGMutablePath()
+class FlareSkRectangle: ActorRectangle, FlareSkPath {
+    var _path: OpaquePointer = sk_path_new()
+    var _isValid: Bool = false
+    var deformedPoints: [PathPoint]? {
+        return points
+    }
+    
+    override func invalidatePath() {
+        _isValid = false
+    }
+    
+    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
+        let rectangle = FlareSkRectangle()
+        rectangle.copyRectangle(self, resetArtboard)
+        return rectangle
+    }
+}
+
+class FlareSkStar: ActorStar, FlareSkPath {
+    var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
@@ -92,14 +93,14 @@ class FlareStar: ActorStar, FlarePath {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgStar = FlareStar()
-        cgStar.copyStar(self, resetArtboard)
-        return cgStar
+        let star = FlareSkStar()
+        star.copyStar(self, resetArtboard)
+        return star
     }
 }
 
-class FlarePolygon: ActorPolygon, FlarePath {
-    var _path: CGMutablePath = CGMutablePath()
+class FlareSkPolygon: ActorPolygon, FlareSkPath {
+    var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     var deformedPoints: [PathPoint]? {
         return points
@@ -110,8 +111,8 @@ class FlarePolygon: ActorPolygon, FlarePath {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let cgPolygon = FlarePolygon()
-        cgPolygon.copyPolygon(self, resetArtboard)
-        return cgPolygon
+        let polygon = FlareSkPolygon()
+        polygon.copyPolygon(self, resetArtboard)
+        return polygon
     }
 }

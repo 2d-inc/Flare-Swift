@@ -1,15 +1,14 @@
 //
-//  flare_color_stroke.swift
-//  Flare-Swift
+//  flare_cg_color_stroke.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
-import CoreGraphics
 
-class FlareColorStroke: ColorStroke, FlareStroke {
+class FlareCGColorStroke: ColorStroke, FlareCGStroke {
     var _color: CGColor = CGColor.black
     var _strokeCap: CGLineCap = CGLineCap.butt
     var _strokeJoin: CGLineJoin = .miter
@@ -40,7 +39,7 @@ class FlareColorStroke: ColorStroke, FlareStroke {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceColorStroke = FlareColorStroke()
+        let instanceColorStroke = FlareCGColorStroke()
         instanceColorStroke.copyColorStroke(self, resetArtboard)
         return instanceColorStroke
     }

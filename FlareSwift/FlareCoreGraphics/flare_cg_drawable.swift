@@ -1,6 +1,6 @@
 //
-//  flare_drawable.swift
-//  FlareSwift
+//  flare_cg_drawable.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 3/19/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol FlareDrawable: class {
+protocol FlareCGDrawable: class {
 //    func draw(context: CGContext)
-    func draw(on: CALayer)
+    func draw(context: CGContext, on: CALayer)
     // TODO: Blending
 }

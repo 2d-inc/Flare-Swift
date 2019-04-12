@@ -1,6 +1,6 @@
 //
-//  flare_artboard.swift
-//  Flare-Swift
+//  flare_cg_artboard.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-public class FlareArtboard: ActorArtboard {
-    public init(actor: FlareActor) {
+public class FlareCGArtboard: ActorArtboard {
+    public init(actor: FlareCGActor) {
         super.init(actor: actor)
     }
     
@@ -18,17 +18,16 @@ public class FlareArtboard: ActorArtboard {
     }
     
     override public func makeInstance() -> ActorArtboard {
-        let artboardInstance = FlareArtboard(actor: actor as! FlareActor)
+        let artboardInstance = FlareCGArtboard(actor: actor as! FlareCGActor)
         artboardInstance.copyArtboard(self)
         return artboardInstance
     }
     
-//    override public func draw(context: CGContext) {
-    override public func draw(on layer: CALayer) {
+    public func draw(context: CGContext, on layer: CALayer) {
         for drawable in drawableNodes {
-            if let d = drawable as? FlareDrawable {
+            if let d = drawable as? FlareCGDrawable {
 //                d.draw(context: context)
-                d.draw(on: layer)
+                d.draw(context: context, on: layer)
             }
         }
     }

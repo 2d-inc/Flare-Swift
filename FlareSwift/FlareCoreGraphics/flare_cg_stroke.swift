@@ -1,6 +1,6 @@
 //
-//  flare_stroke.swift
-//  Flare-Swift
+//  flare_cg_stroke.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FlareStroke: class {
+protocol FlareCGStroke: class {
     var _color: CGColor { get set }
     var _strokeCap: CGLineCap { get set }
     var _strokeJoin: CGLineJoin { get set }
@@ -19,7 +19,7 @@ protocol FlareStroke: class {
     func paint(stroke: ActorStroke, context: CGContext, path: CGPath)
 }
 
-extension FlareStroke {
+extension FlareCGStroke {
     
     func initializeGraphics() {
         let stroke = self as! ActorStroke

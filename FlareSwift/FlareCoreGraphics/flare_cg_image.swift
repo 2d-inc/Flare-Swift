@@ -1,23 +1,23 @@
 //
-//  flare_image.swift
-//  FlareSwift
+//  flare_cg_image.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 3/19/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
-import CoreGraphics
 import MetalKit
+import QuartzCore
 
-
-class FlareImage: ActorImage, FlareDrawable {
+class FlareCGImage: ActorImage, FlareCGDrawable {
     
     let _metalController: MetalController
     let _samplerState: MTLSamplerState
     let _metalLayer: CAMetalLayer!
     
     var _metalVertexBuffer: MTLBuffer!
+    var _metalDeformBuffer: MTLBuffer?
     var _metalIndexBuffer: MTLBuffer!
     var _metalUniformsBuffer: MTLBuffer!
     var _texture: MTLTexture!
@@ -28,6 +28,11 @@ class FlareImage: ActorImage, FlareDrawable {
     var _metalVertices: [Float]?
     
     var _isValid: Bool = false
+    
+    var lastDisplayedDrawable: CAMetalDrawable?
+    
+//    var _timeToImages: [Double: CGImage]?
+    var _displayImage: CGImage?
     
     init(_ metalController: MetalController) {
         _metalController = metalController
@@ -64,7 +69,8 @@ class FlareImage: ActorImage, FlareDrawable {
         get { return _textureIndex }
         set {
             if _textureIndex != newValue {
-                // TODO: set the new texture as the correct value
+                let actor = (artboard!.actor as! FlareCGActor)
+                self._texture = _metalController.generateTexture(actor.images![textureIndex])
             }
         }
     }
@@ -75,7 +81,7 @@ class FlareImage: ActorImage, FlareDrawable {
         _indices = nil
     }
     
-    private func render(_ on: CALayer) {
+    private func render() {
         guard self.updateVertices() else {
             return
         }
@@ -92,10 +98,8 @@ class FlareImage: ActorImage, FlareDrawable {
         let renderDescriptor = MTLRenderPassDescriptor()
         renderDescriptor.colorAttachments[0].texture = drawable.texture
         renderDescriptor.colorAttachments[0].loadAction = .clear
-        
-        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0.5, blue: 0, alpha: 0.5)
-        
         renderDescriptor.colorAttachments[0].storeAction = .store
+        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0.5, blue: 0, alpha: 0.2)
         
         let commandBuffer = commandQ.makeCommandBuffer()!
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
@@ -106,7 +110,6 @@ class FlareImage: ActorImage, FlareDrawable {
         renderEncoder.setFragmentTexture(_texture, index: 0)
         renderEncoder.setFragmentSamplerState(_samplerState, index: 0)
         
-        // TODO: MVP matrices into Uniform buffer
         renderEncoder.drawIndexedPrimitives(
             type: .triangle,
             indexCount: triangles!.count,
@@ -116,16 +119,16 @@ class FlareImage: ActorImage, FlareDrawable {
         )
         renderEncoder.endEncoding()
         
-        commandBuffer.present(drawable)
-        UIGraphicsGetCurrentContext()
+//        commandBuffer.present(drawable)
         commandBuffer.commit()
+        commandBuffer.waitUntilCompleted()
+        self._displayImage = drawable.texture.toCGImage()
     }
     
 //    func draw(context: CGContext) {
-    func draw(on: CALayer) {
+    func draw(context: CGContext, on: CALayer) {
         autoreleasepool{
             if !_metalLayer.bounds.equalTo(on.bounds) {
-                self.invalidateDrawable()
                 _metalLayer.frame = on.bounds
                 _metalLayer.removeFromSuperlayer()
                 on.addSublayer(_metalLayer)
@@ -139,7 +142,32 @@ class FlareImage: ActorImage, FlareDrawable {
             if !isConnectedToBones {
                 _metalController.prepare(transform: self.worldTransform)                
             }
-            self.render(on)
+//            _metalLayer.compositingFilter = CIFilter(name: "CIDarkenBlendMode")
+            
+//            let filter = CIFilter(name: "CIDarkenBlendMode")
+            self.render()
+//            _metalLayer.render(in: context)
+//            let contents = _metalLayer.contents as! CAImageQueue
+//            let image = _metalLayer.contents as! CABackingStore
+//            context.draw(image, in: on.bounds)
+        }
+    }
+    
+    func renderOffscreen(rect: CGRect) {
+        autoreleasepool{
+            if !_metalLayer.bounds.equalTo(rect) {
+                _metalLayer.frame = rect
+                let width = Float(rect.width)
+                let height = Float(rect.height)
+                _metalController.setViewportSize(width: width, height: height)
+                let scale = min(width/artboard!.width, height/artboard!.height)
+                _metalController.setViewMatrix(x: 0, y: Float(height), scale: scale)
+                self.invalidateDrawable()
+            }
+            if !isConnectedToBones {
+                _metalController.prepare(transform: self.worldTransform)
+            }
+            self.render()
         }
     }
     
@@ -153,7 +181,7 @@ class FlareImage: ActorImage, FlareDrawable {
         // TODO: optimize this w/ swapping buffers.
         // Create vertex buffer
         let device = _metalController.device!
-        let actor = (artboard!.actor as! FlareActor)
+        let actor = (artboard!.actor as! FlareCGActor)
         
         // Each Vertex has (x,y) coordinates.
         let vbl = vertexCount * 2 * MemoryLayout<Float>.stride
@@ -171,6 +199,14 @@ class FlareImage: ActorImage, FlareDrawable {
         
         _uvBuffer = makeVertexUVBuffer()
         _indices = tris.map({ Int32($0) })
+//        if doesAnimationVertexDeform {
+//            let deformedVertices = animationDeformedVertices!
+//            // 2 floats per deform data - i.e. x,y translation values.
+//            let size = vertexCount * 2 * MemoryLayout.size(ofValue: deformedVertices[0])
+//            self._metalDeformBuffer = _metalController.device.makeBuffer(bytes: deformedVertices, length: size, options: [])
+//        } else {
+//
+//        }
         
         // TODO: set blendMode
     }
@@ -236,7 +272,7 @@ class FlareImage: ActorImage, FlareDrawable {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceNode = FlareImage(_metalController)
+        let instanceNode = FlareCGImage(_metalController)
         instanceNode.copyImage(self, resetArtboard)
         return instanceNode
     }
@@ -279,6 +315,5 @@ class FlareImage: ActorImage, FlareDrawable {
     override func computeAABB() -> AABB {
         _ = self.updateVertices()
         return self.bounds
-    }
-    
+    }    
 }

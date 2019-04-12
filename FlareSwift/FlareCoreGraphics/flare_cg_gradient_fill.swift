@@ -1,6 +1,6 @@
 //
-//  flare_gradient_fill.swift
-//  Flare-Swift
+//  flare_cg_gradient_fill.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-class FlareGradientFill: GradientFill, FlareFill {
+class FlareCGGradientFill: GradientFill, FlareCGFill {
     var _fillColor = CGColor.black
     var _gradient: CGGradient!
     private let _colorSpace = CGColorSpaceCreateDeviceRGB()
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceGradientFill = FlareGradientFill()
+        let instanceGradientFill = FlareCGGradientFill()
         instanceGradientFill.copyGradientFill(self, resetArtboard)
         return instanceGradientFill
     }

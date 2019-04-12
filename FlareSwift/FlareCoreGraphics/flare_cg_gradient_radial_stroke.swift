@@ -1,19 +1,19 @@
 //
-//  flare_gradient_stroke.swift
-//  FlareSwift
+//  flare_cg_gradient_radial_stroke.swift
+//  FlareCoreGraphics
 //
-//  Created by Umberto Sonnino on 3/4/19.
+//  Created by Umberto Sonnino on 3/5/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
 
-class FlareGradientStroke: GradientStroke, FlareStroke {
+class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
     var _color: CGColor = CGColor.black
     var _strokeCap: CGLineCap = .butt
     var _strokeJoin: CGLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
-    var effectPath: CGPath? = nil    
+    var effectPath: CGPath? = nil
     
     var _gradient: CGGradient!
     
@@ -22,14 +22,14 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceGradientStroke = FlareGradientStroke()
-        instanceGradientStroke.copyGradientStroke(self, resetArtboard)
-        return instanceGradientStroke
+        let radialStrokeNode = FlareCGRadialStroke()
+        radialStrokeNode.copyRadialStroke(self, resetArtboard)
+        return radialStrokeNode
     }
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
-
+        
         let numStops = Int(round( Double(colorStops.count)/5 ))
         var colors = [CGFloat]()
         var locations = [CGFloat]()
@@ -63,12 +63,14 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
         _color = paintColor
         _gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: colors, locations: locations, count: locations.count)
         _strokeWidth = CGFloat(width)
+        
     }
     
+    
     func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
-
+        let radius = CGFloat(Vec2D.distance(renderStart, renderEnd))
+        let center = CGPoint(x: renderStart[0], y: renderStart[1])
+        
         context.addPath(path)
         context.setFillColor(_color)
         context.setLineWidth(_strokeWidth)
@@ -76,8 +78,6 @@ class FlareGradientStroke: GradientStroke, FlareStroke {
         context.setLineJoin(strokeJoin)
         context.replacePathWithStrokedPath()
         context.clip()
-        context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
+        context.drawRadialGradient(_gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
     }
-    
-    
 }

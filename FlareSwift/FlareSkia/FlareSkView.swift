@@ -1,5 +1,5 @@
 //
-//  FlareView.swift
+//  FlareSkView.swift
 //  FlareSwift
 //
 //  Created by Umberto Sonnino on 4/1/19.
@@ -11,7 +11,7 @@ import Foundation
 import Skia
 
 @IBDesignable
-public class FlareSkiaView: UIView {
+public class FlareSkView: UIView {
     
     private var _eaglLayer: CAEAGLLayer?
     private var _context: EAGLContext?
@@ -28,8 +28,8 @@ public class FlareSkiaView: UIView {
     
     private var _filename: String = ""
     
-    private var flareActor: FlareActor!
-    private var artboard: FlareArtboard?
+    private var flareActor: FlareSkActor!
+    private var artboard: FlareSkArtboard?
     private var animation: ActorAnimation?
     private var setupAABB: AABB!
     private var animationName: String?
@@ -52,7 +52,7 @@ public class FlareSkiaView: UIView {
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        fatalError("FlareSkiaView init(coder:) Not Supported!")
+        fatalError("FlareSkView init(coder:) Not Supported!")
     }
     
     private func setupLayer() {
@@ -119,7 +119,7 @@ public class FlareSkiaView: UIView {
                     return
                 }
                 
-                let fActor = FlareActor()
+                let fActor = FlareSkActor()
                 if fActor.loadFromBundle(filename: _filename) {
                     flareActor = fActor
                     artboard = fActor.artboard

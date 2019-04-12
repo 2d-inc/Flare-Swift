@@ -1,5 +1,5 @@
 //
-//  flare_path.swift
+//  flare_cg_path.swift
 //  Flare-Swift
 //
 //  Created by Umberto Sonnino on 2/22/19.
@@ -7,11 +7,8 @@
 //
 
 import Foundation
-import CoreGraphics
 
-
-
-protocol FlarePath: class {
+protocol FlareCGPath: class {
     var _path: CGMutablePath { get set }
     var path: CGMutablePath { get }
     var _isValid: Bool { get set }
@@ -22,7 +19,7 @@ protocol FlarePath: class {
     func makePath() -> CGMutablePath
 }
 
-extension FlarePath {
+extension FlareCGPath {
     var path: CGMutablePath {
         if _isValid {
             return _path

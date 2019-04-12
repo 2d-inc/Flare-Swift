@@ -1,6 +1,6 @@
 //
-//  flare_shape.swift
-//  Flare-Swift
+//  flare_cg_shape.swift
+//  FlareCoreGraphics
 //
 //  Created by Umberto Sonnino on 2/26/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FlareShape: ActorShape, FlareDrawable {
+class FlareCGShape: ActorShape, FlareCGDrawable {
     private var _isValid = false
     private var _path = CGMutablePath()
     private var _layer = CAShapeLayer()
@@ -22,7 +22,7 @@ class FlareShape: ActorShape, FlareDrawable {
         var allPaths = [PiecewiseBezier]()
         if let c = children {
             for node in c {
-                if let flarePath = node as? FlarePath {
+                if let flarePath = node as? FlareCGPath {
                     let beziers = flarePath.beziers
                     let piecewise = PiecewiseBezier(beziers)
                     if let pathTransform = (node as! ActorBasePath).pathTransform {
@@ -54,7 +54,7 @@ class FlareShape: ActorShape, FlareDrawable {
         
         if let c = children {
             for node in c {
-                if let flarePath = node as? FlarePath {
+                if let flarePath = node as? FlareCGPath {
                     let cgPath = flarePath.path
                     if let pathTransform = (node as! ActorBasePath).pathTransform {
                         let a = CGFloat(pathTransform[0])
@@ -74,8 +74,7 @@ class FlareShape: ActorShape, FlareDrawable {
         return _path
     }
     
-//    func draw(context: CGContext) {
-    func draw(on: CALayer) {
+    func draw(context: CGContext, on: CALayer) {
         guard self.doesDraw else {
             return
         }
@@ -88,20 +87,20 @@ class FlareShape: ActorShape, FlareDrawable {
         for clips in clipShapes {
             let clippingPath = CGMutablePath()
             for clipShape in clips {
-                clippingPath.addPath((clipShape as! FlareShape).path)
+                clippingPath.addPath((clipShape as! FlareCGShape).path)
             }
-//            context.addPath(clippingPath)
-//            context.clip()
+            context.addPath(clippingPath)
+            context.clip()
         }
         
         for actorFill in fills {
-            let fill = actorFill as! FlareFill
-//            fill.paint(fill: actorFill, context: context, path: renderPath)
+            let fill = actorFill as! FlareCGFill
+            fill.paint(fill: actorFill, context: context, path: renderPath)
         }
         
         var strokePath = renderPath
         for actorStroke in strokes {
-            let stroke = actorStroke as! FlareStroke
+            let stroke = actorStroke as! FlareCGStroke
             if actorStroke.isTrimmed {
                 if stroke.effectPath == nil {
                     let pbPaths = self.piecewiseBezierPaths
@@ -139,14 +138,14 @@ class FlareShape: ActorShape, FlareDrawable {
                 }
                 strokePath = stroke.effectPath!
             }
-//            stroke.paint(stroke: actorStroke, context: context, path: strokePath)
+            stroke.paint(stroke: actorStroke, context: context, path: strokePath)
         }
         
-//        context.restoreGState()
+        context.restoreGState()
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceShape = FlareShape()
+        let instanceShape = FlareCGShape()
         instanceShape.copyShape(self, resetArtboard)
         return instanceShape
     }

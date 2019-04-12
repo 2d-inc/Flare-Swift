@@ -1,97 +1,83 @@
 //
-//  flare_actor.swift
-//  Flare-Swift
+//  flare_sk_actor.swift
+//  FlareSkia
 //
 //  Created by Umberto Sonnino on 2/22/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
-import MetalKit
 
-public class FlareActor: Actor {
+public class FlareSkActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
     public var images: [Data]?
     public var _artboards: [ActorArtboard?] = []
-  
-    var _metalController: MetalController! = nil
     
-    public var artboard: FlareArtboard? {
-        return _artboards.count > 0 ? (_artboards.first as! FlareArtboard) : nil
+    public var artboard: FlareSkArtboard? {
+        return _artboards.count > 0 ? (_artboards.first as! FlareSkArtboard) : nil
     }
-    
-    var metalController: MetalController {
-        get {
-            if _metalController == nil {
-                _metalController = MetalController()
-            }
-            return _metalController
-        }
-    }
-    
     public init() {}
     
     public func makeArtboard() -> ActorArtboard {
-        return FlareArtboard(actor: self)
+        return FlareSkArtboard(actor: self)
     }
     
     public func makeShapeNode() -> ActorShape {
-        return FlareShape()
+        return FlareSkShape()
     }
     
     public func makePathNode() -> ActorPath {
-        return FlareActorPath()
+        return FlareSkActorPath()
     }
     
     public func makeRectangle() -> ActorRectangle {
-        return FlareRectangle()
+        return FlareSkRectangle()
     }
     
     public func makeTriangle() -> ActorTriangle {
-        return FlareTriangle()
+        return FlareSkTriangle()
     }
     
     public func makeStar() -> ActorStar {
-        return FlareStar()
+        return FlareSkStar()
     }
     
     public func makePolygon() -> ActorPolygon {
-        return FlarePolygon()
+        return FlareSkPolygon()
     }
     
     public func makeEllipse() -> ActorEllipse {
-        return FlareEllipse()
+        return FlareSkEllipse()
     }
 
     public func makeColorFill() -> ColorFill {
-        return FlareColorFill()
+        return FlareSkColorFill()
     }
 
     public func makeColorStroke() -> ColorStroke {
-        return FlareColorStroke()
+        return FlareSkColorStroke()
     }
 
     public func makeGradientFill() -> GradientFill {
-        return FlareGradientFill()
+        return FlareSkGradientFill()
     }
 
     public func makeGradientStroke() -> GradientStroke {
-        return FlareGradientStroke()
+        return FlareSkGradientStroke()
     }
 
     public func makeRadialFill() -> RadialGradientFill {
-        return FlareRadialFill()
+        return FlareSkRadialFill()
     }
 
     public func makeRadialStroke() -> RadialGradientStroke {
-        return FlareRadialStroke()
+        return FlareSkRadialStroke()
     }
     
     public func makeImageNode() -> ActorImage {
-//        return FlareImage(device: device, textureLoader: textureLoader)
-        return FlareImage(self.metalController)
+        return FlareSkImage()
     }
     
     func loadData(_ data: Data) {
