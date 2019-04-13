@@ -889,6 +889,28 @@
 			path = vulkan;
 			sourceTree = "<group>";
 		};
+		E44D539422624D1B00CBD24A /* Fills */ = {
+			isa = PBXGroup;
+			children = (
+				E44D535F225F42BB00CBD24A /* flare_sk_fill.swift */,
+				E44D535C225F42BA00CBD24A /* flare_sk_color_fill.swift */,
+				E44D5361225F42BB00CBD24A /* flare_sk_gradient_fill.swift */,
+				E44D5362225F42BB00CBD24A /* flare_sk_gradient_radial_fill.swift */,
+			);
+			path = Fills;
+			sourceTree = "<group>";
+		};
+		E44D539522624D2700CBD24A /* Strokes */ = {
+			isa = PBXGroup;
+			children = (
+				E44D535D225F42BA00CBD24A /* flare_sk_stroke.swift */,
+				E44D535A225F42BA00CBD24A /* flare_sk_color_stroke.swift */,
+				E44D535B225F42BA00CBD24A /* flare_sk_gradient_radial_stroke.swift */,
+				E44D535E225F42BA00CBD24A /* flare_sk_gradient_stroke.swift */,
+			);
+			path = Strokes;
+			sourceTree = "<group>";
+		};
 		E453590222282EC900981BD7 = {
 			isa = PBXGroup;
 			children = (
@@ -1550,26 +1572,20 @@
 			isa = PBXGroup;
 			children = (
 				E488330D2252467E000940FB /* Skia */,
+				E44D539522624D2700CBD24A /* Strokes */,
+				E44D539422624D1B00CBD24A /* Fills */,
 				E488354A225247B3000940FB /* FlareSkView.swift */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E4C9D822225B83DD003A0DCB /* OpenGLView.swift */,
 				E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */,
 				E4C9D826225B8FBC003A0DCB /* SimpleFragment.glsl */,
-				E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */,
 				E44D5365225F42BB00CBD24A /* flare_sk_actor.swift */,
 				E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */,
-				E44D535C225F42BA00CBD24A /* flare_sk_color_fill.swift */,
-				E44D535A225F42BA00CBD24A /* flare_sk_color_stroke.swift */,
-				E44D5367225F42BC00CBD24A /* flare_sk_drawable.swift */,
-				E44D535F225F42BB00CBD24A /* flare_sk_fill.swift */,
-				E44D5361225F42BB00CBD24A /* flare_sk_gradient_fill.swift */,
-				E44D5362225F42BB00CBD24A /* flare_sk_gradient_radial_fill.swift */,
-				E44D535B225F42BA00CBD24A /* flare_sk_gradient_radial_stroke.swift */,
-				E44D535E225F42BA00CBD24A /* flare_sk_gradient_stroke.swift */,
-				E44D5366225F42BB00CBD24A /* flare_sk_image.swift */,
-				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
 				E44D5360225F42BB00CBD24A /* flare_sk_shape.swift */,
-				E44D535D225F42BA00CBD24A /* flare_sk_stroke.swift */,
+				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
+				E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */,
+				E44D5367225F42BC00CBD24A /* flare_sk_drawable.swift */,
+				E44D5366225F42BB00CBD24A /* flare_sk_image.swift */,
 			);
 			path = FlareSkia;
 			sourceTree = "<group>";

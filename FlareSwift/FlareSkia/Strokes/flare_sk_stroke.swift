@@ -10,14 +10,10 @@ import Foundation
 import Skia
 
 protocol FlareSkStroke: class {
-    /**
-        _paint is a sk_paint_t*
-    */
-    var _paint: OpaquePointer! { get set}
-    /**
-        effectPath is a sk_path_t*
-     */
-    var effectPath: OpaquePointer? { get set}
+    /// paint is of type `sk_paint_t*` (i.e. C-style pointer)
+    var _paint: OpaquePointer! { get set }
+    /// effectPath is of type `sk_path_t*` (i.e. C-style pointer)
+    var effectPath: OpaquePointer? { get set }
 }
 
 extension FlareSkStroke {
@@ -27,6 +23,7 @@ extension FlareSkStroke {
 
         let stroke = self as! ActorStroke
         sk_paint_set_stroke(_paint, true)
+        sk_paint_set_antialias(_paint, true)
         sk_paint_set_stroke_width(_paint, stroke.width)
         sk_paint_set_stroke_cap(_paint, getStrokeCap(cap: stroke.cap))
         sk_paint_set_stroke_join(_paint, getStrokeJoin(cap: stroke.join))

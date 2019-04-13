@@ -10,13 +10,7 @@ import Foundation
 import Skia
 
 protocol FlareSkPath: class {
-    /*
-     
-     var _pa
-     var deformedPoints: [PathPoint]?
-     th: OpaquePointer
-     _path is of type sk_path_t*
-    */
+    /// _path is of type `sk_path_t*` (i.e. C-style pointer)
     var _path: OpaquePointer { get set }
     var _isValid: Bool { get set }
     var isClosed: Bool { get }

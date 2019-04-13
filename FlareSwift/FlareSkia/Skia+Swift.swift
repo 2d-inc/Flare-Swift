@@ -94,14 +94,12 @@ class SkPath: ConcretePath {
         var skMat = sk_matrix_t(
             mat: (
                 mat[0],
-                mat[1],
-                0.0,
                 mat[2],
-                mat[3],
-                0.0,
                 mat[4],
+                mat[1],
+                mat[3],
                 mat[5],
-                1.0
+                0, 0, 1
             )
         )
         let matPointer = withUnsafeMutablePointer(to: &skMat){

@@ -59,7 +59,6 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                                 0, 0, 1.0
                             )
                         )
-                        print("AND TRANSFORM \(pathTransform.description)")
                         let matPointer = withUnsafeMutablePointer(to: &skMat){
                             UnsafeMutablePointer($0)
                         }

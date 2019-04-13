@@ -45,6 +45,7 @@ public class FlareSkView: UIView {
     
     private var _skiaCanvas: OpaquePointer!
     private var _skiaSurface: OpaquePointer!
+    private var _skBackgroundPaint: OpaquePointer!
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +62,7 @@ public class FlareSkView: UIView {
             return
         }
         
-        glLayer.isOpaque = true
+        glLayer.isOpaque = false
         _eaglLayer = glLayer
         
         setupContext()
@@ -99,6 +100,8 @@ public class FlareSkView: UIView {
         if _skiaSurface != nil {
             _skiaCanvas = sk_surface_get_canvas(_skiaSurface)
         }
+        _skBackgroundPaint = sk_paint_new()
+        sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255/2, 93, 93, 93))
     }
     
     public var filename: String {
@@ -225,7 +228,6 @@ public class FlareSkView: UIView {
         }
         
         if let animation = self.animation, let artboard = self.artboard {
-            /*
             let currentTime = CACurrentMediaTime()
             let delta = currentTime - lastTime
             lastTime = currentTime
@@ -235,12 +237,39 @@ public class FlareSkView: UIView {
             }
             animation.apply(time: duration, artboard: artboard, mix: 1.0)
             artboard.advance(seconds: delta)
-            */
+ 
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-            skiaDraw(_skiaCanvas)
+            
+            let bounds = setupAABB!
+            let contentsWidth = bounds.width
+            let contentsHeight = bounds.height
+            
+            let tx = contentsWidth * artboard.origin.x
+            let ty = contentsHeight * artboard.origin.y
+            
+            // Contain the Artboard
+            let scaleX = Float(frame.size.width) / contentsWidth
+            let scaleY = Float(frame.size.height) / contentsHeight
+            let scale = min(scaleX, scaleY)
+            
+            sk_canvas_save(_skiaCanvas)
+            
+            sk_canvas_scale(_skiaCanvas, scale, scale)
+            sk_canvas_translate(_skiaCanvas, tx, ty)
+            
+            clearBackground()
+            artboard.draw(skCanvas: _skiaCanvas)
+            
+            sk_canvas_restore(_skiaCanvas)
+            sk_canvas_flush(_skiaCanvas)
+            
             glBindRenderbuffer(GLenum(GL_RENDERBUFFER), _colorRenderBuffer)
             _context!.presentRenderbuffer(Int(GL_RENDERBUFFER))
         }
+    }
+    
+    func clearBackground() {
+        sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint)
     }
     
     func skiaDraw(_ canvas: OpaquePointer) {
