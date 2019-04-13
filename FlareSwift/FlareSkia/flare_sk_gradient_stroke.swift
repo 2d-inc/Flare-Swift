@@ -13,6 +13,10 @@ class FlareSkGradientStroke: GradientStroke, FlareSkStroke {
     var _paint: OpaquePointer!
     var effectPath: OpaquePointer? = nil
     
+    override func initializeGraphics() {
+        (self as FlareSkStroke).initializeGraphics()
+    }
+    
     override func markPathEffectsDirty() {
         effectPath = nil
     }

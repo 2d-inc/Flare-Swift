@@ -18,7 +18,6 @@ protocol FlareSkPath: class {
      _path is of type sk_path_t*
     */
     var _path: OpaquePointer { get set }
-    var path: OpaquePointer { get }
     var _isValid: Bool { get set }
     var isClosed: Bool { get }
     /// This getter relies (but not necessarily) on the getter implemented in `ActorBasePath`.

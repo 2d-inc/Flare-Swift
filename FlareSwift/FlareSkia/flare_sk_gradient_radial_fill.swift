@@ -12,6 +12,10 @@ import Skia
 class FlareSkRadialFill: RadialGradientFill, FlareSkFill {
     var _paint: OpaquePointer!
     
+    override func initializeGraphics() {
+        (self as FlareSkFill).initializeGraphics()
+    }
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let radialNode = FlareSkRadialFill()
         radialNode.copyRadialFill(self, resetArtboard)

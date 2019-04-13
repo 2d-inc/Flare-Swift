@@ -419,12 +419,10 @@ public class ActorArtboard {
     func readComponentsBlock(_ block: StreamReader) {
         let componentCount = Int(block.readUint16Length())
         _components = Array<ActorComponent>()
-//        _components[0] = _root;
         _components?.insert(_root, at: 0)
         
         // Guaranteed from the exporter to be in index order.
         _nodeCount = 1;
-//        for (int componentIndex = 1, end = componentCount + 1; componentIndex < end; componentIndex++) {
         let end = componentCount + 1
         for componentIndex in 1 ..< end {
             if let nodeBlock = block.readNextBlock(blockTypes: BlockTypesMap) {
@@ -645,7 +643,7 @@ public class ActorArtboard {
                 if (component is ActorNode) {
                     _nodeCount += 1
                 }
-//                _components![componentIndex] = component
+
                 _components!.insert(component, at: componentIndex)
                 if component != nil {
                     component!.idx = componentIndex;
@@ -653,31 +651,25 @@ public class ActorArtboard {
             }
         }
         
-//        _drawableNodes = List<ActorDrawable>(_drawableNodeCount);
         _drawableNodes = [ActorDrawable]()
-//        _nodes = List<ActorNode>(_nodeCount);
         _nodes = [ActorNode]()
-//        _nodes[0] = _root;
         _nodes!.insert(_root, at: 0)
         
         // Resolve nodes.
         var drwIdx = 0;
         var anIdx = 0;
         
-//        for (int i = 1; i <= componentCount; i++) {
         for i in 1 ... componentCount {
             // Nodes can be nil if we read from a file version that contained nodes that we don't interpret in this runtime.
             if let c = _components![i] {
                 c.resolveComponentIndices(_components!);
                 
                 if c is ActorDrawable {
-//                    _drawableNodes[drwIdx] = c as! ActorDrawable
                     _drawableNodes.insert(c as! ActorDrawable, at: drwIdx)
                     drwIdx += 1
                 }
                 
                 if let an = c as? ActorNode {
-//                    _nodes[anIdx] = an
                     _nodes!.insert(an, at: anIdx)
                     anIdx += 1
                 }
@@ -685,7 +677,6 @@ public class ActorArtboard {
             
         }
         
-//        for (int i = 1; i <= componentCount; i++) {
         for i in 1 ... componentCount {
             if let c = components![i] {
                 c.completeResolve();
@@ -707,10 +698,9 @@ public class ActorArtboard {
                 let anim = ActorAnimation.read(reader: animationBlock, components: &_components!)
                 _animations?.insert(anim, at: animationIndex)
                 animationIndex += 1
-//                _animations[animationIndex++] = anim
                 break
             default:
-                print("READING ANIMATIONS BLOCK? \(animationBlock.blockType)")
+                print("READING UNKNOWN ANIMATIONS BLOCK? \(animationBlock.blockType)")
                 break
             }
         }

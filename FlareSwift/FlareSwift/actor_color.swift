@@ -273,7 +273,6 @@ public class ColorStroke: ActorColor, ActorStroke {
     }
     
     func markPathEffectsDirty() {}
-    
     func initializeGraphics() {}
     
     func readColorStroke(_ artboard: ActorArtboard, _ reader: StreamReader) {

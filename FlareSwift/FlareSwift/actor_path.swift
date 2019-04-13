@@ -395,6 +395,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     }
     
     func readPath(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
         self.readSkinnable(artboard, reader)
         
         self.isHidden = !reader.readBool(label: "isVisible")

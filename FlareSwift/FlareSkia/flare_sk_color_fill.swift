@@ -12,15 +12,20 @@ import Skia
 class FlareSkColorFill: ColorFill, FlareSkFill {
     var _paint: OpaquePointer!
     
+    override func initializeGraphics() {
+        (self as FlareSkFill).initializeGraphics()
+    }
+    
     var uiColor: UInt32 {
         get {
             let c = color
-            return sk_color_set_argb(
+            let res: UInt32 = sk_color_set_argb(
                 UInt32(round(Double(c[3]) * 255 * artboard!.modulateOpacity * opacity * shape.renderOpacity)),
                 UInt32(round(c[0] * 255)),
                 UInt32(round(c[1] * 255)),
                 UInt32(round(c[2] * 255))
             )
+            return res
         }
         set(c) {
             let r = Float32(sk_color_get_r(c))/255

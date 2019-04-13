@@ -108,7 +108,4 @@ class KeyFramePathVertices: Interpolated {
         
         return true
     }
-    
-   
-    
 }

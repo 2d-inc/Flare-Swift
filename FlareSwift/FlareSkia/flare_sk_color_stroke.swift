@@ -13,6 +13,10 @@ class FlareSkColorStroke: ColorStroke, FlareSkStroke {
     var _paint: OpaquePointer!
     var effectPath: OpaquePointer?
     
+    override func initializeGraphics() {
+        (self as FlareSkStroke).initializeGraphics()
+    }
+    
     override func markPathEffectsDirty() {
         effectPath = nil
     }

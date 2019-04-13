@@ -21,6 +21,14 @@ public class AABB: Equatable, Hashable {
         }
     }
     
+    var width: Float32 {
+        return _buffer[2] - _buffer[0]
+    }
+    
+    var height: Float32 {
+        return _buffer[3] - _buffer[1]
+    }
+    
     public init() {
         self._buffer = [0.0, 0.0, 0.0, 0.0]
     }

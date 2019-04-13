@@ -12,6 +12,10 @@ import Skia
 class FlareSkGradientFill: GradientFill, FlareSkFill {
     var _paint: OpaquePointer!
     
+    override func initializeGraphics() {
+        (self as FlareSkFill).initializeGraphics()
+    }
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceGradientFill = FlareSkGradientFill()
         instanceGradientFill.copyGradientFill(self, resetArtboard)

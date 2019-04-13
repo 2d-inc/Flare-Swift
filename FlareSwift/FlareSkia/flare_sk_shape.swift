@@ -47,19 +47,19 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                 if let flarePath = node as? FlareSkPath {
                     let subpath = flarePath.path
                     if let pathTransform = (node as! ActorBasePath).pathTransform {
+                        // Indices are adjusted to sk_matrix_t that is in row-major order.
                         var skMat = sk_matrix_t(
                             mat: (
                                 pathTransform[0],
-                                pathTransform[1],
-                                0.0,
                                 pathTransform[2],
-                                pathTransform[3],
-                                0.0,
                                 pathTransform[4],
+                                pathTransform[1],
+                                pathTransform[3],
                                 pathTransform[5],
-                                1.0
+                                0, 0, 1.0
                             )
                         )
+                        print("AND TRANSFORM \(pathTransform.description)")
                         let matPointer = withUnsafeMutablePointer(to: &skMat){
                             UnsafeMutablePointer($0)
                         }
