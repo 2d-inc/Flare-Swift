@@ -410,3 +410,53 @@ func indexOfNearestPoint(_ points: [Vec2D], _ targetPoint: Vec2D ) -> Int {
 /// Interpolate between [min] and [max] with the amount of [a] using a linear
 /// interpolation. The computation is equivalent to the GLSL function mix.
 func mix(_ min: Float, _ max: Float, _ a: Float) -> Float { return min + a * (max - min) }
+
+
+///
+/// Returns a collection of `Bezier` curves (i.e. Segments OR Cubic Beziers)
+/// that represent the given `ActorBasePath`
+///
+func makeBeziers(from path: ActorBasePath) -> [Bezier] {
+    let pathPoints = path.pathPoints
+    guard !pathPoints.isEmpty else {
+        return []
+    }
+    
+    var beziers = [Bezier]()
+    
+    let c = path.isClosed ? pathPoints.count : pathPoints.count - 1
+    let rpc = pathPoints.count
+    
+    for i in 0 ..< c {
+        let point = pathPoints[i]
+        let nextPoint = pathPoints[(i+1)%rpc]
+        var cin = nextPoint is CubicPathPoint ? (nextPoint as! CubicPathPoint).inPoint : nil
+        var cout = point is CubicPathPoint ? (point as! CubicPathPoint).outPoint : nil
+        if cin == nil && cout == nil {
+            let s = Segment([
+                Vec2D.init(clone: point.translation),
+                Vec2D.init(clone: nextPoint.translation)
+                ])
+            beziers.append(s)
+            //                print("SEGMENT \(s.description)")
+        } else {
+            if cout == nil {
+                cout = point.translation
+            }
+            if cin == nil {
+                cin = nextPoint.translation
+            }
+            let cb = CubicBezier([
+                Vec2D.init(clone: point.translation),
+                Vec2D.init(clone: cout!),
+                Vec2D.init(clone: cin!),
+                Vec2D(clone: nextPoint.translation)
+                ])
+            //                print("CUBIC:\(cb.description)")
+            beziers.append(cb)
+        }
+    }
+    
+    return beziers
+}
+

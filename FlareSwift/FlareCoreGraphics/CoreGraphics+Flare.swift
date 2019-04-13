@@ -7,6 +7,11 @@
 //
 
 import Foundation
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import CoreGraphics
+#endif
 
 /// Cross Platform Images.
 /// Credit to: https://gist.github.com/JohnSundell/05f837a3f901630e65e3652945424ba5
@@ -17,19 +22,19 @@ typealias UIImage = NSImage
 
 /// Helper class extension to integrate a static factory constructor for the two different SDKs
 extension CGColor {
-#if os(iOS)
+    #if os(iOS)
     static var black: CGColor = UIColor.black.cgColor
     static var white: CGColor = UIColor.white.cgColor
     static var clear: CGColor = UIColor.clear.cgColor
     static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
         return UIColor.init(red: red, green: green, blue: blue, alpha: alpha).cgColor
     }
-#elseif os(macOS)
+    #elseif os(macOS)
     static func cgColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> CGColor {
         return CGColor(red: red, green: gree, blue: blue, alpha: alpha)
     }
-#endif
- 
+    #endif
+    
     static func toFloatArray(color: CGColor?) -> [Float]? {
         if let c = color {
             if let components = c.components {
@@ -104,5 +109,45 @@ extension CGPath {
             }
         }
         return (arrayPoints,arrayTypes)
+    }
+}
+
+/**
+ Let CGMutablePath conform to the ConcretePath protocol.
+ */
+extension CGMutablePath: ConcretePath {
+    func moveTo(_ to: Vec2D) {
+        self.move(to: Vec2D.toCGPoint(to))
+    }
+    
+    func lineTo(_ to: Vec2D) {
+        self.addLine(to: Vec2D.toCGPoint(to))
+    }
+    
+    func curveTo(_ to: Vec2D, control1: Vec2D, control2: Vec2D) {
+        self.addCurve(to: Vec2D.toCGPoint(to),
+                      control1: Vec2D.toCGPoint(control1),
+                      control2: Vec2D.toCGPoint(control2)
+        )
+    }
+    
+    func addPath(_ subpath: ConcretePath, mat: Mat2D) {
+        let transform = __CGAffineTransformMake(
+            CGFloat(mat[0]),
+            CGFloat(mat[1]),
+            CGFloat(mat[2]),
+            CGFloat(mat[3]),
+            CGFloat(mat[4]),
+            CGFloat(mat[5])
+        )
+        self.addPath(subpath as! CGMutablePath, transform: transform)
+    }
+}
+
+extension CGPoint {
+    init(x: Float32, y: Float32) {
+        self.init()
+        self.x = CGFloat(x)
+        self.y = CGFloat(y)
     }
 }

@@ -9,9 +9,6 @@
 import Foundation
 
 class FlareCGActorPath: ActorPath, FlareCGPath {
-    var isClosed: Bool {
-        return _isClosed
-    }
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
     
@@ -29,9 +26,6 @@ class FlareCGActorPath: ActorPath, FlareCGPath {
 class FlareCGEllipse: ActorEllipse, FlareCGPath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
     
     override func invalidatePath() {
         _isValid = false
@@ -47,9 +41,6 @@ class FlareCGEllipse: ActorEllipse, FlareCGPath {
 class FlareCGTriangle: ActorTriangle, FlareCGPath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
     
     override func invalidatePath() {
         _isValid = false
@@ -65,9 +56,6 @@ class FlareCGTriangle: ActorTriangle, FlareCGPath {
 class FlareCGRectangle: ActorRectangle, FlareCGPath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
     
     override func invalidatePath() {
         _isValid = false
@@ -83,9 +71,6 @@ class FlareCGRectangle: ActorRectangle, FlareCGPath {
 class FlareCGStar: ActorStar, FlareCGPath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
  
     override func invalidatePath() {
         _isValid = false
@@ -101,9 +86,6 @@ class FlareCGStar: ActorStar, FlareCGPath {
 class FlareCGPolygon: ActorPolygon, FlareCGPath {
     var _path: CGMutablePath = CGMutablePath()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
     
     override func invalidatePath() {
         _isValid = false

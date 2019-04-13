@@ -1,26 +1,18 @@
 //
-//  flare_cg_image.swift
-//  FlareCoreGraphics
+//  flare_sk_image.swift
+//  FlareSkia
 //
 //  Created by Umberto Sonnino on 3/19/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 
 import Foundation
-import MetalKit
-import QuartzCore
+import Skia
 
-class FlareCGImage: ActorImage, FlareCGDrawable {
-    
-    let _metalController: MetalController
-    let _samplerState: MTLSamplerState
-    let _metalLayer: CAMetalLayer!
-    
-    var _metalVertexBuffer: MTLBuffer!
-    var _metalDeformBuffer: MTLBuffer?
-    var _metalIndexBuffer: MTLBuffer!
-    var _metalUniformsBuffer: MTLBuffer!
-    var _texture: MTLTexture!
+class FlareSkImage: ActorImage {
+}
+/*
+class FlareSkImage: ActorImage, FlareSkDrawable {
     
     var _vertexBuffer: [Float]?
     var _uvBuffer: [Float]?
@@ -29,32 +21,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
     
     var _isValid: Bool = false
     
-    var lastDisplayedDrawable: CAMetalDrawable?
-    
-//    var _timeToImages: [Double: CGImage]?
-    var _displayImage: CGImage?
-    
-    init(_ metalController: MetalController) {
-        _metalController = metalController
-
-        _metalLayer = CAMetalLayer()
-        _metalLayer.device = _metalController.device!
-        _metalLayer.pixelFormat = .bgra8Unorm_srgb
-        _metalLayer.framebufferOnly = false
-        _metalLayer.isOpaque = false
-        
-        let samplerDesc = MTLSamplerDescriptor()
-        samplerDesc.minFilter = .nearest
-        samplerDesc.magFilter = .nearest
-        samplerDesc.mipFilter = .nearest
-        samplerDesc.maxAnisotropy = 1
-        samplerDesc.sAddressMode = .clampToEdge
-        samplerDesc.tAddressMode = .clampToEdge
-        samplerDesc.rAddressMode = .clampToEdge
-        samplerDesc.normalizedCoordinates = true
-        samplerDesc.lodMinClamp = 0
-        samplerDesc.lodMaxClamp = .greatestFiniteMagnitude
-        _samplerState = _metalController.device.makeSamplerState(descriptor: samplerDesc)!
+    init() {
         super.init()
     }
     
@@ -69,7 +36,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         get { return _textureIndex }
         set {
             if _textureIndex != newValue {
-                let actor = (artboard!.actor as! FlareCGActor)
+                let actor = (artboard!.actor as! FlareSkActor)
                 self._texture = _metalController.generateTexture(actor.images![textureIndex])
             }
         }
@@ -122,7 +89,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
 //        commandBuffer.present(drawable)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
-//        self._displayImage = drawable.texture.toCGImage()
+        self._displayImage = drawable.texture.toCGImage()
     }
     
 //    func draw(context: CGContext) {
@@ -181,7 +148,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         // TODO: optimize this w/ swapping buffers.
         // Create vertex buffer
         let device = _metalController.device!
-        let actor = (artboard!.actor as! FlareCGActor)
+        let actor = (artboard!.actor as! FlareSkActor)
         
         // Each Vertex has (x,y) coordinates.
         let vbl = vertexCount * 2 * MemoryLayout<Float>.stride
@@ -272,7 +239,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let instanceNode = FlareCGImage(_metalController)
+        let instanceNode = FlareSkImage(_metalController)
         instanceNode.copyImage(self, resetArtboard)
         return instanceNode
     }
@@ -315,5 +282,85 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
     override func computeAABB() -> AABB {
         _ = self.updateVertices()
         return self.bounds
-    }    
+    }
+    
+    func extractImage(at time: Double, on layer: CALayer) {
+        // TODO: use aabb to compute the size of the viewport.
+//        let AABB = computeAABB()
+        invalidateDrawable()
+        self.renderOffscreen(rect: layer.bounds)
+        
+    }
+    
 }
+
+extension MTLTexture {
+    func toCGImage() -> CGImage {
+        let width = self.width
+        let height = self.height
+        let bytesPerRow = width * 4
+        let size = width * height * 4
+        let buf = malloc(size)!
+        let region = MTLRegionMake2D(0, 0, width, height)
+        
+        self.getBytes(buf, bytesPerRow: bytesPerRow, from: region, mipmapLevel: 0)
+        
+//        var readIdx = 3
+//        let stride = 4
+//        let rect = width * height
+//        for _ in 0..<rect {
+////            bytesArray[readIdx] *= UInt8(0.2)
+////            s += String(bytesArray[readIdx])
+//            buf.storeBytes(of: UInt8(0.2*255), toByteOffset: readIdx, as: UInt8.self)
+//            readIdx += stride
+//        }
+//        var s = ""
+//        var bytesArray = Array(
+//            UnsafeBufferPointer(start: buf.assumingMemoryBound(to: UInt8.self), count: size)
+//        )
+//        readIdx = 3
+//        for _ in 0..<rect {
+//            s += String(bytesArray[readIdx])
+//            readIdx += stride
+//        }
+//        print(s)
+        let stride = 4
+        let numPixels = width * height
+        let bytesCount = numPixels * 4
+        let rgbaPixels = malloc(size)!
+
+        var writeIdx = 0
+        var readIdx = bytesCount-stride
+        while writeIdx < bytesCount {
+            let b = buf.load(fromByteOffset: readIdx, as: UInt8.self)
+            let g = buf.load(fromByteOffset: readIdx+1, as: UInt8.self)
+            let r = buf.load(fromByteOffset: readIdx+2, as: UInt8.self)
+            let a = buf.load(fromByteOffset: readIdx+3, as: UInt8.self)
+            
+            rgbaPixels.storeBytes(of: b, toByteOffset: writeIdx, as: UInt8.self) // Blue
+            rgbaPixels.storeBytes(of: g, toByteOffset: writeIdx+1, as: UInt8.self) // Green
+            rgbaPixels.storeBytes(of: r, toByteOffset: writeIdx+2, as: UInt8.self) // Red
+            rgbaPixels.storeBytes(of: a, toByteOffset: writeIdx+3, as: UInt8.self) // Alpha
+            
+            readIdx -= stride
+            writeIdx += stride
+        }
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.first.rawValue | CGBitmapInfo.byteOrder32Little.rawValue)
+        
+        let callback: CGDataProviderReleaseDataCallback = {
+            (info: UnsafeMutableRawPointer?, data: UnsafeRawPointer, size: Int) -> () in
+            return
+        }
+        
+        let provider = CGDataProvider(dataInfo: nil, data: buf, size: size, releaseData: callback)!
+        let cgImage = CGImage(width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo, provider: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent)!
+        
+//        free(buf)
+        
+        return cgImage
+    }
+}
+ */

@@ -10,6 +10,7 @@ import Foundation
 
 public protocol ActorBasePath: class {
     var points: [PathPoint] { get }
+    var isClosed: Bool { get }
     var pathTransform: Mat2D? { get }
     var parent: ActorNode? { get }
     var transform: Mat2D { get }
@@ -139,10 +140,77 @@ public extension ActorBasePath {
             parent?.invalidateShape()
         }
     }
+    
+    var pathPoints: [PathPoint] {
+        guard !deformedPoints.isEmpty else {
+            return []
+        }
+        
+        var pathPoints = [PathPoint]()
+        let pc = deformedPoints.count
+        
+        let arcConstant: Float32 = 0.55
+        let iarcConstant = 1.0 - arcConstant
+        var previous = isClosed ? deformedPoints.last : nil
+        
+        for i in 0 ..< pc {
+            let point = deformedPoints[i]
+            switch point.type {
+            case .Straight:
+                let straightPoint = point as! StraightPathPoint
+                let radius = straightPoint.radius
+                if radius > 0 {
+                    if !isClosed && (i == 0 || i == pc - 1) {
+                        pathPoints.append(point)
+                        previous = point
+                    } else {
+                        let next = deformedPoints[(i+1)%pc]
+                        let prevPoint = previous is CubicPathPoint ? (previous as! CubicPathPoint).outPoint : previous!.translation
+                        let nextPoint = next is CubicPathPoint ? (next as! CubicPathPoint).inPoint : next.translation
+                        let pos = point.translation
+                        
+                        let toPrev = Vec2D.subtract(Vec2D(), prevPoint, pos)
+                        let toPrevLength = Vec2D.length(toPrev)
+                        toPrev[0] /= toPrevLength
+                        toPrev[1] /= toPrevLength
+                        
+                        let toNext = Vec2D.subtract(Vec2D(), nextPoint, pos)
+                        let toNextLength = Vec2D.length(toNext)
+                        toNext[0] /= toNextLength
+                        toNext[1] /= toNextLength
+                        
+                        let renderRadius = min(toPrevLength, min(toNextLength, Float32(radius)))
+                        var translation = Vec2D.scaleAndAdd(Vec2D(), pos, toPrev, renderRadius)
+                        pathPoints.append(CubicPathPoint.init(fromValues: translation, translation, Vec2D.scaleAndAdd(Vec2D(), pos, toPrev, iarcConstant * renderRadius)))
+                        
+                        translation = Vec2D.scaleAndAdd(Vec2D(), pos, toNext, renderRadius)
+                        previous = CubicPathPoint.init(fromValues: translation, Vec2D.scaleAndAdd(Vec2D(), pos, toNext, iarcConstant * renderRadius), translation)
+                        pathPoints.append(previous!)
+                    }
+                } else {
+                    pathPoints.append(point)
+                    previous = point
+                }
+                break
+            default:
+                pathPoints.append(point)
+                previous = point
+                break
+            }
+        }
+        
+        return pathPoints
+    }
 }
 
 
 public class ActorProceduralPath: ActorNode, ActorBasePath {
+    public var _isClosed: Bool = false
+    
+    public var isClosed: Bool {
+        return _isClosed
+    }
+    
     public var points: [PathPoint] {
         return []
     }
@@ -216,11 +284,15 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
         return _points
     }
     
+    public var isClosed: Bool {
+        return _isClosed
+    }
+    
     public var pathTransform: Mat2D? { return self.isConnectedToBones ? nil : worldTransform }
     
     var isPathInWorldSpace: Bool { return self.isConnectedToBones }
     
-    var deformedPoints: [PathPoint]? {
+    var deformedPoints: [PathPoint] {
         if !isConnectedToBones || skin == nil {
             return _points
         }
@@ -379,5 +451,4 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
             vertexDeform = vd
         }
     }
-    
 }

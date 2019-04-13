@@ -33,6 +33,7 @@
 		E44D538B2260837E00CBD24A /* vulkan_ios.h in Headers */ = {isa = PBXBuildFile; fileRef = E44D53822260837E00CBD24A /* vulkan_ios.h */; };
 		E44D538C2260837E00CBD24A /* vulkan_core.h in Headers */ = {isa = PBXBuildFile; fileRef = E44D53832260837E00CBD24A /* vulkan_core.h */; };
 		E44D538D2260837E00CBD24A /* vulkan_android.h in Headers */ = {isa = PBXBuildFile; fileRef = E44D53842260837E00CBD24A /* vulkan_android.h */; };
+		E44D53912260C70000CBD24A /* piecewise_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D53902260C70000CBD24A /* piecewise_bezier.swift */; };
 		E453591622282EC900981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E453590C22282EC900981BD7 /* FlareSwift.framework */; };
 		E453591B22282EC900981BD7 /* FlareSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453591A22282EC900981BD7 /* FlareSwiftTests.swift */; };
 		E453591D22282EC900981BD7 /* FlareSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = E453590F22282EC900981BD7 /* FlareSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -397,7 +398,7 @@
 		E46CDCB122313843002C40A1 /* intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB022313843002C40A1 /* intersection.swift */; };
 		E46CDCB322316FB6002C40A1 /* cubic_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */; };
 		E46CDCB52232AB0C002C40A1 /* segment_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB42232AB0C002C40A1 /* segment_bezier.swift */; };
-		E46CDCB92232C3D8002C40A1 /* cg_trim_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB82232C3D8002C40A1 /* cg_trim_path.swift */; };
+		E46CDCB92232C3D8002C40A1 /* trim_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB82232C3D8002C40A1 /* trim_path.swift */; };
 		E488354B225247B3000940FB /* FlareSkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E488354A225247B3000940FB /* FlareSkView.swift */; };
 		E48A648A222E778D00726F7D /* flare_cg_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_cg_gradient_radial_fill.swift */; };
 		E491724722422E05002EA96E /* keyframe_imagevertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724622422E05002EA96E /* keyframe_imagevertices.swift */; };
@@ -449,6 +450,7 @@
 		E44D53822260837E00CBD24A /* vulkan_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vulkan_ios.h; sourceTree = "<group>"; };
 		E44D53832260837E00CBD24A /* vulkan_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vulkan_core.h; sourceTree = "<group>"; };
 		E44D53842260837E00CBD24A /* vulkan_android.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vulkan_android.h; sourceTree = "<group>"; };
+		E44D53902260C70000CBD24A /* piecewise_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = piecewise_bezier.swift; sourceTree = "<group>"; };
 		E453590C22282EC900981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E453590F22282EC900981BD7 /* FlareSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareSwift.h; sourceTree = "<group>"; };
 		E453591022282EC900981BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -815,7 +817,7 @@
 		E46CDCB022313843002C40A1 /* intersection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = intersection.swift; sourceTree = "<group>"; };
 		E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cubic_bezier.swift; sourceTree = "<group>"; };
 		E46CDCB42232AB0C002C40A1 /* segment_bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = segment_bezier.swift; sourceTree = "<group>"; };
-		E46CDCB82232C3D8002C40A1 /* cg_trim_path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cg_trim_path.swift; sourceTree = "<group>"; };
+		E46CDCB82232C3D8002C40A1 /* trim_path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = trim_path.swift; sourceTree = "<group>"; };
 		E48834342252467E000940FB /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		E48835482252478C000940FB /* libskia.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libskia.a; sourceTree = "<group>"; };
 		E488354A225247B3000940FB /* FlareSkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkView.swift; sourceTree = "<group>"; };
@@ -892,6 +894,7 @@
 			children = (
 				E488330C2252464B000940FB /* FlareSkia */,
 				E4535A17222836D700981BD7 /* FlareCoreGraphics */,
+				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E453590E22282EC900981BD7 /* FlareSwift */,
 				E453591922282EC900981BD7 /* FlareSwiftTests */,
 				E453590D22282EC900981BD7 /* Products */,
@@ -1045,7 +1048,6 @@
 			isa = PBXGroup;
 			children = (
 				0BBA0F56223BCD7700B93465 /* FlareCGView.swift */,
-				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E4535A1D2228370500981BD7 /* flare_cg_actor_paths.swift */,
 				E4535A1A2228370500981BD7 /* flare_cg_actor.swift */,
 				E4535A1B2228370500981BD7 /* flare_cg_artboard.swift */,
@@ -1062,7 +1064,6 @@
 				E491724922422E25002EA96E /* flare_cg_drawable.swift */,
 				E491724822422E25002EA96E /* flare_cg_image.swift */,
 				E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */,
-				E46CDCB82232C3D8002C40A1 /* cg_trim_path.swift */,
 				E491724F22422EAE002EA96E /* Shaders.metal */,
 				E49172512242573F002EA96E /* metal_controller.swift */,
 			);
@@ -1539,6 +1540,8 @@
 				E46CDCAC22312C14002C40A1 /* bezier_tools.swift */,
 				E46CDCAE2231376F002C40A1 /* bezier_slice.swift */,
 				E46CDCB022313843002C40A1 /* intersection.swift */,
+				E44D53902260C70000CBD24A /* piecewise_bezier.swift */,
+				E46CDCB82232C3D8002C40A1 /* trim_path.swift */,
 			);
 			path = Bezier;
 			sourceTree = "<group>";
@@ -2022,7 +2025,7 @@
 				E44D536F225F42BC00CBD24A /* flare_sk_fill.swift in Sources */,
 				E453596F22282EF200981BD7 /* actor_ik_constraint.swift in Sources */,
 				E453598B22282EF200981BD7 /* keyframe_length.swift in Sources */,
-				E46CDCB92232C3D8002C40A1 /* cg_trim_path.swift in Sources */,
+				E46CDCB92232C3D8002C40A1 /* trim_path.swift in Sources */,
 				E44D536A225F42BC00CBD24A /* flare_sk_color_stroke.swift in Sources */,
 				E453598422282EF200981BD7 /* dependency_sorter.swift in Sources */,
 				E453597722282EF200981BD7 /* transform_space.swift in Sources */,
@@ -2077,6 +2080,7 @@
 				E45359AC22282EF200981BD7 /* actor_shape.swift in Sources */,
 				E45359A122282EF200981BD7 /* hold.swift in Sources */,
 				E491724A22422E25002EA96E /* flare_cg_image.swift in Sources */,
+				E44D53912260C70000CBD24A /* piecewise_bezier.swift in Sources */,
 				E49172522242573F002EA96E /* metal_controller.swift in Sources */,
 				E453599422282EF200981BD7 /* keyframe_radius.swift in Sources */,
 				E41D08AE222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift in Sources */,

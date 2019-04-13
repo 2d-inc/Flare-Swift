@@ -63,3 +63,50 @@ import Skia
         return BEVEL_SK_STROKE_JOIN
     }
 }
+
+/**
+ SkPath wraps the `sk_path_t` C-style pointer and conform to the ConcretePath protocol.
+ */
+class SkPath: ConcretePath {
+    private var _skPath: OpaquePointer
+    
+    var skPath: OpaquePointer {
+        return _skPath
+    }
+
+    required init() {
+        _skPath = sk_path_new()
+    }
+    
+    func moveTo(_ to: Vec2D) {
+        sk_path_move_to(_skPath, to.x, to.y)
+    }
+    
+    func lineTo(_ to: Vec2D) {
+        sk_path_line_to(_skPath, to.x, to.y)
+    }
+    
+    func curveTo(_ to: Vec2D, control1: Vec2D, control2: Vec2D) {
+        sk_path_cubic_to(_skPath, control1.x, control1.y, control2.x, control2.y, to.x, to.y)
+    }
+    
+    func addPath(_ subpath: ConcretePath, mat: Mat2D) {
+        var skMat = sk_matrix_t(
+            mat: (
+                mat[0],
+                mat[1],
+                0.0,
+                mat[2],
+                mat[3],
+                0.0,
+                mat[4],
+                mat[5],
+                1.0
+            )
+        )
+        let matPointer = withUnsafeMutablePointer(to: &skMat){
+            UnsafeMutablePointer($0)
+        }
+        sk_path_add_path_with_matrix(_skPath, (subpath as! SkPath)._skPath, 0, 0, matPointer)
+    }
+}

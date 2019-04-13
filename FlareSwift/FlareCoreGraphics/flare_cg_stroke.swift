@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 protocol FlareCGStroke: class {
     var _color: CGColor { get set }

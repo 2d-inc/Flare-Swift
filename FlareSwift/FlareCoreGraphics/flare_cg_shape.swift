@@ -18,24 +18,14 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
         stroke?.markPathEffectsDirty()
     }
     
-    var piecewiseBezierPaths: [PiecewiseBezier] {
-        var allPaths = [PiecewiseBezier]()
+    var piecewiseBezierPaths: [PiecewiseBezier<CGMutablePath>] {
+        var allPaths = [PiecewiseBezier<CGMutablePath>]()
         if let c = children {
             for node in c {
-                if let flarePath = node as? FlareCGPath {
-                    let beziers = flarePath.beziers
-                    let piecewise = PiecewiseBezier(beziers)
-                    if let pathTransform = (node as! ActorBasePath).pathTransform {
-                        let a = CGFloat(pathTransform[0])
-                        let b = CGFloat(pathTransform[1])
-                        let c = CGFloat(pathTransform[2])
-                        let d = CGFloat(pathTransform[3])
-                        let tx = CGFloat(pathTransform[4])
-                        let ty = CGFloat(pathTransform[5])
-                        let cgAffine = CGAffineTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
-                        piecewise.transform = cgAffine
-                    }
-                    
+                if let actorPath = node as? ActorBasePath {
+                    let beziers = makeBeziers(from: actorPath)
+                    let piecewise = PiecewiseBezier<CGMutablePath>(beziers)
+                    piecewise.transform = actorPath.pathTransform ?? Mat2D()                    
                     allPaths.append(piecewise)
                 }
             }
@@ -128,9 +118,11 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
                         }
 //                        print("=>=> \(start) END \(end)")
                         if end >= start {
-                            stroke.effectPath = trimPath(pbPaths, start, end, false, isSequential)
+                            let trim = trimPath(pbPaths, start, end, false, isSequential)
+                            stroke.effectPath = (trim as! CGMutablePath)
                         } else {
-                            stroke.effectPath = trimPath(pbPaths, end, start, true, isSequential)
+                            let trim = trimPath(pbPaths, end, start, true, isSequential)
+                            stroke.effectPath = (trim as! CGMutablePath)
                         }
                     } else {
                         stroke.effectPath = renderPath

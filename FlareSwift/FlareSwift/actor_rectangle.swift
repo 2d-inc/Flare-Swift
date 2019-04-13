@@ -45,7 +45,7 @@ public class ActorRectangle: ActorProceduralPath {
         
     }
     
-    var isClosed: Bool {
+    override public var isClosed: Bool {
         return true
     }
     var doesDraw: Bool {

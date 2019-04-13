@@ -10,9 +10,6 @@ import Foundation
 import Skia
 
 class FlareSkActorPath: ActorPath, FlareSkPath {
-    var isClosed: Bool {
-        return _isClosed
-    }
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     
@@ -30,9 +27,7 @@ class FlareSkActorPath: ActorPath, FlareSkPath {
 class FlareSkEllipse: ActorEllipse, FlareSkPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
+
     
     override func invalidatePath() {
         _isValid = false
@@ -48,9 +43,7 @@ class FlareSkEllipse: ActorEllipse, FlareSkPath {
 class FlareSkTriangle: ActorTriangle, FlareSkPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
+
     
     override func invalidatePath() {
         _isValid = false
@@ -66,9 +59,7 @@ class FlareSkTriangle: ActorTriangle, FlareSkPath {
 class FlareSkRectangle: ActorRectangle, FlareSkPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
+
     
     override func invalidatePath() {
         _isValid = false
@@ -84,9 +75,7 @@ class FlareSkRectangle: ActorRectangle, FlareSkPath {
 class FlareSkStar: ActorStar, FlareSkPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
+
  
     override func invalidatePath() {
         _isValid = false
@@ -102,9 +91,7 @@ class FlareSkStar: ActorStar, FlareSkPath {
 class FlareSkPolygon: ActorPolygon, FlareSkPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
-    var deformedPoints: [PathPoint]? {
-        return points
-    }
+
     
     override func invalidatePath() {
         _isValid = false

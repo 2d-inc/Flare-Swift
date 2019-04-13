@@ -18,6 +18,22 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         stroke?.markPathEffectsDirty()
     }
     
+    var piecewiseBezierPaths: [PiecewiseBezier<SkPath>] {
+        var allPaths = [PiecewiseBezier<SkPath>]()
+        if let c = children {
+            for node in c {
+                if let actorPath = node as? ActorBasePath {
+                    let beziers = makeBeziers(from: actorPath)
+                    let piecewise = PiecewiseBezier<SkPath>(beziers)
+                    piecewise.transform = actorPath.pathTransform ?? Mat2D()
+                    allPaths.append(piecewise)
+                }
+            }
+        }
+        
+        return allPaths
+    }
+    
     var path: OpaquePointer {
         if _isValid {
             return _path
@@ -31,17 +47,16 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                 if let flarePath = node as? FlareSkPath {
                     let subpath = flarePath.path
                     if let pathTransform = (node as! ActorBasePath).pathTransform {
-                        let buffer = pathTransform._buffer
                         var skMat = sk_matrix_t(
                             mat: (
-                                buffer[0],
-                                buffer[1],
+                                pathTransform[0],
+                                pathTransform[1],
                                 0.0,
-                                buffer[2],
-                                buffer[3],
+                                pathTransform[2],
+                                pathTransform[3],
                                 0.0,
-                                buffer[4],
-                                buffer[5],
+                                pathTransform[4],
+                                pathTransform[5],
                                 1.0
                             )
                         )
@@ -87,7 +102,49 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         
         for actorStroke in strokes {
             let stroke = actorStroke as! FlareSkStroke
-            stroke.paint(stroke: actorStroke, skCanvas: skCanvas, skPath: renderPath)
+            
+            var strokePath = renderPath
+            if actorStroke.isTrimmed {
+                if stroke.effectPath == nil {
+                    let pbPaths = self.piecewiseBezierPaths
+                    let isSequential = actorStroke._trim == .Sequential
+                    var start = actorStroke.trimStart
+                    var end = actorStroke.trimEnd
+                    let offset = actorStroke.trimOffset
+                    let inverted = start > end
+                    //                    print("TRIM START \(start) END \(end) OFFSET \(offset)")
+                    if abs(start-end) != 1.0 {
+                        start = (start + offset).truncatingRemainder(dividingBy: 1.0)
+                        end = (end + offset).truncatingRemainder(dividingBy: 1.0)
+                        
+                        if start < 0 {
+                            start += 1
+                        }
+                        if end < 0 {
+                            end += 1
+                        }
+                        
+                        if inverted {
+                            let swap = end
+                            end = start
+                            start = swap
+                        }
+                        //                        print("=>=> \(start) END \(end)")
+                        if end >= start {
+                            let trim = trimPath(pbPaths, start, end, false, isSequential)
+                            stroke.effectPath = (trim as! SkPath).skPath
+                        } else {
+                            let trim = trimPath(pbPaths, end, start, true, isSequential)
+                            stroke.effectPath = (trim as! SkPath).skPath
+                        }
+                    } else {
+                        stroke.effectPath = renderPath
+                    }
+                }
+                strokePath = stroke.effectPath!
+            }
+            
+            stroke.paint(stroke: actorStroke, skCanvas: skCanvas, skPath: strokePath)
         }
         
         sk_canvas_restore(skCanvas)

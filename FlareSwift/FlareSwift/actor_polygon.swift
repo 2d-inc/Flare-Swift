@@ -48,7 +48,7 @@ public class ActorPolygon: ActorProceduralPath {
         return _polygonPoints
     }
     
-    var isClosed: Bool {
+    override public var isClosed: Bool {
         return true
     }
     var doesDraw: Bool {
