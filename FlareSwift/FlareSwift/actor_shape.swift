@@ -174,5 +174,10 @@ public class ActorShape: ActorNode, ActorDrawable {
     
     func addFill(_ fill: ActorFill) {
         _fills.append(fill)
-    }    
+    }
+    
+    override func completeResolve() {
+        (self as ActorDrawable).completeResolve()
+    }
+    
 }

@@ -20,6 +20,7 @@ extension FlareSkFill {
     func initializeGraphics() {
         // SkPaint is initialized as a black fill.
         _paint = sk_paint_new()
+        sk_paint_set_antialias(_paint, true)
     }
     
     func paint(fill: ActorFill, skCanvas: OpaquePointer, skPath: OpaquePointer) {

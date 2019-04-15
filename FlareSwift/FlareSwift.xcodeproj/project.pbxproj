@@ -936,7 +936,8 @@
 		E453590E22282EC900981BD7 /* FlareSwift */ = {
 			isa = PBXGroup;
 			children = (
-				E46CDC9D222FE1D5002C40A1 /* Bones */,
+				E453590F22282EC900981BD7 /* FlareSwift.h */,
+				E453591022282EC900981BD7 /* Info.plist */,
 				E453593F22282EF100981BD7 /* actor_artboard.swift */,
 				E453593C22282EF100981BD7 /* actor_color.swift */,
 				E453593922282EF100981BD7 /* actor_component.swift */,
@@ -956,16 +957,15 @@
 				E453593722282EF100981BD7 /* actor_star.swift */,
 				E453593522282EF100981BD7 /* actor_triangle.swift */,
 				E453593322282EF000981BD7 /* actor.swift */,
-				E453594322282EF200981BD7 /* animation */,
 				E453594022282EF100981BD7 /* block_types.swift */,
-				E453592622282EF000981BD7 /* constraints */,
 				E453593E22282EF100981BD7 /* dependency_sorter.swift */,
-				E453596122282EF200981BD7 /* math */,
 				E453593D22282EF100981BD7 /* path_point.swift */,
-				E453596722282EF200981BD7 /* reader */,
 				E453593122282EF000981BD7 /* transform_space.swift */,
-				E453590F22282EC900981BD7 /* FlareSwift.h */,
-				E453591022282EC900981BD7 /* Info.plist */,
+				E453594322282EF200981BD7 /* animation */,
+				E46CDC9D222FE1D5002C40A1 /* Bones */,
+				E453592622282EF000981BD7 /* constraints */,
+				E453596122282EF200981BD7 /* math */,
+				E453596722282EF200981BD7 /* reader */,
 			);
 			path = FlareSwift;
 			sourceTree = "<group>";
@@ -1571,10 +1571,10 @@
 		E488330C2252464B000940FB /* FlareSkia */ = {
 			isa = PBXGroup;
 			children = (
+				E488354A225247B3000940FB /* FlareSkView.swift */,
 				E488330D2252467E000940FB /* Skia */,
 				E44D539522624D2700CBD24A /* Strokes */,
 				E44D539422624D1B00CBD24A /* Fills */,
-				E488354A225247B3000940FB /* FlareSkView.swift */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E4C9D822225B83DD003A0DCB /* OpenGLView.swift */,
 				E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */,

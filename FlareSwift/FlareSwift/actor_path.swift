@@ -15,6 +15,7 @@ public protocol ActorBasePath: class {
     var parent: ActorNode? { get }
     var transform: Mat2D { get }
     var allClips: [[ActorClip]] { get }
+    var deformedPoints: [PathPoint] { get }
     
     func invalidatePath()
 }
@@ -22,10 +23,6 @@ public protocol ActorBasePath: class {
 public extension ActorBasePath {
     var isPathInWorldSpace: Bool {
         return false
-    }
-    
-    var deformedPoints: [PathPoint] {
-        return points
     }
     
     func getPathOBB() -> AABB {
@@ -142,19 +139,20 @@ public extension ActorBasePath {
     }
     
     var pathPoints: [PathPoint] {
-        guard !deformedPoints.isEmpty else {
+        let pts = deformedPoints
+        guard !pts.isEmpty else {
             return []
         }
         
         var pathPoints = [PathPoint]()
-        let pc = deformedPoints.count
+        let pc = pts.count
         
         let arcConstant: Float32 = 0.55
         let iarcConstant = 1.0 - arcConstant
-        var previous = isClosed ? deformedPoints.last : nil
+        var previous = isClosed ? pts.last : nil
         
         for i in 0 ..< pc {
-            let point = deformedPoints[i]
+            let point = pts[i]
             switch point.type {
             case .Straight:
                 let straightPoint = point as! StraightPathPoint
@@ -164,7 +162,7 @@ public extension ActorBasePath {
                         pathPoints.append(point)
                         previous = point
                     } else {
-                        let next = deformedPoints[(i+1)%pc]
+                        let next = pts[(i+1)%pc]
                         let prevPoint = previous is CubicPathPoint ? (previous as! CubicPathPoint).outPoint : previous!.translation
                         let nextPoint = next is CubicPathPoint ? (next as! CubicPathPoint).inPoint : next.translation
                         let pos = point.translation
@@ -217,6 +215,10 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
 
     public var pathTransform: Mat2D? {
         return worldTransform
+    }
+    
+    public var deformedPoints: [PathPoint] {
+        return points
     }
     
     var _width: Double = 0.0
@@ -292,7 +294,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     
     var isPathInWorldSpace: Bool { return self.isConnectedToBones }
     
-    var deformedPoints: [PathPoint] {
+    public var deformedPoints: [PathPoint] {
         if !isConnectedToBones || skin == nil {
             return _points
         }
@@ -316,7 +318,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     
     func makeVertexDeform() {
         if vertexDeform != nil {
-            print("ActorPath::makeVertexDeform() - VERTEX DEFORM ALREADY SPECIFIED!")
+//            print("ActorPath::makeVertexDeform() - VERTEX DEFORM ALREADY SPECIFIED!")
             return
         }
         var length = 0
@@ -451,5 +453,10 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
         if let vd = nodePath.vertexDeform {
             vertexDeform = vd
         }
+    }
+    
+    override func resolveComponentIndices(_ components: [ActorComponent?]) {
+        super.resolveComponentIndices(components)
+        resolveSkinnable(components)
     }
 }

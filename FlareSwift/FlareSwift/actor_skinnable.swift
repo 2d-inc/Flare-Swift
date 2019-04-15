@@ -18,12 +18,10 @@ class SkinnedBone {
 protocol ActorSkinnable: class {
     var skin: ActorSkin? { get set }
     var _connectedBones: [SkinnedBone]? { get set }
-    
-    func invalidateDrawable()
-    
     // From ActorNode
     var worldTransformOverride: Mat2D? { get set }
     
+    func invalidateDrawable()
     func readNode(_ artboard: ActorArtboard, _ reader: StreamReader)
 }
 

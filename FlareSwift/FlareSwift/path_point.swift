@@ -32,14 +32,13 @@ public extension PathPoint {
         self.type = from.type
         Vec2D.copy(self.translation, from.translation)
         if let w = from.weights {
-            self.weights = w // TODO: Copies value type (i.e. Array<Float>)?
+            self.weights = w
         }
     }
     
     func read(reader: StreamReader, isConnectedToBones: Bool) {
         reader.readFloat32ArrayOffset(ar: &translation.values, length: 2, offset: 0, label: "translation")
         readPoint(reader: reader, isConnectedToBones: isConnectedToBones)
-//        if var w = weights {
         if weights != nil {
             reader.readFloat32Array(ar: &weights!, label: "weights")
         }

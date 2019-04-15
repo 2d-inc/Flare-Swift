@@ -227,15 +227,17 @@ public class FlareSkView: UIView {
             return
         }
         
-        if let animation = self.animation, let artboard = self.artboard {
+        if let artboard = self.artboard {
             let currentTime = CACurrentMediaTime()
             let delta = currentTime - lastTime
             lastTime = currentTime
             duration = (duration + delta)
-            if animation.isLooping {
-                duration = duration.truncatingRemainder(dividingBy: animation.duration)
+            if let animation = self.animation {
+                if animation.isLooping {
+                    duration = duration.truncatingRemainder(dividingBy: animation.duration)
+                }
+                animation.apply(time: duration, artboard: artboard, mix: 1.0)
             }
-            animation.apply(time: duration, artboard: artboard, mix: 1.0)
             artboard.advance(seconds: delta)
  
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))

@@ -29,11 +29,11 @@ class ActorSkin: ActorComponent {
                 _boneMatrices = Array<Float32>(repeating: 0.0, count: length)
                 // First bone transform is always identity.
                 _boneMatrices[0] = 1.0;
-                _boneMatrices[1] = 0.0;
-                _boneMatrices[2] = 0.0;
+//                _boneMatrices[1] = 0.0;
+//                _boneMatrices[2] = 0.0;
                 _boneMatrices[3] = 1.0;
-                _boneMatrices[4] = 0.0;
-                _boneMatrices[5] = 0.0;
+//                _boneMatrices[4] = 0.0;
+//                _boneMatrices[5] = 0.0;
             }
             
             var bidx = 6; // Start after first identity.
@@ -95,4 +95,10 @@ class ActorSkin: ActorComponent {
             }
         }
     }
+    
+    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
+        let instance = ActorSkin()
+        instance.copyComponent(self, resetArtboard)
+        return instance
+    }    
 }
