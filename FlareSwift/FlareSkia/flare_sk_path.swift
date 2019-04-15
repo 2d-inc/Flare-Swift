@@ -47,6 +47,7 @@ extension FlareSkPath {
             var cin = nextPoint is CubicPathPoint ? (nextPoint as! CubicPathPoint).inPoint : nil
             var cout = point is CubicPathPoint ? (point as! CubicPathPoint).outPoint : nil
             if cin == nil && cout == nil {
+//                print("LINE TO: \(nextPoint.translation.description)")
                 sk_path_line_to(_path, nextPoint.translation[0], nextPoint.translation[1])
             } else {
                 if cout == nil {
@@ -56,6 +57,7 @@ extension FlareSkPath {
                     cin = nextPoint.translation
                 }
                 
+//                print("CUBIC TO: \(nextPoint.translation.description), C1: \(cout!.description), C2: \(cin!.description)")
                 sk_path_cubic_to(_path,
                                  cout![0], cout![1],
                                  cin![0], cin![1],

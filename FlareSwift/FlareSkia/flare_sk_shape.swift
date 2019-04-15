@@ -72,9 +72,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         return _path
     }
     
-    /**
-     Implements FlareSkDrawable draw(skCanvas:)
-    */
+    /// Implements FlareSkDrawable `draw(skCanvas:)`
     func draw(_ skCanvas: OpaquePointer) {
         guard self.doesDraw else {
             return
@@ -91,7 +89,8 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                 let subClip = (clipShape as! FlareSkShape).path
                 sk_path_add_path(clippingPath, subClip, 0, 0)
             }
-            sk_canvas_clip_path(skCanvas, clippingPath)
+            // bool flag enables antialiasing.
+            sk_canvas_clip_path(skCanvas, clippingPath, true)
         }
         
         for actorFill in fills {
@@ -111,7 +110,6 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                     var end = actorStroke.trimEnd
                     let offset = actorStroke.trimOffset
                     let inverted = start > end
-                    //                    print("TRIM START \(start) END \(end) OFFSET \(offset)")
                     if abs(start-end) != 1.0 {
                         start = (start + offset).truncatingRemainder(dividingBy: 1.0)
                         end = (end + offset).truncatingRemainder(dividingBy: 1.0)
@@ -128,7 +126,6 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                             end = start
                             start = swap
                         }
-                        //                        print("=>=> \(start) END \(end)")
                         if end >= start {
                             let trim = trimPath(pbPaths, start, end, false, isSequential)
                             stroke.effectPath = (trim as! SkPath).skPath
