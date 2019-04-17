@@ -47,6 +47,10 @@ extension ActorDrawable {
         }
     }
     
+    var clipShapes: [[ActorShape]] {
+        return _clipShapes ?? []
+    }
+    
     var doesDraw: Bool {
         return !isHidden && !renderCollapsed
     }

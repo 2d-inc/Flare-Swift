@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0BBA0F57223BCD7700B93465 /* FlareCGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBA0F56223BCD7700B93465 /* FlareCGView.swift */; };
 		E41D08AE222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D08AD222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift */; };
+		E43AEC732265EB4B00E71EA8 /* sk_vertices.h in Headers */ = {isa = PBXBuildFile; fileRef = E43AEC722265EB4B00E71EA8 /* sk_vertices.h */; };
 		E44D5369225F42BC00CBD24A /* flare_sk_actor_paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */; };
 		E44D536A225F42BC00CBD24A /* flare_sk_color_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535A225F42BA00CBD24A /* flare_sk_color_stroke.swift */; };
 		E44D536B225F42BC00CBD24A /* flare_sk_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535B225F42BA00CBD24A /* flare_sk_gradient_radial_stroke.swift */; };
@@ -426,6 +427,7 @@
 /* Begin PBXFileReference section */
 		0BBA0F56223BCD7700B93465 /* FlareCGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareCGView.swift; sourceTree = "<group>"; };
 		E41D08AD222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_cg_gradient_radial_stroke.swift; sourceTree = "<group>"; };
+		E43AEC722265EB4B00E71EA8 /* sk_vertices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sk_vertices.h; path = ../../../../../../../libskia/ios/include/c/sk_vertices.h; sourceTree = "<group>"; };
 		E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_sk_actor_paths.swift; sourceTree = "<group>"; };
 		E44D535A225F42BA00CBD24A /* flare_sk_color_stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_sk_color_stroke.swift; sourceTree = "<group>"; };
 		E44D535B225F42BA00CBD24A /* flare_sk_gradient_radial_stroke.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_sk_gradient_radial_stroke.swift; sourceTree = "<group>"; };
@@ -1528,6 +1530,7 @@
 				E46184452254A5AD00551DBD /* sk_shader.h */,
 				E4C9D820225B7B49003A0DCB /* sk_surface.h */,
 				E461844C2254A5AD00551DBD /* sk_types.h */,
+				E43AEC722265EB4B00E71EA8 /* sk_vertices.h */,
 			);
 			path = c;
 			sourceTree = "<group>";
@@ -1689,6 +1692,7 @@
 				E46184FB2254A5AD00551DBD /* GrSkSLFPFactoryCache.h in Headers */,
 				E46184582254A5AD00551DBD /* GrTypes.h in Headers */,
 				E46184AC2254A5AD00551DBD /* SkCanvas.h in Headers */,
+				E43AEC732265EB4B00E71EA8 /* sk_vertices.h in Headers */,
 				E46184822254A5AD00551DBD /* SkMaskFilter.h in Headers */,
 				E46184882254A5AD00551DBD /* SkTraceMemoryDump.h in Headers */,
 				E46185172254A5AD00551DBD /* GrRenderTargetProxy.h in Headers */,

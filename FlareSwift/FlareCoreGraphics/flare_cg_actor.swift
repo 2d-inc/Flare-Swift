@@ -99,6 +99,7 @@ public class FlareCGActor: Actor {
     }
     
     public func dispose(){}
+    public func onImageData(_ rawData: [Data]) {}
     
     public func loadFromBundle(filename: String) -> Bool {
         let endIndex = filename.index(filename.endIndex, offsetBy: -4)

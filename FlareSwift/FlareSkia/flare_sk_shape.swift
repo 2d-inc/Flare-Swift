@@ -91,6 +91,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
             }
             // bool flag enables antialiasing.
             sk_canvas_clip_path(skCanvas, clippingPath, true)
+            sk_path_delete(clippingPath)
         }
         
         for actorFill in fills {

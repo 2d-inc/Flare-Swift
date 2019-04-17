@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import Skia
 
 public class FlareSkActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
-    public var images: [Data]?
+    /// List of
+    public var images: [OpaquePointer]?
     public var _artboards: [ActorArtboard?] = []
     
     public var artboard: FlareSkArtboard? {
@@ -84,7 +86,26 @@ public class FlareSkActor: Actor {
         self.load(data: data)
     }
     
-    public func dispose(){}
+    public func onImageData(_ rawData: [Data]) {
+        images = []
+        for imageData in rawData {
+            imageData.withUnsafeBytes { (buffer: UnsafePointer<UInt8>) in
+                let skData = sk_data_new_with_copy(buffer, imageData.count)
+                images!.append(sk_image_new_from_encoded(skData, nil))
+                sk_data_unref(skData)
+            }
+        }
+    }
+    
+    public func dispose(){
+        guard let images = images else {
+            return
+        }
+        
+        for image in images {
+            sk_image_unref(image)
+        }
+    }
     
     public func loadFromBundle(filename: String) -> Bool {
         let endIndex = filename.index(filename.endIndex, offsetBy: -4)

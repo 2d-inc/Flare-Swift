@@ -10,3 +10,4 @@
 #include "c/sk_shader.h"
 #include "c/sk_surface.h"
 #include "c/sk_types.h"
+#include "c/sk_vertices.h"

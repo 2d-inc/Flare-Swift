@@ -49,8 +49,8 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
     }
     var animationDeformedVertices: [Float32]?
     
+    var _textureIndex = -1
     private var blendMode: BlendModes = .Normal
-    private(set) var _textureIndex = -1
     private(set) var vertexCount = 0
     private(set) var triangleCount = 0
     private(set) var vertices: [Float32]?

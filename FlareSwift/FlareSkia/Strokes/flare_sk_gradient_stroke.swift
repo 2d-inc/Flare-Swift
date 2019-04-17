@@ -65,5 +65,6 @@ class FlareSkGradientStroke: GradientStroke, FlareSkStroke {
         let end = sk_point_t(x: renderEnd[0], y: renderEnd[1])
         let shader = sk_shader_new_linear_gradient([start, end], colors, locations, numStops, CLAMP_SK_SHADER_TILEMODE, nil)
         sk_paint_set_shader(_paint, shader)
+        sk_shader_unref(shader)
     }
 }

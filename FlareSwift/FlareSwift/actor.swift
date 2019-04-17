@@ -13,12 +13,8 @@ public protocol Actor: class {
     var _version: Int { get set }
     var _artboardCount: Int { get set }
     var _artboards: [ActorArtboard?] { get set }
-    var images: [Data]? { get set }
     
-    func load(data: Data)
-    func copyActor(actor: Actor)
-    func readArtboardsBlock(block: StreamReader)
-    func readAtlasesBlock(block: StreamReader) -> [Data]
+    func onImageData(_ rawData: [Data])
     
     func makeArtboard() -> ActorArtboard
     func makeNode() -> ActorNode
@@ -66,7 +62,8 @@ public extension Actor {
                     break
                     
                 case BlockTypes.Atlases:
-                    self.images = readAtlasesBlock(block: block)
+                    let rawImages = readAtlasesBlock(block: block)
+                    onImageData(rawImages)
                     break
                     
                 default:

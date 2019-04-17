@@ -19,10 +19,6 @@ public class ActorShape: ActorNode, ActorDrawable {
     public var drawIndex: Int = -1
     public var blendModeId: Int = -1
     
-    public var clipShapes: [[ActorShape]] {
-        return _clipShapes ?? []
-    }
-    
     public var fill: ActorFill? {
         return _fills.isEmpty ? nil : _fills.first
     }
