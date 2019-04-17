@@ -48,7 +48,7 @@ enum BlendMode: UInt32 {
     Luminosity
     
     var skType: sk_xfermode_mode_t {
-        return sk_xfermode_mode_t(rawValue: 26)
+        return sk_xfermode_mode_t(rawValue: rawValue)
     }
 }
 

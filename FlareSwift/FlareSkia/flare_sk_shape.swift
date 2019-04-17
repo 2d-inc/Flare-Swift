@@ -15,6 +15,15 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
     private var _isValid = false
     private var _path: OpaquePointer! = sk_path_new()
     
+    override var blendModeId: UInt32 {
+        get {
+            return (self as FlareSkDrawable).blendModeId
+        }
+        set {
+            (self as FlareSkDrawable).blendModeId = newValue
+        }
+    }
+    
     override func invalidateShape() {
         _isValid = false
         stroke?.markPathEffectsDirty()
