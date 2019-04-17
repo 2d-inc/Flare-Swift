@@ -9,6 +9,10 @@
 import Foundation
 import Skia
 
+enum FilterQuality: UInt32 {
+    case none = 0, low, medium, high
+}
+
 class FlareSkImage: ActorImage, FlareSkDrawable {
     var _vertexBuffer: [Float]!
     var _uvBuffer: [Float]!
@@ -29,8 +33,8 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
                 let shader = sk_shader_new_image(skImage)
                 sk_paint_set_shader(_paint, shader)
                 sk_shader_unref(shader)
-                // TODO: add filterQuality
-                // TODO; add isAntialias = true
+                sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
+                sk_paint_set_antialias(_paint, true)
                 // TODO: onPaintUpdated(_paint))
             }
         }
@@ -137,10 +141,10 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
 //        ..blendMode = blendMode
         let shader = sk_shader_new_image(image)
         sk_paint_set_shader(_paint, shader)
-//        _paint.filterQuality = ui.FilterQuality.low;
-//        _paint.isAntiAlias = true;
+        sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
+        sk_paint_set_antialias(_paint, true)
 //        onPaintUpdated(_paint);
-//        sk_shader_unref(shader)
+        sk_shader_unref(shader)
     }
     
     override func invalidateDrawable() {
