@@ -50,6 +50,8 @@ enum BlendMode: UInt32 {
     var skType: sk_xfermode_mode_t {
         return sk_xfermode_mode_t(rawValue: rawValue)
     }
+    
+    static var count: UInt32 { return 29 }
 }
 
 extension FlareSkDrawable {
@@ -70,6 +72,7 @@ extension FlareSkDrawable {
             return _blendMode.rawValue
         }
         set {
+            guard newValue >= 0 && newValue < BlendMode.count else { return }
             if _blendMode.rawValue != newValue {
                 _blendMode = BlendMode.init(rawValue: newValue)!
             }

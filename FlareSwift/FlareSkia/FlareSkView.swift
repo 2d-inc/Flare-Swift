@@ -94,14 +94,13 @@ public class FlareSkView: UIView {
         let width = Int32(frame.size.width)
         let height = Int32(frame.size.height)
         glViewport(0, 0, GLsizei(width), GLsizei(height))
-//        print("W/H \(frame.size.width)/\(frame.size.height)")
         let info = sk_imageinfo_new(width, height, RGBA_8888_SK_COLORTYPE, OPAQUE_SK_ALPHATYPE, nil)
         _skiaSurface = sk_surface_new_gl(info)
         if _skiaSurface != nil {
             _skiaCanvas = sk_surface_get_canvas(_skiaSurface)
         }
         _skBackgroundPaint = sk_paint_new()
-        sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255/2, 93, 93, 93))
+        sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255, 93, 93, 93))
     }
     
     public var filename: String {

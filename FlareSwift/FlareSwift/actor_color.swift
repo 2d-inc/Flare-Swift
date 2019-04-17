@@ -291,18 +291,7 @@ public class GradientColor: ActorPaint {
     
     func copyGradient(_ node: GradientColor, _ resetArtboard: ActorArtboard) {
         copyPaint(node, resetArtboard)
-//        _colorStops = Float32List.fromList(node._colorStops)
         colorStops = node.colorStops
-        
-        // TODO: test if duplicated properly!
-        let cs0 = colorStops[0]
-        colorStops[0] = 42
-        if node.colorStops[0] == 42 {
-            print("SOMETHING IS WRONG HERE!")
-        }
-        print("CHECK COLOR STOPS: \(colorStops), \(node.colorStops)")
-        colorStops[0] = cs0
-        // === TODO: REMOVE
         
         Vec2D.copy(start, node.start)
         Vec2D.copy(end, node.end)
@@ -318,7 +307,6 @@ public class GradientColor: ActorPaint {
     }
     
     func readGradientColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
-//        _ = ActorPaint.readPaint(artboard, reader, component)
         self.readPaint(artboard, reader)
         
         let numStops = Int(reader.readUint8(label: "numColorStops"))
@@ -394,7 +382,6 @@ public class RadialGradientColor: GradientColor {
     }
     
     func readRadialGradientColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
-//        _ = GradientColor.read(artboard, reader, component)
         self.readGradientColor(artboard, reader)
         self.secondaryRadiusScale = Double(reader.readFloat32(label: "secondaryRadiusScale"))
     }

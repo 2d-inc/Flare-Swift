@@ -39,20 +39,16 @@ public class PropertyAnimation {
         
         propertyBlock.openArray(label: "frames");
         let keyFrameCount = Int(propertyBlock.readUint16Length())
-//        propertyAnimation._keyFrames = List<KeyFrame>(keyFrameCount);
         propertyAnimation._keyFrames = []
         var lastKeyFrame: KeyFrame? = nil
-//        for (int i = 0; i < keyFrameCount; i++) {
         for i in 0 ..< keyFrameCount {
             propertyBlock.openObject(label: "frame");
-//            let frame = keyFrame!(propertyBlock, &component);
             guard let keyFrame = keyFrameFactory(type: type, component: component) else {
                 return nil
             }
             if !keyFrame.read(propertyBlock) {
                 fatalError("Failed to read a KeyFrame! \(type)")
             }
-//            propertyAnimation._keyFrames[i] = frame;
             propertyAnimation._keyFrames!.insert(keyFrame, at: i)
             if let lk = lastKeyFrame {
                 lk.setNext(keyFrame);
@@ -61,7 +57,6 @@ public class PropertyAnimation {
             propertyBlock.closeObject();
         }
         propertyBlock.closeArray();
-        //}
         
         return propertyAnimation;
     }
@@ -296,7 +291,7 @@ public class ActorAnimation {
             print("triggerEvents(): no trigger components??")
             return
         }
-//        for (int i = 0; i < _triggerComponents.length; i++) {
+
         for i in 0 ..< tc.count {
             let keyedComponent = tc[i];
             for property in keyedComponent.properties! {
@@ -344,7 +339,6 @@ public class ActorAnimation {
                                     elapsedTime: 0.0));
                             }
                         } else {
-//                            for (int k = idx - 1; k >= 0; k--) {
                             for k in stride(from: idx - 1, through: 0, by: -1) {
                                 let frame = keyFrames[k];
                             
@@ -388,19 +382,16 @@ public class ActorAnimation {
     
         reader.openArray(label: "keyed");
         let numKeyedComponents = Int(reader.readUint16Length())
-        //animation._components = new ComponentAnimation[numKeyedComponents];
     
         // We distinguish between animated and triggered components as ActorEvents are currently only used to trigger events and don't need
         // the full animation cycle. This lets them optimize them out of the regular animation cycle.
         var animatedComponentCount = 0;
         var triggerComponentCount = 0;
     
-//        List<ComponentAnimation> animatedComponents = List<ComponentAnimation>(numKeyedComponents);
         var animatedComponents = [ComponentAnimation]()
-//        for (int i = 0; i < numKeyedComponents; i++) {
+
         for i in 0 ..< numKeyedComponents {
             let componentAnimation = ComponentAnimation.read(reader: reader, components: &components);
-//            animatedComponents[i] = componentAnimation;
             animatedComponents.insert(componentAnimation, at: i)
             let actorComponent = components[componentAnimation.componentIndex];
             if (actorComponent is ActorEvent) {
@@ -411,24 +402,19 @@ public class ActorAnimation {
         }
         reader.closeArray();
     
-//        animation._components = List<ComponentAnimation>(animatedComponentCount);
-//        animation._triggerComponents = List<ComponentAnimation>(triggerComponentCount);
         animation._components = []
         animation._triggerComponents = []
     
         // Put them in their respective lists.
         var animatedComponentIndex = 0;
         var triggerComponentIndex = 0;
-//        for (int i = 0; i < numKeyedComponents; i++) {
         for i in 0 ..< numKeyedComponents {
             let componentAnimation = animatedComponents[i];
             let actorComponent = components[componentAnimation.componentIndex];
             if (actorComponent is ActorEvent) {
-//                animation._triggerComponents[triggerComponentIndex++] = componentAnimation;
                 animation._triggerComponents!.insert(componentAnimation, at: triggerComponentIndex)
                 triggerComponentIndex += 1
             } else {
-//                animation._components[animatedComponentIndex++] = componentAnimation;
                 animation._components!.insert(componentAnimation, at: animatedComponentIndex)
                 animatedComponentIndex += 1
             }

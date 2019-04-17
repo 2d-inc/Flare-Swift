@@ -575,7 +575,6 @@ extension Bezier {
             }
         }
         
-        // TODO: check that his is correct, might be missing one point.
         return BezierFactory.fromPoints(scaledCurvePoints as! [Vec2D])
     }
     

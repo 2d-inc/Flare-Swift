@@ -858,6 +858,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E43AEC74226776E400E71EA8 /* Drawables */ = {
+			isa = PBXGroup;
+			children = (
+				E44D5367225F42BC00CBD24A /* flare_sk_drawable.swift */,
+				E44D5360225F42BB00CBD24A /* flare_sk_shape.swift */,
+				E44D5366225F42BB00CBD24A /* flare_sk_image.swift */,
+			);
+			path = Drawables;
+			sourceTree = "<group>";
+		};
 		E44D53792260837E00CBD24A /* third_party */ = {
 			isa = PBXGroup;
 			children = (
@@ -1578,17 +1588,15 @@
 				E488330D2252467E000940FB /* Skia */,
 				E44D539522624D2700CBD24A /* Strokes */,
 				E44D539422624D1B00CBD24A /* Fills */,
+				E43AEC74226776E400E71EA8 /* Drawables */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E4C9D822225B83DD003A0DCB /* OpenGLView.swift */,
 				E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */,
 				E4C9D826225B8FBC003A0DCB /* SimpleFragment.glsl */,
 				E44D5365225F42BB00CBD24A /* flare_sk_actor.swift */,
 				E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */,
-				E44D5360225F42BB00CBD24A /* flare_sk_shape.swift */,
 				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
 				E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */,
-				E44D5367225F42BC00CBD24A /* flare_sk_drawable.swift */,
-				E44D5366225F42BB00CBD24A /* flare_sk_image.swift */,
 			);
 			path = FlareSkia;
 			sourceTree = "<group>";
