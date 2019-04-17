@@ -59,7 +59,7 @@ class FlareSkGradientStroke: GradientStroke, FlareSkStroke {
         }
         
         sk_paint_set_color(_paint, paintColor)
-        // TODO: blendmode
+        sk_paint_set_xfermode_mode(_paint, (parent as! FlareSkShape).blendMode.skType)
         sk_paint_set_stroke_width(_paint, width)
         let start = sk_point_t(x: renderStart[0], y: renderStart[1])
         let end = sk_point_t(x: renderEnd[0], y: renderEnd[1])

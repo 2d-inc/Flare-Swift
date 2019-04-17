@@ -14,6 +14,8 @@ enum FilterQuality: UInt32 {
 }
 
 class FlareSkImage: ActorImage, FlareSkDrawable {
+    var _blendMode: BlendMode = .SrcOver
+    
     var _vertexBuffer: [Float]!
     var _uvBuffer: [Float]!
     var _indices: [Int32]!
@@ -31,12 +33,23 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
                 let actor = (artboard!.actor as! FlareSkActor)
                 let skImage = actor.images![_textureIndex]
                 let shader = sk_shader_new_image(skImage)
+                sk_paint_set_xfermode_mode(_paint, blendMode.skType)
                 sk_paint_set_shader(_paint, shader)
                 sk_shader_unref(shader)
                 sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
                 sk_paint_set_antialias(_paint, true)
-                // TODO: onPaintUpdated(_paint))
+                onPaintUpdated(_paint)
             }
+        }
+    }
+    
+    /// Force drawables to use the concrete implementation.
+    override var blendModeId: UInt32 {
+        get {
+            return (self as FlareSkDrawable).blendModeId
+        }
+        set {
+            (self as FlareSkDrawable).blendModeId = newValue
         }
     }
     
@@ -47,6 +60,10 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         sk_paint_delete(_paint)
         sk_vertices_unref(_canvasVertices)
     }
+    
+    /// Update the current paint with a new value.
+    /// `skPaint` must be a `sk_paint_t*`
+    func onPaintUpdated(_ skPaint: OpaquePointer){}
     
     func draw(_ skCanvas: OpaquePointer) {
         if triangles == nil || renderCollapsed || renderOpacity <= 0 {
@@ -138,12 +155,12 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         }
 
         _paint = sk_paint_new()
-//        ..blendMode = blendMode
+        sk_paint_set_xfermode_mode(_paint, blendMode.skType)
         let shader = sk_shader_new_image(image)
         sk_paint_set_shader(_paint, shader)
         sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
         sk_paint_set_antialias(_paint, true)
-//        onPaintUpdated(_paint);
+        onPaintUpdated(_paint)
         sk_shader_unref(shader)
     }
     
@@ -203,5 +220,11 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
     override func computeAABB() -> AABB {
         _ = self.updateVertices()
         return self.bounds
+    }
+    
+    func onBlendModeChanged(_ mode: BlendMode) {
+        guard let paint = _paint else { return }
+        sk_paint_set_xfermode_mode(_paint, mode.skType)
+        onPaintUpdated(paint)
     }
 }

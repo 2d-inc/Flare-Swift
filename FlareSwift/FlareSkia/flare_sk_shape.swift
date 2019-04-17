@@ -10,6 +10,8 @@ import Foundation
 import Skia
 
 class FlareSkShape: ActorShape, FlareSkDrawable {
+    var _blendMode: BlendMode = .SrcOver
+    
     private var _isValid = false
     private var _path: OpaquePointer! = sk_path_new()
     
@@ -151,5 +153,14 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         let instanceShape = FlareSkShape()
         instanceShape.copyShape(self, resetArtboard)
         return instanceShape
+    }
+    
+    func onBlendModeChanged(_ mode: BlendMode) {
+        for actorFill in fills {
+            (actorFill as! ActorPaint).markPaintDirty()
+        }
+        for actorStroke in strokes {
+            (actorStroke as! ActorStroke).markPaintDirty()
+        }
     }
 }

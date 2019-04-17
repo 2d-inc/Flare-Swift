@@ -35,7 +35,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
     var skin: ActorSkin?
     var _connectedBones: [SkinnedBone]?
     public var isHidden: Bool = false
-    public var blendModeId: Int {
+    public var blendModeId: UInt32 {
         get {
             return 0
         }

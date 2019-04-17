@@ -49,6 +49,6 @@ class FlareSkColorStroke: ColorStroke, FlareSkStroke {
         super.update(dirt: dirt)
         sk_paint_set_color(_paint, uiColor)
         sk_paint_set_stroke_width(_paint, width)
-        // TODO: sk_paint_set_blendmode(_paint, (parent as! FlareSkShape).blendMode)
+        sk_paint_set_xfermode_mode(_paint, (parent as! FlareSkShape).blendMode.skType)
     }
 }

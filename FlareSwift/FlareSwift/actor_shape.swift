@@ -17,7 +17,13 @@ public class ActorShape: ActorNode, ActorDrawable {
     public var _clipShapes: [[ActorShape]]?
     public var _drawOrder: Int = -1
     public var drawIndex: Int = -1
-    public var blendModeId: Int = -1
+    
+    public var blendModeId: UInt32 {
+        get {
+            return 0
+        }
+        set {}
+    }
     
     public var fill: ActorFill? {
         return _fills.isEmpty ? nil : _fills.first

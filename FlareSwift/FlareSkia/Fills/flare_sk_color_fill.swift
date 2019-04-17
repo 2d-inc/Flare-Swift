@@ -45,6 +45,6 @@ class FlareSkColorFill: ColorFill, FlareSkFill {
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
         sk_paint_set_color(_paint, uiColor)
-        // TODO: set blend mode
+        sk_paint_set_xfermode_mode(_paint, (parent as! FlareSkShape).blendMode.skType)
     }
 }

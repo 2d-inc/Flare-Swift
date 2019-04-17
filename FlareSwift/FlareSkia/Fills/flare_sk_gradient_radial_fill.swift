@@ -54,7 +54,7 @@ class FlareSkRadialFill: RadialGradientFill, FlareSkFill {
         }
         
         sk_paint_set_color(_paint, paintColor)
-        // TODO: blendmode
+        sk_paint_set_xfermode_mode(_paint, (parent as! FlareSkShape).blendMode.skType)
         let start = sk_point_t(x: renderStart[0], y: renderStart[1])
         let end = sk_point_t(x: renderEnd[0], y: renderEnd[1])
         let shader = sk_shader_new_radial_gradient([start, end], radius, colors, locations, numStops, CLAMP_SK_SHADER_TILEMODE, nil)

@@ -20,7 +20,7 @@ public protocol ActorDrawable: class {
     // Computed draw index in the draw list.
     var drawIndex: Int { get set }
     var isHidden: Bool { get set }
-    var blendModeId: Int { get set }
+    var blendModeId: UInt32 { get set }
     var _clipShapes: [[ActorShape]]? { get set }
     
     func computeAABB() -> AABB
@@ -59,7 +59,7 @@ extension ActorDrawable {
         self.readNode(artboard, reader)
         
         self.isHidden = !reader.readBool(label: "isVisible")
-        self.blendModeId = artboard.actor.version < 21 ? 3 : Int(reader.readUint8(label: "blendMode"))
+        self.blendModeId = artboard.actor.version < 21 ? 3 : UInt32(reader.readUint8(label: "blendMode"))
         self.drawOrder = Int(reader.readUint16(label: "drawOrder"))
     }
     
@@ -89,5 +89,4 @@ extension ActorDrawable {
             }
         }
     }
-    
 }
