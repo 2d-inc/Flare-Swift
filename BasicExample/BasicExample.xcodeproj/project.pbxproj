@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E40A9B0C224BDDA8000F90DE /* ImageDeform.flr in Resources */ = {isa = PBXBuildFile; fileRef = E40A9B0B224BDDA7000F90DE /* ImageDeform.flr */; };
 		E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */ = {isa = PBXBuildFile; fileRef = E44CBFB722382B05008F6DFE /* Notification Bell.flr */; };
 		E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359BE2228328500981BD7 /* AppDelegate.swift */; };
 		E45359C12228328500981BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359C02228328500981BD7 /* ViewController.swift */; };
@@ -16,8 +15,6 @@
 		E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E45359C72228328600981BD7 /* LaunchScreen.storyboard */; };
 		E45359D62228340F00981BD7 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; };
 		E45359D82228341300981BD7 /* FlareSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E45359D52228340F00981BD7 /* FlareSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E4882B0F224CE771000940FB /* ImagesVD.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4882B0E224CE770000940FB /* ImagesVD.flr */; };
-		E491725622439792002EA96E /* Images.flr in Resources */ = {isa = PBXBuildFile; fileRef = E491725522439792002EA96E /* Images.flr */; };
 		E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4C7F5C32236D735004F62F4 /* Switch.flr */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +33,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E40A9B0B224BDDA7000F90DE /* ImageDeform.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ImageDeform.flr; sourceTree = "<group>"; };
 		E44CBFB722382B05008F6DFE /* Notification Bell.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Notification Bell.flr"; sourceTree = "<group>"; };
 		E45359BB2228328500981BD7 /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E45359BE2228328500981BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -46,8 +42,6 @@
 		E45359C82228328600981BD7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E45359CA2228328600981BD7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E45359D52228340F00981BD7 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4882B0E224CE770000940FB /* ImagesVD.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = ImagesVD.flr; sourceTree = "<group>"; };
-		E491725522439792002EA96E /* Images.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Images.flr; sourceTree = "<group>"; };
 		E4C7F5C32236D735004F62F4 /* Switch.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Switch.flr; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,9 +79,6 @@
 			children = (
 				E44CBFB722382B05008F6DFE /* Notification Bell.flr */,
 				E4C7F5C32236D735004F62F4 /* Switch.flr */,
-				E491725522439792002EA96E /* Images.flr */,
-				E40A9B0B224BDDA7000F90DE /* ImageDeform.flr */,
-				E4882B0E224CE770000940FB /* ImagesVD.flr */,
 				E45359BE2228328500981BD7 /* AppDelegate.swift */,
 				E45359C02228328500981BD7 /* ViewController.swift */,
 				E45359C22228328500981BD7 /* Main.storyboard */,
@@ -169,10 +160,7 @@
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
 				E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */,
 				E45359C62228328600981BD7 /* Assets.xcassets in Resources */,
-				E491725622439792002EA96E /* Images.flr in Resources */,
 				E45359C42228328500981BD7 /* Main.storyboard in Resources */,
-				E4882B0F224CE771000940FB /* ImagesVD.flr in Resources */,
-				E40A9B0C224BDDA8000F90DE /* ImageDeform.flr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

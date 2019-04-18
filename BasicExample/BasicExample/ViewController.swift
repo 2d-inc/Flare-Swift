@@ -11,14 +11,15 @@ import FlareSwift
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var flareExample: FlareView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
-        flareExample.backgroundColor = UIColor(red: 26/255, green: 26/255, blue: 26/255, alpha: 1)
-        // Initiate Flare file load with the filename setter
-        flareExample.filename = "Notification Bell.flr"
+        
+        self.view.backgroundColor = UIColor.lightGray
+        
+        let frame = UIScreen.main.bounds
+        let flareView = FlareSkView(frame: CGRect(x: 100, y: 100, width: frame.size.width-200, height: frame.size.height-200))
+        view.addSubview(flareView)
+        flareView.filename = "Switch"
     }
 
 

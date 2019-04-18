@@ -408,9 +408,6 @@
 		E491725022422EAE002EA96E /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E491724F22422EAE002EA96E /* Shaders.metal */; };
 		E49172522242573F002EA96E /* metal_controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49172512242573F002EA96E /* metal_controller.swift */; };
 		E4C9D821225B7B49003A0DCB /* sk_surface.h in Headers */ = {isa = PBXBuildFile; fileRef = E4C9D820225B7B49003A0DCB /* sk_surface.h */; };
-		E4C9D823225B83DD003A0DCB /* OpenGLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C9D822225B83DD003A0DCB /* OpenGLView.swift */; };
-		E4C9D825225B8F80003A0DCB /* SimpleVertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */; };
-		E4C9D827225B8FBC003A0DCB /* SimpleFragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = E4C9D826225B8FBC003A0DCB /* SimpleFragment.glsl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -831,9 +828,6 @@
 		E49172512242573F002EA96E /* metal_controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metal_controller.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		E4C9D820225B7B49003A0DCB /* sk_surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sk_surface.h; sourceTree = "<group>"; };
-		E4C9D822225B83DD003A0DCB /* OpenGLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGLView.swift; sourceTree = "<group>"; };
-		E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleVertex.glsl; sourceTree = "<group>"; };
-		E4C9D826225B8FBC003A0DCB /* SimpleFragment.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleFragment.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1587,9 +1581,6 @@
 				E44D539422624D1B00CBD24A /* Fills */,
 				E43AEC74226776E400E71EA8 /* Drawables */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
-				E4C9D822225B83DD003A0DCB /* OpenGLView.swift */,
-				E4C9D824225B8F80003A0DCB /* SimpleVertex.glsl */,
-				E4C9D826225B8FBC003A0DCB /* SimpleFragment.glsl */,
 				E44D5365225F42BB00CBD24A /* flare_sk_actor.swift */,
 				E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */,
 				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
@@ -1983,8 +1974,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E44D53852260837E00CBD24A /* LICENSE in Resources */,
-				E4C9D825225B8F80003A0DCB /* SimpleVertex.glsl in Resources */,
-				E4C9D827225B8FBC003A0DCB /* SimpleFragment.glsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2073,7 +2062,6 @@
 				E453597122282EF200981BD7 /* actor_scale_constraint.swift in Sources */,
 				E4535A252228370600981BD7 /* flare_cg_artboard.swift in Sources */,
 				E46CDCAD22312C14002C40A1 /* bezier_tools.swift in Sources */,
-				E4C9D823225B83DD003A0DCB /* OpenGLView.swift in Sources */,
 				E453599622282EF200981BD7 /* keyframe_stroke.swift in Sources */,
 				E4535A2A2228370600981BD7 /* flare_cg_shape.swift in Sources */,
 				E44D5371225F42BC00CBD24A /* flare_sk_gradient_fill.swift in Sources */,
