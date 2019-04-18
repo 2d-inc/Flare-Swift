@@ -136,7 +136,7 @@ public extension Actor {
             var inBandAssets = [Data]()
             for _ in 0 ..< numAtlases {
                 let bytes = block.readAsset()
-                let data = Data(bytes: bytes)
+                let data = Data(_: bytes)
                 inBandAssets.append(data)
             }
             

@@ -89,8 +89,8 @@ public class FlareSkActor: Actor {
     public func onImageData(_ rawData: [Data]) {
         images = []
         for imageData in rawData {
-            imageData.withUnsafeBytes { (buffer: UnsafePointer<UInt8>) in
-                let skData = sk_data_new_with_copy(buffer, imageData.count)
+            imageData.withUnsafeBytes { (buffer: UnsafeRawBufferPointer) in
+                let skData = sk_data_new_with_copy(buffer.baseAddress, imageData.count)
                 images!.append(sk_image_new_from_encoded(skData, nil))
                 sk_data_unref(skData)
             }

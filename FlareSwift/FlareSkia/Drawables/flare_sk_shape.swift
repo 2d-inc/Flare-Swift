@@ -169,7 +169,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
             (actorFill as! ActorPaint).markPaintDirty()
         }
         for actorStroke in strokes {
-            (actorStroke as! ActorStroke).markPaintDirty()
+            actorStroke.markPaintDirty()
         }
     }
 }

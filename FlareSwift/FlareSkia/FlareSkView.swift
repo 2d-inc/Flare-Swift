@@ -1,6 +1,6 @@
 //
 //  FlareSkView.swift
-//  FlareSwift
+//  FlareSkia
 //
 //  Created by Umberto Sonnino on 4/1/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
@@ -59,7 +59,6 @@ public class FlareSkView: UIView {
     private func setupLayer() {
         guard let glLayer = self.layer as? CAEAGLLayer else {
             fatalError("Couldn't get GL layer!")
-            return
         }
         
         glLayer.isOpaque = false
@@ -71,12 +70,10 @@ public class FlareSkView: UIView {
     private func setupContext() {
         guard let glContext = EAGLContext(api: .openGLES2) else {
             fatalError("Couldn't get GL Context")
-            return
         }
         
         guard EAGLContext.setCurrent(glContext) else {
             fatalError("GL Context could not be set as current!")
-            return
         }
         
         _context = glContext

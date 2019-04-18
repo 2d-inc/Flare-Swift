@@ -1576,11 +1576,11 @@
 			isa = PBXGroup;
 			children = (
 				E488354A225247B3000940FB /* FlareSkView.swift */,
+				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E488330D2252467E000940FB /* Skia */,
 				E44D539522624D2700CBD24A /* Strokes */,
 				E44D539422624D1B00CBD24A /* Fills */,
 				E43AEC74226776E400E71EA8 /* Drawables */,
-				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E44D5365225F42BB00CBD24A /* flare_sk_actor.swift */,
 				E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */,
 				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
@@ -2265,6 +2265,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
 				INFOPLIST_FILE = FlareSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -2277,6 +2278,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FlareSkia/Skia",
 				);
+				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
 					"-lskia",
 					"-lc++",
@@ -2286,7 +2288,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/FlareSkia/Skia";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -2303,6 +2305,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
 				INFOPLIST_FILE = FlareSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
@@ -2315,6 +2318,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/FlareSkia/Skia",
 				);
+				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
 					"-lskia",
 					"-lc++",
@@ -2323,7 +2327,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/FlareSkia/Skia";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

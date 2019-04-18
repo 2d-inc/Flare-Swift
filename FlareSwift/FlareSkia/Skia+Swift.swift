@@ -1,6 +1,6 @@
 //
 //  Skia+Swift.swift
-//  FlareSwift
+//  FlareSkia
 //
 //  Created by Umberto Sonnino on 4/1/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.

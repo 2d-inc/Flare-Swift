@@ -261,7 +261,7 @@ public class ActorNode: ActorComponent {
     
     func addChild(_ node: ActorNode) {
         if let p = node.parent {
-            if let idx = p._children?.index(of: node) {
+            if let idx = p._children?.firstIndex(of: node) {
                 p._children?.remove(at: idx)
             }
         }
