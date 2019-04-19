@@ -9,7 +9,7 @@ cd FlareSwift/FlareSkia/Skia/src
 
 python tools/git-sync-deps
 
-./bin/gn gen out/test \
+./bin/gn gen build \
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
@@ -44,4 +44,4 @@ python tools/git-sync-deps
   skia_enable_spirv_validation=false \
   skia_enable_pdf=false"
 
-ninja -C out/test
+ninja -C build
