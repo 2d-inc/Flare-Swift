@@ -1,0 +1,5 @@
+module Skia [system] {
+  header "Skia.h"
+  link "skia"
+  export *
+}
