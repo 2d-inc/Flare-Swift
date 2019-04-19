@@ -5,40 +5,50 @@
 
 # Flare-Swift
 
-Swift runtime for Flare.
+Swift runtime for Flare: export files from Flare and run them on iOS!
 
-Export Flare files with the _Export to Engine_ picking _Binary_ format. (JSON support is in the works)
+__Only Binary__ format is supported right now, but JSON support is in the works.
 
-## _Alpha Release Notes_
+## Beta Release Notes
 
-This repo contains an alpha release of the Flare runtime. It handles everything Flare-related __except__:
-- JSON format for exports 
-- The [recently added raster image support](https://www.youtube.com/watch?v=XtG4Wa3gIf8). 
 
-If you encounter any problems, be sure to [report them in the issue tracker](https://github.com/2d-inc/Flare-Swift/issues) and, if possible, include your Flare file.
+This is a __beta__ release.
+
+The runtime is now using Skia as its rendering engine, so users will need to build the library with the instructions provided in the [Usage](#Usage) section.
+
+If you encounter any problems [report them in the issue tracker](https://github.com/2d-inc/Flare-Swift/issues) and, if applicable, include your Flare file.
 
 ## Contents
 
-The repository contains an XCode Workspace with two XCode Projects:
-- [**FlareSwift**](FlareSwift/FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files. 
-The Frameworks is further subdivided into two main Groups: 
-    - [FlareSwift](FlareSwift/FlareSwift) is the bottommost layer of the Framework: this is where Flare file contents are read, loaded and built in-memory.    
-    - [FlareCoreGraphics](FlareSwift/FlareCoreGraphics) handles the drawing operations on top of the FlareSwift abstractions. It draws into a Core Graphics context. 
+The repository contains an XCode Workspace with two Projects:
+- [FlareSwift](FlareSwift/FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files. <br/>
+The Framework is further subdivided into: 
+    - [FlareCore](FlareSwift/FlareCore) is the bottommost layer of the Framework: this is where Flare file contents are read, loaded and built in-memory.
+    - [FlareSkia](FlareSwift/FlareSkia) handles the drawing operations in an OpenGL context. It relies on `libskia`, which is built with a custom script (see [Usage](#Usage)).
+    - [FlareCoreGraphics](FlareSwift/FlareCoreGraphics) handles the drawing operations in a Core Graphics context.<br/> Currently it doesn't support raster images. For raster image support, use [FlareSkia](FlareSwift/FlareSkia).
 - [BasicExample](BasicExample/BasicExample) <br/>
-An iOS-based example that loads and animates a Flare file in a UIView.
+An iOS-based example that demonstrates how to use a `ViewController` to load a `FlareSkView` that loads and animates a test Flare file.
 
 
 ## Usage
 
-Here's a step-by-step overview on how to use the Framework in your XCode Project.
+Here's a step-by-step guide on how to use the Framework in your XCode Project:
 
-- Download the repo
+- Install `depot_tools` as described [here](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up)
+- Clone the repository, initialize its submodules, and build the library:
+```
+git clone git@github.com:2d-inc/Flare-Swift.git
+cd Flare-Swift
+git submodule update --init --recursive
+./make_dependency.sh
+```
+N.B: the `make_dependency.sh` script can take a while to build.
 - Open `Flare-Swift.xcworkspace`
-- In the XCode window, make sure `FlareSwift` scheme is selected
+- In the XCode window, make sure that the `FlareSwift` scheme is selected
 - Build the Framework (⌘ + B)
 
 The Framework is built into the `Products` folder. <br/>
-N.B. The folder can be accessed from XCode by right clicking on it > `Show in Finder`.
+(N.B. The folder can be accessed from XCode by right clicking on it > `Show in Finder`.)
 
 Lastly, to use the Framework in your Project:
 - Drag-and-drop it into the XCode window.
