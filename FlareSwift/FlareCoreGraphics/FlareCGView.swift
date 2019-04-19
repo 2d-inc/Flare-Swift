@@ -219,7 +219,6 @@ public class FlareCGView: UIView {
         ctx.translateBy(x: x, y: y)
         backgroundColor = UIColor.gray
         
-        ctx.clip(to: frame)
         artboard.draw(context: ctx)
 
         ctx.restoreGState()
