@@ -57,7 +57,7 @@ extension Interpolated {
             _interpolator = LinearInterpolator.instance
             break
         case .Cubic?:
-            let cubicInterpolator = CubicInterpolator.instance
+            let cubicInterpolator = CubicInterpolator()
             if cubicInterpolator.read(reader) {
                 self._interpolator = cubicInterpolator
             }
