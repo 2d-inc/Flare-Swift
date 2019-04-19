@@ -5,23 +5,11 @@
 # Build notes:
 #   https://skia.org/user/build
 
-# TODO: make it public.
-SKIA_REPO=https://github.com/umberto-sonnino/skia
-
-if [ ! -d skia ]; then
-	echo "Cloning Skia."
-    git clone $SKIA_REPO
-else
-    echo "Already have Skia, update it."
-    cd skia && git pull
-    cd ..
-fi
-
-cd skia
+cd FlareSwift/FlareSkia/Skia/src
 
 python tools/git-sync-deps
 
-./bin/gn gen out/static \
+./bin/gn gen out/test \
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
@@ -49,13 +37,11 @@ python tools/git-sync-deps
   skia_use_system_zlib=false \
   \
   skia_enable_ccpr=false \
+  skia_enable_skottie=false \
+  skia_enable_skshaper=false \
   skia_enable_gpu=true \
   skia_enable_fontmgr_empty=false \
   skia_enable_spirv_validation=false \
   skia_enable_pdf=false"
 
-ninja -C out/static
-
-echo cp -r include ../../Skia
-cp out/static/libskia.a ../../Skia
-cp -r include ../../Skia
+ninja -C out/test

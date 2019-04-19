@@ -1,0 +1,3 @@
+[submodule "FlareSwift/FlareSkia/Skia/src"]
+	path = FlareSwift/FlareSkia/Skia/src
+	url = https://umberto-sonnino@github.com/umberto-sonnino/skia
