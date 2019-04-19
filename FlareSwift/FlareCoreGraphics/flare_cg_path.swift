@@ -48,7 +48,6 @@ extension FlareCGPath {
             if cin == nil && cout == nil {
                 let x = Double(nextPoint.translation[0])
                 let y = Double(nextPoint.translation[1])
-//                print("ADDING LINE: (x \(x), y \(y))")
                 _path.addLine(to: CGPoint(x: x, y: y))
             } else {
                 if cout == nil {
@@ -60,7 +59,6 @@ extension FlareCGPath {
                 let CGTo = CGPoint(x: nextPoint.translation[0], y: nextPoint.translation[1])
                 let CGCin = CGPoint(x: cin![0], y: cin![1])
                 let CGCout = CGPoint(x: cout![0], y: cout![1])
-//                print("ADDING CURVE: (To \(CGTo), Cout \(CGCout), Cin \(CGCin))")
                 _path.addCurve(to: CGTo, control1: CGCout, control2: CGCin)
             }
         }

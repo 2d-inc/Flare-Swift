@@ -23,11 +23,11 @@ public class FlareCGArtboard: ActorArtboard {
         return artboardInstance
     }
     
-    public func draw(context: CGContext, on layer: CALayer) {
+    public func draw(context: CGContext) {
         for drawable in drawableNodes {
             if let d = drawable as? FlareCGDrawable {
 //                d.draw(context: context)
-                d.draw(context: context, on: layer)
+                d.draw(context: context)
             }
         }
     }

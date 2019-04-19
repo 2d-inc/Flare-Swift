@@ -15,22 +15,10 @@ public class FlareCGActor: Actor {
     public var _artboardCount: Int = 0
     public var images: [Data]?
     public var _artboards: [ActorArtboard?] = []
-  
-    var _metalController: MetalController! = nil
     
     public var artboard: FlareCGArtboard? {
         return _artboards.count > 0 ? (_artboards.first as! FlareCGArtboard) : nil
     }
-    
-    var metalController: MetalController {
-        get {
-            if _metalController == nil {
-                _metalController = MetalController()
-            }
-            return _metalController
-        }
-    }
-    
     public init() {}
     
     public func makeArtboard() -> ActorArtboard {
@@ -90,8 +78,7 @@ public class FlareCGActor: Actor {
     }
     
     public func makeImageNode() -> ActorImage {
-//        return FlareCGImage(device: device, textureLoader: textureLoader)
-        return FlareCGImage(self.metalController)
+        return ActorImage()
     }
     
     func loadData(_ data: Data) {

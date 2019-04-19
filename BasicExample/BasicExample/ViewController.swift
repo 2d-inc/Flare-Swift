@@ -19,9 +19,6 @@ class ViewController: UIViewController {
         let frame = UIScreen.main.bounds
         let flareView = FlareSkView(frame: CGRect(x: 100, y: 100, width: frame.size.width-200, height: frame.size.height-200))
         view.addSubview(flareView)
-        flareView.filename = "Switch.flr"
+        flareView.filename = "Notification Bell.flr"
     }
-
-
 }
-

@@ -438,7 +438,6 @@ func makeBeziers(from path: ActorBasePath) -> [Bezier] {
                 Vec2D.init(clone: nextPoint.translation)
                 ])
             beziers.append(s)
-            //                print("SEGMENT \(s.description)")
         } else {
             if cout == nil {
                 cout = point.translation
@@ -452,7 +451,6 @@ func makeBeziers(from path: ActorBasePath) -> [Bezier] {
                 Vec2D.init(clone: cin!),
                 Vec2D(clone: nextPoint.translation)
                 ])
-            //                print("CUBIC:\(cb.description)")
             beziers.append(cb)
         }
     }

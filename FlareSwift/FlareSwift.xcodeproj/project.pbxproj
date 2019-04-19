@@ -122,11 +122,8 @@
 		E488354B225247B3000940FB /* FlareSkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E488354A225247B3000940FB /* FlareSkView.swift */; };
 		E48A648A222E778D00726F7D /* flare_cg_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_cg_gradient_radial_fill.swift */; };
 		E491724722422E05002EA96E /* keyframe_imagevertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724622422E05002EA96E /* keyframe_imagevertices.swift */; };
-		E491724A22422E25002EA96E /* flare_cg_image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724822422E25002EA96E /* flare_cg_image.swift */; };
 		E491724B22422E25002EA96E /* flare_cg_drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724922422E25002EA96E /* flare_cg_drawable.swift */; };
 		E491724D22422E31002EA96E /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
-		E491725022422EAE002EA96E /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = E491724F22422EAE002EA96E /* Shaders.metal */; };
-		E49172522242573F002EA96E /* metal_controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49172512242573F002EA96E /* metal_controller.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,11 +256,8 @@
 		E488354A225247B3000940FB /* FlareSkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkView.swift; sourceTree = "<group>"; };
 		E48A6489222E778D00726F7D /* flare_cg_gradient_radial_fill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_cg_gradient_radial_fill.swift; sourceTree = "<group>"; };
 		E491724622422E05002EA96E /* keyframe_imagevertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_imagevertices.swift; sourceTree = "<group>"; };
-		E491724822422E25002EA96E /* flare_cg_image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_cg_image.swift; sourceTree = "<group>"; };
 		E491724922422E25002EA96E /* flare_cg_drawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_cg_drawable.swift; sourceTree = "<group>"; };
 		E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Flare.swift"; sourceTree = "<group>"; };
-		E491724F22422EAE002EA96E /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		E49172512242573F002EA96E /* metal_controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = metal_controller.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -491,10 +485,7 @@
 				E4535A202228370600981BD7 /* flare_cg_shape.swift */,
 				E4535A182228370500981BD7 /* flare_cg_stroke.swift */,
 				E491724922422E25002EA96E /* flare_cg_drawable.swift */,
-				E491724822422E25002EA96E /* flare_cg_image.swift */,
 				E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */,
-				E491724F22422EAE002EA96E /* Shaders.metal */,
-				E49172512242573F002EA96E /* metal_controller.swift */,
 			);
 			path = FlareCoreGraphics;
 			sourceTree = "<group>";
@@ -772,9 +763,7 @@
 				E488354B225247B3000940FB /* FlareSkView.swift in Sources */,
 				E45359AC22282EF200981BD7 /* actor_shape.swift in Sources */,
 				E45359A122282EF200981BD7 /* hold.swift in Sources */,
-				E491724A22422E25002EA96E /* flare_cg_image.swift in Sources */,
 				E44D53912260C70000CBD24A /* piecewise_bezier.swift in Sources */,
-				E49172522242573F002EA96E /* metal_controller.swift in Sources */,
 				E453599422282EF200981BD7 /* keyframe_radius.swift in Sources */,
 				E41D08AE222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift in Sources */,
 				E45359AB22282EF200981BD7 /* binary_reader.swift in Sources */,
@@ -787,7 +776,6 @@
 				E453599522282EF200981BD7 /* keyframe_sequence.swift in Sources */,
 				E45359A522282EF200981BD7 /* vec2d.swift in Sources */,
 				E453597F22282EF200981BD7 /* actor_component.swift in Sources */,
-				E491725022422EAE002EA96E /* Shaders.metal in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

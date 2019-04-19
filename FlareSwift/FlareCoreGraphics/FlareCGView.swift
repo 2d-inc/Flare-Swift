@@ -135,11 +135,11 @@ public class FlareCGView: UIView {
                     let deltaTime = Double(1/animation._fps)
                     var time: Double = animation.duration/3
                     
-//                    while(time <= animation.duration) {
+                    while(time <= animation.duration) {
                     animation.apply(time: time, artboard: ab, mix: 1.0)
                     ab.advance(seconds: deltaTime)
-//                        time += deltaTime
-//                    }
+                        time += deltaTime
+                    }
                 }
             }
         }
@@ -217,21 +217,10 @@ public class FlareCGView: UIView {
         ctx.saveGState()
         ctx.scaleBy(x: scale, y: scale)
         ctx.translateBy(x: x, y: y)
+        backgroundColor = UIColor.gray
         
-        backgroundColor = UIColor.red
-
-//        artboard.draw(context: ctx)
-//        artboard.draw(context: ctx, on: layer)
-        let iScale = 1/scale
-        let imageRect = CGRect(x: 0, y: 0, width: iScale * rect.width, height: iScale * rect.height)
-        let flareImages = artboard.drawableNodes.compactMap{$0 as? FlareCGImage}
-        for fi in flareImages {
-            if let cgImage = fi._displayImage {
-                
-//                ctx.setBlendMode(.sourceAtop)
-                ctx.draw(cgImage, in: imageRect)
-            }
-        }
+        ctx.clip(to: frame)
+        artboard.draw(context: ctx)
 
         ctx.restoreGState()
     }

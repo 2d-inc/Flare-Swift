@@ -256,6 +256,14 @@ public class FlareSkView: UIView {
             sk_canvas_translate(_skiaCanvas, tx, ty)
             
             clearBackground()
+            let boundsRect = sk_path_new()
+            sk_path_line_to(boundsRect, contentsWidth, 0)
+            sk_path_line_to(boundsRect, contentsWidth, contentsHeight)
+            sk_path_line_to(boundsRect, 0, contentsHeight)
+            sk_path_close(boundsRect)
+            sk_canvas_clip_path(_skiaCanvas, boundsRect, true)
+            sk_path_delete(boundsRect)
+            
             artboard.draw(skCanvas: _skiaCanvas)
             
             sk_canvas_restore(_skiaCanvas)

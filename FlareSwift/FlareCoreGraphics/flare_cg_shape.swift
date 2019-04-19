@@ -64,12 +64,12 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
         return _path
     }
     
-    func draw(context: CGContext, on: CALayer) {
+    func draw(context: CGContext) {
         guard self.doesDraw else {
             return
         }
         
-//        context.saveGState()
+        context.saveGState()
         
         let renderPath = self.path
 
@@ -99,7 +99,6 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
                     var end = actorStroke.trimEnd
                     let offset = actorStroke.trimOffset
                     let inverted = start > end
-//                    print("TRIM START \(start) END \(end) OFFSET \(offset)")
                     if abs(start-end) != 1.0 {
                         start = (start + offset).truncatingRemainder(dividingBy: 1.0)
                         end = (end + offset).truncatingRemainder(dividingBy: 1.0)
@@ -116,7 +115,6 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
                             end = start
                             start = swap
                         }
-//                        print("=>=> \(start) END \(end)")
                         if end >= start {
                             let trim = trimPath(pbPaths, start, end, false, isSequential)
                             stroke.effectPath = (trim as! CGMutablePath)
