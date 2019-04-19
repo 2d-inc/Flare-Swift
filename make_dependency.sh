@@ -13,8 +13,6 @@ python tools/git-sync-deps
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
-  skia_ios_identity=\".*umberto.*\" \
-  skia_ios_profile=\".*betto.*\" \
   skia_use_bitcode = true \
   skia_use_angle=false \
   skia_use_dng_sdk=false \
@@ -35,7 +33,6 @@ python tools/git-sync-deps
   skia_use_metal=true \
   skia_use_zlib=true \
   skia_use_system_zlib=false \
-  \
   skia_enable_ccpr=false \
   skia_enable_skottie=false \
   skia_enable_skshaper=false \
