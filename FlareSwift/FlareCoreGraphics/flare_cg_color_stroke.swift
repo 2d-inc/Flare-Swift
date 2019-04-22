@@ -15,6 +15,8 @@ class FlareCGColorStroke: ColorStroke, FlareCGStroke {
     var _strokeWidth: CGFloat = 0.0
     var effectPath: CGPath? = nil
     
+    var _strokeLayer: CALayer = CAShapeLayer()
+    
     override func markPathEffectsDirty() {
         effectPath = nil
     }
@@ -55,7 +57,7 @@ class FlareCGColorStroke: ColorStroke, FlareCGStroke {
             return
         }
         
-        let strokeLayer = CAShapeLayer()
+        let strokeLayer = _strokeLayer as! CAShapeLayer
         // Remove fill color and just stroke this layer.
         strokeLayer.fillColor = CGColor.clear
         strokeLayer.path = path
@@ -64,12 +66,5 @@ class FlareCGColorStroke: ColorStroke, FlareCGStroke {
         strokeLayer.lineJoin = strokeJoin
         
         on.addSublayer(strokeLayer)
-        
-//        context.setLineCap(strokeCap)
-//        context.setLineJoin(strokeJoin)
-//        context.setLineWidth(_strokeWidth)
-//        context.setStrokeColor(_color)
-//        context.addPath(path)
-//        context.drawPath(using: .stroke)
     }
 }

@@ -11,12 +11,7 @@ import Foundation
 class FlareCGShape: ActorShape, FlareCGDrawable {
     private var _isValid = false
     private var _path = CGMutablePath()
-    private var _layer = CALayer()
-    
-    override func invalidateShape() {
-        _isValid = false
-        stroke?.markPathEffectsDirty()
-    }
+    var _layer = CALayer()
     
     var piecewiseBezierPaths: [PiecewiseBezier<CGMutablePath>] {
         var allPaths = [PiecewiseBezier<CGMutablePath>]()
@@ -64,17 +59,32 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
         return _path
     }
     
-    func draw(context: CGContext, on: CALayer) {
+    override func invalidateShape() {
+        _isValid = false
+        stroke?.markPathEffectsDirty()
+    }
+    
+    func addLayer(on: CALayer) {
+        on.addSublayer(_layer)
+        
+        for actorFill in fills {
+            if let cgFill = actorFill as? FlareCGFill {
+                _layer.addSublayer(cgFill._fillLayer)
+            }
+        }
+        
+        for actorStroke in strokes {
+            if let cgStroke = actorStroke as? FlareCGStroke {
+                _layer.addSublayer(cgStroke._strokeLayer)
+            }
+        }
+    }
+    
+    func draw(on: CALayer) {
         guard self.doesDraw else {
             return
         }
         
-        // Cleanup.
-        if let sublayers = _layer.sublayers {
-            for sublayer in sublayers {
-                sublayer.removeFromSuperlayer()
-            }
-        }
         // Adjust size.
         _layer.frame = on.bounds
         
@@ -141,8 +151,6 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
             }
             stroke.paint(stroke: actorStroke, on: _layer, path: strokePath)
         }
-        
-        on.addSublayer(_layer)
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {

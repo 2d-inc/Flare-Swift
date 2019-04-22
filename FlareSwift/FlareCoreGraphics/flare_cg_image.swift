@@ -11,10 +11,9 @@ import MetalKit
 import QuartzCore
 
 class FlareCGImage: ActorImage, FlareCGDrawable {
-    
     let _metalController: MetalController
     let _samplerState: MTLSamplerState
-    let _metalLayer: CAMetalLayer!
+    var _layer: CALayer
     
     var _metalVertexBuffer: MTLBuffer!
     var _metalDeformBuffer: MTLBuffer?
@@ -37,11 +36,12 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
     init(_ metalController: MetalController) {
         _metalController = metalController
 
-        _metalLayer = CAMetalLayer()
-        _metalLayer.device = _metalController.device!
-        _metalLayer.pixelFormat = .bgra8Unorm_srgb
-        _metalLayer.framebufferOnly = false
-        _metalLayer.isOpaque = false
+        _layer = CAMetalLayer()
+        let metalLayer = _layer as! CAMetalLayer
+        metalLayer.device = _metalController.device!
+        metalLayer.pixelFormat = .bgra8Unorm_srgb
+        metalLayer.framebufferOnly = false
+        metalLayer.isOpaque = false
         
         let samplerDesc = MTLSamplerDescriptor()
         samplerDesc.minFilter = .nearest
@@ -75,6 +75,10 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         }
     }
     
+    func addLayer(on: CALayer) {
+        on.addSublayer(_layer)
+    }
+    
     func dispose() {
         _uvBuffer = nil
         _vertexBuffer = nil
@@ -85,8 +89,8 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         guard self.updateVertices() else {
             return
         }
-        
-        guard let drawable = _metalLayer.nextDrawable() else {
+        let metalLayer = _layer as! CAMetalLayer
+        guard let drawable = metalLayer.nextDrawable() else {
             return
         }
         
@@ -124,12 +128,13 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         commandBuffer.waitUntilCompleted()
     }
     
-    func draw(context: CGContext, on: CALayer) {
+    func draw(on: CALayer) {
         autoreleasepool{
-            if !_metalLayer.bounds.equalTo(on.bounds) {
-                _metalLayer.frame = on.bounds
-                _metalLayer.removeFromSuperlayer()
-                on.addSublayer(_metalLayer)
+            let metalLayer = _layer as! CAMetalLayer
+            if !metalLayer.bounds.equalTo(on.bounds) {
+                metalLayer.frame = on.bounds
+                metalLayer.removeFromSuperlayer()
+                on.addSublayer(metalLayer)
                 let width = Float(on.bounds.width)
                 let height = Float(on.bounds.height)
                 _metalController.setViewportSize(width: width, height: height)
@@ -141,24 +146,6 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
                 _metalController.prepare(transform: self.worldTransform)                
             }
             
-            self.render()
-        }
-    }
-    
-    func renderOffscreen(rect: CGRect) {
-        autoreleasepool{
-            if !_metalLayer.bounds.equalTo(rect) {
-                _metalLayer.frame = rect
-                let width = Float(rect.width)
-                let height = Float(rect.height)
-                _metalController.setViewportSize(width: width, height: height)
-                let scale = min(width/artboard!.width, height/artboard!.height)
-                _metalController.setViewMatrix(x: 0, y: Float(height), scale: scale)
-                self.invalidateDrawable()
-            }
-            if !isConnectedToBones {
-                _metalController.prepare(transform: self.worldTransform)
-            }
             self.render()
         }
     }
@@ -210,7 +197,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
     func updateVertices() -> Bool {
         guard
             let tris = triangles,
-            !_metalLayer.frame.equalTo(CGRect.zero)
+            !_layer.frame.equalTo(CGRect.zero)
         else {
             return false
         }

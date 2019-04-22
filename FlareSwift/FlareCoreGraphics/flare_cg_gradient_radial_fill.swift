@@ -13,7 +13,10 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
     
     var _gradientColors: [CGColor]!
     var _gradientLocations: [Float32]!
-    
+
+    var _fillLayer: CALayer = CAGradientLayer()
+    let gradientMask = CAShapeLayer()
+
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let radialNode = FlareCGRadialFill()
         radialNode.copyRadialFill(self, resetArtboard)
@@ -70,12 +73,11 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
             y: (renderStart[1] + radius)/height
         )
         
-        let gradientMask = CAShapeLayer()
         gradientMask.path = path
         gradientMask.fillColor = _fillColor
         gradientMask.fillRule = self.fillRule
         
-        let gradientLayer = CAGradientLayer()
+        let gradientLayer = _fillLayer as! CAGradientLayer
         gradientLayer.type = .radial
         gradientLayer.startPoint = center
         gradientLayer.endPoint = to

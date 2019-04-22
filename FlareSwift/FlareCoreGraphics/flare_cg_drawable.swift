@@ -9,7 +9,8 @@
 import Foundation
 
 protocol FlareCGDrawable: class {
-//    func draw(context: CGContext)
-    func draw(context: CGContext, on: CALayer)
+    var _layer: CALayer { get set }
+    func addLayer(on: CALayer)
+    func draw(on: CALayer)
     // TODO: Blending
 }

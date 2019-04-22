@@ -10,6 +10,7 @@ import Foundation
 import CoreGraphics
 
 protocol FlareCGStroke: class {
+    var _strokeLayer: CALayer { get set }
     var _color: CGColor { get set }
     var _strokeCap: CAShapeLayerLineCap { get set }
     var _strokeJoin: CAShapeLayerLineJoin { get set }

@@ -13,6 +13,9 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
     var _gradientColors: [CGColor]!
     var _gradientLocations: [NSNumber]!
     
+    var _fillLayer: CALayer = CAGradientLayer()
+    let gradientMask = CAShapeLayer()
+    
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceGradientFill = FlareCGGradientFill()
         instanceGradientFill.copyGradientFill(self, resetArtboard)
@@ -59,12 +62,11 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
         let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
         let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
         
-        let gradientMask = CAShapeLayer()
         gradientMask.path = path
         gradientMask.fillColor = _fillColor
         gradientMask.fillRule = self.fillRule
         
-        let gradientLayer = CAGradientLayer()
+        let gradientLayer = _fillLayer as! CAGradientLayer
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
         gradientLayer.colors = _gradientColors

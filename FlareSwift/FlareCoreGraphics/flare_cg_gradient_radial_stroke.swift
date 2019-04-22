@@ -18,6 +18,9 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
     var _gradientColors: [CGColor]!
     var _gradientLocations: [NSNumber]!
     
+    var _strokeLayer: CALayer = CAGradientLayer()
+    let strokeMask = CAShapeLayer()
+    
     override func markPathEffectsDirty() {
         effectPath = nil
     }
@@ -79,7 +82,6 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
                 y: (renderStart[1] + radius)/height
         )
         
-        let strokeMask = CAShapeLayer()
         // Remove fill color and just stroke this layer.
         strokeMask.fillColor = CGColor.clear
         strokeMask.path = path
@@ -87,9 +89,9 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
         strokeMask.lineWidth = _strokeWidth
         strokeMask.lineJoin = strokeJoin
         
+        let strokeLayer = _strokeLayer as! CAGradientLayer
         // Mask the gradient with the Stroke layer that we just defined above.
         // This'll draw only the portion of the screen described by the stroked path.
-        let strokeLayer = CAGradientLayer()
         strokeLayer.type = .radial
         strokeLayer.startPoint = center
         strokeLayer.endPoint = to

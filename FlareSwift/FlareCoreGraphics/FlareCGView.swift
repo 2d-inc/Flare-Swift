@@ -17,7 +17,6 @@ public class FlareCGView: UIView {
     private var flareActor: FlareCGActor!
     private var artboard: FlareCGArtboard?
     private var animation: ActorAnimation?
-    private var setupAABB: AABB!
     private var animationName: String?
 
     private var lastTime = 0.0
@@ -60,7 +59,7 @@ public class FlareCGView: UIView {
                     flareActor = fActor
                     artboard = fActor.artboard
                     if let ab = artboard {
-                        ab.initializeGraphics()
+                        ab.initializeGraphics(layer)
                         ab.overrideColor = self.colorArray
                         ab.advance(seconds: 0.0)
                         updateBounds()
@@ -118,11 +117,11 @@ public class FlareCGView: UIView {
     }
 
     private func updateBounds() {
-        guard let actor = flareActor else {
+        guard flareActor != nil else {
             return
         }
 
-        setupAABB = actor.artboard?.artboardAABB()
+        artboard?.updateBounds()
     }
 
     private func updateAnimation(onlyWhenMissing: Bool = false) {
@@ -175,40 +174,13 @@ public class FlareCGView: UIView {
     }
 
     override public func draw(_ rect: CGRect) {
-        guard
-            let ctx = UIGraphicsGetCurrentContext(),
-            let artboard = flareActor?.artboard,
-            let bounds = setupAABB
-        else {
+        guard let artboard = flareActor?.artboard else {
             return
         }
-
-        let contentWidth = CGFloat(bounds[2] - bounds[0])
-        let contentHeight = CGFloat(bounds[3] - bounds[1])
-
-        // Contain the artboard
-        let scaleX = rect.width / contentWidth
-        let scaleY = rect.height / contentHeight
-        let scale = min(scaleX, scaleY)
-        
-        layer.backgroundColor = UIColor.white.cgColor
         
         backgroundColor = UIColor.white
-        layer.sublayers?.forEach{ $0.removeFromSuperlayer() }
-        
-        let shapeLayer = CAShapeLayer()
-        shapeLayer.anchorPoint = CGPoint(x: 0, y: 0)
-        shapeLayer.frame = CGRect(x: 0, y: 0, width: contentWidth, height: contentHeight)
-// TODO: translate too.
-//        let x = contentWidth * CGFloat(artboard.origin.x)
-//        let y = contentHeight * CGFloat(artboard.origin.y)
-//        ctx.translateBy(x: x, y: y)
-//        ctx.scaleBy(x: scale, y: scale)
-        shapeLayer.transform = CATransform3DMakeScale(scale, scale, 1)
-        shapeLayer.backgroundColor = UIColor(red: 93/255, green: 93/255, blue: 93/255, alpha: 1).cgColor
-        shapeLayer.masksToBounds = true
-        layer.addSublayer(shapeLayer)
-        artboard.draw(context: ctx, on: shapeLayer)
+        artboard.rect = rect
+        artboard.draw()
     }
     
 }

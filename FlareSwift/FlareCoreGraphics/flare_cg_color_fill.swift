@@ -9,6 +9,7 @@
 import Foundation
 
 class FlareCGColorFill: ColorFill, FlareCGFill {
+    var _fillLayer: CALayer = CAShapeLayer()
     var _fillColor = CGColor.black
     
     var uiColor: CGColor {
@@ -46,7 +47,7 @@ class FlareCGColorFill: ColorFill, FlareCGFill {
     }
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
-        let fillLayer = CAShapeLayer()
+        let fillLayer = _fillLayer as! CAShapeLayer
         fillLayer.frame = on.frame
         fillLayer.path = path
         fillLayer.fillColor = self._fillColor

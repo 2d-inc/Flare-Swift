@@ -11,6 +11,7 @@ import Foundation
 protocol FlareCGFill: class {
     var _fillRule: FillRule { get set }
     var _fillColor: CGColor { get set }
+    var _fillLayer: CALayer { get set }
     func initializeGraphics()
     func paint(fill: ActorFill, on: CALayer, path: CGPath)
 }
