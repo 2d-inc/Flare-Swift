@@ -11,13 +11,13 @@ import CoreGraphics
 
 protocol FlareCGStroke: class {
     var _color: CGColor { get set }
-    var _strokeCap: CGLineCap { get set }
-    var _strokeJoin: CGLineJoin { get set }
+    var _strokeCap: CAShapeLayerLineCap { get set }
+    var _strokeJoin: CAShapeLayerLineJoin { get set }
     var _strokeWidth: CGFloat { get set }
     var effectPath: CGPath? { get set }
     
     func initializeGraphics()
-    func paint(stroke: ActorStroke, context: CGContext, path: CGPath)
+    func paint(stroke: ActorStroke, on: CALayer, path: CGPath)
 }
 
 extension FlareCGStroke {
@@ -30,27 +30,27 @@ extension FlareCGStroke {
         _strokeWidth = CGFloat(stroke.width)
     }
     
-    var strokeCap: CGLineCap {
+    var strokeCap: CAShapeLayerLineCap {
         let stroke = self as! ActorStroke
         switch stroke.cap {
         case .Butt:
-            return CGLineCap.butt
+            return .butt
         case .Round:
-            return CGLineCap.round
+            return .round
         case .Square:
-            return CGLineCap.square
+            return .square
         }
     }
     
-    var strokeJoin: CGLineJoin {
+    var strokeJoin: CAShapeLayerLineJoin {
         let stroke = self as! ActorStroke
         switch stroke.join {
         case .Bevel:
-            return CGLineJoin.bevel
+            return .bevel
         case .Miter:
-            return CGLineJoin.miter
+            return .miter
         case .Round:
-            return CGLineJoin.round
+            return .round
         }
     }
     

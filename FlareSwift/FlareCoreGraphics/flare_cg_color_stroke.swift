@@ -10,8 +10,8 @@ import Foundation
 
 class FlareCGColorStroke: ColorStroke, FlareCGStroke {
     var _color: CGColor = CGColor.black
-    var _strokeCap: CGLineCap = CGLineCap.butt
-    var _strokeJoin: CGLineJoin = .miter
+    var _strokeCap: CAShapeLayerLineCap = .butt
+    var _strokeJoin: CAShapeLayerLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
     var effectPath: CGPath? = nil
     
@@ -50,16 +50,26 @@ class FlareCGColorStroke: ColorStroke, FlareCGStroke {
         _strokeWidth = CGFloat(width)
     }
     
-    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
+    func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
         guard _strokeWidth > 0 else {
             return
         }
         
-        context.setLineCap(strokeCap)
-        context.setLineJoin(strokeJoin)
-        context.setLineWidth(_strokeWidth)
-        context.setStrokeColor(_color)
-        context.addPath(path)
-        context.drawPath(using: .stroke)
+        let strokeLayer = CAShapeLayer()
+        // Remove fill color and just stroke this layer.
+        strokeLayer.fillColor = CGColor.clear
+        strokeLayer.path = path
+        strokeLayer.strokeColor = _color
+        strokeLayer.lineWidth = _strokeWidth
+        strokeLayer.lineJoin = strokeJoin
+        
+        on.addSublayer(strokeLayer)
+        
+//        context.setLineCap(strokeCap)
+//        context.setLineJoin(strokeJoin)
+//        context.setLineWidth(_strokeWidth)
+//        context.setStrokeColor(_color)
+//        context.addPath(path)
+//        context.drawPath(using: .stroke)
     }
 }

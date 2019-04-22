@@ -10,8 +10,9 @@ import Foundation
 
 class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
     var _fillColor: CGColor = CGColor.black
-    var _gradient: CGGradient!
-    private let _colorSpace = CGColorSpaceCreateDeviceRGB()
+    
+    var _gradientColors: [CGColor]!
+    var _gradientLocations: [Float32]!
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let radialNode = FlareCGRadialFill()
@@ -24,20 +25,17 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
 
         let numStops = Int(round( Double(colorStops.count)/5 ))
 
-        var colors = [CGFloat]()
-        var locations = [CGFloat]()
+        _gradientLocations = []
+        _gradientColors = []
         
         var idx = 0
         for _ in 0 ..< numStops {
             let r = CGFloat(colorStops[idx])
-            colors.append(r)
             let g = CGFloat(colorStops[idx+1])
-            colors.append(g)
             let b = CGFloat(colorStops[idx+2])
-            colors.append(b)
             let a = CGFloat(colorStops[idx+3])
-            colors.append(a)
-            locations.append(CGFloat(colorStops[idx+4]))
+            _gradientColors.append(CGColor.cgColor(red: r, green: g, blue: b, alpha: a))
+            _gradientLocations.append(colorStops[idx+4])
             idx += 5
         }
         
@@ -53,18 +51,39 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
             paintColor = CGColor.cgColor(red: 1, green: 1, blue: 1, alpha: CGFloat(alpha)) // White w/ custom alpha.
         }
         
-        
         _fillColor = paintColor
-        _gradient = CGGradient(colorSpace: _colorSpace, colorComponents: colors, locations: locations, count: locations.count)
     }
     
-    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
-        let radius = CGFloat(Vec2D.distance(renderStart, renderEnd))
-        let center = CGPoint(x: renderStart[0], y: renderStart[1])
+    func paint(fill: ActorFill, on: CALayer, path: CGPath) {
+        let bounds = on.bounds
+        let width = Float(bounds.width)
+        let height = Float(bounds.height)
         
-        context.addPath(path)
-        context.setFillColor(_fillColor)
-        context.clip()
-        context.drawRadialGradient(_gradient, startCenter: center, startRadius: 0.0, endCenter: center, endRadius: radius, options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
+        let center = CGPoint(
+            x: renderStart[0]/width,
+            y: renderStart[1]/height
+        )
+        
+        let radius = Vec2D.distance(renderEnd, renderStart)
+        let to = CGPoint(
+            x: (renderStart[0] + radius)/width,
+            y: (renderStart[1] + radius)/height
+        )
+        
+        let gradientMask = CAShapeLayer()
+        gradientMask.path = path
+        gradientMask.fillColor = _fillColor
+        gradientMask.fillRule = self.fillRule
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.type = .radial
+        gradientLayer.startPoint = center
+        gradientLayer.endPoint = to
+        gradientLayer.colors = _gradientColors
+        gradientLayer.locations = _gradientLocations as [NSNumber]?
+        gradientLayer.frame = bounds
+        gradientLayer.mask = gradientMask
+        
+        on.addSublayer(gradientLayer)
     }
 }

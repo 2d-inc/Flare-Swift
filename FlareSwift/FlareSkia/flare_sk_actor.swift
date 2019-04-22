@@ -13,7 +13,7 @@ public class FlareSkActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
-    /// List of
+    /// List of pointers to `sk_image_t`
     public var images: [OpaquePointer]?
     public var _artboards: [ActorArtboard?] = []
     

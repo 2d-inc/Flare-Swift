@@ -12,16 +12,16 @@ protocol FlareCGFill: class {
     var _fillRule: FillRule { get set }
     var _fillColor: CGColor { get set }
     func initializeGraphics()
-    func paint(fill: ActorFill, context: CGContext, path: CGPath)
+    func paint(fill: ActorFill, on: CALayer, path: CGPath)
 }
 
 extension FlareCGFill {
-    var cgFillRule: CGPathFillRule {
+    var fillRule: CAShapeLayerFillRule {
         switch _fillRule {
         case .EvenOdd:
             return .evenOdd
         case .NonZero:
-            return .winding
+            return .nonZero
         }
     }
 }

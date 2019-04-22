@@ -10,8 +10,8 @@ import Foundation
 
 class FlareCGGradientFill: GradientFill, FlareCGFill {
     var _fillColor = CGColor.black
-    var _gradient: CGGradient!
-    private let _colorSpace = CGColorSpaceCreateDeviceRGB()
+    var _gradientColors: [CGColor]!
+    var _gradientLocations: [NSNumber]!
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceGradientFill = FlareCGGradientFill()
@@ -23,20 +23,17 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
         super.update(dirt: dirt)
         
         let numStops = Int(round( Double(colorStops.count)/5 ))
-        var colors = [CGFloat]()
-        var locations = [CGFloat]()
+        _gradientLocations = []
+        _gradientColors = []
         
         var idx = 0
         for _ in 0 ..< numStops {
             let r = CGFloat(colorStops[idx])
-            colors.append(r)
             let g = CGFloat(colorStops[idx+1])
-            colors.append(g)
             let b = CGFloat(colorStops[idx+2])
-            colors.append(b)
             let a = CGFloat(colorStops[idx+3])
-            colors.append(a)
-            locations.append(CGFloat(colorStops[idx+4]))
+            _gradientColors.append(CGColor.cgColor(red: r, green: g, blue: b, alpha: a))
+            _gradientLocations.append(NSNumber(value: colorStops[idx+4]))
             idx += 5
         }
         
@@ -53,16 +50,28 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
         }
         
         _fillColor = paintColor
-        _gradient = CGGradient(colorSpace: _colorSpace, colorComponents: colors, locations: locations, count: locations.count)
     }
     
-    func paint(fill: ActorFill, context: CGContext, path: CGPath) {
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
-
-        context.addPath(path)
-        context.setFillColor(_fillColor)
-        context.clip()
-        context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
+    func paint(fill: ActorFill, on: CALayer, path: CGPath) {
+        let bounds = on.bounds
+        let width = Float(bounds.width)
+        let height = Float(bounds.height)
+        let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
+        let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
+        
+        let gradientMask = CAShapeLayer()
+        gradientMask.path = path
+        gradientMask.fillColor = _fillColor
+        gradientMask.fillRule = self.fillRule
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.colors = _gradientColors
+        gradientLayer.locations = _gradientLocations
+        gradientLayer.frame = bounds
+        gradientLayer.mask = gradientMask
+        
+        on.addSublayer(gradientLayer)
     }
 }

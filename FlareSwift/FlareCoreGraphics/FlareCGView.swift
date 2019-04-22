@@ -66,8 +66,6 @@ public class FlareCGView: UIView {
                         updateBounds()
                     }
                     
-                    extractImageData()
-                    
                     updateAnimation(onlyWhenMissing: true)
                     setNeedsDisplay()
                 }
@@ -126,24 +124,6 @@ public class FlareCGView: UIView {
 
         setupAABB = actor.artboard?.artboardAABB()
     }
-    
-    func extractImageData() {
-        if let ab = artboard {
-            let images = ab.drawableNodes.compactMap{ $0 as? ActorImage }
-            if images.count > 0, let animations = ab.animations {
-                for animation in animations {
-                    let deltaTime = Double(1/animation._fps)
-                    var time: Double = animation.duration/3
-                    
-//                    while(time <= animation.duration) {
-                    animation.apply(time: time, artboard: ab, mix: 1.0)
-                    ab.advance(seconds: deltaTime)
-//                        time += deltaTime
-//                    }
-                }
-            }
-        }
-    }
 
     private func updateAnimation(onlyWhenMissing: Bool = false) {
         //        if let aName = animationName, let ab = artboard {
@@ -185,9 +165,9 @@ public class FlareCGView: UIView {
             let delta = currentTime - lastTime
             lastTime = currentTime
             duration = (duration + delta)
-//            if animation.isLooping {
+            if animation.isLooping {
                 duration = duration.truncatingRemainder(dividingBy: animation.duration)
-//            }
+            }
             animation.apply(time: duration, artboard: artboard, mix: 1.0)
             artboard.advance(seconds: delta)
             setNeedsDisplay()
@@ -206,34 +186,29 @@ public class FlareCGView: UIView {
         let contentWidth = CGFloat(bounds[2] - bounds[0])
         let contentHeight = CGFloat(bounds[3] - bounds[1])
 
-        let x = contentWidth * CGFloat(artboard.origin.x)
-        let y = contentHeight * CGFloat(artboard.origin.y)
-
         // Contain the artboard
         let scaleX = rect.width / contentWidth
         let scaleY = rect.height / contentHeight
         let scale = min(scaleX, scaleY)
-
-        ctx.saveGState()
-        ctx.scaleBy(x: scale, y: scale)
-        ctx.translateBy(x: x, y: y)
         
-        backgroundColor = UIColor.red
-
-//        artboard.draw(context: ctx)
-//        artboard.draw(context: ctx, on: layer)
-        let iScale = 1/scale
-        let imageRect = CGRect(x: 0, y: 0, width: iScale * rect.width, height: iScale * rect.height)
-        let flareImages = artboard.drawableNodes.compactMap{$0 as? FlareCGImage}
-        for fi in flareImages {
-            if let cgImage = fi._displayImage {
-                
-//                ctx.setBlendMode(.sourceAtop)
-                ctx.draw(cgImage, in: imageRect)
-            }
-        }
-
-        ctx.restoreGState()
+        layer.backgroundColor = UIColor.white.cgColor
+        
+        backgroundColor = UIColor.white
+        layer.sublayers?.forEach{ $0.removeFromSuperlayer() }
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        shapeLayer.frame = CGRect(x: 0, y: 0, width: contentWidth, height: contentHeight)
+// TODO: translate too.
+//        let x = contentWidth * CGFloat(artboard.origin.x)
+//        let y = contentHeight * CGFloat(artboard.origin.y)
+//        ctx.translateBy(x: x, y: y)
+//        ctx.scaleBy(x: scale, y: scale)
+        shapeLayer.transform = CATransform3DMakeScale(scale, scale, 1)
+        shapeLayer.backgroundColor = UIColor(red: 93/255, green: 93/255, blue: 93/255, alpha: 1).cgColor
+        shapeLayer.masksToBounds = true
+        layer.addSublayer(shapeLayer)
+        artboard.draw(context: ctx, on: shapeLayer)
     }
     
 }

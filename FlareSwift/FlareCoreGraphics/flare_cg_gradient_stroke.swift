@@ -10,12 +10,14 @@ import Foundation
 
 class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
     var _color: CGColor = CGColor.black
-    var _strokeCap: CGLineCap = .butt
-    var _strokeJoin: CGLineJoin = .miter
+    var _strokeCap: CAShapeLayerLineCap = .butt
+    var _strokeJoin: CAShapeLayerLineJoin = .miter
     var _strokeWidth: CGFloat = 0.0
-    var effectPath: CGPath? = nil    
+    var effectPath: CGPath? = nil
     
-    var _gradient: CGGradient!
+    var _gradientColors: [CGColor]!
+    var _gradientLocations: [NSNumber]!
+    
     
     override func markPathEffectsDirty() {
         effectPath = nil
@@ -31,20 +33,17 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
         super.update(dirt: dirt)
 
         let numStops = Int(round( Double(colorStops.count)/5 ))
-        var colors = [CGFloat]()
-        var locations = [CGFloat]()
+        _gradientLocations = []
+        _gradientColors = []
         
         var idx = 0
         for _ in 0 ..< numStops {
             let r = CGFloat(colorStops[idx])
-            colors.append(r)
             let g = CGFloat(colorStops[idx+1])
-            colors.append(g)
             let b = CGFloat(colorStops[idx+2])
-            colors.append(b)
             let a = CGFloat(colorStops[idx+3])
-            colors.append(a)
-            locations.append(CGFloat(colorStops[idx+4]))
+            _gradientColors.append(CGColor.cgColor(red: r, green: g, blue: b, alpha: a))
+            _gradientLocations.append(NSNumber(value: colorStops[idx+4]))
             idx += 5
         }
         
@@ -61,22 +60,35 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
         }
         
         _color = paintColor
-        _gradient = CGGradient(colorSpace: CGColorSpaceCreateDeviceRGB(), colorComponents: colors, locations: locations, count: locations.count)
         _strokeWidth = CGFloat(width)
     }
     
-    func paint(stroke: ActorStroke, context: CGContext, path: CGPath) {
-        let startPoint = CGPoint(x: renderStart[0], y: renderStart[1])
-        let endPoint = CGPoint(x: renderEnd[0], y: renderEnd[1])
+    func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
+        let bounds = on.bounds
+        let width = Float(bounds.width)
+        let height = Float(bounds.height)
+        let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
+        let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
 
-        context.addPath(path)
-        context.setFillColor(_color)
-        context.setLineWidth(_strokeWidth)
-        context.setLineCap(strokeCap)
-        context.setLineJoin(strokeJoin)
-        context.replacePathWithStrokedPath()
-        context.clip()
-        context.drawLinearGradient(_gradient, start: startPoint, end: endPoint, options: [.drawsAfterEndLocation, .drawsBeforeStartLocation])
+        let strokeMask = CAShapeLayer()
+        // Remove fill color and just stroke this layer.
+        strokeMask.fillColor = CGColor.clear
+        strokeMask.path = path
+        strokeMask.strokeColor = _color
+        strokeMask.lineWidth = _strokeWidth
+        strokeMask.lineJoin = strokeJoin
+        
+        // Mask the gradient with the Stroke layer that we just defined above.
+        // This'll draw only the portion of the screen described by the stroked path.
+        let strokeLayer = CAGradientLayer()
+        strokeLayer.startPoint = startPoint
+        strokeLayer.endPoint = endPoint
+        strokeLayer.colors = _gradientColors
+        strokeLayer.locations = _gradientLocations
+        strokeLayer.frame = on.frame
+        strokeLayer.mask = strokeMask
+        
+        on.addSublayer(strokeLayer)
     }
     
     

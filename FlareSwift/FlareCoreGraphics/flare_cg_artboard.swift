@@ -24,9 +24,14 @@ public class FlareCGArtboard: ActorArtboard {
     }
     
     public func draw(context: CGContext, on layer: CALayer) {
+        // Cleanup.
+        if let sublayers = layer.sublayers {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
+            }
+        }
         for drawable in drawableNodes {
             if let d = drawable as? FlareCGDrawable {
-//                d.draw(context: context)
                 d.draw(context: context, on: layer)
             }
         }

@@ -13,7 +13,7 @@ public class FlareCGActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
-    public var images: [Data]?
+    public var images: [Data]!
     public var _artboards: [ActorArtboard?] = []
   
     var _metalController: MetalController! = nil
@@ -90,7 +90,6 @@ public class FlareCGActor: Actor {
     }
     
     public func makeImageNode() -> ActorImage {
-//        return FlareCGImage(device: device, textureLoader: textureLoader)
         return FlareCGImage(self.metalController)
     }
     
@@ -98,8 +97,11 @@ public class FlareCGActor: Actor {
         self.load(data: data)
     }
     
+    public func onImageData(_ rawData: [Data]) {
+        self.images = rawData
+    }
+    
     public func dispose(){}
-    public func onImageData(_ rawData: [Data]) {}
     
     public func loadFromBundle(filename: String) -> Bool {
         let endIndex = filename.index(filename.endIndex, offsetBy: -4)

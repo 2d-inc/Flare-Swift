@@ -11,7 +11,7 @@ import Foundation
 class FlareCGShape: ActorShape, FlareCGDrawable {
     private var _isValid = false
     private var _path = CGMutablePath()
-    private var _layer = CAShapeLayer()
+    private var _layer = CALayer()
     
     override func invalidateShape() {
         _isValid = false
@@ -69,7 +69,14 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
             return
         }
         
-//        context.saveGState()
+        // Cleanup.
+        if let sublayers = _layer.sublayers {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
+            }
+        }
+        // Adjust size.
+        _layer.frame = on.bounds
         
         let renderPath = self.path
 
@@ -79,13 +86,15 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
             for clipShape in clips {
                 clippingPath.addPath((clipShape as! FlareCGShape).path)
             }
-            context.addPath(clippingPath)
-            context.clip()
+            let maskingLayer = CAShapeLayer()
+            maskingLayer.frame = _layer.bounds
+            maskingLayer.path = clippingPath
+            _layer.mask = maskingLayer
         }
         
         for actorFill in fills {
             let fill = actorFill as! FlareCGFill
-            fill.paint(fill: actorFill, context: context, path: renderPath)
+            fill.paint(fill: actorFill, on: _layer, path: renderPath)
         }
         
         var strokePath = renderPath
@@ -130,10 +139,10 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
                 }
                 strokePath = stroke.effectPath!
             }
-            stroke.paint(stroke: actorStroke, context: context, path: strokePath)
+            stroke.paint(stroke: actorStroke, on: _layer, path: strokePath)
         }
         
-        context.restoreGState()
+        on.addSublayer(_layer)
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {

@@ -99,7 +99,7 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         renderDescriptor.colorAttachments[0].texture = drawable.texture
         renderDescriptor.colorAttachments[0].loadAction = .clear
         renderDescriptor.colorAttachments[0].storeAction = .store
-        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0.5, blue: 0, alpha: 0.2)
+        renderDescriptor.colorAttachments[0].clearColor = MTLClearColor(red: 0, green: 0.0, blue: 0, alpha: 0.0)
         
         let commandBuffer = commandQ.makeCommandBuffer()!
         let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
@@ -119,13 +119,11 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
         )
         renderEncoder.endEncoding()
         
-//        commandBuffer.present(drawable)
+        commandBuffer.present(drawable)
         commandBuffer.commit()
         commandBuffer.waitUntilCompleted()
-//        self._displayImage = drawable.texture.toCGImage()
     }
     
-//    func draw(context: CGContext) {
     func draw(context: CGContext, on: CALayer) {
         autoreleasepool{
             if !_metalLayer.bounds.equalTo(on.bounds) {
@@ -142,14 +140,8 @@ class FlareCGImage: ActorImage, FlareCGDrawable {
             if !isConnectedToBones {
                 _metalController.prepare(transform: self.worldTransform)                
             }
-//            _metalLayer.compositingFilter = CIFilter(name: "CIDarkenBlendMode")
             
-//            let filter = CIFilter(name: "CIDarkenBlendMode")
             self.render()
-//            _metalLayer.render(in: context)
-//            let contents = _metalLayer.contents as! CAImageQueue
-//            let image = _metalLayer.contents as! CABackingStore
-//            context.draw(image, in: on.bounds)
         }
     }
     

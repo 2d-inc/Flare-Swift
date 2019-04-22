@@ -51,8 +51,7 @@ class MetalController {
     init() {
         device = MTLCreateSystemDefaultDevice()
         textureLoader = MTKTextureLoader(device: device)
-        
-//        projectionMatrix = [Float](repeating: 0, count: 16)
+
         projectionMatrix = [
             1, 0, 0, 0,
             0, 1, 0, 0,
@@ -81,7 +80,7 @@ class MetalController {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexProgram
         pipelineDescriptor.fragmentFunction = fragmentProgram
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
 
         // TODO: blending options
         pipelineDescriptor.colorAttachments[0].isBlendingEnabled = true
