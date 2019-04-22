@@ -48,7 +48,6 @@ class EaseFactory {
         if x1 == y1 && x2 == y2 {
             return LinearCubicEase()
         } else {
-            print("CUBIC: \(x1),\(y1),\(x2),\(y2),")
             return Cubic(x1: x1, y1: y1, x2: x2, y2: y2)
         }
     }

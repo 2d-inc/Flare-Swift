@@ -48,10 +48,8 @@ class FlareCGColorFill: ColorFill, FlareCGFill {
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
         let fillLayer = _fillLayer as! CAShapeLayer
-        fillLayer.frame = on.frame
         fillLayer.path = path
         fillLayer.fillColor = self._fillColor
         fillLayer.fillRule = self.fillRule
-        on.addSublayer(fillLayer)
     }
 }

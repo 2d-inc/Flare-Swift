@@ -66,9 +66,9 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
     }
     
     func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
-        let bounds = on.bounds
-        let width = Float(bounds.width)
-        let height = Float(bounds.height)
+        let frame = on.frame
+        let width = Float(frame.width)
+        let height = Float(frame.height)
         let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
         let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
 
@@ -86,10 +86,8 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
         strokeLayer.endPoint = endPoint
         strokeLayer.colors = _gradientColors
         strokeLayer.locations = _gradientLocations
-        strokeLayer.frame = on.frame
+        strokeLayer.frame = frame
         strokeLayer.mask = strokeMask
-        
-        on.addSublayer(strokeLayer)
     }
     
     

@@ -68,9 +68,9 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
     
     
     func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
-        let bounds = on.bounds
-        let width = Float(bounds.width)
-        let height = Float(bounds.height)
+        let frame = on.frame
+        let width = Float(frame.width)
+        let height = Float(frame.height)
         
         // Normalize wrt to the containing layer's size.
         // Gradient coordinates need to be btwn [0,1].
@@ -97,9 +97,7 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
         strokeLayer.endPoint = to
         strokeLayer.colors = _gradientColors
         strokeLayer.locations = _gradientLocations
-        strokeLayer.frame = bounds
+        strokeLayer.frame = frame
         strokeLayer.mask = strokeMask
-        
-        on.addSublayer(strokeLayer)
     }
 }

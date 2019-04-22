@@ -58,9 +58,9 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
     }
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
-        let bounds = on.bounds
-        let width = Float(bounds.width)
-        let height = Float(bounds.height)
+        let frame = on.frame
+        let width = Float(frame.width)
+        let height = Float(frame.height)
         
         let center = CGPoint(
             x: renderStart[0]/width,
@@ -83,9 +83,7 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
         gradientLayer.endPoint = to
         gradientLayer.colors = _gradientColors
         gradientLayer.locations = _gradientLocations as [NSNumber]?
-        gradientLayer.frame = bounds
+        gradientLayer.frame = frame
         gradientLayer.mask = gradientMask
-        
-        on.addSublayer(gradientLayer)
     }
 }

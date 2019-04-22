@@ -56,9 +56,9 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
     }
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
-        let bounds = on.bounds
-        let width = Float(bounds.width)
-        let height = Float(bounds.height)
+        let frame = on.frame
+        let width = Float(frame.width)
+        let height = Float(frame.height)
         let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
         let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
         
@@ -71,9 +71,7 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
         gradientLayer.endPoint = endPoint
         gradientLayer.colors = _gradientColors
         gradientLayer.locations = _gradientLocations
-        gradientLayer.frame = bounds
+        gradientLayer.frame = frame
         gradientLayer.mask = gradientMask
-        
-        on.addSublayer(gradientLayer)
     }
 }
