@@ -58,24 +58,29 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
     }
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
-        let frame = on.frame
-        let width = Float(frame.width)
-        let height = Float(frame.height)
-        
-        let center = CGPoint(
-            x: renderStart[0]/width,
-            y: renderStart[1]/height
-        )
-        
-        let radius = Vec2D.distance(renderEnd, renderStart)
-        let to = CGPoint(
-            x: (renderStart[0] + radius)/width,
-            y: (renderStart[1] + radius)/height
-        )
-        
         gradientMask.path = path
         gradientMask.fillColor = _fillColor
         gradientMask.fillRule = self.fillRule
+
+        let onBounds = on.bounds
+        let gradientFrame = CGRect(x: 0, y: 0, width: onBounds.width, height: onBounds.height)
+        if !_fillLayer.frame.equalTo(gradientFrame) {
+            _fillLayer.frame = gradientFrame
+        }
+        _fillLayer.mask = gradientMask
+        
+        let fWidth = Float(onBounds.width)
+        let fHeight = Float(onBounds.height)
+        let radius = Vec2D.distance(renderEnd, renderStart)
+        
+        let center = CGPoint(
+            x: renderStart[0]/fWidth,
+            y: renderStart[1]/fHeight
+        )
+        let to = CGPoint(
+            x: (renderStart[0] + radius)/fWidth,
+            y: (renderStart[1] + radius)/fHeight
+        )
         
         let gradientLayer = _fillLayer as! CAGradientLayer
         gradientLayer.type = .radial
@@ -83,7 +88,6 @@ class FlareCGRadialFill: RadialGradientFill, FlareCGFill {
         gradientLayer.endPoint = to
         gradientLayer.colors = _gradientColors
         gradientLayer.locations = _gradientLocations as [NSNumber]?
-        gradientLayer.frame = frame
-        gradientLayer.mask = gradientMask
+        on.addSublayer(_fillLayer)
     }
 }

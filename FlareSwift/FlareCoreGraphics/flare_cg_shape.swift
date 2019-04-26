@@ -49,6 +49,7 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
                         let tx = CGFloat(pathTransform[4])
                         let ty = CGFloat(pathTransform[5])
                         let cgAffine = CGAffineTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+//                        print("TRANSFORM: \(cgAffine)")
                         _path.addPath(cgPath, transform: cgAffine)
                     } else {
                         _path.addPath(cgPath)
@@ -64,42 +65,41 @@ class FlareCGShape: ActorShape, FlareCGDrawable {
         stroke?.markPathEffectsDirty()
     }
     
-    func addLayer(on: CALayer) {
-        on.addSublayer(_layer)
-        
-        for actorFill in fills {
-            if let cgFill = actorFill as? FlareCGFill {
-                _layer.addSublayer(cgFill._fillLayer)
-            }
-        }
-        
-        for actorStroke in strokes {
-            if let cgStroke = actorStroke as? FlareCGStroke {
-                _layer.addSublayer(cgStroke._strokeLayer)
+    private func removeSublayers() {
+        if let sublayers = _layer.sublayers {
+            for sublayer in sublayers {
+                sublayer.removeFromSuperlayer()
             }
         }
     }
     
     func draw(on: CALayer) {
+        // Cleanup
+        removeSublayers()
+        
         guard self.doesDraw else {
             return
         }
-        
-        // Adjust size.
-        _layer.frame = on.bounds
+
+        if _layer.superlayer != on {
+            on.addSublayer(_layer)
+        }
         
         let renderPath = self.path
 
         // Get Clips
-        for clips in clipShapes {
-            let clippingPath = CGMutablePath()
-            for clipShape in clips {
-                clippingPath.addPath((clipShape as! FlareCGShape).path)
-            }
+        if !clipShapes.isEmpty {
             let maskingLayer = CAShapeLayer()
-            maskingLayer.frame = _layer.bounds
-            maskingLayer.path = clippingPath
+            let clippingPath = CGMutablePath()
+            maskingLayer.frame = CGRect(x: 0, y: 0, width: _layer.bounds.width, height: _layer.bounds.height)
             _layer.mask = maskingLayer
+            
+            for clips in clipShapes {
+                for clipShape in clips {
+                    clippingPath.addPath((clipShape as! FlareCGShape).path)
+                }
+            }
+            maskingLayer.path = clippingPath
         }
         
         for actorFill in fills {

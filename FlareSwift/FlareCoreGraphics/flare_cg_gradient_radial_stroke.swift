@@ -68,26 +68,32 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
     
     
     func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
-        let frame = on.frame
-        let width = Float(frame.width)
-        let height = Float(frame.height)
-        
-        // Normalize wrt to the containing layer's size.
-        // Gradient coordinates need to be btwn [0,1].
-        let center = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
-        
-        let radius = Vec2D.distance(renderEnd, renderStart)
-        let to = CGPoint(
-                x: (renderStart[0] + radius)/width,
-                y: (renderStart[1] + radius)/height
-        )
-        
         // Remove fill color and just stroke this layer.
         strokeMask.fillColor = CGColor.clear
         strokeMask.path = path
         strokeMask.strokeColor = _color
         strokeMask.lineWidth = _strokeWidth
         strokeMask.lineJoin = strokeJoin
+
+        let bounds = on.bounds
+        let strokeFrame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        if !_strokeLayer.frame.equalTo(strokeFrame) {
+            _strokeLayer.frame = strokeFrame
+        }
+        
+        let fWidth = Float(bounds.width)
+        let fHeight = Float(bounds.height)
+        let radius = Vec2D.distance(renderEnd, renderStart)
+        // Normalize wrt to the containing layer's size.
+        // Gradient coordinates need to be btwn [0,1].
+        let center = CGPoint(
+            x: renderStart[0]/fWidth,
+            y: renderStart[1]/fHeight
+        )
+        let to = CGPoint(
+            x: (renderStart[0] + radius)/fWidth,
+            y: (renderStart[1] + radius)/fHeight
+        )
         
         let strokeLayer = _strokeLayer as! CAGradientLayer
         // Mask the gradient with the Stroke layer that we just defined above.
@@ -97,7 +103,7 @@ class FlareCGRadialStroke: RadialGradientStroke, FlareCGStroke {
         strokeLayer.endPoint = to
         strokeLayer.colors = _gradientColors
         strokeLayer.locations = _gradientLocations
-        strokeLayer.frame = frame
         strokeLayer.mask = strokeMask
+        on.addSublayer(_strokeLayer)
     }
 }

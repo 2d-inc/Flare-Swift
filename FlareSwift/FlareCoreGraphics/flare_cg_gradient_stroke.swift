@@ -66,11 +66,6 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
     }
     
     func paint(stroke: ActorStroke, on: CALayer, path: CGPath) {
-        let frame = on.frame
-        let width = Float(frame.width)
-        let height = Float(frame.height)
-        let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
-        let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
 
         // Remove fill color and just stroke this layer.
         strokeMask.fillColor = CGColor.clear
@@ -79,6 +74,17 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
         strokeMask.lineWidth = _strokeWidth
         strokeMask.lineJoin = strokeJoin
         
+        let bounds = on.bounds
+        let strokeFrame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
+        if !_strokeLayer.frame.equalTo(strokeFrame) {
+            _strokeLayer.frame = strokeFrame
+        }
+        
+        let fWidth = Float(bounds.width)
+        let fHeight = Float(bounds.height)
+        let startPoint = CGPoint(x: renderStart[0]/fWidth, y: renderStart[1]/fHeight)
+        let endPoint = CGPoint(x: renderEnd[0]/fWidth, y: renderEnd[1]/fHeight)
+
         let strokeLayer = _strokeLayer as! CAGradientLayer
         // Mask the gradient with the Stroke layer that we just defined above.
         // This'll draw only the portion of the screen described by the stroked path.
@@ -86,8 +92,8 @@ class FlareCGGradientStroke: GradientStroke, FlareCGStroke {
         strokeLayer.endPoint = endPoint
         strokeLayer.colors = _gradientColors
         strokeLayer.locations = _gradientLocations
-        strokeLayer.frame = frame
         strokeLayer.mask = strokeMask
+        on.addSublayer(_strokeLayer)
     }
     
     

@@ -33,11 +33,19 @@ public class FlareCGArtboard: ActorArtboard {
                 let scaleY = newValue.height / CGFloat(contentHeight)
                 let scale = min(scaleX, scaleY)
                 
+                let frame = CGRect(x: 0, y: 0, width: CGFloat(contentWidth), height: CGFloat(contentHeight))
+                let boundsOrigin = CGPoint(x: -origin.x*contentWidth, y: -origin.y*contentHeight)
                 artboardLayer.anchorPoint = CGPoint(x: 0, y: 0)
-                artboardLayer.frame = CGRect(x: 0, y: 0, width: CGFloat(contentWidth), height: CGFloat(contentHeight))
+                artboardLayer.frame = frame
+                artboardLayer.bounds.origin = boundsOrigin
                 artboardLayer.transform = CATransform3DMakeScale(scale, scale, 1)
-                artboardLayer.bounds.origin = CGPoint(x: origin.x*contentWidth, y: origin.y*contentHeight)
                 artboardLayer.backgroundColor = CGColor.cgColor(red: 93/255, green: 93/255, blue: 93/255, alpha: 1)
+                for drawable in drawableNodes {
+                    if let d = drawable as? FlareCGDrawable {
+                        d._layer.frame = CGRect(x: boundsOrigin.x, y: boundsOrigin.y, width: CGFloat(contentWidth), height: CGFloat(contentHeight))
+                        d._layer.bounds.origin = boundsOrigin
+                    }
+                }
             }
         }
     }
@@ -59,11 +67,6 @@ public class FlareCGArtboard: ActorArtboard {
     func initializeGraphics(_ layer: CALayer) {
         layer.addSublayer(artboardLayer)
         super.initializeGraphics()
-        for drawable in drawableNodes {
-            if let cgDrawable = drawable as? FlareCGDrawable {
-                cgDrawable.addLayer(on: artboardLayer)
-            }
-        }
     }
 
     public func draw() {

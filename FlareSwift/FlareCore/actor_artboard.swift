@@ -273,16 +273,13 @@ public class ActorArtboard {
         _nodeCount = artboard._nodeCount;
     
         if (artboard.componentCount != 0) {
-//            _components = Array<ActorComponent>(artboard.componentCount)
             _components = Array<ActorComponent?>()
         }
         if (_nodeCount != 0) // This will always be at least 1.
         {
-//            _nodes = Array<ActorNode>(_nodeCount);
             _nodes = Array<ActorNode>()
         }
         if (_drawableNodeCount != 0) {
-//            _drawableNodes = Array<ActorDrawable>(_drawableNodeCount);
             _drawableNodes = Array<ActorDrawable>()
         }
     
@@ -337,13 +334,6 @@ public class ActorArtboard {
         for i in 0..<_drawableNodes.count {
             _drawableNodes[i].drawIndex = i
         }
-        
-//        if (_drawableNodes != null) {
-//            _drawableNodes.sort((a, b) => a.drawOrder.compareTo(b.drawOrder));
-//            for (int i = 0; i < _drawableNodes.length; i++) {
-//                _drawableNodes[i].drawIndex = i;
-//            }
-//        }
     }
     
     public func advance(seconds: Double) {

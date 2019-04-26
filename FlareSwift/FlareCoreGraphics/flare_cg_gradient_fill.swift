@@ -56,22 +56,28 @@ class FlareCGGradientFill: GradientFill, FlareCGFill {
     }
     
     func paint(fill: ActorFill, on: CALayer, path: CGPath) {
-        let frame = on.frame
-        let width = Float(frame.width)
-        let height = Float(frame.height)
-        let startPoint = CGPoint(x: renderStart[0]/width, y: renderStart[1]/height)
-        let endPoint = CGPoint(x: renderEnd[0]/width, y: renderEnd[1]/height)
         
         gradientMask.path = path
         gradientMask.fillColor = _fillColor
         gradientMask.fillRule = self.fillRule
+        
+        let onBounds = on.bounds
+        let gradientFrame = CGRect(x: 0, y: 0, width: onBounds.width, height: onBounds.height)
+        if !_fillLayer.frame.equalTo(gradientFrame) {
+            _fillLayer.frame = gradientFrame
+        }
+        _fillLayer.mask = gradientMask
+        
+        let fWidth = Float(onBounds.width)
+        let fHeight = Float(onBounds.height)
+        let startPoint = CGPoint(x: renderStart[0]/fWidth, y: renderStart[1]/fHeight)
+        let endPoint = CGPoint(x: renderEnd[0]/fWidth, y: renderEnd[1]/fHeight)
         
         let gradientLayer = _fillLayer as! CAGradientLayer
         gradientLayer.startPoint = startPoint
         gradientLayer.endPoint = endPoint
         gradientLayer.colors = _gradientColors
         gradientLayer.locations = _gradientLocations
-        gradientLayer.frame = frame
-        gradientLayer.mask = gradientMask
+        on.addSublayer(_fillLayer)
     }
 }

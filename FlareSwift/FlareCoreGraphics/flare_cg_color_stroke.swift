@@ -64,5 +64,6 @@ class FlareCGColorStroke: ColorStroke, FlareCGStroke {
         strokeLayer.strokeColor = _color
         strokeLayer.lineWidth = _strokeWidth
         strokeLayer.lineJoin = strokeJoin
+        on.addSublayer(_strokeLayer)
     }
 }
