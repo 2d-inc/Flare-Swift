@@ -319,7 +319,7 @@
 				E488330C2252464B000940FB /* FlareSkia */,
 				E4535A17222836D700981BD7 /* FlareCoreGraphics */,
 				E46CDCA9223116C6002C40A1 /* Bezier */,
-				E453590E22282EC900981BD7 /* FlareCore */,
+				E453590E22282EC900981BD7 /* Flare */,
 				E453591922282EC900981BD7 /* FlareSwiftTests */,
 				E453590D22282EC900981BD7 /* Products */,
 				E461855E2254B29C00551DBD /* Frameworks */,
@@ -335,7 +335,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E453590E22282EC900981BD7 /* FlareCore */ = {
+		E453590E22282EC900981BD7 /* Flare */ = {
 			isa = PBXGroup;
 			children = (
 				E453590F22282EC900981BD7 /* FlareSwift.h */,
@@ -368,7 +368,7 @@
 				E453596122282EF200981BD7 /* math */,
 				E453596722282EF200981BD7 /* reader */,
 			);
-			path = FlareCore;
+			path = Flare;
 			sourceTree = "<group>";
 		};
 		E453591922282EC900981BD7 /* FlareSwiftTests */ = {
