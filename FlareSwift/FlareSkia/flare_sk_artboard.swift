@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Skia
 
 public class FlareSkArtboard: ActorArtboard {
     public init(actor: FlareSkActor) {
@@ -24,10 +25,20 @@ public class FlareSkArtboard: ActorArtboard {
     }
     
     public func draw(skCanvas: OpaquePointer) {
+        if(clipContents) {
+            sk_canvas_save(skCanvas)
+            let aabb = artboardAABB()
+            var clipRect = sk_rect_t(left: aabb[0], top: aabb[1], right: aabb[2], bottom: aabb[3])
+            sk_canvas_clip_rect(skCanvas, &clipRect)
+        }
         for drawable in drawableNodes {
             if let d = drawable as? FlareSkDrawable {
                 d.draw(skCanvas)
             }
+        }
+
+        if (clipContents) {
+            sk_canvas_restore(skCanvas)
         }
     }
     
