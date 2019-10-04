@@ -14,6 +14,7 @@ protocol FlareSkFill: class {
         _paint is of type sk_paint_t*
     */
     var _paint: OpaquePointer! { get set }
+    func onPaintUpdated(_ paint: OpaquePointer)
 }
 
 extension FlareSkFill {    
@@ -21,6 +22,7 @@ extension FlareSkFill {
         // SkPaint is initialized as a black fill.
         _paint = sk_paint_new()
         sk_paint_set_antialias(_paint, true)
+        onPaintUpdated(_paint)
     }
     
     func paint(fill: ActorFill, skCanvas: OpaquePointer, skPath: OpaquePointer) {
@@ -33,5 +35,11 @@ extension FlareSkFill {
             break
         }
         sk_canvas_draw_path(skCanvas, skPath, _paint)
+    }
+    
+    func onPaintUpdated(_ paint: OpaquePointer) {
+        /**
+            Optional.
+         */
     }
 }

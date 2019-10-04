@@ -14,6 +14,7 @@ protocol FlareSkStroke: class {
     var _paint: OpaquePointer! { get set }
     /// effectPath is of type `sk_path_t*` (i.e. C-style pointer)
     var effectPath: OpaquePointer? { get set }
+    func onPaintUpdated(_ paint: OpaquePointer)
 }
 
 extension FlareSkStroke {
@@ -27,6 +28,7 @@ extension FlareSkStroke {
         sk_paint_set_stroke_width(_paint, stroke.width)
         sk_paint_set_stroke_cap(_paint, getStrokeCap(cap: stroke.cap))
         sk_paint_set_stroke_join(_paint, getStrokeJoin(cap: stroke.join))
+        onPaintUpdated(_paint)
     }
     
     func markPathEffectsDirty() {
@@ -39,5 +41,11 @@ extension FlareSkStroke {
         }
         
         sk_canvas_draw_path(skCanvas, skPath, _paint)
+    }
+    
+    func onPaintUpdated(_ paint: OpaquePointer) {
+        /**
+           Optional.
+        */
     }
 }

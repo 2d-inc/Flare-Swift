@@ -19,8 +19,10 @@ class FlareSkColorFill: ColorFill, FlareSkFill {
     var uiColor: UInt32 {
         get {
             let c = color
+            let alpha = round(Double(c[3]) * 255 * artboard!.modulateOpacity * opacity * shape.renderOpacity)
+            let clampedAlpha = min(max(alpha, 0.0), 1.0)
             let res: UInt32 = sk_color_set_argb(
-                UInt32(round(Double(c[3]) * 255 * artboard!.modulateOpacity * opacity * shape.renderOpacity)),
+                UInt32(clampedAlpha),
                 UInt32(round(c[0] * 255)),
                 UInt32(round(c[1] * 255)),
                 UInt32(round(c[2] * 255))
@@ -46,5 +48,6 @@ class FlareSkColorFill: ColorFill, FlareSkFill {
         super.update(dirt: dirt)
         sk_paint_set_color(_paint, uiColor)
         sk_paint_set_xfermode_mode(_paint, (parent as! FlareSkShape).blendMode.skType)
+        onPaintUpdated(_paint)
     }
 }
