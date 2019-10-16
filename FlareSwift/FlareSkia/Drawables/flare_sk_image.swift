@@ -61,10 +61,84 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         sk_vertices_unref(_canvasVertices)
     }
     
-    /// Update the current paint with a new value.
-    /// `skPaint` must be a `sk_paint_t*`
-    func onPaintUpdated(_ skPaint: OpaquePointer){}
+    func onBlendModeChanged(_ mode: BlendMode) {
+        guard let paint = _paint else { return }
+        sk_paint_set_xfermode_mode(_paint, mode.skType)
+        onPaintUpdated(paint)
+    }
+
+    override func initializeGraphics() {
+        super.initializeGraphics()
+        guard let tris = triangles else {
+            return
+        }
+        
+        _vertexBuffer = makeVertexPositionBuffer()
+        _uvBuffer = makeVertexUVBuffer()
+        _indices = []
+        for val in tris {
+            _indices.append(Int32(val))
+        }
+        updateVertexUVBuffer(buffer: &_uvBuffer)
+        let count = vertexCount
+        var idx = 0
+        
+        _paint = sk_paint_new()
+        sk_paint_set_xfermode_mode(_paint, blendMode.skType)
+        
+        if let images = (artboard!.actor as! FlareSkActor).images {
+            let image = images[textureIndex]
+            let imageWidth = Float(sk_image_get_width(image))
+            let imageHeight = Float(sk_image_get_height(image))
+            
+            // SKIA requires texture coordinates in full image space, not traditional
+            // normalized uv coordinates.
+            for _ in 0 ..< count {
+                _uvBuffer[idx] *= imageWidth
+                _uvBuffer[idx + 1] *= imageHeight
+                idx += 2
+            }
+            
+            if var suv = sequenceUVs {
+                var i = 0
+                while i < suv.count {
+                    suv[i] *= imageWidth
+                    i += 1
+                    suv[i] *= imageWidth
+                    i += 1
+                }
+            }
+
+            let shader = sk_shader_new_image(image)
+            sk_paint_set_shader(_paint, shader)
+            sk_shader_unref(shader)
+        }
+
+        
+        
+        sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
+        sk_paint_set_antialias(_paint, true)
+        onPaintUpdated(_paint)
+    }
     
+    override func invalidateDrawable() {
+        sk_vertices_unref(_canvasVertices)
+        _canvasVertices = nil
+    }
+    
+    func updateVertices() -> Bool {
+        guard triangles != nil else {
+            return false
+        }
+        
+        updateVertexPositionBuffer(buffer: &_vertexBuffer, isSkinnedDeformInWorld: false)
+        let vCount = Int32(vertexCount)
+        let iCount = Int32(_indices.count)
+        _canvasVertices = sk_vertices_new(_vertexBuffer, vCount, _uvBuffer, _indices, iCount)
+        
+        return true
+    }
+
     func draw(_ skCanvas: OpaquePointer) {
         if triangles == nil || renderCollapsed || renderOpacity <= 0 {
             return
@@ -118,70 +192,6 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         sk_canvas_restore(skCanvas)
     }
     
-    override func initializeGraphics() {
-        guard let tris = triangles else {
-            return
-        }
-        
-        _vertexBuffer = makeVertexPositionBuffer()
-        _uvBuffer = makeVertexUVBuffer()
-        _indices = []
-        for val in tris {
-            _indices.append(Int32(val))
-        }
-        updateVertexUVBuffer(buffer: &_uvBuffer)
-        let count = vertexCount
-        var idx = 0
-        let image = (artboard!.actor as! FlareSkActor).images![textureIndex]
-        let imageWidth = Float(sk_image_get_width(image))
-        let imageHeight = Float(sk_image_get_height(image))
-        
-        // SKIA requires texture coordinates in full image space, not traditional
-        // normalized uv coordinates.
-        for _ in 0 ..< count {
-            _uvBuffer[idx] *= imageWidth
-            _uvBuffer[idx + 1] *= imageHeight
-            idx += 2
-        }
-        
-        if var suv = sequenceUVs {
-            var i = 0
-            while i < suv.count {
-                suv[i] *= imageWidth
-                i += 1
-                suv[i] *= imageWidth
-                i += 1
-            }
-        }
-
-        _paint = sk_paint_new()
-        sk_paint_set_xfermode_mode(_paint, blendMode.skType)
-        let shader = sk_shader_new_image(image)
-        sk_paint_set_shader(_paint, shader)
-        sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
-        sk_paint_set_antialias(_paint, true)
-        onPaintUpdated(_paint)
-        sk_shader_unref(shader)
-    }
-    
-    override func invalidateDrawable() {
-        sk_vertices_unref(_canvasVertices)
-        _canvasVertices = nil
-    }
-    
-    func updateVertices() -> Bool {
-        guard triangles != nil else {
-            return false
-        }
-        
-        updateVertexPositionBuffer(buffer: &_vertexBuffer, isSkinnedDeformInWorld: false)
-        let vCount = Int32(vertexCount)
-        let iCount = Int32(_indices.count)
-        _canvasVertices = sk_vertices_new(_vertexBuffer, vCount, _uvBuffer, _indices, iCount)
-        
-        return true
-    }
-    
     private var bounds: AABB {
         get {
             var minX = Float.greatestFiniteMagnitude
@@ -222,9 +232,14 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         return self.bounds
     }
     
-    func onBlendModeChanged(_ mode: BlendMode) {
-        guard let paint = _paint else { return }
-        sk_paint_set_xfermode_mode(_paint, mode.skType)
-        onPaintUpdated(paint)
+    /// Update the current paint with a new value.
+    /// `skPaint` must be a `sk_paint_t*`
+    func onPaintUpdated(_ skPaint: OpaquePointer){}
+    
+    override func update(dirt: UInt8) {
+        super.update(dirt: dirt)
+        if (dirt & DirtyFlags.PaintDirty != 0) {
+            onPaintUpdated(_paint)
+        }
     }
 }

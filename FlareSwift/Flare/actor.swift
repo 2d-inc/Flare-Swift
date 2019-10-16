@@ -14,7 +14,10 @@ public protocol Actor: class {
     var _artboardCount: Int { get set }
     var _artboards: [ActorArtboard?] { get set }
     
+    init()
+    
     func onImageData(_ rawData: [Data])
+    func getArtboard(name: String?) -> ActorArtboard?
     
     func makeArtboard() -> ActorArtboard
     func makeNode() -> ActorNode
@@ -47,7 +50,13 @@ public extension Actor {
         return maxTextureIndex + 1
     }
     
-    
+    func getArtboard(name: String?) -> ActorArtboard? {
+        guard let name = name else {
+            return artboard
+        }
+        return (_artboards.first { $0!.name == name })!
+    }
+
     func load(data: Data) {
         guard data.count > 5 else {
             fatalError("NOT A VALID FLARE FILE.")

@@ -104,6 +104,7 @@
 		E4535A2A2228370600981BD7 /* flare_cg_shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A202228370600981BD7 /* flare_cg_shape.swift */; };
 		E4535A2B2228370600981BD7 /* flare_cg_gradient_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A212228370600981BD7 /* flare_cg_gradient_fill.swift */; };
 		E4535A2F222D839000981BD7 /* flare_cg_gradient_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2E222D839000981BD7 /* flare_cg_gradient_stroke.swift */; };
+		E45AF96723548A34008F1AD7 /* cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45AF96623548A34008F1AD7 /* cache.swift */; };
 		E461851D2254A5AD00551DBD /* Skia.h in Headers */ = {isa = PBXBuildFile; fileRef = E461840A2254A5AD00551DBD /* Skia.h */; };
 		E46185612255056500551DBD /* Skia+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46185602255056500551DBD /* Skia+Swift.swift */; };
 		E46CDC9A222FE031002C40A1 /* actor_bone_base.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC99222FE031002C40A1 /* actor_bone_base.swift */; };
@@ -124,6 +125,8 @@
 		E491724722422E05002EA96E /* keyframe_imagevertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724622422E05002EA96E /* keyframe_imagevertices.swift */; };
 		E491724B22422E25002EA96E /* flare_cg_drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724922422E25002EA96E /* flare_cg_drawable.swift */; };
 		E491724D22422E31002EA96E /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
+		E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
+		E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +240,7 @@
 		E4535A202228370600981BD7 /* flare_cg_shape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_cg_shape.swift; sourceTree = "<group>"; };
 		E4535A212228370600981BD7 /* flare_cg_gradient_fill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_cg_gradient_fill.swift; sourceTree = "<group>"; };
 		E4535A2E222D839000981BD7 /* flare_cg_gradient_stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flare_cg_gradient_stroke.swift; sourceTree = "<group>"; };
+		E45AF96623548A34008F1AD7 /* cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cache.swift; sourceTree = "<group>"; };
 		E461840A2254A5AD00551DBD /* Skia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Skia.h; sourceTree = "<group>"; };
 		E46185602255056500551DBD /* Skia+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Skia+Swift.swift"; sourceTree = "<group>"; };
 		E46CDC99222FE031002C40A1 /* actor_bone_base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = actor_bone_base.swift; sourceTree = "<group>"; };
@@ -258,6 +262,8 @@
 		E491724622422E05002EA96E /* keyframe_imagevertices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_imagevertices.swift; sourceTree = "<group>"; };
 		E491724922422E25002EA96E /* flare_cg_drawable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = flare_cg_drawable.swift; sourceTree = "<group>"; };
 		E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CoreGraphics+Flare.swift"; sourceTree = "<group>"; };
+		E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkViewController.swift; sourceTree = "<group>"; };
+		E4B3BCF323507A49004EC76B /* sk_cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sk_cache.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -359,6 +365,7 @@
 				E453593522282EF100981BD7 /* actor_triangle.swift */,
 				E453593322282EF000981BD7 /* actor.swift */,
 				E453594022282EF100981BD7 /* block_types.swift */,
+				E45AF96623548A34008F1AD7 /* cache.swift */,
 				E453593E22282EF100981BD7 /* dependency_sorter.swift */,
 				E453593D22282EF100981BD7 /* path_point.swift */,
 				E453593122282EF000981BD7 /* transform_space.swift */,
@@ -529,6 +536,7 @@
 		E488330C2252464B000940FB /* FlareSkia */ = {
 			isa = PBXGroup;
 			children = (
+				E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */,
 				E488354A225247B3000940FB /* FlareSkView.swift */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E488330D2252467E000940FB /* Skia */,
@@ -539,6 +547,7 @@
 				E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */,
 				E44D5364225F42BB00CBD24A /* flare_sk_path.swift */,
 				E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */,
+				E4B3BCF323507A49004EC76B /* sk_cache.swift */,
 			);
 			path = FlareSkia;
 			sourceTree = "<group>";
@@ -721,6 +730,7 @@
 				E453598D22282EF200981BD7 /* keyframe_gradient.swift in Sources */,
 				E453598522282EF200981BD7 /* actor_artboard.swift in Sources */,
 				E44D536E225F42BC00CBD24A /* flare_sk_gradient_stroke.swift in Sources */,
+				E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */,
 				E46CDCB52232AB0C002C40A1 /* segment_bezier.swift in Sources */,
 				E44D5376225F42BC00CBD24A /* flare_sk_image.swift in Sources */,
 				E453599E22282EF200981BD7 /* cubic.swift in Sources */,
@@ -747,6 +757,8 @@
 				E453599A22282EF200981BD7 /* keyframe_int.swift in Sources */,
 				E45359A422282EF200981BD7 /* mat2d.swift in Sources */,
 				E453599F22282EF200981BD7 /* interpolator.swift in Sources */,
+				E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */,
+				E45AF96723548A34008F1AD7 /* cache.swift in Sources */,
 				E453598E22282EF200981BD7 /* keyframe_numeric.swift in Sources */,
 				E44D5377225F42BC00CBD24A /* flare_sk_drawable.swift in Sources */,
 				E453599B22282EF200981BD7 /* keyframe_active_child.swift in Sources */,
@@ -949,8 +961,8 @@
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
-					"-lskia",
 					"-lc++",
+					"-lskia",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.FlareSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
@@ -989,8 +1001,8 @@
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
-					"-lskia",
 					"-lc++",
+					"-lskia",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.FlareSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";

@@ -13,7 +13,19 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
     var _blendMode: BlendMode = .SrcOver
     
     private var _isValid = false
-    private var _path: OpaquePointer! = sk_path_new()
+    private var _path: OpaquePointer!
+    
+    override func initializeGraphics() {
+        super.initializeGraphics()
+        _path = sk_path_new()
+        if let c = children {
+            for actorNode in c {
+                if let skiaPath = actorNode as? FlareSkPath {
+                    skiaPath.initializeGraphics()
+                }
+            }
+        }
+    }
     
     override var blendModeId: UInt32 {
         get {
@@ -83,6 +95,10 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         return _path
     }
     
+    func getRenderPath(_ skCanvas: OpaquePointer) -> OpaquePointer {
+        return path
+    }
+    
     /// Implements FlareSkDrawable `draw(skCanvas:)`
     func draw(_ skCanvas: OpaquePointer) {
         guard self.doesDraw else {
@@ -90,20 +106,37 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         }
         
         sk_canvas_save(skCanvas)
-        
-        let renderPath = self.path
 
         // Get Clips
         for clips in clipShapes {
-            let clippingPath = sk_path_new()
-            for clipShape in clips {
-                let subClip = (clipShape as! FlareSkShape).path
-                sk_path_add_path(clippingPath, subClip, 0, 0)
+            if clips.count == 1  {
+                let firstClip = clips.first!
+                if firstClip.renderCollapsed {
+                    continue
+                }
+                let cPath = (firstClip as! FlareSkShape).path
+                // bool flag enables antialiasing.
+                sk_canvas_clip_path(skCanvas, cPath, true)
+            } else {
+                let clippingPath = sk_path_new()
+                var empty = true
+                for clipShape in clips {
+                    if clipShape.renderCollapsed {
+                        continue
+                    }
+                    let subClip = (clipShape as! FlareSkShape).path
+                    sk_path_add_path(clippingPath, subClip, 0, 0)
+                    empty = false
+                }
+                if !empty {
+                    // bool flag enables antialiasing.
+                    sk_canvas_clip_path(skCanvas, clippingPath, true)
+                    sk_path_delete(clippingPath)
+                }
             }
-            // bool flag enables antialiasing.
-            sk_canvas_clip_path(skCanvas, clippingPath, true)
-            sk_path_delete(clippingPath)
         }
+        
+        let renderPath = getRenderPath(skCanvas)
         
         for actorFill in fills {
             let fill = actorFill as! FlareSkFill

@@ -9,18 +9,47 @@
 import Foundation
 import Skia
 
+extension UIColor {
+    func rgb() -> [Float]? {
+        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
+        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
+            return [Float(red), Float(green), Float(blue), Float(alpha)]
+        }
+        return nil
+    }
+}
+
 public class FlareSkActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
-    /// List of
+
     public var images: [OpaquePointer]?
     public var _artboards: [ActorArtboard?] = []
+    
+    private var _color: UIColor?
+    
+    public var color: UIColor? {
+        get { return _color }
+        set {
+            if newValue != _color {
+                _color = newValue
+                if let ab = artboard {
+                    var colorArray: [Float]? = nil
+                    if let color = _color {
+                        colorArray = color.rgb()
+                    }
+                    ab.overrideColor = colorArray
+                }
+            }
+        }
+    }
     
     public var artboard: FlareSkArtboard? {
         return _artboards.count > 0 ? (_artboards.first as! FlareSkArtboard) : nil
     }
-    public init() {}
+
+    required public init() {}
     
     public func makeArtboard() -> ActorArtboard {
         return FlareSkArtboard(actor: self)
@@ -32,6 +61,10 @@ public class FlareSkActor: Actor {
     
     public func makePathNode() -> ActorPath {
         return FlareSkActorPath()
+    }
+    
+    public func makeImageNode() -> ActorImage {
+        return FlareSkImage()
     }
     
     public func makeRectangle() -> ActorRectangle {
@@ -78,10 +111,6 @@ public class FlareSkActor: Actor {
         return FlareSkRadialStroke()
     }
     
-    public func makeImageNode() -> ActorImage {
-        return FlareSkImage()
-    }
-    
     func loadData(_ data: Data) {
         self.load(data: data)
     }
@@ -107,7 +136,7 @@ public class FlareSkActor: Actor {
         }
     }
     
-    public func loadFromBundle(filename: String) -> Bool {
+    public func loadFromFile(filename: String) -> Bool {
         let endIndex = filename.index(filename.endIndex, offsetBy: -4)
         let fname = String(filename.prefix(upTo: endIndex))
         if let path = Bundle.main.path(forResource: fname, ofType: "flr") {
@@ -118,4 +147,42 @@ public class FlareSkActor: Actor {
         }
         return false
     }
+
+    // By using a semaphore, this function won't return until
+    // that semaphore has been signaled.
+    public static func loadFromFileAwait(filename: String) -> FlareSkActor? {
+        guard !filename.isEmpty else {
+            return nil
+        }
+        
+        var flareActor: FlareSkActor?
+       
+        // Create semaphore with a single token.
+        let semaphore = DispatchSemaphore(value: 0)
+        let queue = DispatchQueue.global()
+        queue.async {
+            // Loading operations
+            let endIndex = filename.index(filename.endIndex, offsetBy: -4)
+            let fname = String(filename.prefix(upTo: endIndex))
+            if let path = Bundle.main.path(forResource: fname, ofType: "flr") {
+                if let data = FileManager.default.contents(atPath: path) {
+                    flareActor = FlareSkActor()
+                    flareActor!.load(data: data)
+                }
+            }
+            // Loaded or not, unblock.
+            semaphore.signal()
+        }
+        
+        // Wait for the signal.
+        _ = semaphore.wait(timeout: .distantFuture)
+
+        return flareActor
+    }
+    
+    /**
+      TODO:
+     - loadImages
+     - readOutOfBandAsset
+     */
 }

@@ -9,7 +9,7 @@
 import Foundation
 import Skia
 
-class FlareSkActorPath: ActorPath, FlareSkPath {
+class FlareSkActorPath: ActorPath, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
     
@@ -24,7 +24,7 @@ class FlareSkActorPath: ActorPath, FlareSkPath {
     }
 }
 
-class FlareSkEllipse: ActorEllipse, FlareSkPath {
+class FlareSkEllipse: ActorEllipse, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
 
@@ -40,7 +40,7 @@ class FlareSkEllipse: ActorEllipse, FlareSkPath {
     }
 }
 
-class FlareSkTriangle: ActorTriangle, FlareSkPath {
+class FlareSkTriangle: ActorTriangle, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
 
@@ -56,7 +56,7 @@ class FlareSkTriangle: ActorTriangle, FlareSkPath {
     }
 }
 
-class FlareSkRectangle: ActorRectangle, FlareSkPath {
+class FlareSkRectangle: ActorRectangle, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
 
@@ -72,7 +72,7 @@ class FlareSkRectangle: ActorRectangle, FlareSkPath {
     }
 }
 
-class FlareSkStar: ActorStar, FlareSkPath {
+class FlareSkStar: ActorStar, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
 
@@ -88,7 +88,7 @@ class FlareSkStar: ActorStar, FlareSkPath {
     }
 }
 
-class FlareSkPolygon: ActorPolygon, FlareSkPath {
+class FlareSkPolygon: ActorPolygon, FlareSkPathPointsPath {
     var _path: OpaquePointer = sk_path_new()
     var _isValid: Bool = false
 

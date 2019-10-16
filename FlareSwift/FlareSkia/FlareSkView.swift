@@ -24,24 +24,12 @@ public class FlareSkView: UIView {
         }
     }
     
-    private var displayLink: CADisplayLink?
-    
-    private var _filename: String = ""
-    
     private var flareActor: FlareSkActor!
     private var artboard: FlareSkArtboard?
     private var animation: ActorAnimation?
-    private var setupAABB: AABB!
-    private var animationName: String?
+    var setupAABB: AABB!
     
-    private var lastTime = 0.0
-    private var duration = 0.0
-    private var animationTime = 0.0
-    private var isPlaying = true
     private var shouldClip = true
-    
-    private var _color: CGColor?
-    // TODO: animation layers
     
     private var _skiaCanvas: OpaquePointer!
     private var _skiaSurface: OpaquePointer!
@@ -100,145 +88,28 @@ public class FlareSkView: UIView {
         sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255, 93, 93, 93))
     }
     
-    public var filename: String {
-        get {
-            return _filename
-        }
-        set {
-            if newValue != _filename {
-                _filename = newValue
-                if flareActor != nil {
-                    flareActor.dispose()
-                    flareActor = nil
-                    artboard = nil
-                }
-                
-                if _filename.isEmpty || !_filename.hasSuffix(".flr") {
-                    setNeedsDisplay()
-                    return
-                }
-                
-                let fActor = FlareSkActor()
-                if fActor.loadFromBundle(filename: _filename) {
-                    flareActor = fActor
-                    artboard = fActor.artboard
-                    if let ab = artboard {
-                        ab.initializeGraphics()
-                        ab.overrideColor = self.colorArray
-                        ab.advance(seconds: 0.0)
-                        updateBounds()
-                    }
-
-                    updateAnimation(onlyWhenMissing: true)
-                    setNeedsDisplay()
-                }
-            }
+    /// Perform any pre-painting stuff if needed.
+    /// Override to perform custom operations.
+    func prePaint() {
+        if shouldClip {
+            var clipRect = sk_rect_t()
+            clipRect.left = 0
+            clipRect.top = 0
+            clipRect.right = Float(frame.width)
+            clipRect.bottom = Float(frame.height)
+            sk_canvas_clip_rect(_skiaCanvas, &clipRect)
         }
     }
     
-    public var color: CGColor? {
-        get {
-            return _color
-        }
-        set {
-            if newValue != _color {
-                _color = newValue
-                if let ab = artboard {
-                    ab.overrideColor = self.colorArray
-                }
-                setNeedsDisplay()
-            }
-        }
-    }
+    func postPaint() {}
     
-    private var colorArray: [Float]? {
-        get {
-            guard
-                let c = _color,
-                let colorSpaceModel = c.colorSpace?.model,
-                let components = c.components
-                else {
-                    return nil
-            }
-            
-            let fComponents = components.map { Float($0) }
-            
-            switch colorSpaceModel {
-            case .rgb:
-                return [fComponents[0],
-                        fComponents[1],
-                        fComponents[2],
-                        fComponents[3]]
-            case .monochrome:
-                return [fComponents[0],
-                        fComponents[0],
-                        fComponents[0],
-                        fComponents[1]]
-            default:
-                return nil
-            }
-        }
-    }
-    
-    private func updateBounds() {
-        guard let actor = flareActor else {
-            return
-        }
-        
-        setupAABB = actor.artboard?.artboardAABB()
-    }
-
-    private func updateAnimation(onlyWhenMissing: Bool = false) {
-        //        if let aName = animationName, let ab = artboard {
-        //            if let a = ab.getAnimation(name: aName) {
-        if let ab = artboard {
-            if let a = ab.animations?.first {
-                self.animation = a
-                a.apply(time: 0.0, artboard: ab, mix: 1.0)
-                ab.advance(seconds: 0.0)
-            }
-            updatePlayState()
-        }
-    }
-    
-    private func updatePlayState() {
-        if isPlaying && !isHidden {
-            if displayLink == nil {
-                displayLink = CADisplayLink(target: self, selector: #selector(beginFrame))
-                lastTime = CACurrentMediaTime()
-                displayLink!.add(to: .current, forMode: .common)
-            }
-        } else {
-            if let dl = displayLink {
-                dl.invalidate()
-                displayLink = nil
-            }
-            lastTime = 0.0
-        }
-    }
-    
-    @objc private func beginFrame() {
-        guard flareActor != nil else {
-            updatePlayState()
-            return
-        }
-        
+    func paint() {
         if let artboard = self.artboard {
-            let currentTime = CACurrentMediaTime()
-            let delta = currentTime - lastTime
-            lastTime = currentTime
-            duration = (duration + delta)
-            if let animation = self.animation {
-                if animation.isLooping {
-                    duration = duration.truncatingRemainder(dividingBy: animation.duration)
-                }
-                animation.apply(time: duration, artboard: artboard, mix: 1.0)
-            }
-            artboard.advance(seconds: delta)
- 
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             
             let bounds = setupAABB!
+            // Check for alignment:
+            // self.alignmentRectInsets
             let contentsWidth = bounds.width
             let contentsHeight = bounds.height
             
@@ -252,14 +123,19 @@ public class FlareSkView: UIView {
             
             sk_canvas_save(_skiaCanvas)
             
+            prePaint()
+            
             sk_canvas_scale(_skiaCanvas, scale, scale)
             sk_canvas_translate(_skiaCanvas, tx, ty)
             
             clearBackground()
-
+            
             artboard.draw(skCanvas: _skiaCanvas)
             
             sk_canvas_restore(_skiaCanvas)
+            
+            postPaint()
+            
             sk_canvas_flush(_skiaCanvas)
             
             glBindRenderbuffer(GLenum(GL_RENDERBUFFER), _colorRenderBuffer)

@@ -19,7 +19,7 @@ public class FlareCGActor: Actor {
     public var artboard: FlareCGArtboard? {
         return _artboards.count > 0 ? (_artboards.first as! FlareCGArtboard) : nil
     }
-    public init() {}
+    required public init() {}
     
     public func makeArtboard() -> ActorArtboard {
         return FlareCGArtboard(actor: self)

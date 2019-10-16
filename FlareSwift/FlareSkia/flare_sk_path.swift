@@ -10,6 +10,11 @@ import Foundation
 import Skia
 
 protocol FlareSkPath: class {
+    var path: OpaquePointer { get }
+    func initializeGraphics()
+}
+
+protocol FlareSkPathPointsPath: FlareSkPath {
     /// _path is of type `sk_path_t*` (i.e. C-style pointer)
     var _path: OpaquePointer { get set }
     var _isValid: Bool { get set }
@@ -18,12 +23,16 @@ protocol FlareSkPath: class {
     var pathPoints: [PathPoint] { get }
 }
 
-extension FlareSkPath {
+extension FlareSkPathPointsPath {
     var path: OpaquePointer {
         if _isValid {
             return _path
         }
         return self.makePath()
+    }
+    
+    func initializeGraphics() {
+        _path = sk_path_new()
     }
     
     func makePath()  -> OpaquePointer {
