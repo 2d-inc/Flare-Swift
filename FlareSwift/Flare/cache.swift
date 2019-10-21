@@ -32,7 +32,7 @@ class FlareCache<T: CacheAsset> {
         return CacheAsset() as! T
     }
     
-    func drop(_ asset: T) {
+    private func drop(_ asset: T) {
         toPrune.insert(asset)
         
         // Avoid firing multiple times.
@@ -42,7 +42,18 @@ class FlareCache<T: CacheAsset> {
         }
     }
     
-    func hold(_ asset: T) {
+    func deref(_ asset: T) {
+        asset.refCount -= 1
+        if asset.isFree {
+            drop(asset)
+        }
+    }
+    
+    func ref(_ asset: T) {
+        asset.refCount += 1
+    }
+    
+    private func hold(_ asset: T) {
         toPrune.remove(asset)
     }
     
@@ -50,7 +61,7 @@ class FlareCache<T: CacheAsset> {
         if let v = assets[filename] {
             if !v.isAvailable {
                 do {
-                    try v.load(filename, cache: self as! FlareCache<CacheAsset>)
+                    try v.load(filename)
                 } catch {
                     print("Couldn't load \(filename)")
                 }
@@ -62,7 +73,7 @@ class FlareCache<T: CacheAsset> {
             let asset = makeAsset()
             assets[filename] = asset
             do {
-                try asset.load(filename, cache: self as! FlareCache<CacheAsset>)
+                try asset.load(filename)
             } catch {
                 print("Couldn't load \(filename)")
             }
@@ -88,12 +99,13 @@ class FlareCache<T: CacheAsset> {
 /// Base class for an Asset in Cache.
 /// Meant to be extended.
 class CacheAsset: Hashable {
-    var cache: FlareCache<CacheAsset>!
-    internal var refCount = 0
+    fileprivate var refCount = 0
     
     var isAvailable: Bool {
         return false
     }
+    
+    var isFree: Bool { return refCount == 0 }
     
     init() {}
     
@@ -106,24 +118,7 @@ class CacheAsset: Hashable {
         return lhs === rhs
     }
     ///
-    
-    func ref() {
-        refCount += 1
-        if refCount == 1 {
-            cache.hold(self)
-        }
-    }
-    
-    func deref() {
-        refCount -= 1
-        if refCount <= 0 {
-            cache.drop(self)
-        }
-    }
-    
-    func load(_ file: String, cache: FlareCache<CacheAsset>) throws {
-        self.cache = cache
-    }
+    func load(_ file: String) throws {}
     
     internal enum LoadError: Error {
         case FileNotFound

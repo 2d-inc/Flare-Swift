@@ -8,6 +8,7 @@
 
 import Foundation
 import Skia
+import os.log
 
 protocol FlareController {
     func initialize()
@@ -15,13 +16,16 @@ protocol FlareController {
     func advance(elapsed: Double)
 }
 
-class FlareSkViewController: UIViewController, FlareController {
+public typealias CompletedAnimationCallback = (String) -> ()
+
+public class FlareSkViewController: UIViewController, FlareController {
+    private let bundleCache = BundleCache.storage
     /**
      Mat2D _lastControllerViewTransform;
      */
     private var assetBundle: Bundle
     private var displayLink: CADisplayLink?
-    private var flareView: FlareSkView!
+    private(set) var flareView: FlareSkView!
     private var flareActor: FlareSkActor!
     private var artboard: FlareSkArtboard?
     private var artboardName: String?
@@ -30,8 +34,7 @@ class FlareSkViewController: UIViewController, FlareController {
     
     private var assets = [SkCacheAsset]()
     private var animationLayers: [FlareAnimationLayer] = []
-    typealias CompletedAnimationCallback = (String) -> ()
-    private var completedCallback: CompletedAnimationCallback?
+    public var completedCallback: CompletedAnimationCallback?
     
     private var lastTime = 0.0
     private var _isLoading = false
@@ -41,27 +44,7 @@ class FlareSkViewController: UIViewController, FlareController {
     private var _actor: FlareSkActor?
     
     private var _animationName: String?
-    private var _filename: String = ""
-    public var filename: String {
-        get {
-            return _filename
-        }
-        set {
-            if newValue != _filename {
-                _filename = newValue
-                if flareActor != nil {
-                    flareActor.dispose()
-                    flareActor = nil
-                    artboard = nil
-                }
-            }
-            
-            if _filename.isEmpty || !_filename.hasSuffix(".flr") {
-                flareView.setNeedsDisplay()
-                return
-            }
-        }
-    }
+    private let filename: String
     
     public var completed: CompletedAnimationCallback? {
         get { return completedCallback }
@@ -76,7 +59,11 @@ class FlareSkViewController: UIViewController, FlareController {
     var isLoading: Bool { return _isLoading }
     var aabb: AABB? { return setupAABB }
     
-    init(_ sourceBundle: Bundle = Bundle.main) {
+    public init(for filename: String, _ sourceBundle: Bundle = Bundle.main) {
+        guard filename.hasSuffix(".flr") else {
+            fatalError("FlareController init() needs a .flr file")
+        }
+        self.filename = filename
         assetBundle = sourceBundle
         // Per documentation, init with nil values.
         super.init(nibName: nil, bundle: nil)
@@ -95,8 +82,9 @@ class FlareSkViewController: UIViewController, FlareController {
      - load Flare from Cache
      */
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
+        print("Flare viewDidLoad()")
         flareView = FlareSkView(frame: self.view.bounds)
         if assets.isEmpty {
             _load()
@@ -104,17 +92,18 @@ class FlareSkViewController: UIViewController, FlareController {
         bindView()
     }
     
-    override func viewDidLayoutSubviews() {
+    override public func viewDidLayoutSubviews() {
         /**
          When bounds change for a view controller's view, the view adjust the positions of its subviews and then the system calls this method.
          */
         super.viewDidLayoutSubviews()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override public func viewDidDisappear(_ animated: Bool) {
         /**
          Notifies the view controller that its view was removed from a view hierarchy.
          */
+        print("Disappear view, disposing")
         super.viewDidDisappear(animated)
         dispose()
     }
@@ -124,7 +113,14 @@ class FlareSkViewController: UIViewController, FlareController {
         _unload()
     }
     
-    func load() {}
+    func load() {
+        _actor = loadFlare(filename)
+        if
+            !instanceArtboard() // Checks that the actor and its artboard have been loaded.
+        {
+            os_log("Couldn't instance the artboard", type: .debug)
+        }
+    }
     
     private func _load() {
         guard !_isLoading else { return }
@@ -136,13 +132,13 @@ class FlareSkViewController: UIViewController, FlareController {
     
     private func _unload() {
         for asset in assets {
-            asset.deref()
+            bundleCache.deref(in: assetBundle.bundleIdentifier!, for: asset)
         }
         assets.removeAll()
         onUnload()
     }
     
-    func loadFlare(filename: String) -> FlareSkActor? {
+    func loadFlare(_ filename: String) -> FlareSkActor? {
         guard
             !filename.isEmpty,
             let bundleId = Bundle.main.bundleIdentifier
@@ -150,8 +146,8 @@ class FlareSkViewController: UIViewController, FlareController {
                 return nil
         }
 
-        if let asset = cachedActor(bundle: bundleId, filename: filename) {
-            asset.ref()
+        if let asset = bundleCache.cachedAsset(bundle: bundleId, filename: filename) {
+            bundleCache.deref(in: assetBundle.bundleIdentifier!, for: asset)
             assets.append(asset)
             return asset.value
         } else {

@@ -88,7 +88,7 @@ public class FlareSkView: UIView {
         sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255, 93, 93, 93))
     }
     
-    /// Perform any pre-painting stuff if needed.
+    /// Perform any pre-painting operation, if needed.
     /// Override to perform custom operations.
     func prePaint() {
         if shouldClip {
