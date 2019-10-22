@@ -54,6 +54,8 @@ final class SkCacheAsset: CacheAsset {
     private var _value: FlareSkActor?
     var value: FlareSkActor? { return _value }
     
+    override var isAvailable: Bool { return _value != nil }
+    
     override init() {
         super.init()
         _value = nil

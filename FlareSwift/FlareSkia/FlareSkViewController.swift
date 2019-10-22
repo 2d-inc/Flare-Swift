@@ -147,7 +147,6 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
 
         if let asset = bundleCache.cachedAsset(bundle: bundleId, filename: filename) {
-            bundleCache.deref(in: assetBundle.bundleIdentifier!, for: asset)
             assets.append(asset)
             return asset.value
         } else {

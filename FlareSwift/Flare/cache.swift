@@ -51,6 +51,9 @@ class FlareCache<T: CacheAsset> {
     
     func ref(_ asset: T) {
         asset.refCount += 1
+        if asset.refCount == 1 {
+            hold(asset)
+        }
     }
     
     private func hold(_ asset: T) {
