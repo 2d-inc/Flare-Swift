@@ -147,6 +147,44 @@ public class FlareSkView: UIView {
         sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint)
     }
     
+    func drawQuad(_ canvas: OpaquePointer) {
+        sk_canvas_save(canvas)
+        let path = sk_path_new()
+        //
+        let subpath = sk_path_new()
+        sk_path_move_to(subpath, -236.0, -236.0)
+        sk_path_line_to(subpath, 236, -236)
+        sk_path_line_to(subpath, 236, 236)
+        sk_path_line_to(subpath, -236, 236)
+        sk_path_line_to(subpath, -236, -236)
+        sk_path_close(subpath)
+        
+        var skMat = sk_matrix_t(
+            mat: (
+                0.5,    0.0,    236/2,
+                0.0,    0.5,    372/2,
+                0,      0,      1
+            )
+        )
+        let matPointer = withUnsafeMutablePointer(to: &skMat){
+            UnsafeMutablePointer($0)
+        }
+        sk_path_add_path_with_matrix(path, subpath, 0, 0, matPointer)
+        
+        let paint = sk_paint_new()
+        sk_paint_set_antialias(paint, true)
+        sk_paint_set_color(paint, sk_color_set_argb(0xFF, 0x00, 0xFF, 0xFF))
+        sk_path_set_evenodd(path, false)
+        
+        sk_canvas_draw_path(canvas, path, paint)
+        
+        sk_path_delete(subpath)
+        sk_path_delete(path)
+        sk_paint_delete(paint)
+        sk_canvas_restore(canvas)
+        sk_canvas_flush(canvas)
+    }
+    
     func skiaDraw(_ canvas: OpaquePointer) {
         let fill = sk_paint_new()
         sk_paint_set_color(fill, sk_color_set_argb(0xFF, 0x00, 0x00, 0xFF))

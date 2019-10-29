@@ -47,6 +47,7 @@ extension FlareSkPathPointsPath {
         
         let firstPoint = renderPoints.first!
         sk_path_move_to(_path, firstPoint.translation[0], firstPoint.translation[1])
+//        print("START FROM: \(firstPoint.translation.description)")
         
         let c = isClosed ? renderPoints.count : renderPoints.count - 1
         let rpc = renderPoints.count

@@ -71,6 +71,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
                     let subpath = flarePath.path
                     if let pathTransform = (node as! ActorBasePath).pathTransform {
                         // Indices are adjusted to sk_matrix_t that is in row-major order.
+//                        print("MAT TRANSFORM: \(pathTransform[0]), \(pathTransform[2]), \(pathTransform[4]), \(pathTransform[1]), \(pathTransform[3]), \(pathTransform[5])")
                         var skMat = sk_matrix_t(
                             mat: (
                                 pathTransform[0],
