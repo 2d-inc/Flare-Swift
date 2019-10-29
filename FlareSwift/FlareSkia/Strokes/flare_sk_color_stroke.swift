@@ -27,7 +27,7 @@ class FlareSkColorStroke: ColorStroke, FlareSkStroke {
             let r = UInt32(c[0] * 255)
             let g = UInt32(c[1] * 255)
             let b = UInt32(c[2] * 255)
-            let a = min(max(UInt32(Double(c[3]) * artboard!.modulateOpacity * opacity * shape.renderOpacity * 255), 0), 1)
+            let a = min(max(UInt32(Double(c[3]) * artboard!.modulateOpacity * opacity * shape.renderOpacity * 255), 0), 255)
             return sk_color_set_argb(a, r, g, b)
         }
         set(c) {

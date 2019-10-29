@@ -20,7 +20,7 @@ class FlareSkColorFill: ColorFill, FlareSkFill {
         get {
             let c = color
             let alpha = round(Double(c[3]) * 255 * artboard!.modulateOpacity * opacity * shape.renderOpacity)
-            let clampedAlpha = min(max(alpha, 0.0), 1.0)
+            let clampedAlpha = min(max(alpha, 0.0), 255.0)
             let res: UInt32 = sk_color_set_argb(
                 UInt32(clampedAlpha),
                 UInt32(round(c[0] * 255)),

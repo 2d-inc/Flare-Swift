@@ -166,7 +166,7 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         let r = sk_color_get_r(color)
         let g = sk_color_get_g(color)
         let b = sk_color_get_b(color)
-        let a = UInt32(renderOpacity) * 255
+        let a = min(max((UInt32(renderOpacity) * 255), 0), 255)
         sk_paint_set_color(_paint, sk_color_set_argb(a, r, g, b))
 
         if let imgTransform = imageTransform {

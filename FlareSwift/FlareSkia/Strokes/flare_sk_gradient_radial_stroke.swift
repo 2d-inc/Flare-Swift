@@ -40,7 +40,7 @@ class FlareSkRadialStroke: RadialGradientStroke, FlareSkStroke {
             let r = UInt32(colorStops[idx]*255)
             let g = UInt32(colorStops[idx+1]*255)
             let b = UInt32(colorStops[idx+2]*255)
-            let a = min(max(UInt32(colorStops[idx+3]*255), 0), 1)
+            let a = min(max(UInt32(colorStops[idx+3]*255), 0), 255)
             colors.append(sk_color_set_argb(a, r, g, b))
             locations.append(colorStops[idx+4])
             idx += 5
@@ -51,10 +51,10 @@ class FlareSkRadialStroke: RadialGradientStroke, FlareSkStroke {
             let r = UInt32(overrideColor[0]*255)
             let g = UInt32(overrideColor[1]*255)
             let b = UInt32(overrideColor[2]*255)
-            let a = min(max(UInt32(Double(overrideColor[3]) * artboard!.modulateOpacity * opacity * shape.renderOpacity * 255), 0), 1)
+            let a = min(max(UInt32(Double(overrideColor[3]) * artboard!.modulateOpacity * opacity * shape.renderOpacity * 255), 0), 255)
             paintColor = sk_color_set_argb(a,r,g,b)
         } else {
-            let alpha = min(max(artboard!.modulateOpacity * opacity * shape.renderOpacity, 0,0), 1.0) // Clamp
+            let alpha = min(max(artboard!.modulateOpacity * opacity * shape.renderOpacity, 0,0), 255.0) // Clamp
             paintColor = sk_color_set_argb(0xFF, 0xFF, 0xFF, UInt32(alpha)) // White w/ custom alpha
         }
         
