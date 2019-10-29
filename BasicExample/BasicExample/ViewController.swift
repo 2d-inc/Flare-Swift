@@ -11,14 +11,40 @@ import FlareSwift
 
 class ViewController: UIViewController {
     
+    private var button: UIButton!
+    private let addLabel = "Add Flare"
+    private let removeLabel = "Remove Flare"
+    private var flareController: FlareSkViewController? = nil
+    private var count = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.lightGray
+        button = UIButton(type: .system)
+        button.frame = CGRect(x: 50, y: 50, width: 150, height: 50)
+        button.backgroundColor = UIColor.red
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle(addLabel, for: .normal)
+        button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
+        view.addSubview(button)
         
-        let frame = UIScreen.main.bounds
-        let flareView = FlareSkView(frame: CGRect(x: 100, y: 100, width: frame.size.width-200, height: frame.size.height-200))
-        view.addSubview(flareView)
-        flareView.filename = "Notification Bell.flr"
+        print("viewDidLoad")
+    }
+
+    @objc func onTap() {
+//        print("TAP!")
+        if flareController != nil {
+            flareController?.view.removeFromSuperview()
+            flareController = nil
+            button.setTitle(addLabel, for: .normal)
+        } else {
+            flareController = FlareSkViewController(for: "Shape.flr")
+            flareController!.animationName = "Move"
+            view.addSubview(flareController!.view)
+            button.setTitle(removeLabel, for: .normal)
+            
+        }
     }
 }
+

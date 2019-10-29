@@ -25,9 +25,6 @@ public class FlareSkViewController: UIViewController, FlareController {
      */
     private var assetBundle: Bundle
     private var displayLink: CADisplayLink?
-    private(set) var flareView: FlareSkView!
-    private var flareActor: FlareSkActor!
-    private var artboard: FlareSkArtboard?
     private var artboardName: String?
     private var boundsNodeName: String?
     private var setupAABB: AABB?
@@ -38,13 +35,14 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     private var lastTime = 0.0
     private var _isLoading = false
-    private var _isPlaying = false
-    private var _isPaused = false
-    
-    private var _actor: FlareSkActor?
+    private var isPaused = false
     
     private var _animationName: String?
     private let filename: String
+    
+    private var isPlaying: Bool {
+        return !isPaused && !animationLayers.isEmpty
+    }
     
     public var completed: CompletedAnimationCallback? {
         get { return completedCallback }
@@ -53,6 +51,16 @@ public class FlareSkViewController: UIViewController, FlareController {
             /// http://bit.ly/2MHp0dV
             /// So every time we set the callback, it gets overridden
             completedCallback = newValue
+        }
+    }
+    
+    public var animationName: String? {
+        get { return _animationName }
+        set {
+            if _animationName != newValue {
+                _animationName = newValue
+                updateAnimation()
+            }
         }
     }
     
@@ -73,29 +81,29 @@ public class FlareSkViewController: UIViewController, FlareController {
         fatalError("No coder init allowed for FlareSkViewController")
     }
     
-    /**
-     TODO:
+    /** TODO:
      - alignment
      - fit
      - on resize
-     - on detach
-     - load Flare from Cache
      */
     
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        print("Flare viewDidLoad()")
-        flareView = FlareSkView(frame: self.view.bounds)
+    override public func loadView() {
+        #warning("Remove harcoded size")
+        view = FlareSkView(frame: CGRect(x: 50, y: 150, width: 780, height: 500))
         if assets.isEmpty {
             _load()
         }
-        bindView()
+    }
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
     }
     
     override public func viewDidLayoutSubviews() {
         /**
          When bounds change for a view controller's view, the view adjust the positions of its subviews and then the system calls this method.
          */
+        #warning("TODO:")
         super.viewDidLayoutSubviews()
     }
     
@@ -114,11 +122,17 @@ public class FlareSkViewController: UIViewController, FlareController {
     }
     
     func load() {
-        _actor = loadFlare(filename)
+        guard let view = view as? FlareSkView else {
+            os_log("flareView isn't available!", type: .debug)
+            return
+        }
+
+        view.actor = loadFlare(filename)
         if
             !instanceArtboard() // Checks that the actor and its artboard have been loaded.
         {
             os_log("Couldn't instance the artboard", type: .debug)
+            return
         }
     }
     
@@ -158,22 +172,24 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     private func instanceArtboard() -> Bool {
         guard
-            let actor = _actor,
+            let view = view as? FlareSkView,
+            let actor = view.actor,
             let _ = actor.artboard
         else { return false }
         
         /// getArtboard() could return `nil`.
-        /// If it does something went wrong at `load()` time.
+        /// If it does, something went wrong at `load()` time.
         let instance = actor
             .getArtboard(name: artboardName)!
             .makeInstance() as! FlareSkArtboard
         instance.initializeGraphics()
-        artboard = instance
+        
+        // Set the artboard and advance(0)
+        view.artboard = instance
         let actorColor = actor.color
-        // Call the setter? Might not be needed.
+        
         actor.color = actorColor
-        artboard!.advance(seconds: 0.0)
-        updateBounds()
+        view.updateBounds()
         
         // Initialize controller.
         self.initialize()
@@ -182,29 +198,29 @@ public class FlareSkViewController: UIViewController, FlareController {
         
         return true
     }
-    
-    func updateBounds() {
-        if let ab = artboard {
-            if let boundsNode = boundsNodeName,
-                let node = ab.getNode(name: boundsNode) as? ActorDrawable {
-                flareView.setupAABB = node.computeAABB()
-            } else {
-                flareView.setupAABB = ab.artboardAABB()
-            }
-        }
-    }
-    
+
+    /**
     private func bindView() {
-        view.addSubview(flareView)
+        guard let fView = flareView else {
+            return
+        }
+
+        // View in this case is the default view
+        view.addSubview(fView)
         // Constrain if needed.
-        flareView.translatesAutoresizingMaskIntoConstraints = false
+        view.translatesAutoresizingMaskIntoConstraints = false
     }
+    */
     
     func setViewTransform(viewTransform: Mat2D) {}
     func initialize() {}
     func advance(elapsed: Double) {
-        guard let artboard = artboard else { return }
-        if _isPlaying {
+        guard
+            let view = view as? FlareSkView,
+            let artboard = view.artboard else {
+            return
+        }
+        if isPlaying {
             var lastFullyMixed = -1
             var lastMix = 0.0
             
@@ -212,15 +228,19 @@ public class FlareSkViewController: UIViewController, FlareController {
             
             for layerIndex in 0..<animationLayers.count {
                 let layer = animationLayers[layerIndex]
-                if /** snapToEnd && */ !layer.isLooping {
+//                if snapToEnd && !layer.isLooping {
+                if !layer.isLooping {
                     layer.mix = 1.0
                     layer.time = layer.duration
                 } else {
                     layer.mix += elapsed
                     layer.time += elapsed
                 }
+
+                lastMix = (layer.mixSeconds == 0.0)
+                    ? 1.0
+                    : min(1.0, layer.mix / layer.mixSeconds)
                 
-                lastMix = layer.mixSeconds == 0.0 ? 1.0 : min(1.0, layer.mix / layer.mixSeconds)
                 if layer.isLooping {
                     // layer.time %= layer.duration
                     layer.time = layer.time.truncatingRemainder(dividingBy: layer.duration)
@@ -249,12 +269,18 @@ public class FlareSkViewController: UIViewController, FlareController {
                     callback(animation.name)
                 }
             }
+            
+            artboard.advance(seconds: elapsed)
         }
+    }
+    
+    override public func viewDidAppear(_ animated: Bool) {
+        updatePlayState()
     }
     
     private func updatePlayState() {
         /// (viewIfLoaded?.window) != nil checks if the view is still attached
-        if _isPlaying && (viewIfLoaded?.window != nil) {
+        if isPlaying && (viewIfLoaded?.window != nil) {
             if displayLink == nil {
                 displayLink = CADisplayLink(target: self, selector: #selector(beginFrame))
                 lastTime = CACurrentMediaTime()
@@ -270,8 +296,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     }
     
     @objc private func beginFrame() {
-        guard flareActor != nil else {
-            updatePlayState()
+        guard let view = view as? FlareSkView else {
             return
         }
         let currentTime = CACurrentMediaTime()
@@ -279,10 +304,10 @@ public class FlareSkViewController: UIViewController, FlareController {
         lastTime = currentTime
         
         advance(elapsed: delta)
-        if !_isPlaying {
+        if !isPlaying {
             lastTime = 0.0
         }
-        flareView.paint()
+        view.paint()
     }
     
     private func updateAnimation(onlyWhenMissing: Bool = false) {
@@ -291,8 +316,9 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
         
         guard
+            let view = view as? FlareSkView,
             let name = _animationName,
-            let artboard = artboard
+            let artboard = view.artboard
         else { return }
         
         if let animation = artboard.getAnimation(name: name) {

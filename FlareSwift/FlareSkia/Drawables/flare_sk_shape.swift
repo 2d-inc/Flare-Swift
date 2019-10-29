@@ -97,7 +97,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
     }
     
     func getRenderPath(_ skCanvas: OpaquePointer) -> OpaquePointer {
-        return path
+        return path // Call to the getter.
     }
     
     /// Implements FlareSkDrawable `draw(skCanvas:)`

@@ -18,14 +18,8 @@ public class FlareSkView: UIView {
     private var _depthRenderBuffer = GLuint()
     private var _colorRenderBuffer = GLuint()
     
-    override public class var layerClass: AnyClass {
-        get {
-            return CAEAGLLayer.self
-        }
-    }
-    
-    private var flareActor: FlareSkActor!
-    private var artboard: FlareSkArtboard?
+    var actor: FlareSkActor!
+    private var _artboardInstance: FlareSkArtboard?
     private var animation: ActorAnimation?
     var setupAABB: AABB!
     
@@ -34,6 +28,22 @@ public class FlareSkView: UIView {
     private var _skiaCanvas: OpaquePointer!
     private var _skiaSurface: OpaquePointer!
     private var _skBackgroundPaint: OpaquePointer!
+
+    var artboard: FlareSkArtboard? {
+        get { return _artboardInstance }
+        set {
+            if newValue != _artboardInstance {
+                _artboardInstance = newValue
+                _artboardInstance?.advance(seconds: 0.0)
+            }
+        }
+    }
+    
+    override public class var layerClass: AnyClass {
+        get {
+            return CAEAGLLayer.self
+        }
+    }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,6 +96,17 @@ public class FlareSkView: UIView {
         }
         _skBackgroundPaint = sk_paint_new()
         sk_paint_set_color(_skBackgroundPaint, sk_color_set_argb(255, 93, 93, 93))
+    }
+    
+    func updateBounds(with nodeName: String? = nil) {
+        guard let artboard = artboard else { return }
+        
+        if let boundsNodeName = nodeName,
+            let node = artboard.getNode(name: boundsNodeName) as? ActorDrawable {
+            setupAABB = node.computeAABB()
+        } else {
+            setupAABB = artboard.computeAABB()
+        }
     }
     
     /// Perform any pre-painting operation, if needed.

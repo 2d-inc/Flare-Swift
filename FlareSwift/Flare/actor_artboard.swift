@@ -8,8 +8,8 @@
 
 import Foundation
 
-public class ActorArtboard {
-    private var _flags = ActorFlags.IsDrawOrderDirty | ActorFlags.IsVertexDeformDirty
+public class ActorArtboard: Equatable {
+   private var _flags = ActorFlags.IsDrawOrderDirty | ActorFlags.IsVertexDeformDirty
     
     private var _drawableNodeCount = 0
     public var drawNodeCount: Int {
@@ -158,6 +158,12 @@ public class ActorArtboard {
         _actor = actor
         _root = ActorNode(withArtboard: self)
     }
+    
+    /// Equatable
+    public static func == (lhs: ActorArtboard, rhs: ActorArtboard) -> Bool {
+        return lhs === rhs
+    }
+    ///
     
     func addDependency(_ a: ActorComponent, _ b: ActorComponent) -> Bool {
         if b.dependents == nil {

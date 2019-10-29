@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4198BA8235F3ADA00C4E22F /* Shape.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4198BA7235F3AD900C4E22F /* Shape.flr */; };
 		E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */ = {isa = PBXBuildFile; fileRef = E44CBFB722382B05008F6DFE /* Notification Bell.flr */; };
 		E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359BE2228328500981BD7 /* AppDelegate.swift */; };
 		E45359C12228328500981BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359C02228328500981BD7 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E4198BA7235F3AD900C4E22F /* Shape.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Shape.flr; sourceTree = "<group>"; };
 		E44CBFB722382B05008F6DFE /* Notification Bell.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Notification Bell.flr"; sourceTree = "<group>"; };
 		E45359BB2228328500981BD7 /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E45359BE2228328500981BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				E44CBFB722382B05008F6DFE /* Notification Bell.flr */,
 				E4C7F5C32236D735004F62F4 /* Switch.flr */,
+				E4198BA7235F3AD900C4E22F /* Shape.flr */,
 				E45359BE2228328500981BD7 /* AppDelegate.swift */,
 				E45359C02228328500981BD7 /* ViewController.swift */,
 				E45359C22228328500981BD7 /* Main.storyboard */,
@@ -159,6 +162,7 @@
 			files = (
 				E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */,
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
+				E4198BA8235F3ADA00C4E22F /* Shape.flr in Resources */,
 				E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */,
 				E45359C62228328600981BD7 /* Assets.xcassets in Resources */,
 				E45359C42228328500981BD7 /* Main.storyboard in Resources */,
