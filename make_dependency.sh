@@ -13,7 +13,7 @@ python tools/git-sync-deps
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
-  skia_use_bitcode = true \
+  skia_use_bitcode=true \
   skia_use_angle=false \
   skia_use_dng_sdk=false \
   skia_use_egl=false \
@@ -39,6 +39,14 @@ python tools/git-sync-deps
   skia_enable_gpu=true \
   skia_enable_fontmgr_empty=false \
   skia_enable_spirv_validation=false \
-  skia_enable_pdf=false"
+  skia_enable_pdf=false
+  \
+  is_debug=false \
+  skia_enable_flutter_defines=true \
+  skia_gl_standard=\"gles\"
+  skia_use_sfntly=false \
+  skia_use_wuffs=true \
+  skia_use_x11=false \
+  target_cpu=\"arm64\""
 
 ninja -C build
