@@ -23,6 +23,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     /**
      Mat2D _lastControllerViewTransform;
      */
+    private let flareViewFrame: CGRect
     private var assetBundle: Bundle
     private var displayLink: CADisplayLink?
     private var artboardName: String?
@@ -67,12 +68,14 @@ public class FlareSkViewController: UIViewController, FlareController {
     var isLoading: Bool { return _isLoading }
     var aabb: AABB? { return setupAABB }
     
-    public init(for filename: String, _ sourceBundle: Bundle = Bundle.main) {
+    public init(for filename: String, frame: CGRect, _ sourceBundle: Bundle = Bundle.main) {
         guard filename.hasSuffix(".flr") else {
             fatalError("FlareController init() needs a .flr file")
         }
+        
         self.filename = filename
         assetBundle = sourceBundle
+        flareViewFrame = frame
         // Per documentation, init with nil values.
         super.init(nibName: nil, bundle: nil)
     }
@@ -88,8 +91,7 @@ public class FlareSkViewController: UIViewController, FlareController {
      */
     
     override public func loadView() {
-        #warning("Remove harcoded size")
-        view = FlareSkView(frame: CGRect(x: 50, y: 150, width: 780, height: 500))
+        view = FlareSkView(frame: flareViewFrame)
         if assets.isEmpty {
             _load()
         }
@@ -97,6 +99,11 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override public func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        print("BOUNDS: \(self.view.bounds)")
     }
     
     override public func viewDidLayoutSubviews() {

@@ -21,8 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.lightGray
-        button = UIButton(type: .system)
-        button.frame = CGRect(x: 50, y: 50, width: 150, height: 50)
+        button = UIButton(frame: CGRect(x: 50, y: 50, width: 150, height: 50))
         button.backgroundColor = UIColor.red
         button.setTitleColor(.white, for: .normal)
         button.setTitle(addLabel, for: .normal)
@@ -39,7 +38,7 @@ class ViewController: UIViewController {
             flareController = nil
             button.setTitle(addLabel, for: .normal)
         } else {
-            flareController = FlareSkViewController(for: "Shape.flr")
+            flareController = FlareSkViewController(for: "Shape.flr", frame: CGRect(origin: CGPoint(x: 50, y: 100), size: CGSize(width: 800, height: 600)))
             flareController!.animationName = "Move"
             view.addSubview(flareController!.view)
             button.setTitle(removeLabel, for: .normal)
