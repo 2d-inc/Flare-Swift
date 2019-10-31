@@ -105,7 +105,7 @@ public class FlareSkView: UIView {
             let node = artboard.getNode(name: boundsNodeName) as? ActorDrawable {
             setupAABB = node.computeAABB()
         } else {
-            setupAABB = artboard.computeAABB()
+            setupAABB = artboard.artboardAABB()
         }
     }
     
@@ -149,7 +149,7 @@ public class FlareSkView: UIView {
             sk_canvas_scale(_skiaCanvas, scale, scale)
             sk_canvas_translate(_skiaCanvas, tx, ty)
             
-            clearBackground()
+            sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint) // Clear the background.
             
             artboard.draw(skCanvas: _skiaCanvas)
             
@@ -163,11 +163,9 @@ public class FlareSkView: UIView {
             _context!.presentRenderbuffer(Int(GL_RENDERBUFFER))
         }
     }
+
     
-    func clearBackground() {
-        sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint)
-    }
-    
+    // Debugging functions.
     func drawQuad(_ canvas: OpaquePointer) {
         sk_canvas_save(canvas)
         let path = sk_path_new()

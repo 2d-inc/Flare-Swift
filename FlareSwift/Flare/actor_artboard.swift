@@ -721,8 +721,8 @@ public class ActorArtboard: Equatable {
     public func artboardAABB() -> AABB {
         let fw = Float32(_width)
         let fh = Float32(_height)
-        let minX = -_origin[0] * fw
-        let minY = -_origin[1] * fh
+        let minX = -1 * _origin[0] * fw
+        let minY = -1 * _origin[1] * fh
         return AABB.init(fromValues: minX, minY, minX + fw, minY + fh)
     }
     
