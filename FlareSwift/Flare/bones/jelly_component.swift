@@ -57,8 +57,8 @@ class JellyComponent: ActorComponent {
     static func fuzzyEquals(_ a: Vec2D, _ b: Vec2D) -> Bool {
         let a0 = a[0], a1 = a[1]
         let b0 = b[0], b1 = b[1]
-        return (abs(a0 - b0) <= Epsilon * max(1.0, max(abs(a0), abs(b0))) &&
-            abs(a1 - b1) <= Epsilon * max(1.0, max(abs(a1), abs(b1))))
+        return abs(a0 - b0) <= Epsilon * max(1.0, max(abs(a0), abs(b0))) &&
+            abs(a1 - b1) <= Epsilon * max(1.0, max(abs(a1), abs(b1)))
     }
     
     static func forwardDiffBezier(c0: inout Float, c1: inout Float, c2: inout Float, c3: inout Float, points: [Vec2D], count: Int, offset: Int) {
@@ -141,7 +141,7 @@ class JellyComponent: ActorComponent {
         _outTargetIdx = component._outTargetIdx
     }
     
-    func resolveComponentIndices(components: [ActorComponent]) {
+    override func resolveComponentIndices(_ components: [ActorComponent?]) {
         guard let aboard = self.artboard else {
             fatalError("JellyComponent@resolveComponentIndices() - No Artboard??")
         }
@@ -285,7 +285,7 @@ class JellyComponent: ActorComponent {
             fatalError("JellyComponent@update() - bone is nil!")
         }
         
-        let parentBone = bone.parent
+        let parentBone = bone.parent is ActorBoneBase ? bone.parent : nil
         var parentBoneJelly: JellyComponent?
         if let pb = parentBone as? ActorBone {
             parentBoneJelly = pb.jelly
@@ -331,7 +331,8 @@ class JellyComponent: ActorComponent {
         } else {
             _inDirection[0] = 1.0
             _inDirection[1] = 0.0
-            _inPoint[0] = _inDirection[0] * _easeIn * bone.length * JellyComponent.CurveConstant
+            _inPoint[0] = _easeIn * bone.length * JellyComponent.CurveConstant
+            _inPoint[1] = 0.0
         }
         
         if let outT = _outTarget {

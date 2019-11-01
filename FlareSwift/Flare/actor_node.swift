@@ -235,7 +235,7 @@ public class ActorNode: ActorComponent {
             if (!_overrideWorldTransform) {
                 Mat2D.multiply(_worldTransform, p._worldTransform, _transform)
             }
-        } else {
+        } else if(!_overrideWorldTransform) {
             Mat2D.copy(_worldTransform, _transform)
         }
     }

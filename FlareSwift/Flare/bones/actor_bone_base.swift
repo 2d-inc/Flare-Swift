@@ -23,7 +23,7 @@ class ActorBoneBase: ActorNode {
             
             if let c = children {
                 for node in c {
-                    if (node is ActorBoneBase) {
+                    if (node is ActorBone) {
                         node.x = newValue
                     }
                 }
