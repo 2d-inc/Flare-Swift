@@ -12,103 +12,47 @@ public class ActorArtboard: Equatable {
    private var _flags = ActorFlags.IsDrawOrderDirty | ActorFlags.IsVertexDeformDirty
     
     private var _drawableNodeCount = 0
-    public var drawNodeCount: Int {
-        get {
-            return self._drawableNodeCount
-        }
-    }
+    public var drawNodeCount: Int { return self._drawableNodeCount }
     
     private var _nodeCount = 0
-    public var nodeCount: Int{
-        get {
-            return self._nodeCount
-        }
-    }
+    public var nodeCount: Int { return self._nodeCount }
     
     private var _dirtDepth = 0
     private var _root : ActorNode?
-    public var root: ActorNode? {
-        get {
-            return self._root
-        }
-    }
+    public var root: ActorNode? { return self._root }
     
     private var _components : [ActorComponent?]?
-    public var components: [ActorComponent?]? {
-        get {
-            return self._components
-        }
-    }
-    public var componentCount : Int {
-        get {
-            return _components?.count ?? 0
-        }
-    }
+    public var components: [ActorComponent?]? { return self._components }
+    public var componentCount : Int { return _components?.count ?? 0  }
     
     private var _nodes : [ActorNode?]?
-    public var nodes: [ActorNode?]? {
-        get {
-            return self._nodes
-        }
-    }
+    public var nodes: [ActorNode?]? { return self._nodes }
     
     private var _drawableNodes = [ActorDrawable]()
-    public var drawableNodes: [ActorDrawable] {
-        get {
-            return self._drawableNodes
-        }
-    }
+    public var drawableNodes: [ActorDrawable] { return self._drawableNodes }
 
     private var _animations : [ActorAnimation]?
-    public var animations : [ActorAnimation]? {
-        get {
-            return self._animations
-        }
-    }
+    public var animations : [ActorAnimation]? { return self._animations }
     
     private var _dependencyOrder : [ActorComponent]?
     
     private var _actor : Actor
-    public var actor : Actor {
-        get {
-            return self._actor
-        }
-    }
+    public var actor : Actor { return self._actor }
     
     private var _name : String
-    public var name : String {
-        get {
-            return self._name
-        }
-    }
+    public var name : String { return self._name }
     
     private var _translation = Vec2D()
-    public var translation : Vec2D {
-        get {
-            return self._translation
-        }
-    }
+    public var translation : Vec2D { return self._translation }
     
     private var _origin = Vec2D()
-    public var origin: Vec2D {
-        get {
-            return self._origin
-        }
-    }
+    public var origin: Vec2D { return self._origin }
     
     private var _width: Float = 0.0
-    public var width: Float {
-        get {
-            return self._width
-        }
-    }
+    public var width: Float { return self._width }
     
     private var _height: Float = 0.0
-    public var height: Float {
-        get {
-            return self._height
-        }
-    }
+    public var height: Float { return self._height }
 
     private var _modulateOpacity = 1.0
     public var modulateOpacity: Double {
@@ -125,11 +69,7 @@ public class ActorArtboard: Equatable {
     }
     
     private var _clipContents = true
-    public var clipContents: Bool {
-        get {
-            return self._clipContents
-        }
-    }
+    public var clipContents: Bool { return self._clipContents }
     
     private var _color = [Float32](repeating: 0.0, count: 4)
 
@@ -147,11 +87,7 @@ public class ActorArtboard: Equatable {
         }
     }
     
-    subscript(index: Int) -> ActorComponent? {
-        get {
-            return _components?[index] ?? nil
-        }
-    }
+    subscript(index: Int) -> ActorComponent? { return _components?[index] ?? nil }
     
     public init(actor: Actor) {
         _name = ""
@@ -248,11 +184,7 @@ public class ActorArtboard: Equatable {
         _flags |= ActorFlags.IsDrawOrderDirty
     }
     
-    var isVertexDeformDirty: Bool {
-        get {
-            return (_flags & ActorFlags.IsVertexDeformDirty) != 0x00
-        }
-    }
+    var isVertexDeformDirty: Bool { return (_flags & ActorFlags.IsVertexDeformDirty) != 0x00 }
     
     public func makeInstance() -> ActorArtboard {
         let artboardInstance = ActorArtboard(actor: _actor)
