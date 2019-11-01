@@ -5,6 +5,21 @@
 # Build notes:
 #   https://skia.org/user/build
 
+ARCH="arm64"
+
+while getopts ":s" opt; do 
+  case $opt in
+  s)
+    echo "-s was triggered!" >&2
+    ARCH="x64" # Build for simulator.
+    ;;
+  \?)
+    echo "invalid option: -$OPTARG" >&2
+    exit 1
+    ;;
+  esac
+done
+
 cd FlareSwift/FlareSkia/Skia/src
 
 python tools/git-sync-deps
@@ -47,6 +62,6 @@ python tools/git-sync-deps
   skia_use_sfntly=false \
   skia_use_wuffs=true \
   skia_use_x11=false \
-  target_cpu=\"arm64\""
+  target_cpu=\"$ARCH\""
 
 ninja -C build
