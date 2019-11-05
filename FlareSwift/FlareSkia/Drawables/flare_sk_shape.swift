@@ -8,6 +8,7 @@
 
 import Foundation
 import Skia
+import os.log
 
 class FlareSkShape: ActorShape, FlareSkDrawable {
     var _blendMode: BlendMode = .SrcOver
@@ -18,11 +19,11 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
     override func initializeGraphics() {
         super.initializeGraphics()
         _path = sk_path_new()
-        if let c = children {
-            for actorNode in c {
-                if let skiaPath = actorNode as? FlareSkPath {
-                    skiaPath.initializeGraphics()
-                }
+        for path in paths {
+            if let skiaPath = path as? FlareSkPath {
+                skiaPath.initializeGraphics()
+            } else {
+                os_log("Couldn't cast path to FlareSkPath!", type: .debug)
             }
         }
     }
@@ -65,34 +66,33 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         _isValid = true
         sk_path_reset(_path)
         
-        if let c = children {
-            for node in c {
-                if let flarePath = node as? FlareSkPath {
-                    let subpath = flarePath.path
-                    if let pathTransform = (node as! ActorBasePath).pathTransform {
-                        // Indices are adjusted to sk_matrix_t that is in row-major order.
-//                        print("MAT TRANSFORM: \(pathTransform[0]), \(pathTransform[2]), \(pathTransform[4]), \(pathTransform[1]), \(pathTransform[3]), \(pathTransform[5])")
-                        var skMat = sk_matrix_t(
-                            mat: (
-                                pathTransform[0],
-                                pathTransform[2],
-                                pathTransform[4],
-                                pathTransform[1],
-                                pathTransform[3],
-                                pathTransform[5],
-                                0, 0, 1.0
-                            )
-                        )
-                        let matPointer = withUnsafeMutablePointer(to: &skMat){
-                            UnsafeMutablePointer($0)
-                        }
-                        sk_path_add_path_with_matrix(_path, subpath, 0, 0, matPointer)
-                    } else {
-                        sk_path_add_path(_path, subpath, 0, 0)
-                    }
-                }
-            }
+        if let pathFill = fill, pathFill.fillRule == .EvenOdd {
+            sk_path_set_evenodd(_path, true)
+        } else {
+            sk_path_set_evenodd(_path, true)
         }
+        
+        for path in paths {
+            let pathTransform = path.pathTransform!
+            var skMat = sk_matrix_t(
+                mat: (
+                    pathTransform[0],
+                    pathTransform[2],
+                    pathTransform[4],
+                    pathTransform[1],
+                    pathTransform[3],
+                    pathTransform[5],
+                    0, 0, 1.0
+                )
+            )
+            let matPointer = withUnsafeMutablePointer(to: &skMat){
+                UnsafeMutablePointer($0)
+            }
+            let skiaPath = path as! FlareSkPath
+            let subPath = skiaPath.path // Calls the getter.
+            sk_path_add_path_with_matrix(_path, subPath, 0, 0, matPointer)
+        }
+
         return _path
     }
     
@@ -108,34 +108,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         
         sk_canvas_save(skCanvas)
 
-        // Get Clips
-        for clips in clipShapes {
-            if clips.count == 1  {
-                let firstClip = clips.first!
-                if firstClip.renderCollapsed {
-                    continue
-                }
-                let cPath = (firstClip as! FlareSkShape).path
-                // bool flag enables antialiasing.
-                sk_canvas_clip_path(skCanvas, cPath, true)
-            } else {
-                let clippingPath = sk_path_new()
-                var empty = true
-                for clipShape in clips {
-                    if clipShape.renderCollapsed {
-                        continue
-                    }
-                    let subClip = (clipShape as! FlareSkShape).path
-                    sk_path_add_path(clippingPath, subClip, 0, 0)
-                    empty = false
-                }
-                if !empty {
-                    // bool flag enables antialiasing.
-                    sk_canvas_clip_path(skCanvas, clippingPath, true)
-                    sk_path_delete(clippingPath)
-                }
-            }
-        }
+        clip(skCanvas)
         
         let renderPath = getRenderPath(skCanvas)
         

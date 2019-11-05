@@ -24,7 +24,7 @@ public protocol Actor: class {
     func makeImageNode() -> ActorImage
     func makeEvent() -> ActorEvent
     func makePathNode() -> ActorPath
-    func makeShapeNode() -> ActorShape
+    func makeShapeNode(_ source: ActorShape?) -> ActorShape
     func makeRectangle() -> ActorRectangle
     func makeTriangle() -> ActorTriangle
     func makeStar() -> ActorStar
@@ -173,7 +173,7 @@ public extension Actor {
         return ActorPath()
     }
     
-    func makeShapeNode() -> ActorShape {
+    func makeShapeNode(_ source: ActorShape?) -> ActorShape {
         return ActorShape()
     }
     

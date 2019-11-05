@@ -27,9 +27,7 @@ protocol ActorSkinnable: class {
 
 extension ActorSkinnable {
     
-    var connectedBones: [SkinnedBone]? {
-        return _connectedBones
-    }
+    var connectedBones: [SkinnedBone]? { return _connectedBones }
     
     var isConnectedToBones: Bool {
         guard let cb = _connectedBones else {

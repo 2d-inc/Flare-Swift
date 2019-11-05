@@ -9,20 +9,77 @@
 import Foundation
 
 public protocol ActorBasePath: class {
+    var shape: ActorShape? { get set }
+    var isRootPath: Bool { get set }
     var points: [PathPoint] { get }
     var isClosed: Bool { get }
     var pathTransform: Mat2D? { get }
     var parent: ActorNode? { get }
     var transform: Mat2D { get }
+    var worldTransform: Mat2D { get }
     var allClips: [[ActorClip]] { get }
     var deformedPoints: [PathPoint] { get }
     
     func invalidatePath()
+    func updateShape()
+    func completeResolve()
+    func getPathAABB() -> AABB
+    func getPathOBB() -> AABB
 }
 
 public extension ActorBasePath {
     var isPathInWorldSpace: Bool {
         return false
+    }
+    
+    func getPathAABB() -> AABB {
+        var minX = Float32.greatestFiniteMagnitude
+        var minY = Float32.greatestFiniteMagnitude
+        var maxX = -Float32.greatestFiniteMagnitude
+        var maxY = -Float32.greatestFiniteMagnitude
+        
+        let obb = getPathOBB()
+        
+        let pts = [
+            Vec2D.init(fromValues: obb[0], obb[1]),
+            Vec2D.init(fromValues: obb[2], obb[1]),
+            Vec2D.init(fromValues: obb[2], obb[3]),
+            Vec2D.init(fromValues: obb[0], obb[3])
+        ]
+        
+        var localTransform: Mat2D
+        if isPathInWorldSpace {
+            // Convert path coordinates to local parent space.
+            localTransform = Mat2D()
+            _ = Mat2D.invert(localTransform, parent!.worldTransform)
+        } else if !isRootPath, let shape = self.shape {
+            localTransform = Mat2D()
+            // Path isn't root, so get transform in shape space.
+            if Mat2D.invert(localTransform, shape.worldTransform) {
+                Mat2D.multiply(localTransform, localTransform, worldTransform)
+            }
+        } else {
+            localTransform = transform
+        }
+        
+        for p in pts {
+            let wp: Vec2D = Vec2D.transformMat2D(p, p, localTransform)
+            if wp[0] < minX {
+                minX = wp[0]
+            }
+            if wp[1] < minY {
+                minY = wp[1]
+            }
+            
+            if wp[0] > maxX {
+                maxX = wp[0]
+            }
+            if wp[1] > maxY {
+                maxY = wp[1]
+            }
+        }
+        
+        return AABB.init(fromValues: minX, minY, maxX, maxY)
     }
     
     func getPathOBB() -> AABB {
@@ -89,55 +146,34 @@ public extension ActorBasePath {
         
     }
     
-    func getPathAABB() -> AABB {
-        var minX = Float32.greatestFiniteMagnitude
-        var minY = Float32.greatestFiniteMagnitude
-        var maxX = -Float32.greatestFiniteMagnitude
-        var maxY = -Float32.greatestFiniteMagnitude
-        
-        let obb = getPathOBB()
-        
-        let pts = [
-            Vec2D.init(fromValues: obb[0], obb[1]),
-            Vec2D.init(fromValues: obb[2], obb[1]),
-            Vec2D.init(fromValues: obb[2], obb[3]),
-            Vec2D.init(fromValues: obb[0], obb[3])
-        ]
-        
-        var localTransform: Mat2D
-        if isPathInWorldSpace {
-            localTransform = Mat2D()
+    func updateShape() {
+        if let shape = self.shape {
+            _ = shape.removePath(self)
+        }
+
+        var possibleShape = parent
+        while let possible = possibleShape,
+            !(possibleShape is ActorShape) {
+                possibleShape = possible.parent
+        }
+        if let possible = possibleShape {
+            _ = (possible as! ActorShape).addPath(self)
         } else {
-            localTransform = transform
+            shape = nil
         }
-        
-        for p in pts {
-            let wp: Vec2D = Vec2D.transformMat2D(p, p, localTransform)
-            if wp[0] < minX {
-                minX = wp[0]
-            }
-            if wp[1] < minY {
-                minY = wp[1]
-            }
-            
-            if wp[0] > maxX {
-                maxX = wp[0]
-            }
-            if wp[1] > maxY {
-                maxY = wp[1]
-            }
-        }
-        
-        return AABB.init(fromValues: minX, minY, maxX, maxY)
+        isRootPath = shape === parent
     }
     
     func invalidateDrawable() {
         self.invalidatePath()
-        if parent is ActorShape {
-            parent?.invalidateShape()
+        if let s = shape {
+            s.invalidateShape()
         }
     }
     
+    /// This function returns the [List] of points that form this path.
+    /// They can be either Straight points or Cubic points, depending on
+    /// whether the path is made of Segments or of Bezier curves.
     var pathPoints: [PathPoint] {
         let pts = deformedPoints
         guard !pts.isEmpty else {
@@ -199,27 +235,24 @@ public extension ActorBasePath {
         
         return pathPoints
     }
+    
+    func basePathResolve() {
+        updateShape()
+    }
 }
-
 
 public class ActorProceduralPath: ActorNode, ActorBasePath {
     public var _isClosed: Bool = false
-    
-    public var isClosed: Bool {
-        return _isClosed
-    }
-    
-    public var points: [PathPoint] {
-        return []
-    }
 
-    public var pathTransform: Mat2D? {
-        return worldTransform
-    }
-    
-    public var deformedPoints: [PathPoint] {
-        return points
-    }
+    /// Default empty values
+    public var shape: ActorShape? = nil
+    public var isRootPath: Bool = false
+    public var points: [PathPoint] { return [] }
+    ///
+
+    public var isClosed: Bool { return _isClosed }
+    public var pathTransform: Mat2D? { return worldTransform }
+    public var deformedPoints: [PathPoint] { return points }
     
     var _width: Double = 0.0
     var _height: Double = 0.0
@@ -267,13 +300,22 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
     override func onDirty(_ dirt: UInt8) {
         super.onDirty(dirt)
         // We transformed, make sure parent is invalidated.
-        if parent is ActorShape {
-            parent!.invalidateShape()
+        if let shape = self.shape {
+            shape.invalidateShape()
         }
     }
+    
+    override public func completeResolve() {
+        basePathResolve()
+    }
+    
 }
 
 public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
+    
+    public var shape: ActorShape? = nil
+    public var isRootPath: Bool = false
+    
     public var isHidden: Bool = false
     private(set) var _isClosed: Bool = false
     var _points: [PathPoint] = []
@@ -282,15 +324,14 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     let VertexDeformDirty: UInt8 = 1 << 1
     var _connectedBones: [SkinnedBone]?
     
-    public var points: [PathPoint] {
-        return _points
-    }
+    public var points: [PathPoint] { return _points }
+    public var isClosed: Bool { return _isClosed }
     
-    public var isClosed: Bool {
-        return _isClosed
+    public var pathTransform: Mat2D? {
+        return self.isConnectedToBones
+            ? nil
+            : worldTransform
     }
-    
-    public var pathTransform: Mat2D? { return self.isConnectedToBones ? nil : worldTransform }
     
     var isPathInWorldSpace: Bool { return self.isConnectedToBones }
     
@@ -439,6 +480,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     
     func copyPath(_ node: ActorBasePath, _ resetArtboard: ActorArtboard) {
         let nodePath = node as! ActorPath
+        (self as ActorNode).copyNode(nodePath, resetArtboard)
         copySkinnable(nodePath, resetArtboard)
         isHidden = nodePath.isHidden
         _isClosed = nodePath._isClosed
@@ -458,5 +500,9 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     override func resolveComponentIndices(_ components: [ActorComponent?]) {
         super.resolveComponentIndices(components)
         resolveSkinnable(components)
+    }
+
+    override public func completeResolve() {
+        basePathResolve()
     }
 }

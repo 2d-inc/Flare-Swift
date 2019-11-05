@@ -128,39 +128,63 @@ public class FlareSkView: UIView {
         if let artboard = self.artboard {
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             
-            let bounds = setupAABB!
-            // Check for alignment:
-            // self.alignmentRectInsets
-            let contentsWidth = bounds.width
-            let contentsHeight = bounds.height
-            
-            let tx = contentsWidth * artboard.origin.x
-            let ty = contentsHeight * artboard.origin.y
-            
-            // Contain the Artboard
-            let scaleX = Float(frame.size.width) / contentsWidth
-            let scaleY = Float(frame.size.height) / contentsHeight
-            let scale = min(scaleX, scaleY)
-            
-            sk_canvas_save(_skiaCanvas)
-            
-            prePaint()
-            
-            sk_canvas_scale(_skiaCanvas, scale, scale)
-            sk_canvas_translate(_skiaCanvas, tx, ty)
-            
-            sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint) // Clear the background.
-            
-            artboard.draw(skCanvas: _skiaCanvas)
-            
-            sk_canvas_restore(_skiaCanvas)
-            
-            postPaint()
-            
-            sk_canvas_flush(_skiaCanvas)
-            
-            glBindRenderbuffer(GLenum(GL_RENDERBUFFER), _colorRenderBuffer)
-            _context!.presentRenderbuffer(Int(GL_RENDERBUFFER))
+            if let bounds = setupAABB {
+                #warning("TODO: Check for alignment")
+                // self.alignmentRectInsets
+                let contentWidth = bounds.width
+                let contentHeight = bounds.height
+                
+                let tx = contentWidth * artboard.origin.x
+                let ty = contentHeight * artboard.origin.y
+                
+                let size = frame.size
+                
+                // Contain the Artboard
+                let scaleX = Float(size.width) / contentWidth
+                let scaleY = Float(size.height) / contentHeight
+                let scale = min(scaleX, scaleY)
+                
+                sk_canvas_save(_skiaCanvas)
+                
+                prePaint()
+                
+                let x = -1 * bounds[0] - contentWidth / 2.0
+                let y = -1 * bounds[1] - contentHeight / 2.0
+                
+                let transform = Mat2D()
+                transform[4] = Float(size.width / 2.0)
+                transform[5] = Float(size.height / 2.0)
+                Mat2D.scale(transform, transform, Vec2D.init(fromValues: scaleX, scaleY))
+                let center = Mat2D()
+                center[4] = x
+                center[5] = y
+                Mat2D.multiply(transform, transform, center)
+                sk_canvas_translate(_skiaCanvas, Float(size.width/2.0), Float(size.height/2.0))
+                
+                sk_canvas_scale(_skiaCanvas, scale, scale)
+                sk_canvas_translate(_skiaCanvas, x, y)
+                
+                sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint) // Clear the background.
+                
+                let fill = sk_paint_new()
+                sk_paint_set_color(fill, sk_color_set_argb(0xFF, 0xFF, 0xFF, 0xFF))
+                var rect = sk_rect_t()
+                rect.left = bounds[0]
+                rect.top = bounds[1]
+                rect.right = bounds.width
+                rect.bottom = bounds.height
+                sk_canvas_draw_rect(_skiaCanvas, &rect, fill)
+                artboard.draw(skCanvas: _skiaCanvas)
+                
+                sk_canvas_restore(_skiaCanvas)
+                
+                postPaint()
+                
+                sk_canvas_flush(_skiaCanvas)
+                
+                glBindRenderbuffer(GLenum(GL_RENDERBUFFER), _colorRenderBuffer)
+                _context!.presentRenderbuffer(Int(GL_RENDERBUFFER))
+            }
         }
     }
 

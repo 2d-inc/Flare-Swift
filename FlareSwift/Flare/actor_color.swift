@@ -91,8 +91,7 @@ public class ActorColor: ActorPaint {
 
 public protocol ActorFill: class {
     var _fillRule: FillRule { get set }
-    
-    
+
     func copyFill(_ node: ActorFill, _ resetArtboard: ActorArtboard)
     func initializeGraphics()
     

@@ -7,13 +7,20 @@
 //
 
 import Foundation
+import os.log
 
 public class ActorClip {
     var clipIdx: Int
     var node: ActorNode?
+    var intersect = true
     
     public init(_ idx: Int) {
         self.clipIdx = idx
+    }
+
+    public init(copy from: ActorClip) {
+        clipIdx = from.clipIdx
+        intersect = from.intersect
     }
 }
 
@@ -65,7 +72,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var worldTransform: Mat2D {
+    public var worldTransform: Mat2D {
         get {
             return self._worldTransform
         }
@@ -253,7 +260,11 @@ public class ActorNode: ActorComponent {
         if clipCount > 0 {
             self._clips = Array<ActorClip>()
             for i in 0 ..< clipCount {
-                self._clips!.insert(ActorClip(reader.readId(label: "clip")), at: i)
+                let clip = ActorClip(reader.readId(label: "clip"))
+                if(artboard.actor.version >= 23) {
+                    clip.intersect = reader.readBool(label: "intersect")
+                }
+                self._clips!.insert(clip, at: i)
             }
         }
         reader.closeArray()
@@ -287,7 +298,7 @@ public class ActorNode: ActorComponent {
         if let nodeClips = node._clips {
             _clips = Array<ActorClip>()
             for (index, value) in nodeClips.enumerated() {
-                _clips!.insert(ActorClip(value.clipIdx), at: index)
+                _clips!.insert(ActorClip(copy: value), at: index)
             }
         } else {
             _clips = nil
@@ -353,7 +364,10 @@ public class ActorNode: ActorComponent {
     
         if let clips = _clips {
             for clip in clips {
-                clip.node = components[clip.clipIdx] as? ActorNode
+                let component = components[clip.clipIdx]
+                if let cNode = component as? ActorNode {
+                    clip.node = cNode
+                }
             }
         }
     }

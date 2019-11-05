@@ -23,7 +23,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     /**
      Mat2D _lastControllerViewTransform;
      */
-    private let flareViewFrame: CGRect
+    private var flareViewFrame: CGRect
     private var assetBundle: Bundle
     private var displayLink: CADisplayLink?
     private var artboardName: String?
@@ -68,7 +68,9 @@ public class FlareSkViewController: UIViewController, FlareController {
     var isLoading: Bool { return _isLoading }
     var aabb: AABB? { return setupAABB }
     
-    public init(for filename: String, frame: CGRect, _ sourceBundle: Bundle = Bundle.main) {
+    public init(for filename: String,
+                _ frame: CGRect = UIScreen.main.bounds,
+                _ sourceBundle: Bundle = Bundle.main) {
         guard filename.hasSuffix(".flr") else {
             fatalError("FlareController init() needs a .flr file")
         }
@@ -103,14 +105,16 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        print("BOUNDS: \(self.view.bounds)")
+        flareViewFrame = self.view.bounds
+        updateAnimation(onlyWhenMissing: true)
+//        print("Change Bounds: \(self.view.bounds)")
     }
     
     override public func viewDidLayoutSubviews() {
         /**
          When bounds change for a view controller's view, the view adjust the positions of its subviews and then the system calls this method.
          */
-        #warning("TODO:")
+        #warning("TODO: check correctness")
         super.viewDidLayoutSubviews()
     }
     
@@ -118,6 +122,7 @@ public class FlareSkViewController: UIViewController, FlareController {
         /**
          Notifies the view controller that its view was removed from a view hierarchy.
          */
+        #warning("REMOVE:")
         print("Disappear view, disposing")
         super.viewDidDisappear(animated)
         dispose()

@@ -55,7 +55,7 @@ public class FlareSkActor: Actor {
         return FlareSkArtboard(actor: self)
     }
     
-    public func makeShapeNode() -> ActorShape {
+    public func makeShapeNode(_ source: ActorShape?) -> ActorShape {
         return FlareSkShape()
     }
     

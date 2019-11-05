@@ -19,8 +19,11 @@ protocol FlareSkPathPointsPath: FlareSkPath {
     var _path: OpaquePointer { get set }
     var _isValid: Bool { get set }
     var isClosed: Bool { get }
-    /// This getter relies (but not necessarily) on the getter implemented in `ActorBasePath`.
-    var pathPoints: [PathPoint] { get }
+    var deformedPoints: [PathPoint] { get }
+    
+    func invalidatePath()
+    func getPathPoints() -> [PathPoint]
+    func makePath()  -> OpaquePointer
 }
 
 extension FlareSkPathPointsPath {
@@ -35,12 +38,77 @@ extension FlareSkPathPointsPath {
         _path = sk_path_new()
     }
     
+    func invalidatePath() {
+        _isValid = false
+    }
+    
+    func getPathPoints() -> [PathPoint] {
+        let pts = deformedPoints
+        guard !pts.isEmpty else {
+            return []
+        }
+        
+        var pathPoints = [PathPoint]()
+        let pc = pts.count
+        
+        let arcConstant: Float32 = 0.55
+        let iarcConstant = 1.0 - arcConstant
+        var previous = isClosed ? pts.last : nil
+        
+        for i in 0 ..< pc {
+            let point = pts[i]
+            switch point.type {
+            case .Straight:
+                let straightPoint = point as! StraightPathPoint
+                let radius = straightPoint.radius
+                if radius > 0 {
+                    if !isClosed && (i == 0 || i == pc - 1) {
+                        pathPoints.append(point)
+                        previous = point
+                    } else {
+                        let next = pts[(i+1)%pc]
+                        let prevPoint = previous is CubicPathPoint ? (previous as! CubicPathPoint).outPoint : previous!.translation
+                        let nextPoint = next is CubicPathPoint ? (next as! CubicPathPoint).inPoint : next.translation
+                        let pos = point.translation
+                        
+                        let toPrev = Vec2D.subtract(Vec2D(), prevPoint, pos)
+                        let toPrevLength = Vec2D.length(toPrev)
+                        toPrev[0] /= toPrevLength
+                        toPrev[1] /= toPrevLength
+                        
+                        let toNext = Vec2D.subtract(Vec2D(), nextPoint, pos)
+                        let toNextLength = Vec2D.length(toNext)
+                        toNext[0] /= toNextLength
+                        toNext[1] /= toNextLength
+                        
+                        let renderRadius = min(toPrevLength, min(toNextLength, Float32(radius)))
+                        var translation = Vec2D.scaleAndAdd(Vec2D(), pos, toPrev, renderRadius)
+                        pathPoints.append(CubicPathPoint.init(fromValues: translation, translation, Vec2D.scaleAndAdd(Vec2D(), pos, toPrev, iarcConstant * renderRadius)))
+                        
+                        translation = Vec2D.scaleAndAdd(Vec2D(), pos, toNext, renderRadius)
+                        previous = CubicPathPoint.init(fromValues: translation, Vec2D.scaleAndAdd(Vec2D(), pos, toNext, iarcConstant * renderRadius), translation)
+                        pathPoints.append(previous!)
+                    }
+                } else {
+                    pathPoints.append(point)
+                    previous = point
+                }
+                break
+            default:
+                pathPoints.append(point)
+                previous = point
+                break
+            }
+        }
+        
+        return pathPoints
+    }
+    
     func makePath()  -> OpaquePointer {
         _isValid = true
-        
         sk_path_reset(_path)
         
-        let renderPoints = pathPoints
+        let renderPoints = getPathPoints()
         guard !renderPoints.isEmpty else {
             return self._path
         }

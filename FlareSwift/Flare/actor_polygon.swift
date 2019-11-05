@@ -11,26 +11,11 @@ import Foundation
 public class ActorPolygon: ActorProceduralPath {
     var sides = 5
     
-    override public func invalidatePath() {}
-    
-    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let polygon = ActorPolygon()
-        polygon.copyPolygon(self, resetArtboard)
-        return polygon
-    }
-    
-    func copyPolygon(_ node: ActorPolygon, _ ab: ActorArtboard) {
-        copyPath(node, ab)
-        sides = node.sides
-    }
-    
-    func readPolygon(_ artboard: ActorArtboard, _ reader: StreamReader) {
-        self.readNode(artboard, reader)
-        self.width = Double(reader.readFloat32(label: "width"))
-        self.height = Double(reader.readFloat32(label: "height"))
-        self.sides = Int(reader.readUint32(label: "sides"))
-    }
-    
+    override public var isClosed: Bool { return true }
+    var doesDraw: Bool { return !self.renderCollapsed }
+    var radiusX: Double { return self.width/2 }
+    var radiusY: Double { return self.height/2 }
+
     override public var points: [PathPoint] {
         var _polygonPoints = [PathPoint]()
         var angle = Float32.pi / 2.0
@@ -47,17 +32,24 @@ public class ActorPolygon: ActorProceduralPath {
 
         return _polygonPoints
     }
+
+    override public func invalidatePath() {}
+
+    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
+        let polygon = ActorPolygon()
+        polygon.copyPolygon(self, resetArtboard)
+        return polygon
+    }
     
-    override public var isClosed: Bool {
-        return true
+    func copyPolygon(_ node: ActorPolygon, _ ab: ActorArtboard) {
+        copyPath(node, ab)
+        sides = node.sides
     }
-    var doesDraw: Bool {
-        return !self.renderCollapsed
-    }
-    var radiusX: Double {
-        return self.width/2
-    }
-    var radiusY: Double {
-        return self.height/2
+    
+    func readPolygon(_ artboard: ActorArtboard, _ reader: StreamReader) {
+        self.readNode(artboard, reader)
+        self.width = Double(reader.readFloat32(label: "width"))
+        self.height = Double(reader.readFloat32(label: "height"))
+        self.sides = Int(reader.readUint32(label: "sides"))
     }
 }

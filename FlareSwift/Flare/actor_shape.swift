@@ -10,36 +10,36 @@ import Foundation
 
 public class ActorShape: ActorNode, ActorDrawable {
     
+    var _paths = [ActorBasePath]()
     var _strokes = [ActorStroke]()
     var _fills = [ActorFill]()
+    private(set) var transformAffectsStroke = false
     
     public var isHidden: Bool = false
-    public var _clipShapes: [[ActorShape]]?
+    public var _clipShapes: [[ClipShape]]?
     public var _drawOrder: Int = -1
     public var drawIndex: Int = -1
     
     public var blendModeId: UInt32 {
-        get {
-            return 0
-        }
+        get { return 0 }
         set {}
     }
     
     public var fill: ActorFill? {
-        return _fills.isEmpty ? nil : _fills.first
+        return _fills.isEmpty
+            ? nil
+            : _fills.first
     }
     
     var stroke: ActorStroke? {
-        return _strokes.isEmpty ? nil : _strokes.first
+        return _strokes.isEmpty
+            ? nil
+            : _strokes.first
     }
     
-    public var fills: [ActorFill] {
-        return _fills
-    }
-    
-    var strokes: [ActorStroke] {
-        return _strokes
-    }
+    public var fills: [ActorFill] { return _fills }
+    var strokes: [ActorStroke] { return _strokes }
+    var paths: [ActorBasePath] { return _paths }
     
     override func update(dirt: UInt8) {
         super.update(dirt: dirt)
@@ -48,10 +48,11 @@ public class ActorShape: ActorNode, ActorDrawable {
     
     func copyShape(_ shape: ActorShape, _ ab: ActorArtboard) {
         self.copyDrawable(shape, ab)
+        shape.transformAffectsStroke = self.transformAffectsStroke
     }
     
     override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
-        let shape = ActorShape()
+        let shape = resetArtboard.actor.makeShapeNode(self)
         shape.copyShape(self, resetArtboard)
         return shape
     }
@@ -60,8 +61,8 @@ public class ActorShape: ActorNode, ActorDrawable {
         var aabb: AABB? = nil
         if let cs = _clipShapes {
             for clips in cs {
-                for node in clips {
-                    let bounds = node.computeAABB()
+                for clipShape in clips {
+                    let bounds = clipShape.shape.computeAABB()
                     if aabb == nil {
                         aabb = bounds;
                     } else {
@@ -84,8 +85,7 @@ public class ActorShape: ActorNode, ActorDrawable {
         if aabb != nil {
             return aabb!
         }
-        
-//        for (ActorNode node in children) {
+
         if let c = children {
             for node in c {
                 if let path = node as? ActorBasePath {
@@ -137,7 +137,6 @@ public class ActorShape: ActorNode, ActorDrawable {
             Vec2D.init(fromValues: aabb![0], aabb![3])
         ]
         
-//        for (var i = 0; i < points.length; i++) {
         for i in 0 ..< points.count {
             let pt = points[i]
             let wp = Vec2D.transformMat2D(pt, pt, world)
@@ -168,6 +167,9 @@ public class ActorShape: ActorNode, ActorDrawable {
     
     func readShape(_ artboard: ActorArtboard, _ reader: StreamReader) {
         self.readDrawable(artboard, reader)
+        if artboard.actor.version >= 22 {
+            self.transformAffectsStroke = reader.readBool(label: "transformAffectsStroke")
+        }
     }
     
     func addStroke(_ stroke: ActorStroke) {
@@ -178,8 +180,20 @@ public class ActorShape: ActorNode, ActorDrawable {
         _fills.append(fill)
     }
     
-    override func completeResolve() {
+    override public func completeResolve() {
         (self as ActorDrawable).completeResolve()
     }
     
+    func addPath(_ path: ActorBasePath) -> Bool {
+        if _paths.contains(where: { p in return p === path }) {
+            return false
+        }
+        _paths.append(path)
+        return true
+    }
+    
+    func removePath(_ path: ActorBasePath) -> Bool {
+        _paths.removeAll(where: { p in return p === path })
+        return true
+    }    
 }

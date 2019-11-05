@@ -29,20 +29,29 @@ class ViewController: UIViewController {
         view.addSubview(button)
         
         print("viewDidLoad")
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {
+            timer in
+                self.button.sendActions(for: .touchUpInside)
+        })
     }
 
     @objc func onTap() {
 //        print("TAP!")
-        if flareController != nil {
+        if flareController == nil {
+            flareController = FlareSkViewController(for: "Shape.flr", CGRect(x: 50, y: 100, width: 800, height: 600))
+            flareController!.animationName = "Move"
+            addChild(flareController!)
+
+            let fView = flareController!.view!
+            view.addSubview(fView)
+            fView.translatesAutoresizingMaskIntoConstraints = false
+            flareController!.didMove(toParent: self)
+
+            button.setTitle(removeLabel, for: .normal)
+        } else {
             flareController?.view.removeFromSuperview()
             flareController = nil
             button.setTitle(addLabel, for: .normal)
-        } else {
-            flareController = FlareSkViewController(for: "Shape.flr", frame: CGRect(origin: CGPoint(x: 50, y: 100), size: CGSize(width: 800, height: 600)))
-            flareController!.animationName = "Move"
-            view.addSubview(flareController!.view)
-            button.setTitle(removeLabel, for: .normal)
-            
         }
     }
 }

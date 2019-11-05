@@ -9,7 +9,7 @@
 import Foundation
 import MetalKit
 
-public class FlareCGActor: Actor {
+public class FlareCGActor: Actor {    
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
     public var _artboardCount: Int = 0
@@ -25,7 +25,7 @@ public class FlareCGActor: Actor {
         return FlareCGArtboard(actor: self)
     }
     
-    public func makeShapeNode() -> ActorShape {
+    public func makeShapeNode(_ source: ActorShape?) -> ActorShape {
         return FlareCGShape()
     }
     

@@ -12,6 +12,15 @@ public enum BlendModes {
     case Normal, Multiply, Screen, Additive
 }
 
+public class ClipShape {
+    let shape: ActorShape
+    let intersect: Bool
+    init(_ s: ActorShape, _ i: Bool) {
+        shape = s
+        intersect = i
+    }
+}
+
 /// This protocol requires that its implementation will be mixed together with an [ActorNode], or an
 /// [ActorNode] descendant.
 public protocol ActorDrawable: class {
@@ -21,7 +30,7 @@ public protocol ActorDrawable: class {
     var drawIndex: Int { get set }
     var isHidden: Bool { get set }
     var blendModeId: UInt32 { get set }
-    var _clipShapes: [[ActorShape]]? { get set }
+    var _clipShapes: [[ClipShape]]? { get set }
     
     func computeAABB() -> AABB
     func initializeGraphics()
@@ -47,7 +56,7 @@ extension ActorDrawable {
         }
     }
     
-    var clipShapes: [[ActorShape]] {
+    var clipShapes: [[ClipShape]] {
         return _clipShapes ?? []
     }
     
@@ -71,15 +80,15 @@ extension ActorDrawable {
     }
     
     func completeResolve() {
-        _clipShapes = [[ActorShape]]()
+        _clipShapes = [[ClipShape]]()
         let clippers = allClips
         
         for clips in clippers {
-            var shapes = [ActorShape]()
+            var shapes = [ClipShape]()
             for clip in clips {
                 _ = clip.node?.all({ (node: ActorNode) -> Bool in
                     if let shapeNode = node as? ActorShape {
-                        shapes.append(shapeNode)
+                        shapes.append(ClipShape(shapeNode, clip.intersect))
                     }
                     return true
                 })

@@ -20,8 +20,7 @@ class SequenceFrame {
     var offset: Int!
 }
 
-public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
-    
+public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {    
     public var _drawOrder: Int = -1 // Must be public b/c of ActorDrawable
     public var drawOrder: Int {
         get {
@@ -41,7 +40,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
         }
         set {}
     }
-    public var _clipShapes: [[ActorShape]]?
+    public var _clipShapes: [[ClipShape]]?
     public var drawIndex: Int = -1
     
     var imageTransform: Mat2D? {

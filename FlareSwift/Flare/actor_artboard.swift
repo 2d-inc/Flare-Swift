@@ -491,7 +491,7 @@ public class ActorArtboard: Equatable {
                     
                 case BlockTypes.ActorShape:
 //                    component = ActorShape.read(self, nodeBlock, actor.makeShapeNode())
-                    component = actor.makeShapeNode()
+                    component = actor.makeShapeNode(nil)
                     (component as! ActorShape).readShape(self, nodeBlock)
                     break;
                     
