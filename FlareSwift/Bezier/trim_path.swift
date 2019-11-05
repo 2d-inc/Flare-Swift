@@ -57,7 +57,7 @@ private func _trimPathSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>],
             offset = _appendPathSegmentSequential(paths, result, offset, 0.0, trimStart)
         }
         if trimStop < totalLength {
-            offset = _appendPathSegmentSequential(paths, result, offset, trimStart, trimStop)
+            offset = _appendPathSegmentSequential(paths, result, offset, trimStop, totalLength)
         }
     } else {
         if trimStart < trimStop {
