@@ -95,7 +95,7 @@ extension FlareSkDrawable {
                     continue
                 }
                 if(clipShape.intersect) {
-                    let shapePath = (shape as! FlareSkPath).path
+                    let shapePath = (shape as! FlareSkShape).path
                     sk_canvas_clip_path(skCanvas, shapePath, true)
                 } else {
                     var clipRect = sk_rect_t()
