@@ -26,12 +26,14 @@ public class ActorRectangle: ActorProceduralPath {
     override public var points: [PathPoint] {
         let hw = Float32(self._width/2)
         let hh = Float32(self._height/2)
+        let minH = Float32(min(hw, hh))
+        let renderRadius = min(_radius, Double(minH))
         
         return [
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, -hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, -hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, hh), _radius),
-            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, hh), _radius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, -hh), renderRadius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, -hh), renderRadius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: hw, hh), renderRadius),
+            StraightPathPoint.init(fromValues: Vec2D(fromValues: -hw, hh), renderRadius),
         ]   
     }
     
