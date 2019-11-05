@@ -49,8 +49,8 @@ class FlareSkRadialFill: RadialGradientFill, FlareSkFill {
             let a = min(max(UInt32(Double(overrideColor[3]) * artboard!.modulateOpacity * opacity * shape.renderOpacity * 255), 0), 255)
             paintColor = sk_color_set_argb(a,r,g,b)
         } else {
-            let alpha = min(max(artboard!.modulateOpacity * opacity * shape.renderOpacity, 0,0), 255.0) // Clamp
-            paintColor = sk_color_set_argb(0xFF, 0xFF, 0xFF, UInt32(alpha)) // White w/ custom alpha
+            let alpha = min(max(artboard!.modulateOpacity * opacity * shape.renderOpacity * 255, 0,0), 255.0) // Clamp
+            paintColor = sk_color_set_argb(UInt32(alpha), 0xFF, 0xFF, 0xFF) // White w/ custom alpha
         }
         
         sk_paint_set_color(_paint, paintColor)

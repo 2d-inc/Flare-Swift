@@ -286,7 +286,6 @@ public class GradientColor: ActorPaint {
     private(set) var end = Vec2D()
     private(set) var renderStart = Vec2D()
     private(set) var renderEnd = Vec2D()
-    private var _opacity = 1.0
     
     func copyGradient(_ node: GradientColor, _ resetArtboard: ActorArtboard) {
         copyPaint(node, resetArtboard)
