@@ -10,13 +10,13 @@ import Foundation
 
 func trimPath<C: ConcretePath>(_ paths : [PiecewiseBezier<C>], _ startT: Float, _ stopT: Float, _ complement: Bool, _ isSequential: Bool) -> ConcretePath {
     if isSequential {
-        return _trimPathSequential(paths, startT, stopT, complement)
+        return trimPathSequential(paths, startT, stopT, complement)
     } else {
-        return _trimPathSync(paths, startT, stopT, complement)
+        return trimPathSync(paths, startT, stopT, complement)
     }
 }
 
-private func _trimPathSync<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ startT: Float, _ stopT: Float, _ complement: Bool) -> ConcretePath {
+private func trimPathSync<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ startT: Float, _ stopT: Float, _ complement: Bool) -> ConcretePath {
     let result = C.init()
     
     for p in paths {
@@ -26,14 +26,14 @@ private func _trimPathSync<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ sta
         
         if complement {
             if trimStart > 0 {
-                _appendPathSegmentSync(p, result, 0.0, 0.0, trimStart)
+                appendPathSegmentSync(p, result, 0.0, 0.0, trimStart)
             }
             if trimEnd < length {
-                _appendPathSegmentSync(p, result, 0.0, trimEnd, length)
+                appendPathSegmentSync(p, result, 0.0, trimEnd, length)
             }
         } else {
             if trimStart < trimEnd {
-                _appendPathSegmentSync(p, result, 0.0, trimStart, trimEnd)
+                appendPathSegmentSync(p, result, 0.0, trimStart, trimEnd)
             }
         }
     }
@@ -41,7 +41,7 @@ private func _trimPathSync<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ sta
     return result
 }
 
-private func _trimPathSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ startT: Float, _ stopT: Float, _ complement: Bool) -> ConcretePath {
+private func trimPathSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ startT: Float, _ stopT: Float, _ complement: Bool) -> ConcretePath {
     let result = C.init()
     
     var totalLength: Float = 0
@@ -54,21 +54,21 @@ private func _trimPathSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>],
     
     if complement {
         if trimStart > 0 {
-            offset = _appendPathSegmentSequential(paths, result, offset, 0.0, trimStart)
+            offset = appendPathSegmentSequential(paths, result, offset, 0.0, trimStart)
         }
         if trimStop < totalLength {
-            offset = _appendPathSegmentSequential(paths, result, offset, trimStop, totalLength)
+            offset = appendPathSegmentSequential(paths, result, offset, trimStop, totalLength)
         }
     } else {
         if trimStart < trimStop {
-            offset = _appendPathSegmentSequential(paths, result, offset, trimStart, trimStop)
+            offset = appendPathSegmentSequential(paths, result, offset, trimStart, trimStop)
         }
     }
     
     return result
 }
 
-private func _appendPathSegmentSync<C: ConcretePath>(_ path: PiecewiseBezier<C>, _ to: ConcretePath, _ offset: Float, _ start: Float, _ stop: Float) {
+private func appendPathSegmentSync<C: ConcretePath>(_ path: PiecewiseBezier<C>, _ to: ConcretePath, _ offset: Float, _ start: Float, _ stop: Float) {
     let nextOffset = offset + path.length
     if start < nextOffset {
         if let extracted = path.extractPath(start-offset, stop-offset) {
@@ -78,7 +78,7 @@ private func _appendPathSegmentSync<C: ConcretePath>(_ path: PiecewiseBezier<C>,
 }
 
 /// offset, start and stop are all relative to the length of the full path.
-private func _appendPathSegmentSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ to: ConcretePath, _ offset: Float, _ start: Float, _ stop: Float) -> Float {
+private func appendPathSegmentSequential<C: ConcretePath>(_ paths: [PiecewiseBezier<C>], _ to: ConcretePath, _ offset: Float, _ start: Float, _ stop: Float) -> Float {
     var result = offset
     var nextOffset = offset
     
