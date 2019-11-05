@@ -597,28 +597,30 @@ public class ActorArtboard: Equatable {
         var drwIdx = 0;
         var anIdx = 0;
         
-        for i in 1 ... componentCount {
-            // Nodes can be nil if we read from a file version that contained nodes that we don't interpret in this runtime.
-            if let c = _components![i] {
-                c.resolveComponentIndices(_components!);
-                
-                if c is ActorDrawable {
-                    _drawableNodes.insert(c as! ActorDrawable, at: drwIdx)
-                    drwIdx += 1
+        if componentCount > 0 {
+            for i in 1 ... componentCount {
+                // Nodes can be nil if we read from a file version that contained nodes that we don't interpret in this runtime.
+                if let c = _components![i] {
+                    c.resolveComponentIndices(_components!);
+                    
+                    if c is ActorDrawable {
+                        _drawableNodes.insert(c as! ActorDrawable, at: drwIdx)
+                        drwIdx += 1
+                    }
+                    
+                    if let an = c as? ActorNode {
+                        _nodes!.insert(an, at: anIdx)
+                        anIdx += 1
+                    }
                 }
                 
-                if let an = c as? ActorNode {
-                    _nodes!.insert(an, at: anIdx)
-                    anIdx += 1
-                }
             }
             
-        }
-        
-        for i in 1 ... componentCount {
-            if let c = components![i] {
-                c.completeResolve();
-            }
+            for i in 1 ... componentCount {
+                if let c = components![i] {
+                    c.completeResolve();
+                }
+            }            
         }
         
         sortDependencies();
