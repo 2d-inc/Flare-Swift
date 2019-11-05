@@ -258,9 +258,7 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
     var _height: Double = 0.0
     
     var width: Double {
-        get {
-            return _width
-        }
+        get { return _width }
         set {
             if newValue != _width {
                 _width = newValue
@@ -270,9 +268,7 @@ public class ActorProceduralPath: ActorNode, ActorBasePath {
     }
     
     var height: Double {
-        get {
-            return _height
-        }
+        get { return _height }
         set {
             if newValue != _height {
                 _height = newValue

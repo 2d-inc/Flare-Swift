@@ -12,22 +12,14 @@ public class Mat2D: Equatable, Hashable {
     var _buffer : [Float32]
     
     var values : [Float32] {
-        get {
-            return self._buffer
-        }
-        set {
-            self._buffer = newValue
-        }
+        get { return self._buffer }
+        set { self._buffer = newValue }
     }
     
     // Overload [] operator for this class
     subscript(index: Int) -> Float32 {
-        get {
-            return _buffer[index]
-        }
-        set {
-            _buffer[index] = newValue
-        }
+        get { return _buffer[index] }
+        set { _buffer[index] = newValue }
     }
     
     var mat4 : [Float32] {

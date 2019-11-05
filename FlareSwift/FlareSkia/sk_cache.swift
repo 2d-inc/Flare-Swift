@@ -32,9 +32,9 @@ class BundleCache {
             bCache.ref(asset)
             return asset
         }
+        // Something went wrong
         #warning("TODO: use Result")
         os_log("Cache or asset are nil!", type: .debug)
-        // Something went wrong
         return nil
     }
     
@@ -80,9 +80,9 @@ final class SkCacheAsset: CacheAsset {
             throw LoadError.FileNotFound
         }
     }
-    /**
-     TODO: possibly async variants, if needed.
-     */
+
+    /** TODO: possibly async variants, if needed. */
+
 }
 
 final class FlareSkCache: FlareCache<SkCacheAsset> {
