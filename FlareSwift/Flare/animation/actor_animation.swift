@@ -215,13 +215,17 @@ public class ComponentAnimation {
         return componentAnimation;
     }
     
-    func apply(time: Double, components: Array<ActorComponent>, mix: Float) {
+    func apply(time: Double, components: Array<ActorComponent?>, mix: Float) {
         guard let p = _properties else {
             print("apply(): nil _properties")
             return
         }
         for propertyAnimation in p {
-            propertyAnimation.apply(time: time, component: components[_componentIndex], mix: mix)
+            propertyAnimation.apply(
+                time: time,
+                component: components[_componentIndex]!,
+                mix: mix
+            )
         }
     }
 }
@@ -364,12 +368,19 @@ public class ActorAnimation {
     }
     
     public func apply(time: Double, artboard: ActorArtboard, mix: Float) {
-        guard let components = _components else {
+        guard
+            let components = _components,
+            let abComponents = artboard.components
+        else {
             print("apply(): no components??")
             return
         }
         for componentAnimation in components {
-            componentAnimation.apply(time: time, components: artboard.components! as! Array<ActorComponent>, mix: mix);
+            componentAnimation.apply(
+                time: time,
+                components: abComponents as! Array<ActorComponent?>,
+                mix: mix
+            );
         }
     }
     
