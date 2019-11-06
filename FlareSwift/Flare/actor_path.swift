@@ -314,7 +314,7 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     
     public var isHidden: Bool = false
     private(set) var _isClosed: Bool = false
-    var _points: [PathPoint] = []
+    private var _points: [PathPoint] = []
     var vertexDeform: [Float32]?
     var skin: ActorSkin?
     let VertexDeformDirty: UInt8 = 1 << 1
@@ -401,28 +401,31 @@ public class ActorPath: ActorNode, ActorSkinnable, ActorBasePath {
     }
     
     override func update(dirt: UInt8) {
-        if vertexDeform != nil && (dirt & VertexDeformDirty) == VertexDeformDirty {
+        if
+            let vertexDeform = vertexDeform,
+            (dirt & VertexDeformDirty) == VertexDeformDirty
+        {
             var readIdx = 0
             for point in _points {
-                point.translation[0] = vertexDeform![readIdx]
+                point.translation[0] = vertexDeform[readIdx]
                 readIdx += 1
-                point.translation[1] = vertexDeform![readIdx]
+                point.translation[1] = vertexDeform[readIdx]
                 readIdx += 1
                 switch (point.type) {
                 case PointType.Straight:
-                    (point as! StraightPathPoint).radius = Double(vertexDeform![readIdx])
+                    (point as! StraightPathPoint).radius = Double(vertexDeform[readIdx])
                     readIdx += 1
                     break;
                     
                 default:
                     let cubicPoint = point as! CubicPathPoint;
-                    cubicPoint.inPoint[0] = vertexDeform![readIdx]
+                    cubicPoint.inPoint[0] = vertexDeform[readIdx]
                     readIdx += 1
-                    cubicPoint.inPoint[1] = vertexDeform![readIdx]
+                    cubicPoint.inPoint[1] = vertexDeform[readIdx]
                     readIdx += 1
-                    cubicPoint.outPoint[0] = vertexDeform![readIdx]
+                    cubicPoint.outPoint[0] = vertexDeform[readIdx]
                     readIdx += 1
-                    cubicPoint.outPoint[1] = vertexDeform![readIdx]
+                    cubicPoint.outPoint[1] = vertexDeform[readIdx]
                     readIdx += 1
                     break
                 }

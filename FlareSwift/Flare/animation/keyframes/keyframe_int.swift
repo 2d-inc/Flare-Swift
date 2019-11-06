@@ -10,13 +10,10 @@ import Foundation
 
 class KeyFrameInt: Interpolated {
     var _time: Double
-    
     var _interpolator: Interpolator?
-    
     var _value: Float
-    var value: Float {
-        return _value
-    }
+    
+    var value: Float { return _value }
     
     init() {
         self._time = 0

@@ -43,12 +43,8 @@ public extension Actor {
         return (_artboards.count > 0) ? _artboards.first as? ActorArtboard : nil
     }
     
-    var version: Int {
-        return _version
-    }
-    var texturesUsed: Int {
-        return maxTextureIndex + 1
-    }
+    var version: Int { return _version }
+    var texturesUsed: Int { return maxTextureIndex + 1 }
     
     func getArtboard(name: String?) -> ActorArtboard? {
         guard let name = name else {

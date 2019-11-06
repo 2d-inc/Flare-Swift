@@ -82,6 +82,5 @@ class KeyFrameImageVertices: Interpolated {
         imageNode.invalidateDrawable()
     }
     
-    func setNext(_ frame: KeyFrame) { // Do Nothing
-    }
+    func setNext(_ frame: KeyFrame) { /** Do Nothing */ }
 }
