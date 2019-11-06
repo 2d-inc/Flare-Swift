@@ -89,7 +89,7 @@ class PiecewiseBezier<C> where C: ConcretePath {
         
         var beziers = [Bezier]()
         
-        if start.index != end.index {
+        if start.index < end.index {
             //            print("ADDING: \(start.curve.description)")
             beziers.append(start.curve)
             // Add all the curves in between
@@ -129,6 +129,12 @@ class PiecewiseBezier<C> where C: ConcretePath {
         
         var pStart = piecewiseStart
         let curvesCount = self.curves.count
+        
+        // Early out to avoid numerical precision errors.
+        if t == 1 {
+            let curve = self.curves[curvesCount-1]
+            return (curve, curvesCount-1)
+        }
         
         for i in 0 ..< curvesCount {
             let curve = self.curves[i]
