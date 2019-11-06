@@ -69,7 +69,7 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         if let pathFill = fill, pathFill.fillRule == .EvenOdd {
             sk_path_set_evenodd(_path, true)
         } else {
-            sk_path_set_evenodd(_path, true)
+            sk_path_set_evenodd(_path, false)
         }
         
         for path in paths {
