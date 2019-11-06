@@ -73,24 +73,27 @@ class FlareSkShape: ActorShape, FlareSkDrawable {
         }
         
         for path in paths {
-            let pathTransform = path.pathTransform!
-            var skMat = sk_matrix_t(
-                mat: (
-                    pathTransform[0],
-                    pathTransform[2],
-                    pathTransform[4],
-                    pathTransform[1],
-                    pathTransform[3],
-                    pathTransform[5],
-                    0, 0, 1.0
-                )
-            )
-            let matPointer = withUnsafeMutablePointer(to: &skMat){
-                UnsafeMutablePointer($0)
-            }
             let skiaPath = path as! FlareSkPath
             let subPath = skiaPath.path // Calls the getter.
-            sk_path_add_path_with_matrix(_path, subPath, 0, 0, matPointer)
+            if let pathTransform = path.pathTransform {
+                var skMat = sk_matrix_t(
+                    mat: (
+                        pathTransform[0],
+                        pathTransform[2],
+                        pathTransform[4],
+                        pathTransform[1],
+                        pathTransform[3],
+                        pathTransform[5],
+                        0, 0, 1.0
+                    )
+                )
+                let matPointer = withUnsafeMutablePointer(to: &skMat){
+                    UnsafeMutablePointer($0)
+                }
+                sk_path_add_path_with_matrix(_path, subPath, 0, 0, matPointer)
+            } else {
+                sk_path_add_path(_path, subPath, 0, 0)
+            }
         }
 
         return _path
