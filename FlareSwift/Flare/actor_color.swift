@@ -408,7 +408,7 @@ public class RadialGradientFill: RadialGradientColor, ActorFill {
     }
     
     func readRadialGradientFill(_ artboard: ActorArtboard, _ reader: StreamReader) {
-        self.readGradientColor(artboard, reader)
+        self.readRadialGradientColor(artboard, reader)
         self.readFill(artboard, reader)
     }
 }
