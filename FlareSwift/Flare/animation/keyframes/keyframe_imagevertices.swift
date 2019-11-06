@@ -33,7 +33,7 @@ class KeyFrameImageVertices: Interpolated {
     
     
     func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
-        let imageNode = _component
+        let imageNode = component as! ActorImage
         let to = (toFrame as! KeyFrameImageVertices).vertices!
         let c = vertices.count
         var wr = [Float32](repeating: 0.0, count: c)
@@ -63,7 +63,7 @@ class KeyFrameImageVertices: Interpolated {
     }
     
     func apply(component: ActorComponent, mix: Float) {
-        let imageNode = _component
+        let imageNode = component as! ActorImage
         let c = vertices.count
         var wr = [Float](repeating: 0.0, count: c)
         if (mix == 1.0) {

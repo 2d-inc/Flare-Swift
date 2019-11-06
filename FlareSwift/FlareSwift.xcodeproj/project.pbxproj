@@ -60,7 +60,6 @@
 		E453598922282EF200981BD7 /* property_types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594422282EF200981BD7 /* property_types.swift */; };
 		E453598A22282EF200981BD7 /* actor_animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594522282EF200981BD7 /* actor_animation.swift */; };
 		E453598B22282EF200981BD7 /* keyframe_length.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594722282EF200981BD7 /* keyframe_length.swift */; };
-		E453598C22282EF200981BD7 /* keyframe_vertex_deform.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594822282EF200981BD7 /* keyframe_vertex_deform.swift */; };
 		E453598D22282EF200981BD7 /* keyframe_gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594922282EF200981BD7 /* keyframe_gradient.swift */; };
 		E453598E22282EF200981BD7 /* keyframe_numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594A22282EF200981BD7 /* keyframe_numeric.swift */; };
 		E453598F22282EF200981BD7 /* keyframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594B22282EF200981BD7 /* keyframe.swift */; };
@@ -197,7 +196,6 @@
 		E453594422282EF200981BD7 /* property_types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = property_types.swift; sourceTree = "<group>"; };
 		E453594522282EF200981BD7 /* actor_animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = actor_animation.swift; sourceTree = "<group>"; };
 		E453594722282EF200981BD7 /* keyframe_length.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_length.swift; sourceTree = "<group>"; };
-		E453594822282EF200981BD7 /* keyframe_vertex_deform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_vertex_deform.swift; sourceTree = "<group>"; };
 		E453594922282EF200981BD7 /* keyframe_gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_gradient.swift; sourceTree = "<group>"; };
 		E453594A22282EF200981BD7 /* keyframe_numeric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe_numeric.swift; sourceTree = "<group>"; };
 		E453594B22282EF200981BD7 /* keyframe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = keyframe.swift; sourceTree = "<group>"; };
@@ -421,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				E453594722282EF200981BD7 /* keyframe_length.swift */,
-				E453594822282EF200981BD7 /* keyframe_vertex_deform.swift */,
 				E453594922282EF200981BD7 /* keyframe_gradient.swift */,
 				E453594A22282EF200981BD7 /* keyframe_numeric.swift */,
 				E453594B22282EF200981BD7 /* keyframe.swift */,
@@ -695,7 +692,6 @@
 				E46CDC9C222FE15F002C40A1 /* actor_bone.swift in Sources */,
 				E453599822282EF200981BD7 /* keyframe_opacity.swift in Sources */,
 				E453598722282EF200981BD7 /* actor_node_solo.swift in Sources */,
-				E453598C22282EF200981BD7 /* keyframe_vertex_deform.swift in Sources */,
 				E453597622282EF200981BD7 /* actor_drawable.swift in Sources */,
 				E4535A222228370600981BD7 /* flare_cg_stroke.swift in Sources */,
 				E453597922282EF200981BD7 /* actor.swift in Sources */,

@@ -378,7 +378,7 @@ public class ActorAnimation {
         for componentAnimation in components {
             componentAnimation.apply(
                 time: time,
-                components: abComponents as! Array<ActorComponent?>,
+                components: abComponents,
                 mix: mix
             );
         }

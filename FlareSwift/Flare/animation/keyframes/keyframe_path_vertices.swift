@@ -20,7 +20,7 @@ class KeyFramePathVertices: Interpolated {
     }
     
     func applyInterpolation(component: ActorComponent, time: Double, toFrame: KeyFrame, mix: Float) {
-        let path = _component as! ActorPath
+        let path = component as! ActorPath
         let to = (toFrame as! KeyFramePathVertices)
         let c = vertices.count
         
@@ -44,7 +44,7 @@ class KeyFramePathVertices: Interpolated {
     }
     
     func apply(component: ActorComponent, mix: Float) {
-        let path = _component as! ActorPath
+        let path = component as! ActorPath
         let l = vertices.count
         let fMix: Float = Float(mix)
         
