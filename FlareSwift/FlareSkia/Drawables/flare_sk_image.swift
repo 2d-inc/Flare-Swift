@@ -242,4 +242,10 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
             onPaintUpdated(_paint)
         }
     }
+    
+    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
+        let instanceImage = FlareSkImage()
+        instanceImage.copyImage(self, resetArtboard)
+        return instanceImage
+    }
 }
