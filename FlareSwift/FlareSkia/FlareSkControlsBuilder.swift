@@ -31,27 +31,27 @@ public class FlareSkControlsBuilder {
         self.viewFrame = frame
     }
     
-    public func with(animationName: String) -> FlareSkControllerBuilder {
+    public func with(animationName: String) -> FlareSkControlsBuilder {
         self.animationName = animationName
         return self
     }
-    public func with(boundsNode: String) -> FlareSkControllerBuilder {
+    public func with(boundsNode: String) -> FlareSkControlsBuilder {
         self.boundsNodeName = boundsNode
         return self
     }
-    public func with(artboard: Int) -> FlareSkControllerBuilder {
+    public func with(artboard: Int) -> FlareSkControlsBuilder {
         self.artboardIndex = artboard
         return self
     }
-    public func with(snapEnd: Bool) -> FlareSkControllerBuilder {
+    public func with(snapEnd: Bool) -> FlareSkControlsBuilder {
         self.snapToEnd = snapEnd
         return self
     }
-    public func with(isPaused: Bool) -> FlareSkControllerBuilder {
+    public func with(isPaused: Bool) -> FlareSkControlsBuilder {
         self.isPaused = isPaused
         return self
     }
-    public func with(shouldClip: Bool) -> FlareSkControllerBuilder {
+    public func with(shouldClip: Bool) -> FlareSkControlsBuilder {
         self.shouldClip = shouldClip
         return self
     }

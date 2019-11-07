@@ -103,6 +103,11 @@ public class FlareSkViewController: UIViewController, FlareController {
         super.viewDidLoad()
     }
     
+    override public func viewDidAppear(_ animated: Bool) {
+        updatePlayState()
+        flareView?.paint()
+    }
+    
     override public func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         flareViewFrame = self.view.bounds
@@ -112,7 +117,9 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     override public func viewDidLayoutSubviews() {
         /**
-         When bounds change for a view controller's view, the view adjust the positions of its subviews and then the system calls this method.
+         When bounds change for a view controller's view,
+         the view adjust the positions of its subviews
+         and then the OS calls this method.
          */
         #warning("TODO: check correctness")
         super.viewDidLayoutSubviews()
@@ -132,7 +139,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     }
     
     func load() {
-        guard let view = view as? FlareSkView else {
+        guard let view = flareView else {
             os_log("flareView isn't available!", type: .debug)
             return
         }
@@ -182,7 +189,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     private func instanceArtboard() -> Bool {
         guard
-            let view = view as? FlareSkView,
+            let view = flareView,
             let actor = view.actor,
             let _ = actor.artboard
         else { return false }
@@ -201,7 +208,6 @@ public class FlareSkViewController: UIViewController, FlareController {
         // Set the artboard and advance(0)
         view.artboard = instance
         view.updateBounds()
-        
         
         return true
     }
@@ -224,7 +230,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     func advanceControls(by elapsed: Double) -> Bool { return false }
     func advance(elapsed: Double) {
         guard
-            let view = view as? FlareSkView,
+            let view = flareView,
             let artboard = view.artboard
         else { return }
 
@@ -281,11 +287,7 @@ public class FlareSkViewController: UIViewController, FlareController {
             artboard.advance()
         }
     }
-    
-    override public func viewDidAppear(_ animated: Bool) {
-        updatePlayState()
-    }
-    
+
     private func updatePlayState() {
         /// (viewIfLoaded?.window) != nil checks if the view is still attached
         if isPlaying && (viewIfLoaded?.window != nil) {
@@ -304,7 +306,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     }
     
     @objc private func beginFrame() {
-        guard let view = view as? FlareSkView else {
+        guard let view = flareView else {
             return
         }
         let currentTime = CACurrentMediaTime()
@@ -324,7 +326,7 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
         
         guard
-            let view = view as? FlareSkView,
+            let view = flareView,
             let name = _animationName,
             let artboard = view.artboard
         else { return }
