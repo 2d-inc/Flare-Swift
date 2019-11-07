@@ -35,11 +35,11 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     private var setupAABB: AABB?
     private var assets = [SkCacheAsset]()
-    private var animationLayers: [FlareAnimationLayer] = []
+    internal var animationLayers: [FlareAnimationLayer] = []
     private var lastTime = 0.0
     private var _isLoading = false
     
-    private var isPlaying: Bool {
+    internal var isPlaying: Bool {
         return !isPaused && !animationLayers.isEmpty
     }
     
@@ -288,7 +288,7 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
     }
 
-    private func updatePlayState() {
+    internal func updatePlayState() {
         /// (viewIfLoaded?.window) != nil checks if the view is still attached
         if isPlaying && (viewIfLoaded?.window != nil) {
             if displayLink == nil {

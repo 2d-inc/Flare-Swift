@@ -13,6 +13,11 @@ public class FlareSkControls: FlareSkViewController {
     internal let mixSeconds: Double = 0.1
     internal var controlLayers = [FlareAnimationLayer]()
     
+    override internal var isPlaying: Bool {
+        return !isPaused
+            && (!controlLayers.isEmpty || !animationLayers.isEmpty)
+    }
+    
     /// Triggered when animation `name` completes.
     func onCompleted(name: String) {}
     
@@ -36,6 +41,7 @@ public class FlareSkControls: FlareSkViewController {
                     mixSeconds: mixSeconds
                 )
             )
+            updatePlayState()
         }
     }
     

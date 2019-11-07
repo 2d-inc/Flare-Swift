@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         
         Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false, block: {
             timer in
-                self.flareController?.play(name: "music_walk")
+                self.flareController?.play(name: "On")
         })
     }
 
@@ -43,13 +43,13 @@ class ViewController: UIViewController {
 //        print("TAP!")
         if flareController == nil {
             let fBuilder = FlareSkControlsBuilder(
-                for: "Penguin.flr",
+                for: "Switch.flr",
                 frame: CGRect(x: 50, y: 100, width: 800, height: 600)
             )
 
             flareController =
                 fBuilder
-                    .with(animationName: "walk")
+//                    .with(animationName: "walk")
                     .with(shouldClip: true)
                     .build()
 
