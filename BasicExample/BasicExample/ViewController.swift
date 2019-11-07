@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     private var button: UIButton!
     private let addLabel = "Add Flare"
     private let removeLabel = "Remove Flare"
-    private var flareController: FlareSkViewController? = nil
+    private var flareController: FlareSkControls? = nil
     private var count = 0
     
     override func viewDidLoad() {
@@ -33,13 +33,18 @@ class ViewController: UIViewController {
             timer in
                 self.button.sendActions(for: .touchUpInside)
         })
+        
+        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false, block: {
+            timer in
+                self.flareController?.play(name: "Mustache_New")
+        })
     }
 
     @objc func onTap() {
 //        print("TAP!")
         if flareController == nil {
-            flareController = FlareSkViewController(for: "Shape.flr", CGRect(x: 50, y: 100, width: 800, height: 600))
-            flareController!.animationName = "Move"
+            flareController = FlareSkControls(for: "Cactus.flr", CGRect(x: 50, y: 100, width: 800, height: 600))
+            flareController!.animationName = "Idle"
             addChild(flareController!)
 
             let fView = flareController!.view!
