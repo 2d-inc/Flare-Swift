@@ -211,16 +211,13 @@ public class ActorArtboard: Equatable {
         _nodeCount = artboard._nodeCount;
     
         if (artboard.componentCount != 0) {
-//            _components = Array<ActorComponent>(artboard.componentCount)
             _components = Array<ActorComponent?>()
         }
         if (_nodeCount != 0) // This will always be at least 1.
         {
-//            _nodes = Array<ActorNode>(_nodeCount);
             _nodes = Array<ActorNode>()
         }
         if (_drawableNodeCount != 0) {
-//            _drawableNodes = Array<ActorDrawable>(_drawableNodeCount);
             _drawableNodes = Array<ActorDrawable>()
         }
     
@@ -231,7 +228,6 @@ public class ActorArtboard: Equatable {
         
             for component in artboard.components! {
                 if component == nil {
-//                    _components[idx] = nil
                     _components!.insert(nil, at: idx)
                     idx += 1
                     continue
@@ -244,8 +240,6 @@ public class ActorArtboard: Equatable {
                     _nodes!.insert(instanceNode, at: ndIdx)
                     ndIdx += 1
                 }
-//                if (instanceComponent is ActorDrawable) {
-//                    _drawableNodes[drwIdx] = instanceComponent as ActorDrawable
                 if let instanceDrawable = instanceComponent as? ActorDrawable {
                     _drawableNodes.insert(instanceDrawable, at: drwIdx)
                     drwIdx += 1
@@ -275,13 +269,6 @@ public class ActorArtboard: Equatable {
         for i in 0..<_drawableNodes.count {
             _drawableNodes[i].drawIndex = i
         }
-        
-//        if (_drawableNodes != null) {
-//            _drawableNodes.sort((a, b) => a.drawOrder.compareTo(b.drawOrder));
-//            for (int i = 0; i < _drawableNodes.length; i++) {
-//                _drawableNodes[i].drawIndex = i;
-//            }
-//        }
     }
     
     public func advance() {
@@ -372,13 +359,11 @@ public class ActorArtboard: Equatable {
                     break;
                     
                 case BlockTypes.ActorBone:
-//                    component = ActorBone.read(self, nodeBlock, nil);
                     component = ActorBone()
                     (component as! ActorBone).readActorBone(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorRootBone:
-//                    component = ActorRootBone.read(self, nodeBlock, nil);
                     component = ActorRootBone()
                     (component as! ActorRootBone).readRootBone(self, nodeBlock)
                     break;
@@ -403,7 +388,6 @@ public class ActorArtboard: Equatable {
                     break;
                     
                 case BlockTypes.ActorEvent:
-//                    component = ActorEvent.read(self, nodeBlock, actor.makeEvent())
                     component = actor.makeEvent()
                     (component as! ActorEvent).readEvent(self, nodeBlock)
                     break;
@@ -490,84 +474,70 @@ public class ActorArtboard: Equatable {
                     break;
                     
                 case BlockTypes.ActorShape:
-//                    component = ActorShape.read(self, nodeBlock, actor.makeShapeNode())
                     component = actor.makeShapeNode(nil)
                     (component as! ActorShape).readShape(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorPath:
-//                    component = ActorPath.read(self, nodeBlock, actor.makePathNode());
                     component = actor.makePathNode()
                     (component as! ActorPath).readPath(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ColorFill:
-//                    component = ColorFill.read(self, nodeBlock, actor.makeColorFill());
                     component = actor.makeColorFill()
                     (component as! ColorFill).readColorFill(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ColorStroke:
-//                    component = ColorStroke.read(self, nodeBlock, actor.makeColorStroke());
                     component = actor.makeColorStroke()
                     (component as! ColorStroke).readColorStroke(self, nodeBlock)
                     break;
                     
                 case BlockTypes.GradientFill:
-//                    component = GradientFill.read(self, nodeBlock, actor.makeGradientFill());
                     component = actor.makeGradientFill()
                     (component as! GradientFill).readGradientFill(self, nodeBlock)
                     break;
                     
                 case BlockTypes.GradientStroke:
-//                    component = GradientStroke.read(self, nodeBlock, actor.makeGradientStroke());
                     component = actor.makeGradientStroke()
                     (component as! GradientStroke).readGradientStroke(self, nodeBlock)
                     break;
                     
                 case BlockTypes.RadialGradientFill:
-//                    component = RadialGradientFill.read(self, nodeBlock, actor.makeRadialFill());
                     component = actor.makeRadialFill()
                     (component as! RadialGradientFill).readRadialGradientFill(self, nodeBlock)
                     break;
                     
                 case BlockTypes.RadialGradientStroke:
-//                    component = RadialGradientStroke.read(self, nodeBlock, actor.makeRadialStroke());
                     component = actor.makeRadialStroke()
                     (component as! RadialGradientStroke).readRadialGradientStroke(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorEllipse:
-//                    component = ActorEllipse.read(self, nodeBlock, actor.makeEllipse());
                     component = actor.makeEllipse()
                     (component as! ActorEllipse).readEllipse(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorRectangle:
-//                    component = ActorRectangle.read(self, nodeBlock, actor.makeRectangle());
                     component = actor.makeRectangle()
                     (component as! ActorRectangle).readRectangle(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorTriangle:
-//                    component = ActorTriangle.read(self, nodeBlock, actor.makeTriangle());
                     component = actor.makeTriangle()
                     (component as! ActorTriangle).readTriangle(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorStar:
-//                    component = ActorStar.read(self, nodeBlock, actor.makeStar());
                     component = actor.makeStar()
                     (component as! ActorStar).readStar(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorPolygon:
-//                    component = ActorPolygon.read(self, nodeBlock, actor.makePolygon());
                     component = actor.makePolygon()
                     (component as! ActorPolygon).readPolygon(self, nodeBlock)
                     break;
                 case BlockTypes.ActorSkin:
-//                    component = ActorComponent.read(self, nodeBlock, ActorSkin());
                     component = ActorSkin()
                     component!.readComponent(self, nodeBlock)
                     break;
