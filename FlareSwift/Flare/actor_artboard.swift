@@ -71,7 +71,7 @@ public class ActorArtboard: Equatable {
     private var _clipContents = true
     public var clipContents: Bool { return self._clipContents }
     
-    private var _color = [Float32](repeating: 0.0, count: 4)
+    private(set) var _color = [Float32](repeating: 0.0, count: 4)
 
     private var _overrideColor : [Float32]?
     public var overrideColor: [Float32]? {
@@ -284,7 +284,7 @@ public class ActorArtboard: Equatable {
 //        }
     }
     
-    public func advance(seconds: Double) {
+    public func advance() {
         if (_flags & ActorFlags.IsDirty) != 0 {
             let MaxSteps = 100
             var step = 0

@@ -34,7 +34,7 @@ public class FlareSkView: UIView {
         set {
             if newValue != _artboardInstance {
                 _artboardInstance = newValue
-                _artboardInstance?.advance(seconds: 0.0)
+                _artboardInstance?.advance()
             }
         }
     }
@@ -189,7 +189,7 @@ public class FlareSkView: UIView {
     }
 
     
-    // Debugging functions.
+    /* Debugging functions. */
     func drawQuad(_ canvas: OpaquePointer) {
         sk_canvas_save(canvas)
         let path = sk_path_new()

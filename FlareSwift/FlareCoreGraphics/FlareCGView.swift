@@ -62,7 +62,7 @@ public class FlareCGView: UIView {
                     if let ab = artboard {
                         ab.initializeGraphics()
                         ab.overrideColor = self.colorArray
-                        ab.advance(seconds: 0.0)
+                        ab.advance()
                         updateBounds()
                     }
                     
@@ -137,7 +137,7 @@ public class FlareCGView: UIView {
                     
                     while(time <= animation.duration) {
                     animation.apply(time: time, artboard: ab, mix: 1.0)
-                    ab.advance(seconds: deltaTime)
+                    ab.advance()
                         time += deltaTime
                     }
                 }
@@ -152,7 +152,7 @@ public class FlareCGView: UIView {
             if let a = ab.animations?.first {
                 self.animation = a
                 a.apply(time: 0.0, artboard: ab, mix: 1.0)
-                ab.advance(seconds: 0.0)
+                ab.advance()
             }
             updatePlayState()
         }
@@ -189,7 +189,7 @@ public class FlareCGView: UIView {
                 duration = duration.truncatingRemainder(dividingBy: animation.duration)
 //            }
             animation.apply(time: duration, artboard: artboard, mix: 1.0)
-            artboard.advance(seconds: delta)
+            artboard.advance()
             setNeedsDisplay()
         }
     }

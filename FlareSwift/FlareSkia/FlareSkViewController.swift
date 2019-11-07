@@ -122,8 +122,6 @@ public class FlareSkViewController: UIViewController, FlareController {
         /**
          Notifies the view controller that its view was removed from a view hierarchy.
          */
-        #warning("REMOVE:")
-        print("Disappear view, disposing")
         super.viewDidDisappear(animated)
         dispose()
     }
@@ -282,7 +280,7 @@ public class FlareSkViewController: UIViewController, FlareController {
                 }
             }
             
-            artboard.advance(seconds: elapsed)
+            artboard.advance()
         }
     }
     
@@ -338,7 +336,7 @@ public class FlareSkViewController: UIViewController, FlareController {
                 FlareAnimationLayer(animation, name: name, mix: 1.0)
             )
             animation.apply(time: 0.0, artboard: artboard, mix: 1.0)
-            artboard.advance(seconds: 0.0)
+            artboard.advance()
             updatePlayState()
         }
     }

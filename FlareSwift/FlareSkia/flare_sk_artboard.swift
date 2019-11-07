@@ -14,8 +14,8 @@ public class FlareSkArtboard: ActorArtboard {
         super.init(actor: actor)
     }
     
-    override public func advance(seconds: Double) {
-        super.advance(seconds: seconds)
+    override public func advance() {
+        super.advance()
     }
     
     override public func makeInstance() -> ActorArtboard {
