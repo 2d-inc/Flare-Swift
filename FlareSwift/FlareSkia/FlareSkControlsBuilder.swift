@@ -8,6 +8,21 @@
 
 import Foundation
 
+/// This is a helper object to build a custom FlareSkControls.
+/// Its constructor needs a Flare file name and a frame size
+/// for the View that it'll build.
+///
+/// All the other fields are optional parameters that can be specified to
+/// customize the FlareSkControls that we want it to build.
+/// Usage:
+///     let fBuilder = FlareSkControlsBuilder()
+///     let flare: FlareSkControls =
+///         fBuilder
+///             .with(animationName: "Idle") // Specify custom parameters
+///             .with(shouldClip: true)
+///             .with(artboard: 2) // Indices start at 0
+///             .build() // Finally build the object and return it.
+
 public class FlareSkControlsBuilder {
     private var viewFrame: CGRect
     private var filename: String
