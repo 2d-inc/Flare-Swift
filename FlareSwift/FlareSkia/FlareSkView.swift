@@ -190,14 +190,6 @@ public class FlareSkView: UIView {
 
                 paintFlare(transform)
                 
-                let fill = sk_paint_new()
-                sk_paint_set_color(fill, sk_color_set_argb(0xFF, 0xFF, 0xFF, 0xFF))
-                var rect = sk_rect_t()
-                rect.left = bounds[0]
-                rect.top = bounds[1]
-                rect.right = bounds.width
-                rect.bottom = bounds.height
-                sk_canvas_draw_rect(_skiaCanvas, &rect, fill)
                 artboard.draw(skCanvas: _skiaCanvas)
                 
                 sk_canvas_restore(_skiaCanvas)
