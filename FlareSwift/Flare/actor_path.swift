@@ -157,7 +157,8 @@ public extension ActorBasePath {
                 possibleShape = possible.parent
         }
         if let possible = possibleShape {
-            _ = (possible as! ActorShape).addPath(self)
+            self.shape = (possible as! ActorShape)
+            _ = self.shape!.addPath(self)
         } else {
             shape = nil
         }

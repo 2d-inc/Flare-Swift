@@ -27,8 +27,7 @@ class ViewController: UIViewController {
         button.setTitle(addLabel, for: .normal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         view.addSubview(button)
-        
-        print("viewDidLoad")
+
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {
             timer in
                 self.button.sendActions(for: .touchUpInside)
@@ -36,21 +35,21 @@ class ViewController: UIViewController {
         
         Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false, block: {
             timer in
-                self.flareController?.play(name: "Mustache_New")
+                self.flareController?.play(name: "music_walk")
         })
     }
 
     @objc func onTap() {
 //        print("TAP!")
         if flareController == nil {
-            let fBuilder = FlareSkControllerBuilder(
-                for: "Cactus.flr",
+            let fBuilder = FlareSkControlsBuilder(
+                for: "Penguin.flr",
                 frame: CGRect(x: 50, y: 100, width: 800, height: 600)
             )
 
             flareController =
                 fBuilder
-                    .with(animationName: "Idle")
+                    .with(animationName: "walk")
                     .with(shouldClip: true)
                     .build()
 
