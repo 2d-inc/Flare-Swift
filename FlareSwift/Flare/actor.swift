@@ -17,7 +17,7 @@ public protocol Actor: class {
     init()
     
     func onImageData(_ rawData: [Data])
-    func getArtboard(name: String?) -> ActorArtboard?
+    func getArtboard(_ index: Int) -> ActorArtboard?
     
     func makeArtboard() -> ActorArtboard
     func makeNode() -> ActorNode
@@ -46,11 +46,11 @@ public extension Actor {
     var version: Int { return _version }
     var texturesUsed: Int { return maxTextureIndex + 1 }
     
-    func getArtboard(name: String?) -> ActorArtboard? {
-        guard let name = name else {
+    func getArtboard(_ index: Int) -> ActorArtboard? {
+        guard index >= 0 && index < _artboards.count else {
             return artboard
         }
-        return (_artboards.first { $0!.name == name })!
+        return _artboards[index]
     }
 
     func load(data: Data) {

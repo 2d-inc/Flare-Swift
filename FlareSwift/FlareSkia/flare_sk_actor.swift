@@ -9,16 +9,6 @@
 import Foundation
 import Skia
 
-extension UIColor {
-    func rgb() -> [Float]? {
-        var red: CGFloat = 0, green: CGFloat = 0, blue: CGFloat = 0, alpha: CGFloat = 0
-        if self.getRed(&red, green: &green, blue: &blue, alpha: &alpha) {
-            return [Float(red), Float(green), Float(blue), Float(alpha)]
-        }
-        return nil
-    }
-}
-
 public class FlareSkActor: Actor {
     public var maxTextureIndex: Int = 0
     public var _version: Int = -1
@@ -26,24 +16,6 @@ public class FlareSkActor: Actor {
 
     public var images: [OpaquePointer]?
     public var _artboards: [ActorArtboard?] = []
-    
-    private var _color: UIColor?
-    
-    public var color: UIColor? {
-        get { return _color }
-        set {
-            if newValue != _color {
-                _color = newValue
-                if let ab = artboard {
-                    var colorArray: [Float]? = nil
-                    if let color = _color {
-                        colorArray = color.rgb()
-                    }
-                    ab.overrideColor = colorArray
-                }
-            }
-        }
-    }
     
     public var artboard: FlareSkArtboard? {
         return _artboards.count > 0 ? (_artboards.first as! FlareSkArtboard) : nil

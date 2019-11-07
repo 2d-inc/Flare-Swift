@@ -23,7 +23,8 @@ public class FlareSkView: UIView {
     private var animation: ActorAnimation?
     var setupAABB: AABB!
     
-    private var shouldClip = true
+    internal var shouldClip = true
+    internal var _color: UIColor?
     
     private var _skiaCanvas: OpaquePointer!
     private var _skiaSurface: OpaquePointer!
@@ -48,6 +49,22 @@ public class FlareSkView: UIView {
             }
         }
         return nil
+    }
+    
+    internal var color: UIColor? {
+        get { return _color }
+        set {
+            if newValue != _color {
+                _color = newValue
+                if let artboard = artboard {
+                    var colorArray: [Float]? = nil
+                    if let color = _color {
+                        colorArray = color.rgb()
+                    }
+                    artboard.overrideColor = colorArray
+                }
+            }
+        }
     }
     
     override public class var layerClass: AnyClass {

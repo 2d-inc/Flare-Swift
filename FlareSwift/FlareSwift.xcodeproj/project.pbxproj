@@ -128,6 +128,8 @@
 		E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
 		E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
 		E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
+		E4FE894F23745D3800CFB68D /* FlareSkControlsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */; };
+		E4FE8951237462D700CFB68D /* Flare+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE8950237462D700CFB68D /* Flare+Swift.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -267,6 +269,8 @@
 		E4B3BCF323507A49004EC76B /* sk_cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sk_cache.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
+		E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControlsBuilder.swift; sourceTree = "<group>"; };
+		E4FE8950237462D700CFB68D /* Flare+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flare+Swift.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -540,7 +544,9 @@
 			children = (
 				E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */,
 				E4FE894A23741AA100CFB68D /* FlareSkControls.swift */,
+				E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */,
 				E488354A225247B3000940FB /* FlareSkView.swift */,
+				E4FE8950237462D700CFB68D /* Flare+Swift.swift */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E488330D2252467E000940FB /* Skia */,
 				E44D539522624D2700CBD24A /* Strokes */,
@@ -723,6 +729,7 @@
 				E453596F22282EF200981BD7 /* actor_ik_constraint.swift in Sources */,
 				E453598B22282EF200981BD7 /* keyframe_length.swift in Sources */,
 				E46CDCB92232C3D8002C40A1 /* trim_path.swift in Sources */,
+				E4FE8951237462D700CFB68D /* Flare+Swift.swift in Sources */,
 				E44D536A225F42BC00CBD24A /* flare_sk_color_stroke.swift in Sources */,
 				E453598422282EF200981BD7 /* dependency_sorter.swift in Sources */,
 				E453597722282EF200981BD7 /* transform_space.swift in Sources */,
@@ -732,6 +739,7 @@
 				E46CDCA822311089002C40A1 /* bezier.swift in Sources */,
 				E453598D22282EF200981BD7 /* keyframe_gradient.swift in Sources */,
 				E453598522282EF200981BD7 /* actor_artboard.swift in Sources */,
+				E4FE894F23745D3800CFB68D /* FlareSkControlsBuilder.swift in Sources */,
 				E44D536E225F42BC00CBD24A /* flare_sk_gradient_stroke.swift in Sources */,
 				E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */,
 				E46CDCB52232AB0C002C40A1 /* segment_bezier.swift in Sources */,

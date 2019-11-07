@@ -20,31 +20,31 @@ public typealias CompletedAnimationCallback = (String) -> ()
 
 public class FlareSkViewController: UIViewController, FlareController {
     private let bundleCache = BundleCache.storage
-    /**
-     Mat2D _lastControllerViewTransform;
-     */
+
+    private let filename: String
+    private let assetBundle: Bundle
     private var flareViewFrame: CGRect
-    private var assetBundle: Bundle
     private var displayLink: CADisplayLink?
-    private var artboardName: String?
-    private var boundsNodeName: String?
-    private var setupAABB: AABB?
     
+    internal var _animationName: String?
+    internal var boundsNodeName: String?
+    internal var artboardIndex = 0
+    internal var snapToEnd = false
+    internal var isPaused = false
+    internal var completedCallback: CompletedAnimationCallback?
+    
+    private var setupAABB: AABB?
     private var assets = [SkCacheAsset]()
     private var animationLayers: [FlareAnimationLayer] = []
-    public var completedCallback: CompletedAnimationCallback?
-    
-    internal var snapToEnd = false
     private var lastTime = 0.0
     private var _isLoading = false
-    private var isPaused = false
-    
-    private var _animationName: String?
-    private let filename: String
     
     private var isPlaying: Bool {
         return !isPaused && !animationLayers.isEmpty
     }
+    
+    internal var isLoading: Bool { return _isLoading }
+    internal var aabb: AABB? { return setupAABB }
     
     public var completed: CompletedAnimationCallback? {
         get { return completedCallback }
@@ -66,10 +66,9 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
     }
     
-    var isLoading: Bool { return _isLoading }
-    var aabb: AABB? { return setupAABB }
+    public var flareView: FlareSkView? { return view as? FlareSkView }
     
-    public init(for filename: String,
+    init(for filename: String,
                 _ frame: CGRect = UIScreen.main.bounds,
                 _ sourceBundle: Bundle = Bundle.main) {
         guard filename.hasSuffix(".flr") else {
@@ -191,21 +190,18 @@ public class FlareSkViewController: UIViewController, FlareController {
         /// getArtboard() could return `nil`.
         /// If it does, something went wrong at `load()` time.
         let instance = actor
-            .getArtboard(name: artboardName)!
+            .getArtboard(artboardIndex)!
             .makeInstance() as! FlareSkArtboard
         instance.initializeGraphics()
         
-        // Set the artboard and advance(0)
-        view.artboard = instance
-        let actorColor = actor.color
-        
-        actor.color = actorColor
-        view.updateBounds()
-        
         // Initialize controller.
         self.initialize()
-        
         updateAnimation(onlyWhenMissing: true)
+
+        // Set the artboard and advance(0)
+        view.artboard = instance
+        view.updateBounds()
+        
         
         return true
     }

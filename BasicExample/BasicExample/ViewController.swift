@@ -43,14 +43,27 @@ class ViewController: UIViewController {
     @objc func onTap() {
 //        print("TAP!")
         if flareController == nil {
-            flareController = FlareSkControls(for: "Cactus.flr", CGRect(x: 50, y: 100, width: 800, height: 600))
-            flareController!.animationName = "Idle"
+            let fBuilder = FlareSkControllerBuilder(
+                for: "Cactus.flr",
+                frame: CGRect(x: 50, y: 100, width: 800, height: 600)
+            )
+
+            flareController =
+                fBuilder
+                    .with(animationName: "Idle")
+                    .with(shouldClip: true)
+                    .build()
+
             addChild(flareController!)
 
-            let fView = flareController!.view!
-            view.addSubview(fView)
-            fView.translatesAutoresizingMaskIntoConstraints = false
-            flareController!.didMove(toParent: self)
+            if let fView = flareController!.view {
+                view.addSubview(fView)
+                fView.translatesAutoresizingMaskIntoConstraints = false
+                flareController!.didMove(toParent: self)
+            } else {
+                /* Something went wrong? */
+                print("Couldn't get FlareController subview?")
+            }
 
             button.setTitle(removeLabel, for: .normal)
         } else {
