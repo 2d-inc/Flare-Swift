@@ -127,6 +127,7 @@
 		E491724D22422E31002EA96E /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
 		E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
 		E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
+		E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -265,6 +266,7 @@
 		E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkViewController.swift; sourceTree = "<group>"; };
 		E4B3BCF323507A49004EC76B /* sk_cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sk_cache.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -537,6 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */,
+				E4FE894A23741AA100CFB68D /* FlareSkControls.swift */,
 				E488354A225247B3000940FB /* FlareSkView.swift */,
 				E46185602255056500551DBD /* Skia+Swift.swift */,
 				E488330D2252467E000940FB /* Skia */,
@@ -760,6 +763,7 @@
 				E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */,
 				E45AF96723548A34008F1AD7 /* cache.swift in Sources */,
 				E453598E22282EF200981BD7 /* keyframe_numeric.swift in Sources */,
+				E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */,
 				E44D5377225F42BC00CBD24A /* flare_sk_drawable.swift in Sources */,
 				E453599B22282EF200981BD7 /* keyframe_active_child.swift in Sources */,
 				E453597E22282EF200981BD7 /* actor_skinnable.swift in Sources */,

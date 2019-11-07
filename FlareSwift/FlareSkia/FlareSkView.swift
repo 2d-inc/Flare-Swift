@@ -39,6 +39,17 @@ public class FlareSkView: UIView {
         }
     }
     
+    internal var flareViewController: FlareSkViewController? {
+        var parentResponder: UIResponder? = self
+        while let pResponder = parentResponder {
+            parentResponder = pResponder.next
+            if let fVC = parentResponder as? FlareSkViewController {
+                return fVC
+            }
+        }
+        return nil
+    }
+    
     override public class var layerClass: AnyClass {
         get {
             return CAEAGLLayer.self
@@ -122,6 +133,17 @@ public class FlareSkView: UIView {
         }
     }
     
+    func paintFlare(_ viewTransform: Mat2D) {
+        if let artboard = self.artboard {
+            
+            if let controller = self.flareViewController {
+                controller.setViewTransform(viewTransform: viewTransform)
+            }
+            
+            artboard.draw(skCanvas: _skiaCanvas)
+        }
+    }
+    
     func postPaint() {}
     
     func paint() {
@@ -165,6 +187,8 @@ public class FlareSkView: UIView {
                 sk_canvas_translate(_skiaCanvas, x, y)
                 
                 sk_canvas_draw_paint(_skiaCanvas, _skBackgroundPaint) // Clear the background.
+
+                paintFlare(transform)
                 
                 let fill = sk_paint_new()
                 sk_paint_set_color(fill, sk_color_set_argb(0xFF, 0xFF, 0xFF, 0xFF))

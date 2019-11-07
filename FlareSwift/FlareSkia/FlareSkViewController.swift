@@ -34,6 +34,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     private var animationLayers: [FlareAnimationLayer] = []
     public var completedCallback: CompletedAnimationCallback?
     
+    internal var snapToEnd = false
     private var lastTime = 0.0
     private var _isLoading = false
     private var isPaused = false
@@ -224,12 +225,13 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     func setViewTransform(viewTransform: Mat2D) {}
     func initialize() {}
+    func advanceControls(by elapsed: Double) -> Bool { return false }
     func advance(elapsed: Double) {
         guard
             let view = view as? FlareSkView,
-            let artboard = view.artboard else {
-            return
-        }
+            let artboard = view.artboard
+        else { return }
+
         if isPlaying {
             var lastFullyMixed = -1
             var lastMix = 0.0
@@ -238,8 +240,7 @@ public class FlareSkViewController: UIViewController, FlareController {
             
             for layerIndex in 0..<animationLayers.count {
                 let layer = animationLayers[layerIndex]
-//                if snapToEnd && !layer.isLooping {
-                if !layer.isLooping {
+                if snapToEnd && !layer.isLooping {
                     layer.mix = 1.0
                     layer.time = layer.duration
                 } else {
@@ -252,10 +253,10 @@ public class FlareSkViewController: UIViewController, FlareController {
                     : min(1.0, layer.mix / layer.mixSeconds)
                 
                 if layer.isLooping {
-                    // layer.time %= layer.duration
                     layer.time = layer.time.truncatingRemainder(dividingBy: layer.duration)
                 }
-                // Effectively apply the animation.
+
+                // Apply the animation specifying a mix.
                 layer.animation.apply(time: layer.time, artboard: artboard, mix: Float(lastMix))
                 if lastMix == 1.0 {
                     lastFullyMixed = layerIndex
@@ -279,6 +280,7 @@ public class FlareSkViewController: UIViewController, FlareController {
                     callback(animation.name)
                 }
             }
+            if !advanceControls(by: elapsed) { }
             
             artboard.advance()
         }
