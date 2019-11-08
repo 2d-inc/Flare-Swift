@@ -13,7 +13,7 @@ enum FilterQuality: UInt32 {
     case none = 0, low, medium, high
 }
 
-class FlareSkImage: ActorImage, FlareSkDrawable {
+public class FlareSkImage: ActorImage, FlareSkDrawable {
     var _blendMode: BlendMode = .SrcOver
     
     var _vertexBuffer: [Float]!
@@ -44,7 +44,7 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
     }
     
     /// Force drawables to use the concrete implementation.
-    override var blendModeId: UInt32 {
+    override public var blendModeId: UInt32 {
         get {
             return (self as FlareSkDrawable).blendModeId
         }
@@ -113,8 +113,6 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
             sk_paint_set_shader(_paint, shader)
             sk_shader_unref(shader)
         }
-
-        
         
         sk_paint_set_filterquality(_paint, FilterQuality.low.rawValue)
         sk_paint_set_antialias(_paint, true)
@@ -122,6 +120,9 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
     }
     
     override func invalidateDrawable() {
+        guard _canvasVertices != nil else {
+            return
+        }
         sk_vertices_unref(_canvasVertices)
         _canvasVertices = nil
     }
@@ -134,7 +135,13 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         updateVertexPositionBuffer(buffer: &_vertexBuffer, isSkinnedDeformInWorld: false)
         let vCount = Int32(vertexCount)
         let iCount = Int32(_indices.count)
-        _canvasVertices = sk_vertices_new(_vertexBuffer, vCount, _uvBuffer, _indices, iCount)
+        _canvasVertices = sk_vertices_new(
+            _vertexBuffer,
+            vCount,
+            _uvBuffer,
+            _indices,
+            iCount
+        )
         
         return true
     }
@@ -227,7 +234,7 @@ class FlareSkImage: ActorImage, FlareSkDrawable {
         }
     }
     
-    override func computeAABB() -> AABB {
+    override public func computeAABB() -> AABB {
         _ = self.updateVertices()
         return self.bounds
     }

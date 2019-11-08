@@ -10,15 +10,16 @@ import Foundation
 import Skia
 import os.log
 
-protocol FlareController {
+public protocol FlareController {
     func initialize()
     func setViewTransform(viewTransform: Mat2D)
     func advance(elapsed: Double)
+    func advanceControls(by elapsed: Double) -> Bool
 }
 
 public typealias CompletedAnimationCallback = (String) -> ()
 
-public class FlareSkViewController: UIViewController, FlareController {
+open class FlareSkViewController: UIViewController, FlareController {
     private let bundleCache = BundleCache.storage
 
     private let filename: String
@@ -33,18 +34,18 @@ public class FlareSkViewController: UIViewController, FlareController {
     internal var isPaused = false
     internal var completedCallback: CompletedAnimationCallback?
     
-    private var setupAABB: AABB?
+    public var setupAABB: AABB?
     private var assets = [SkCacheAsset]()
     internal var animationLayers: [FlareAnimationLayer] = []
     private var lastTime = 0.0
     private var _isLoading = false
     
-    internal var isPlaying: Bool {
+    open var isPlaying: Bool {
         return !isPaused && !animationLayers.isEmpty
     }
     
-    internal var isLoading: Bool { return _isLoading }
-    internal var aabb: AABB? { return setupAABB }
+    public var isLoading: Bool { return _isLoading }
+    public var aabb: AABB? { return setupAABB }
     
     public var completed: CompletedAnimationCallback? {
         get { return completedCallback }
@@ -68,7 +69,7 @@ public class FlareSkViewController: UIViewController, FlareController {
     
     public var flareView: FlareSkView? { return view as? FlareSkView }
     
-    init(for filename: String,
+    public init(for filename: String,
                 _ frame: CGRect = UIScreen.main.bounds,
                 _ sourceBundle: Bundle = Bundle.main) {
         guard filename.hasSuffix(".flr") else {
@@ -82,7 +83,7 @@ public class FlareSkViewController: UIViewController, FlareController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("No coder init allowed for FlareSkViewController")
     }
     
@@ -201,12 +202,13 @@ public class FlareSkViewController: UIViewController, FlareController {
             .makeInstance() as! FlareSkArtboard
         instance.initializeGraphics()
         
+        // Set the artboard and advance(0)
+        view.artboard = instance
+                
         // Initialize controller.
         self.initialize()
         updateAnimation(onlyWhenMissing: true)
 
-        // Set the artboard and advance(0)
-        view.artboard = instance
         view.updateBounds()
         
         return true
@@ -225,10 +227,10 @@ public class FlareSkViewController: UIViewController, FlareController {
     }
     */
     
-    func setViewTransform(viewTransform: Mat2D) {}
-    func initialize() {}
-    func advanceControls(by elapsed: Double) -> Bool { return false }
-    func advance(elapsed: Double) {
+    open func setViewTransform(viewTransform: Mat2D) {}
+    open func initialize() {}
+    open func advanceControls(by elapsed: Double) -> Bool { return false }
+    open func advance(elapsed: Double) {
         guard
             let view = flareView,
             let artboard = view.artboard
@@ -288,7 +290,7 @@ public class FlareSkViewController: UIViewController, FlareController {
         }
     }
 
-    internal func updatePlayState() {
+    public func updatePlayState() {
         /// (viewIfLoaded?.window) != nil checks if the view is still attached
         if isPlaying && (viewIfLoaded?.window != nil) {
             if displayLink == nil {

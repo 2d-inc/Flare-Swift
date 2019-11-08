@@ -8,18 +8,18 @@
 
 import Foundation
 
-public class FlareSkControls: FlareSkViewController {
+open class FlareSkControls: FlareSkViewController {
     
     internal let mixSeconds: Double = 0.1
     internal var controlLayers = [FlareAnimationLayer]()
     
-    override internal var isPlaying: Bool {
+    override open var isPlaying: Bool {
         return !isPaused
             && (!controlLayers.isEmpty || !animationLayers.isEmpty)
     }
     
     /// Triggered when animation `name` completes.
-    func onCompleted(name: String) {}
+    open func onCompleted(name: String) {}
     
     /// If not `nil`, play the animation with the given `name`.
     /// Custom `mix` or `mixSeconds` can be specified.
@@ -45,7 +45,7 @@ public class FlareSkControls: FlareSkViewController {
         }
     }
     
-    override func advanceControls(by elapsed: Double) -> Bool {
+    override open func advanceControls(by elapsed: Double) -> Bool {
         guard
             let fView = view as? FlareSkView,
             let artboard = fView.artboard
@@ -100,5 +100,5 @@ public class FlareSkControls: FlareSkViewController {
         return !controlLayers.isEmpty
     }
     
-    override func setViewTransform(viewTransform: Mat2D) {}
+    override open func setViewTransform(viewTransform: Mat2D) {}
 }

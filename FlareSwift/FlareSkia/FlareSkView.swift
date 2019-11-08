@@ -30,7 +30,7 @@ public class FlareSkView: UIView {
     private var _skiaSurface: OpaquePointer!
     private var _skBackgroundPaint: OpaquePointer!
 
-    var artboard: FlareSkArtboard? {
+    public var artboard: FlareSkArtboard? {
         get { return _artboardInstance }
         set {
             if newValue != _artboardInstance {

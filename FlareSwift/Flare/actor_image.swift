@@ -53,6 +53,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
     private(set) var vertexCount = 0
     private(set) var triangleCount = 0
     private(set) var vertices: [Float32]?
+    private(set) var dynamicUV: [Float32]?
     private(set) var triangles: [UInt16]?
     
     private var _boneConnections: [BoneConnection]?
@@ -114,6 +115,14 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
             self.vertices = [Float].init(repeating: 0.0, count: numVerts*self.vertexStride)
             reader.readFloat32ArrayOffset(ar: &self.vertices!, length: self.vertices!.count, offset: 0, label: "vertices")
             
+            if artboard.actor.version >= 24 {
+                let isDynamic = reader.readBool(label: "isDynamic")
+                if isDynamic {
+                    self.dynamicUV = [Float].init(repeating: 0.0, count: numVerts*2)
+                    reader.readFloat32ArrayOffset(ar: &self.dynamicUV!, length: numVerts, offset: 0, label: "uv")
+                }
+            }
+            
             let numTris = Int(reader.readUint32(label: "numTriangles"))
             self.triangles = Array<UInt16>.init(repeating: UInt16(0.0), count: numTris*3)
             self.triangleCount = numTris
@@ -141,6 +150,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
         triangleCount = node.triangleCount
         vertices = node.vertices
         triangles = node.triangles
+        dynamicUV = node.dynamicUV
         if let adv = node.animationDeformedVertices {
             animationDeformedVertices = adv // Array is struct and copies it over.
         }
