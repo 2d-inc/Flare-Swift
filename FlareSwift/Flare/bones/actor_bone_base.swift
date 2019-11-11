@@ -8,10 +8,10 @@
 
 import Foundation
 
-class ActorBoneBase: ActorNode {
+public class ActorBoneBase: ActorNode {
     var _length: Float = 0
     
-    var length: Float {
+    public var length: Float {
         get {
             return _length
         }

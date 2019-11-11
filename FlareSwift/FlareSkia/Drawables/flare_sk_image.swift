@@ -67,7 +67,7 @@ public class FlareSkImage: ActorImage, FlareSkDrawable {
         onPaintUpdated(paint)
     }
 
-    override func initializeGraphics() {
+    override public func initializeGraphics() {
         super.initializeGraphics()
         guard let tris = triangles else {
             return

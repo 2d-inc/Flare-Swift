@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0FC2A7DA2379DBFD00D09218 /* Cactus_Test.flr in Resources */ = {isa = PBXBuildFile; fileRef = 0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */; };
+		0FC2A7DC2379E80800D09218 /* ExampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC2A7DB2379E80800D09218 /* ExampleController.swift */; };
 		E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */ = {isa = PBXBuildFile; fileRef = E44CBFB722382B05008F6DFE /* Notification Bell.flr */; };
 		E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359BE2228328500981BD7 /* AppDelegate.swift */; };
 		E45359C12228328500981BD7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45359C02228328500981BD7 /* ViewController.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus_Test.flr; sourceTree = "<group>"; };
+		0FC2A7DB2379E80800D09218 /* ExampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleController.swift; sourceTree = "<group>"; };
 		E44CBFB722382B05008F6DFE /* Notification Bell.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Notification Bell.flr"; sourceTree = "<group>"; };
 		E45359BB2228328500981BD7 /* BasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E45359BE2228328500981BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 		E45359BD2228328500981BD7 /* BasicExample */ = {
 			isa = PBXGroup;
 			children = (
+				0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */,
 				E44CBFB722382B05008F6DFE /* Notification Bell.flr */,
 				E4FE8952237471F000CFB68D /* Penguin.flr */,
 				E4C7F5C32236D735004F62F4 /* Switch.flr */,
@@ -88,6 +93,7 @@
 				E45359C52228328600981BD7 /* Assets.xcassets */,
 				E45359C72228328600981BD7 /* LaunchScreen.storyboard */,
 				E45359CA2228328600981BD7 /* Info.plist */,
+				0FC2A7DB2379E80800D09218 /* ExampleController.swift */,
 			);
 			path = BasicExample;
 			sourceTree = "<group>";
@@ -161,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */,
+				0FC2A7DA2379DBFD00D09218 /* Cactus_Test.flr in Resources */,
 				E4FE8953237471F000CFB68D /* Penguin.flr in Resources */,
 				E45359C92228328600981BD7 /* LaunchScreen.storyboard in Resources */,
 				E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */,
@@ -177,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E45359C12228328500981BD7 /* ViewController.swift in Sources */,
+				0FC2A7DC2379E80800D09218 /* ExampleController.swift in Sources */,
 				E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,14 +334,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				DEVELOPMENT_TEAM = 53ZSD6484C;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BasicExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.BasicExample;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2dimensions.NewTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -345,14 +354,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				DEVELOPMENT_TEAM = 53ZSD6484C;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = BasicExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.BasicExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2dimensions.NewTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

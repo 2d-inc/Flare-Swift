@@ -8,10 +8,10 @@
 
 import Foundation
 
-class ActorNodeSolo: ActorNode {
+public class ActorNodeSolo: ActorNode {
     var _activeChildIndex = 0
     
-    var activeChildIndex: Int {
+    public var activeChildIndex: Int {
         get {
             return _activeChildIndex
         }
@@ -22,7 +22,7 @@ class ActorNodeSolo: ActorNode {
         }
     }
     
-    func setActiveChildIndex(_ idx: Int) {
+    public func setActiveChildIndex(_ idx: Int) {
         if self._children != nil {
             self._activeChildIndex = min(self._children!.count, max(0, idx))
             for i in 0 ..< self._children!.count {

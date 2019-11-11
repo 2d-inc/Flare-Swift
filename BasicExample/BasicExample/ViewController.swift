@@ -54,6 +54,7 @@ class ViewController: UIViewController {
                     .build()
 
             addChild(flareController!)
+            
 
             if let fView = flareController!.view {
                 view.addSubview(fView)
