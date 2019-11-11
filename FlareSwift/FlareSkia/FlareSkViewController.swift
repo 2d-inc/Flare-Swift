@@ -345,24 +345,24 @@ open class FlareSkViewController: UIViewController, FlareController {
     
 }
 
-class FlareAnimationLayer {
-    let name: String
-    let animation: ActorAnimation
-    var time: Double
-    var mix: Double
-    var mixSeconds: Double
+public class FlareAnimationLayer {
+    public let name: String
+    public let animation: ActorAnimation
+    public var time: Double
+    public var mix: Double
+    public var mixSeconds: Double
     
-    var duration: Double {
+    public var duration: Double {
         return animation.duration
     }
-    var isDone: Bool {
+    public var isDone: Bool {
         return time >= animation.duration
     }
-    var isLooping: Bool {
+    public var isLooping: Bool {
         return animation.isLooping
     }
     
-    init(_ animation: ActorAnimation, name: String = "",
+    public init(_ animation: ActorAnimation, name: String = "",
          time: Double = 0.0, mix: Double = 0.0, mixSeconds: Double = 0.2)
     {
         self.animation = animation

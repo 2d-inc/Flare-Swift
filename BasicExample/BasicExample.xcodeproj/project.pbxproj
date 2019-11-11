@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F3A261F237A146900E78E18 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3A261E237A146900E78E18 /* CustomController.swift */; };
 		0FC2A7DA2379DBFD00D09218 /* Cactus_Test.flr in Resources */ = {isa = PBXBuildFile; fileRef = 0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */; };
 		0FC2A7DC2379E80800D09218 /* ExampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC2A7DB2379E80800D09218 /* ExampleController.swift */; };
 		E44CBFB822382B05008F6DFE /* Notification Bell.flr in Resources */ = {isa = PBXBuildFile; fileRef = E44CBFB722382B05008F6DFE /* Notification Bell.flr */; };
@@ -36,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F3A261E237A146900E78E18 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus_Test.flr; sourceTree = "<group>"; };
 		0FC2A7DB2379E80800D09218 /* ExampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleController.swift; sourceTree = "<group>"; };
 		E44CBFB722382B05008F6DFE /* Notification Bell.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Notification Bell.flr"; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				E45359C72228328600981BD7 /* LaunchScreen.storyboard */,
 				E45359CA2228328600981BD7 /* Info.plist */,
 				0FC2A7DB2379E80800D09218 /* ExampleController.swift */,
+				0F3A261E237A146900E78E18 /* CustomController.swift */,
 			);
 			path = BasicExample;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F3A261F237A146900E78E18 /* CustomController.swift in Sources */,
 				E45359C12228328500981BD7 /* ViewController.swift in Sources */,
 				0FC2A7DC2379E80800D09218 /* ExampleController.swift in Sources */,
 				E45359BF2228328500981BD7 /* AppDelegate.swift in Sources */,

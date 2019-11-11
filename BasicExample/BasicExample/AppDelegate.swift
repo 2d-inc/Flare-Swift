@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.main.bounds)
         //Uncomment for testing of the Cactus Example
-        //self.window?.rootViewController = ExampleController()
-        self.window?.rootViewController = ViewController()
+        self.window?.rootViewController = ExampleController()
+        //self.window?.rootViewController = ViewController()
         self.window?.makeKeyAndVisible()
 
         return true

@@ -13,7 +13,7 @@ import FlareSwift
 class ExampleController: UIViewController {
     
     private var button: UIButton!
-    private var flareController: FlareSkControls? = nil
+    private var flareController: CustomController? = nil
     private var soloNode: ActorNodeSolo? = nil
     private var artboard: ActorArtboard? = nil
   
@@ -27,7 +27,7 @@ class ExampleController: UIViewController {
         
         let frame = UIScreen.main.bounds
         
-        flareController = FlareSkControls(for: "Cactus_Test.flr", CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        flareController = CustomController(for: "Cactus_Test.flr", CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         flareController!.animationName = "Idle"
         addChild(flareController!)
         
@@ -70,14 +70,15 @@ class ExampleController: UIViewController {
     }
 
     @objc func onTap() {
-        self.flareController!.play(name: "Mustache_New", mix: 0.5, mixSeconds: 1.0)
+               
+        self.flareController!.play(name: "Mustache_New")//, mix: 0.5, mixSeconds: 1.0
               
         count += 1
         if(count > 5){
             count = 1;
         }
         soloNode?.setActiveChildIndex(count)
-        //print(soloNode?.activeChildIndex as Any)
+       // print(soloNode?.activeChildIndex as Any)
         
     }
 }
