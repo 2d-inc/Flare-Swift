@@ -271,6 +271,7 @@
 		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
 		E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControlsBuilder.swift; sourceTree = "<group>"; };
 		E4FE8950237462D700CFB68D /* Flare+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flare+Swift.swift"; sourceTree = "<group>"; };
+		E4FE895B237AC61B00CFB68D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,9 +331,9 @@
 			children = (
 				E453591022282EC900981BD7 /* Info.plist */,
 				E488330C2252464B000940FB /* FlareSkia */,
-				E4535A17222836D700981BD7 /* FlareCoreGraphics */,
 				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E453590E22282EC900981BD7 /* Flare */,
+				E4FE895A237AC5F900CFB68D /* Experiments */,
 				E453591922282EC900981BD7 /* FlareSwiftTests */,
 				E453590D22282EC900981BD7 /* Products */,
 				E461855E2254B29C00551DBD /* Frameworks */,
@@ -483,6 +484,7 @@
 		E4535A17222836D700981BD7 /* FlareCoreGraphics */ = {
 			isa = PBXGroup;
 			children = (
+				E4FE895B237AC61B00CFB68D /* README.md */,
 				0BBA0F56223BCD7700B93465 /* FlareCGView.swift */,
 				E4535A1D2228370500981BD7 /* flare_cg_actor_paths.swift */,
 				E4535A1A2228370500981BD7 /* flare_cg_actor.swift */,
@@ -568,6 +570,14 @@
 				E461840A2254A5AD00551DBD /* Skia.h */,
 			);
 			path = Skia;
+			sourceTree = "<group>";
+		};
+		E4FE895A237AC5F900CFB68D /* Experiments */ = {
+			isa = PBXGroup;
+			children = (
+				E4535A17222836D700981BD7 /* FlareCoreGraphics */,
+			);
+			path = Experiments;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
