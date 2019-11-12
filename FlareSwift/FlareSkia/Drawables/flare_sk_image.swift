@@ -67,7 +67,89 @@ public class FlareSkImage: ActorImage, FlareSkDrawable {
         onPaintUpdated(paint)
     }
 
-    override func initializeGraphics() {
+    /// Update the canvas vertices to correctly display a dynamic image.
+    func changeImage(with image: OpaquePointer) -> Bool {
+        guard
+            triangles != nil,
+            let dynamicUV = dynamicUV
+        else { return false }
+        
+        _uvBuffer = makeVertexUVBuffer()
+        let vCount = Int32(vertexCount)
+        
+        let imageWidth = Float(sk_image_get_width(image))
+        let imageHeight = Float(sk_image_get_height(image))
+        
+        var idx = 0
+        for _ in 0 ..< vCount {
+            _uvBuffer[idx] = dynamicUV[idx] * imageWidth
+            _uvBuffer[idx + 1] = dynamicUV[idx + 1] * imageHeight
+            idx += 2
+        }
+
+        invalidateDrawable()
+        
+        let shader = sk_shader_new_image(image)
+        sk_paint_set_shader(_paint, shader)
+        sk_shader_unref(shader)
+        
+        // Make sure that vb has been populated.
+        updateVertexPositionBuffer(buffer: &_vertexBuffer, isSkinnedDeformInWorld: false)
+        
+        _canvasVertices = sk_vertices_new(
+            _vertexBuffer,
+            vCount,
+            _uvBuffer,
+            _indices,
+            Int32(_indices.count)
+        )
+
+        onPaintUpdated(_paint)
+        
+        return true
+    }
+    
+    /// Update the image of this FlareSkImage with the contents
+    /// of a PNG or a JPG file located at the parameter URL.
+    public func changeImageFrom(url: String) {
+        let imageURL = URL(string: url)!
+        let session = URLSession(configuration: .default)
+        let task = session.dataTask(with: imageURL) { (data, res, err) in
+            if let imageData = data {
+                let uiImg = UIImage(data: imageData)
+                if let pngData = uiImg?.pngData() {
+                    pngData.withUnsafeBytes{ (buffer: UnsafeRawBufferPointer) in
+                        let skData = sk_data_new_with_copy(buffer.baseAddress, pngData.count)
+                        if let skImage = sk_image_new_from_encoded(skData, nil) {
+                            _ = self.changeImage(with: skImage)
+                            sk_image_unref(skImage)
+                        }
+                        sk_data_unref(skData)
+                    }
+                }
+            }
+        }
+        // Start download.
+        task.resume()
+    }
+    
+    /// Update the image of this FlareSkImage with the contents
+    /// of a file in the bundle.
+    public func changeImageFrom(bundle: Bundle, with filename: String) {
+        if let fileURL = bundle.path(forResource: filename, ofType: "") {
+            if let imageData = FileManager.default.contents(atPath: fileURL) {
+                imageData.withUnsafeBytes{ (buffer: UnsafeRawBufferPointer) in
+                    let skData = sk_data_new_with_copy(buffer.baseAddress, imageData.count)
+                    let skImage = sk_image_new_from_encoded(skData, nil)!
+                    _ = self.changeImage(with: skImage)
+                    sk_image_unref(skImage)
+                    sk_data_unref(skData)
+                }
+            }
+        }
+    }
+    
+    override public func initializeGraphics() {
         super.initializeGraphics()
         guard let tris = triangles else {
             return
