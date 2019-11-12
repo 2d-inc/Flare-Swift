@@ -52,6 +52,28 @@ open class CustomController: FlareSkViewController {
             let artboard = fView.artboard
         else { return false }
         
+       /* Stubbed for when CustomProperties are supported:
+         let myNode = artboard.getNode(name: "Scale Node_Special Property")
+        for cpNodes in myNode.CustomProperties {
+            print(cpNodes)
+        }*/
+        /* EVENT TEST:
+        let animation = artboard.getAnimation(name: "Idle")
+        var arrayEvent =  Array<AnimationEventArgs>()
+        
+        var _components : [ActorComponent?]?
+        if (artboard.componentCount != 0) {
+            _components = Array<ActorComponent?>()
+        }
+        
+        currentAnimTime += elapsed * 1
+        animation?.triggerEvents(components: _components as! Array<ActorComponent>, fromTime: elapsed, toTime: currentAnimTime, triggerEvents: &arrayEvent)
+        //print(currentAnimTime)
+        for i in 0 ..< arrayEvent.count {
+            print(arrayEvent[i].name)
+        }
+ */
+         
         /*let animation = artboard.getAnimation(name: "Idle")
         currentAnimTime +=
             (animTime - currentAnimTime) * min(1, elapsed * 5);

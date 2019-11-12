@@ -230,7 +230,7 @@ public class ComponentAnimation {
     }
 }
 
-class AnimationEventArgs {
+public class AnimationEventArgs {
     var _name: String
     var _component: ActorComponent
     var _propertyType: Int
@@ -245,7 +245,7 @@ class AnimationEventArgs {
         _elapsedTime = elapsedTime;
     }
     
-    var name: String {
+    public var name: String {
             return _name
     }
     
@@ -290,7 +290,7 @@ public class ActorAnimation {
         return _components
     }
     
-    func triggerEvents(components: Array<ActorComponent>, fromTime: Double, toTime: Double, triggerEvents: inout Array<AnimationEventArgs> ) {
+    public func triggerEvents(components: Array<ActorComponent>, fromTime: Double, toTime: Double, triggerEvents: inout Array<AnimationEventArgs> ) {
         guard let tc = _triggerComponents else {
             print("triggerEvents(): no trigger components??")
             return

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F13A2B0237B47D200DAE4EB /* Cactus_Test_CP.flr in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A2AF237B47D200DAE4EB /* Cactus_Test_CP.flr */; };
 		0F3A261F237A146900E78E18 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3A261E237A146900E78E18 /* CustomController.swift */; };
 		0FC2A7DA2379DBFD00D09218 /* Cactus_Test.flr in Resources */ = {isa = PBXBuildFile; fileRef = 0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */; };
 		0FC2A7DC2379E80800D09218 /* ExampleController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC2A7DB2379E80800D09218 /* ExampleController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F13A2AF237B47D200DAE4EB /* Cactus_Test_CP.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus_Test_CP.flr; sourceTree = "<group>"; };
 		0F3A261E237A146900E78E18 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus_Test.flr; sourceTree = "<group>"; };
 		0FC2A7DB2379E80800D09218 /* ExampleController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				0FC2A7D92379DBFD00D09218 /* Cactus_Test.flr */,
+				0F13A2AF237B47D200DAE4EB /* Cactus_Test_CP.flr */,
 				E44CBFB722382B05008F6DFE /* Notification Bell.flr */,
 				E4FE8952237471F000CFB68D /* Penguin.flr */,
 				E4C7F5C32236D735004F62F4 /* Switch.flr */,
@@ -169,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F13A2B0237B47D200DAE4EB /* Cactus_Test_CP.flr in Resources */,
 				E4C7F5C42236D735004F62F4 /* Switch.flr in Resources */,
 				0FC2A7DA2379DBFD00D09218 /* Cactus_Test.flr in Resources */,
 				E4FE8953237471F000CFB68D /* Penguin.flr in Resources */,
