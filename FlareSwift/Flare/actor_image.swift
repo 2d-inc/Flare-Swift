@@ -119,7 +119,7 @@ public class ActorImage: ActorNode, ActorSkinnable, ActorDrawable {
                 let isDynamic = reader.readBool(label: "isDynamic")
                 if isDynamic {
                     self.dynamicUV = [Float].init(repeating: 0.0, count: numVerts*2)
-                    reader.readFloat32ArrayOffset(ar: &self.dynamicUV!, length: numVerts, offset: 0, label: "uv")
+                    reader.readFloat32ArrayOffset(ar: &self.dynamicUV!, length: self.dynamicUV!.count, offset: 0, label: "uv")
                 }
             }
             
