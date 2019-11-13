@@ -27,7 +27,7 @@ class ExampleController: UIViewController {
         
         let frame = UIScreen.main.bounds
         
-        flareController = CustomController(for: "Cactus_Test.flr", CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        flareController = CustomController(for: "Cactus_Test_CP_EV.flr", CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         flareController!.animationName = "Idle"
         addChild(flareController!)
         
