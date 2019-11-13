@@ -20,7 +20,7 @@ public class PropertyAnimation {
             return _keyFrames
     }
     
-    static func read(reader: StreamReader, component: inout ActorComponent) -> PropertyAnimation? {
+    static func read(reader: StreamReader, component: inout ActorComponent?) -> PropertyAnimation? {
         guard let propertyBlock = reader.readNextBlock(blockTypes: PropertyTypesMap) else {
             return nil
         }
@@ -61,7 +61,7 @@ public class PropertyAnimation {
         return propertyAnimation;
     }
     
-    static func keyFrameFactory(type: Int, component: ActorComponent) ->  KeyFrame? {
+    static func keyFrameFactory(type: Int, component: ActorComponent?) ->  KeyFrame? {
         switch type {
         case PropertyTypes.PosX:
             return KeyFramePosX()
@@ -80,7 +80,10 @@ public class PropertyAnimation {
         case PropertyTypes.Length:
             return KeyFrameLength()
         case PropertyTypes.ImageVertices:
-            return KeyFrameImageVertices(component: component)
+            if let verticesComponent = component {
+                return KeyFrameImageVertices(component: verticesComponent)
+            }
+            return nil
         case PropertyTypes.ConstraintStrength:
             return KeyFrameConstraintStrength()
         case PropertyTypes.Trigger:
@@ -100,7 +103,10 @@ public class PropertyAnimation {
         case PropertyTypes.Sequence:
             return KeyFrameSequence()
         case PropertyTypes.PathVertices:
-            return KeyFramePathVertices(component: component)
+            if let verticesComponent = component {
+                return KeyFramePathVertices(component: verticesComponent)
+            }
+            return nil
         case PropertyTypes.FillColor:
             return KeyFrameFillColor()
         case PropertyTypes.FillGradient:
@@ -205,10 +211,9 @@ public class ComponentAnimation {
         componentAnimation._properties = Array<PropertyAnimation>()
 
         for i in 0 ..< numProperties {
-            if var c = components[componentAnimation._componentIndex] {
-                let pa = PropertyAnimation.read(reader: reader, component: &c)
-                componentAnimation._properties!.insert(pa!, at: i)
-            }
+            var c = components[componentAnimation._componentIndex]
+            let pa = PropertyAnimation.read(reader: reader, component: &c)
+            componentAnimation._properties!.insert(pa!, at: i)
         }
         reader.closeObject();
     
