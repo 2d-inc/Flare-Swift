@@ -14,7 +14,7 @@ public class ActorEvent: ActorComponent {
         self.readComponent(artboard, reader)
     }
     
-    func makeInstance(resetArtboard: ActorArtboard) -> ActorComponent {
+    override func makeInstance(_ resetArtboard: ActorArtboard) -> ActorComponent {
         let instanceEvent = ActorEvent();
         instanceEvent.copyComponent(self, resetArtboard);
         return instanceEvent;
