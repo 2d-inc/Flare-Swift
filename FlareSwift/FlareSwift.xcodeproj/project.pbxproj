@@ -127,6 +127,7 @@
 		E491724D22422E31002EA96E /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
 		E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
 		E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
+		E4F7F5F0237C91B800F22466 /* custom_property.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7F5EF237C91B800F22466 /* custom_property.swift */; };
 		E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
 		E4FE894F23745D3800CFB68D /* FlareSkControlsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */; };
 		E4FE8951237462D700CFB68D /* Flare+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE8950237462D700CFB68D /* Flare+Swift.swift */; };
@@ -268,6 +269,7 @@
 		E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkViewController.swift; sourceTree = "<group>"; };
 		E4B3BCF323507A49004EC76B /* sk_cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sk_cache.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		E4F7F5EF237C91B800F22466 /* custom_property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = custom_property.swift; sourceTree = "<group>"; };
 		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
 		E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControlsBuilder.swift; sourceTree = "<group>"; };
 		E4FE8950237462D700CFB68D /* Flare+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flare+Swift.swift"; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				E453593522282EF100981BD7 /* actor_triangle.swift */,
 				E453593322282EF000981BD7 /* actor.swift */,
 				E453594022282EF100981BD7 /* block_types.swift */,
+				E4F7F5EF237C91B800F22466 /* custom_property.swift */,
 				E45AF96623548A34008F1AD7 /* cache.swift */,
 				E453593E22282EF100981BD7 /* dependency_sorter.swift */,
 				E453593D22282EF100981BD7 /* path_point.swift */,
@@ -721,6 +724,7 @@
 				E4535A2B2228370600981BD7 /* flare_cg_gradient_fill.swift in Sources */,
 				E453598222282EF200981BD7 /* actor_color.swift in Sources */,
 				E45359A822282EF200981BD7 /* actor_image.swift in Sources */,
+				E4F7F5F0237C91B800F22466 /* custom_property.swift in Sources */,
 				E453599922282EF200981BD7 /* keyframe_path_vertices.swift in Sources */,
 				E45359A322282EF200981BD7 /* actor_flags.swift in Sources */,
 				E45359A622282EF200981BD7 /* aabb.swift in Sources */,

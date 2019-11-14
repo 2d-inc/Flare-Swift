@@ -18,9 +18,9 @@ class KeyFrameIntProperty : KeyFrameInt {
     }
     
     override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
-        // TODO:
-        //var node = component as CustomIntProperty;
-        //node.value = (node.value * (1.0 - mix) + value * mix).round();
+        let prop = component as! CustomProperty<Int>
+        let val = round(Float(prop.value!) * (1.0 - mix) + value * mix)
+        prop.value = Int(val)
     }
 }
 
@@ -33,9 +33,8 @@ class KeyFrameFloatProperty: KeyFrameNumeric {
     }
     
     override func setValue(_ component: ActorComponent, _ value: Float, _ mix: Float) {
-        // TODO:
-        //var node = component as CustomIntProperty;
-        //node.value = (node.value * (1.0 - mix) + value * mix).round();
+        let prop = component as! CustomProperty<Float>
+        prop.value = round(prop.value! * (1.0 - mix) + value * mix)
     }
 }
 
@@ -48,8 +47,8 @@ class KeyFrameStringProperty: KeyFrame {
     }
     
     func apply(component: ActorComponent, mix: Float) {
-        // var prop = component as CustomStringProperty;
-        // prop.value = _value;
+        let prop = component as! CustomProperty<String>
+        prop.value = _value
     }
     
     func setNext(_ frame: KeyFrame) {
@@ -75,8 +74,8 @@ class KeyFrameBooleanProperty: KeyFrame {
     }
     
     func apply(component: ActorComponent, mix: Float) {
-        // var prop = component as CustomBooleanProperty;
-        // prop.value = _value;
+        let prop = component as! CustomProperty<Bool>;
+        prop.value = _value;
     }
     
     func setNext(_ frame: KeyFrame) {

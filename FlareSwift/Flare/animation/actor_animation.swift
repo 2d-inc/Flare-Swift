@@ -226,11 +226,15 @@ public class ComponentAnimation {
             return
         }
         for propertyAnimation in p {
-            propertyAnimation.apply(
-                time: time,
-                component: components[_componentIndex]!,
-                mix: mix
-            )
+            if let component = components[_componentIndex] {
+                propertyAnimation.apply(
+                    time: time,
+                    component: component,
+                    mix: mix
+                )
+            } else {
+                print("Nil component at \(_componentIndex)")
+            }
         }
     }
 }

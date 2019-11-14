@@ -393,19 +393,23 @@ public class ActorArtboard: Equatable {
                     break;
                     
                 case BlockTypes.CustomIntProperty:
-                    //component = CustomIntProperty.Read(self, nodeBlock);
+                    component = CustomProperty<Int>()
+                    (component as! CustomProperty<Int>).readCustomProperty(self, nodeBlock)
                     break;
                     
                 case BlockTypes.CustomFloatProperty:
-                    //component = CustomFloatProperty.Read(self, nodeBlock);
+                    component = CustomProperty<Float>()
+                    (component as! CustomProperty<Float>).readCustomProperty(self, nodeBlock)
                     break;
                     
                 case BlockTypes.CustomStringProperty:
-                    //component = CustomStringProperty.Read(self, nodeBlock);
+                    component = CustomProperty<String>()
+                    (component as! CustomProperty<String>).readCustomProperty(self, nodeBlock)
                     break;
                     
                 case BlockTypes.CustomBooleanProperty:
-                    //component = CustomBooleanProperty.Read(self, nodeBlock);
+                    component = CustomProperty<Bool>()
+                    (component as! CustomProperty<Bool>).readCustomProperty(self, nodeBlock)
                     break;
                     
                 case BlockTypes.ActorColliderRectangle:
