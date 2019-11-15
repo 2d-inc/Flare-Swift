@@ -14,6 +14,8 @@ open class CustomController: FlareSkViewController {
     internal let mixSeconds: Double = 0.1
     internal var controlLayers = [FlareAnimationLayer]()
     
+    var animation: ActorAnimation? = nil
+    
     var animTime: Double = 0.00;
     var currentAnimTime: Double  = 0;
     
@@ -57,22 +59,8 @@ open class CustomController: FlareSkViewController {
         for cpNodes in myNode.CustomProperties {
             print(cpNodes)
         }*/
-        /* EVENT TEST:
-        let animation = artboard.getAnimation(name: "Idle")
-        var arrayEvent =  Array<AnimationEventArgs>()
-        
-        var _components : [ActorComponent?]?
-        if (artboard.componentCount != 0) {
-            _components = Array<ActorComponent?>()
-        }
-        
-        currentAnimTime += elapsed * 1
-        animation?.triggerEvents(components: _components as! Array<ActorComponent>, fromTime: elapsed, toTime: currentAnimTime, triggerEvents: &arrayEvent)
-        //print(currentAnimTime)
-        for i in 0 ..< arrayEvent.count {
-            print(arrayEvent[i].name)
-        }
- */
+       
+ 
          
         /*let animation = artboard.getAnimation(name: "Idle")
         currentAnimTime +=
@@ -86,8 +74,14 @@ open class CustomController: FlareSkViewController {
         
         var completed = [FlareAnimationLayer]()
         
+        var arrayEvent =  Array<AnimationEventArgs>()
+        
         for i in 0..<controlLayers.count {
+            
             let layer = controlLayers[i]
+            
+            currentAnimTime = layer.time;
+            
             layer.mix += elapsed
             layer.time += elapsed
             
@@ -107,6 +101,21 @@ open class CustomController: FlareSkViewController {
             
             if layer.time > layer.animation.duration {
                 completed.append(layer)
+            }
+            
+            // EVENT TEST:
+            if(animation == nil)
+            {
+                animation = artboard.getAnimation(name: "Mustache_New")
+            }
+                   
+            animation?.triggerEvents(components: artboard.components! as! Array<ActorComponent>, fromTime: currentAnimTime, toTime: layer.time, triggerEvents: &arrayEvent)
+                  
+            for i in 0 ..< arrayEvent.count {
+                print(arrayEvent[i].name)
+                if(arrayEvent[i].name == "Event"){
+                    //do something
+                }
             }
         }
         
