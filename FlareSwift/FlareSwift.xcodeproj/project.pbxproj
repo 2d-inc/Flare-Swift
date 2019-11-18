@@ -704,7 +704,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Make sure submodules are initialized.\ngit submodule update --init --recursive\n\nSTART_DIR=$PWD\n\necho $PROJECT_DIR\n\n# create dep folder in top project dir if it doesn't exist.\nmkdir -p ../dep\ncd ../dep\n\n# Check that depot tools git repo has been initialized.\nif [ ! -d \"depot_tools/.git\" ]\nthen\n    echo \"Let's clone this!\"\n    # Clone depot_tools\n    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git\n    cd depot_tools\nelse\n    echo \"JUST PULL IT!\"\n    cd depot_tools\n    git pull\nfi\n# Currently in depot_tools folder as both branches `cd` there.\n# Add depot_tools to Path (i.e. needed for the script to have access to the executables)\nPATH=${PATH}:$PWD\necho $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\necho $PWD\n./make_dependency.sh -s\n\n# \"$PROJECT_DIR\"/../make_dependency.sh -s\ncd $START_DIR\necho $PWD\n";
+			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd ../dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\n# echo $PWD\n./make_dependency.sh -s\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

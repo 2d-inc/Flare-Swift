@@ -10,7 +10,7 @@ ARCH="arm64"
 while getopts ":s" opt; do 
   case $opt in
   s)
-    echo "-s was triggered!" >&2
+    echo "Build for Simulator." >&2
     ARCH="x64" # Build for simulator.
     ;;
   \?)
