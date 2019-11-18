@@ -2,7 +2,6 @@
 xcuserdata/
 Build/
 Index/
-dep/
 *.a
 FlareSwift/FlareSkia/Skia/include/*
 !FlareSwift/FlareSkia/Skia/include/Skia.h
