@@ -599,6 +599,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E453592022282EC900981BD7 /* Build configuration list for PBXNativeTarget "FlareSwift" */;
 			buildPhases = (
+				E4E98948237EF98A00371EC6 /* ShellScript */,
 				E453590722282EC900981BD7 /* Headers */,
 				E453590822282EC900981BD7 /* Sources */,
 				E453590922282EC900981BD7 /* Frameworks */,
@@ -686,6 +687,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4E98948237EF98A00371EC6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "START_DIR=$PWD\n\necho $PROJECT_DIR\n\n# create dep folder in top project dir if it doesn't exist.\nmkdir -p ../dep\ncd ../dep\n\n# Check that depot tools git repo has been initialized.\nif [ ! -d \"depot_tools/.git\" ]\nthen\n    echo \"Let's clone this!\"\n    # Clone depot_tools\n    git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git\n    cd depot_tools\nelse\n    echo \"JUST PULL IT!\"\n    cd depot_tools\n    git pull\nfi\n# Currently in depot_tools folder as both branches `cd` there.\n# Add depot_tools to Path (i.e. needed for the script to have access to the executables)\nPATH=${PATH}:$PWD\necho $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\necho $PWD\n./make_dependency.sh -s\n\n# \"$PROJECT_DIR\"/../make_dependency.sh -s\ncd $START_DIR\necho $PWD\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E453590822282EC900981BD7 /* Sources */ = {
