@@ -1,3 +1,6 @@
 [submodule "FlareSwift/FlareSkia/Skia/src"]
 	path = FlareSwift/FlareSkia/Skia/src
 	url = https://umberto-sonnino@github.com/umberto-sonnino/skia
+[submodule "dep/depot_tools"]
+	path = dep/depot_tools
+	url = https://chromium.googlesource.com/chromium/tools/depot_tools.git
