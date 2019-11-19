@@ -9,46 +9,40 @@ Swift runtime for Flare: export files from Flare and run them on iOS!
 
 __Only Binary__ format is supported right now, but JSON support is in the works.
 
-## Beta Release Notes
-
-
-This is a __beta__ release.
-
-The runtime is now using Skia as its rendering engine, so users will need to build the library with the instructions provided in the [Usage](#Usage) section.
+## Problems
 
 If you encounter any problems [report them in the issue tracker](https://github.com/2d-inc/Flare-Swift/issues) and, if applicable, include your Flare file.
 
 ## Contents
 
 The repository contains an XCode Workspace with two Projects:
-- [FlareSwift](FlareSwift/FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files. <br/>
+- [FlareSwift](FlareSwift/FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files. <br/> 
 The Framework is further subdivided into: 
     - [FlareCore](FlareSwift/FlareCore) is the bottommost layer of the Framework: this is where Flare file contents are read, loaded and built in-memory.
     - [FlareSkia](FlareSwift/FlareSkia) handles the drawing operations in an OpenGL context. It relies on `libskia`, which is built with a custom script (see [Usage](#Usage)).
-    - [FlareCoreGraphics](FlareSwift/FlareCoreGraphics) handles the drawing operations in a Core Graphics context.<br/> Currently it doesn't support raster images. For raster image support, use [FlareSkia](FlareSwift/FlareSkia).
 - [BasicExample](BasicExample/BasicExample) <br/>
 An iOS-based example that demonstrates how to use a `ViewController` to load a `FlareSkView` that loads and animates a test Flare file.
 
-
 ## Usage
 
-Here's a step-by-step guide on how to use the Framework in your XCode Project:
-
-- Install `depot_tools` as described [here](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_setting_up)
-- Clone the repository, initialize its submodules, and build the library:
+- Clone the repository:
 ```
 git clone git@github.com:2d-inc/Flare-Swift.git
-cd Flare-Swift
-git submodule update --init --recursive
-./make_dependency.sh
 ```
-N.B: the `make_dependency.sh` script can take a while to build.
 - Open `Flare-Swift.xcworkspace`
-- In the XCode window, make sure that the `FlareSwift` scheme is selected
+- In the XCode window, select the scheme for the device you want to run on:
+    - Use **`FlareSwift Device`** to use the Framework on a **physical device**
+    - Use **`FlareSwift Simulator`** to use the Framework on a **Simulator**
+<img src="https://i.imgur.com/RhmcrmC.png" />
+
+*N.B: first time building the Framework takes a while, as it is initializing and building all the dependencies. Use the Report Navigator to check the ongoing build.*
+
 - Build the Framework (⌘ + B)
 
-The Framework is built into the `Products` folder. <br/>
-(N.B. The folder can be accessed from XCode by right clicking on it > `Show in Finder`.)
+The Framework can be found in the `Products` folder. <br/>
+Access the `Products` folder from XCode by right clicking on it > `Show in Finder`:
+
+<img src="https://i.imgur.com/jMr5Cv5.png" />
 
 Lastly, to use the Framework in your Project:
 - Drag-and-drop it into the XCode window.
@@ -62,4 +56,4 @@ Lastly, to use the Framework in your Project:
 ## License
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
 
-FlareCoreGraphics contains a `Bezier` folder, that is a port of [bezier.dart](https://github.com/aab29/bezier.dart), and is complying with their [LICENSE.txt](FlareSwift/FlareCoreGraphics/Bezier/LICENSE.txt) (BSD 2-Clause License).
+The [`Bezier`](FlareSwift/Bezier) folder is a port of [bezier.dart](https://github.com/aab29/bezier.dart), and is complying with their [LICENSE.txt](FlareSwift/FlareCoreGraphics/Bezier/LICENSE.txt) (BSD 2-Clause License).

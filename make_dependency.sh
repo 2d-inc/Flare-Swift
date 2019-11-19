@@ -6,12 +6,14 @@
 #   https://skia.org/user/build
 
 ARCH="arm64"
+BUILD_DIR="build_device"
 
 while getopts ":s" opt; do 
   case $opt in
   s)
     echo "Build for Simulator." >&2
     ARCH="x64" # Build for simulator.
+    BUILD_DIR="build_simulator"
     ;;
   \?)
     echo "invalid option: -$OPTARG" >&2
@@ -24,7 +26,7 @@ cd FlareSwift/FlareSkia/Skia/src
 
 python tools/git-sync-deps
 
-./bin/gn gen build \
+./bin/gn gen $BUILD_DIR \
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
@@ -64,4 +66,4 @@ python tools/git-sync-deps
   skia_use_x11=false \
   target_cpu=\"$ARCH\""
 
-ninja -C build
+ninja -C $BUILD_DIR
