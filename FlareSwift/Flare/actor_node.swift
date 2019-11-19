@@ -81,7 +81,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var x: Float32 {
+    public var x: Float32 {
         get {
             return _translation[0]
         }
@@ -93,7 +93,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var y: Float32 {
+    public var y: Float32 {
         get {
             return _translation[1]
         }
@@ -115,7 +115,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var rotation: Double {
+    public var rotation: Double {
         get {
             return self._rotation
         }
@@ -127,7 +127,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var scaleX: Float32 {
+    public var scaleX: Float32 {
         get {
             return self._scale[0]
         }
@@ -139,7 +139,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var scaleY: Float32 {
+    public var scaleY: Float32 {
         get {
             return self._scale[1]
         }
@@ -151,7 +151,7 @@ public class ActorNode: ActorComponent {
         }
     }
     
-    var opacity: Double {
+    public var opacity: Double {
         get {
             return self._opacity
         }

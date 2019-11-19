@@ -14,14 +14,14 @@ public class ActorComponent: Equatable, Hashable {
     // Hashable Protocol
     public func hash(into hasher: inout Hasher) {
         hasher.combine(idx)
-        hasher.combine(_parentIdx)
+        hasher.combine(parentIdx)
         hasher.combine(name)
         hasher.combine(parent)
     }
 
     public static func == (lhs: ActorComponent, rhs: ActorComponent) -> Bool {
         return lhs.parent == rhs.parent &&
-            lhs._parentIdx == rhs._parentIdx &&
+            lhs.parentIdx == rhs.parentIdx &&
             lhs.name == rhs.name &&
             lhs.idx == rhs.idx
     }
@@ -35,21 +35,21 @@ public class ActorComponent: Equatable, Hashable {
         self.artboard = ab
     }
     
+    internal var parentIdx = 0
+    // The list below is a list of CustomProperty<T>, with the generic T parameter.
+    public var customProperties = [Any]()
     private var _name: String
-    public var name : String {
-        get { return self._name }
-    }
+    public var name : String { return self._name }
     
     public var parent : ActorNode?
     public var artboard : ActorArtboard?
-    private var _parentIdx = 0
     public var idx = 0
     public var graphOrder = 0
     public var dirtMask = ActorFlags.IsClean
     public var dependents: [ActorComponent]?
     
     func resolveComponentIndices(_ components: [ActorComponent?]) {
-        if let node = components[_parentIdx] as? ActorNode {
+        if let node = components[parentIdx] as? ActorNode {
             if self is ActorNode {
                 node.addChild(self as! ActorNode)
             } else {
@@ -77,13 +77,17 @@ public class ActorComponent: Equatable, Hashable {
     func readComponent(_ artboard: ActorArtboard, _ reader: StreamReader) {
         self.artboard = artboard
         self._name = reader.readString(label: "name")
-        self._parentIdx = reader.readId(label: "parent")
+        self.parentIdx = reader.readId(label: "parent")
     }
     
     func copyComponent(_ component: ActorComponent, _ resetArtboard: ActorArtboard) {
         _name = component._name;
         artboard = resetArtboard;
-        _parentIdx = component._parentIdx;
+        parentIdx = component.parentIdx;
         idx = component.idx;
+    }
+    
+    func addCustomProperty<T>(_ property: CustomProperty<T>) {
+        customProperties.append(property)
     }
 }

@@ -20,7 +20,7 @@ public class PropertyAnimation {
             return _keyFrames
     }
     
-    static func read(reader: StreamReader, component: inout ActorComponent) -> PropertyAnimation? {
+    static func read(reader: StreamReader, component: inout ActorComponent?) -> PropertyAnimation? {
         guard let propertyBlock = reader.readNextBlock(blockTypes: PropertyTypesMap) else {
             return nil
         }
@@ -61,7 +61,7 @@ public class PropertyAnimation {
         return propertyAnimation;
     }
     
-    static func keyFrameFactory(type: Int, component: ActorComponent) ->  KeyFrame? {
+    static func keyFrameFactory(type: Int, component: ActorComponent?) ->  KeyFrame? {
         switch type {
         case PropertyTypes.PosX:
             return KeyFramePosX()
@@ -80,7 +80,10 @@ public class PropertyAnimation {
         case PropertyTypes.Length:
             return KeyFrameLength()
         case PropertyTypes.ImageVertices:
-            return KeyFrameImageVertices(component: component)
+            if let verticesComponent = component {
+                return KeyFrameImageVertices(component: verticesComponent)
+            }
+            return nil
         case PropertyTypes.ConstraintStrength:
             return KeyFrameConstraintStrength()
         case PropertyTypes.Trigger:
@@ -100,7 +103,10 @@ public class PropertyAnimation {
         case PropertyTypes.Sequence:
             return KeyFrameSequence()
         case PropertyTypes.PathVertices:
-            return KeyFramePathVertices(component: component)
+            if let verticesComponent = component {
+                return KeyFramePathVertices(component: verticesComponent)
+            }
+            return nil
         case PropertyTypes.FillColor:
             return KeyFrameFillColor()
         case PropertyTypes.FillGradient:
@@ -205,10 +211,9 @@ public class ComponentAnimation {
         componentAnimation._properties = Array<PropertyAnimation>()
 
         for i in 0 ..< numProperties {
-            if var c = components[componentAnimation._componentIndex] {
-                let pa = PropertyAnimation.read(reader: reader, component: &c)
-                componentAnimation._properties!.insert(pa!, at: i)
-            }
+            var c = components[componentAnimation._componentIndex]
+            let pa = PropertyAnimation.read(reader: reader, component: &c)
+            componentAnimation._properties!.insert(pa!, at: i)
         }
         reader.closeObject();
     
@@ -221,16 +226,20 @@ public class ComponentAnimation {
             return
         }
         for propertyAnimation in p {
-            propertyAnimation.apply(
-                time: time,
-                component: components[_componentIndex]!,
-                mix: mix
-            )
+            if let component = components[_componentIndex] {
+                propertyAnimation.apply(
+                    time: time,
+                    component: component,
+                    mix: mix
+                )
+            } else {
+                print("Nil component at \(_componentIndex)")
+            }
         }
     }
 }
 
-class AnimationEventArgs {
+public class AnimationEventArgs {
     var _name: String
     var _component: ActorComponent
     var _propertyType: Int
@@ -245,7 +254,7 @@ class AnimationEventArgs {
         _elapsedTime = elapsedTime;
     }
     
-    var name: String {
+    public var name: String {
             return _name
     }
     
@@ -290,7 +299,7 @@ public class ActorAnimation {
         return _components
     }
     
-    func triggerEvents(components: Array<ActorComponent>, fromTime: Double, toTime: Double, triggerEvents: inout Array<AnimationEventArgs> ) {
+    public func triggerEvents(components: Array<ActorComponent>, fromTime: Double, toTime: Double, triggerEvents: inout Array<AnimationEventArgs> ) {
         guard let tc = _triggerComponents else {
             print("triggerEvents(): no trigger components??")
             return

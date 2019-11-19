@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E4E989CF2384014500371EC6"
-               BuildableName = "FlareSwiftSimulator.framework"
-               BlueprintName = "FlareSwiftSimulator"
-               ReferencedContainer = "container:FlareSwift.xcodeproj">
+               BlueprintIdentifier = "E4E98A8123842C0500371EC6"
+               BuildableName = "ControllerExample.app"
+               BlueprintName = "ControllerExample"
+               ReferencedContainer = "container:ControllerExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,6 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E4E98A8123842C0500371EC6"
+            BuildableName = "ControllerExample.app"
+            BlueprintName = "ControllerExample"
+            ReferencedContainer = "container:ControllerExample.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E4E989CF2384014500371EC6"
-            BuildableName = "FlareSwiftSimulator.framework"
-            BlueprintName = "FlareSwiftSimulator"
-            ReferencedContainer = "container:FlareSwift.xcodeproj">
+            BlueprintIdentifier = "E4E98A8123842C0500371EC6"
+            BuildableName = "ControllerExample.app"
+            BlueprintName = "ControllerExample"
+            ReferencedContainer = "container:ControllerExample.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

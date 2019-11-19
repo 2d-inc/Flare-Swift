@@ -127,127 +127,7 @@
 		E491724D22422E31002EA96E /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
 		E4B3BCF2234D2FD6004EC76B /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
 		E4B3BCF423507A49004EC76B /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
-		E4E989D22384014500371EC6 /* FlareSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = E453590F22282EC900981BD7 /* FlareSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E4E989D32384014500371EC6 /* Skia.h in Headers */ = {isa = PBXBuildFile; fileRef = E461840A2254A5AD00551DBD /* Skia.h */; };
-		E4E989D52384014500371EC6 /* json_reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596922282EF200981BD7 /* json_reader.swift */; };
-		E4E989D62384014500371EC6 /* linear.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595F22282EF200981BD7 /* linear.swift */; };
-		E4E989D72384014500371EC6 /* CoreGraphics+Flare.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724C22422E31002EA96E /* CoreGraphics+Flare.swift */; };
-		E4E989D82384014500371EC6 /* keyframe_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594E22282EF200981BD7 /* keyframe_fill.swift */; };
-		E4E989D92384014500371EC6 /* actor_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594222282EF100981BD7 /* actor_path.swift */; };
-		E4E989DA2384014500371EC6 /* flare_sk_color_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535C225F42BA00CBD24A /* flare_sk_color_fill.swift */; };
-		E4E989DB2384014500371EC6 /* cubic_ease.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595D22282EF200981BD7 /* cubic_ease.swift */; };
-		E4E989DC2384014500371EC6 /* keyframe_trigger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595322282EF200981BD7 /* keyframe_trigger.swift */; };
-		E4E989DD2384014500371EC6 /* flare_sk_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5362225F42BB00CBD24A /* flare_sk_gradient_radial_fill.swift */; };
-		E4E989DE2384014500371EC6 /* jelly_component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC9E222FE1E7002C40A1 /* jelly_component.swift */; };
-		E4E989DF2384014500371EC6 /* flare_cg_actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1A2228370500981BD7 /* flare_cg_actor.swift */; };
-		E4E989E02384014500371EC6 /* actor_translation_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592E22282EF000981BD7 /* actor_translation_constraint.swift */; };
-		E4E989E12384014500371EC6 /* keyframe_imagevertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724622422E05002EA96E /* keyframe_imagevertices.swift */; };
-		E4E989E22384014500371EC6 /* flare_sk_actor_paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5359225F42BA00CBD24A /* flare_sk_actor_paths.swift */; };
-		E4E989E32384014500371EC6 /* actor_animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594522282EF200981BD7 /* actor_animation.swift */; };
-		E4E989E42384014500371EC6 /* actor_root_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA022300883002C40A1 /* actor_root_bone.swift */; };
-		E4E989E52384014500371EC6 /* actor_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC9B222FE15F002C40A1 /* actor_bone.swift */; };
-		E4E989E62384014500371EC6 /* keyframe_opacity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595422282EF200981BD7 /* keyframe_opacity.swift */; };
-		E4E989E72384014500371EC6 /* actor_node_solo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594122282EF100981BD7 /* actor_node_solo.swift */; };
-		E4E989E82384014500371EC6 /* actor_drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593022282EF000981BD7 /* actor_drawable.swift */; };
-		E4E989E92384014500371EC6 /* flare_cg_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A182228370500981BD7 /* flare_cg_stroke.swift */; };
-		E4E989EA2384014500371EC6 /* actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593322282EF000981BD7 /* actor.swift */; };
-		E4E989EB2384014500371EC6 /* intersection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB022313843002C40A1 /* intersection.swift */; };
-		E4E989EC2384014500371EC6 /* actor_targeted_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592822282EF000981BD7 /* actor_targeted_constraint.swift */; };
-		E4E989ED2384014500371EC6 /* actor_distance_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592F22282EF000981BD7 /* actor_distance_constraint.swift */; };
-		E4E989EE2384014500371EC6 /* flare_sk_actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5365225F42BB00CBD24A /* flare_sk_actor.swift */; };
-		E4E989EF2384014500371EC6 /* flare_sk_artboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5368225F42BC00CBD24A /* flare_sk_artboard.swift */; };
-		E4E989F02384014500371EC6 /* flare_cg_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A192228370500981BD7 /* flare_cg_fill.swift */; };
-		E4E989F12384014500371EC6 /* keyframe_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595822282EF200981BD7 /* keyframe_constraint.swift */; };
-		E4E989F22384014500371EC6 /* keyframe_property.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595922282EF200981BD7 /* keyframe_property.swift */; };
-		E4E989F32384014500371EC6 /* property_types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594422282EF200981BD7 /* property_types.swift */; };
-		E4E989F42384014500371EC6 /* flare_sk_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5364225F42BB00CBD24A /* flare_sk_path.swift */; };
-		E4E989F52384014500371EC6 /* block_types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594022282EF100981BD7 /* block_types.swift */; };
-		E4E989F62384014500371EC6 /* actor_skin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596C22282EF200981BD7 /* actor_skin.swift */; };
-		E4E989F72384014500371EC6 /* stream_reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596822282EF200981BD7 /* stream_reader.swift */; };
-		E4E989F82384014500371EC6 /* flare_sk_shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5360225F42BB00CBD24A /* flare_sk_shape.swift */; };
-		E4E989F92384014500371EC6 /* flare_cg_gradient_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A212228370600981BD7 /* flare_cg_gradient_fill.swift */; };
-		E4E989FA2384014500371EC6 /* actor_color.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593C22282EF100981BD7 /* actor_color.swift */; };
-		E4E989FB2384014500371EC6 /* actor_image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596622282EF200981BD7 /* actor_image.swift */; };
-		E4E989FC2384014500371EC6 /* keyframe_path_vertices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595522282EF200981BD7 /* keyframe_path_vertices.swift */; };
-		E4E989FD2384014500371EC6 /* actor_flags.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596022282EF200981BD7 /* actor_flags.swift */; };
-		E4E989FE2384014500371EC6 /* aabb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596422282EF200981BD7 /* aabb.swift */; };
-		E4E989FF2384014500371EC6 /* keyframe_draworder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594C22282EF200981BD7 /* keyframe_draworder.swift */; };
-		E4E98A002384014500371EC6 /* flare_sk_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535F225F42BB00CBD24A /* flare_sk_fill.swift */; };
-		E4E98A012384014500371EC6 /* actor_ik_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592922282EF000981BD7 /* actor_ik_constraint.swift */; };
-		E4E98A022384014500371EC6 /* keyframe_length.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594722282EF200981BD7 /* keyframe_length.swift */; };
-		E4E98A032384014500371EC6 /* trim_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB82232C3D8002C40A1 /* trim_path.swift */; };
-		E4E98A042384014500371EC6 /* Flare+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE8950237462D700CFB68D /* Flare+Swift.swift */; };
-		E4E98A052384014500371EC6 /* flare_sk_color_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535A225F42BA00CBD24A /* flare_sk_color_stroke.swift */; };
-		E4E98A062384014500371EC6 /* dependency_sorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593E22282EF100981BD7 /* dependency_sorter.swift */; };
-		E4E98A072384014500371EC6 /* transform_space.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593122282EF000981BD7 /* transform_space.swift */; };
-		E4E98A082384014500371EC6 /* keyframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594B22282EF200981BD7 /* keyframe.swift */; };
-		E4E98A092384014500371EC6 /* keyframe_transformations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594F22282EF200981BD7 /* keyframe_transformations.swift */; };
-		E4E98A0A2384014500371EC6 /* actor_star.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593722282EF100981BD7 /* actor_star.swift */; };
-		E4E98A0B2384014500371EC6 /* bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA722311089002C40A1 /* bezier.swift */; };
-		E4E98A0C2384014500371EC6 /* keyframe_gradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594922282EF200981BD7 /* keyframe_gradient.swift */; };
-		E4E98A0D2384014500371EC6 /* actor_artboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593F22282EF100981BD7 /* actor_artboard.swift */; };
-		E4E98A0E2384014500371EC6 /* FlareSkControlsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */; };
-		E4E98A0F2384014500371EC6 /* flare_sk_gradient_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535E225F42BA00CBD24A /* flare_sk_gradient_stroke.swift */; };
-		E4E98A102384014500371EC6 /* FlareSkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */; };
-		E4E98A112384014500371EC6 /* segment_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB42232AB0C002C40A1 /* segment_bezier.swift */; };
-		E4E98A122384014500371EC6 /* flare_sk_image.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5366225F42BB00CBD24A /* flare_sk_image.swift */; };
-		E4E98A132384014500371EC6 /* cubic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595B22282EF200981BD7 /* cubic.swift */; };
-		E4E98A142384014500371EC6 /* flare_cg_color_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1C2228370500981BD7 /* flare_cg_color_stroke.swift */; };
-		E4E98A152384014500371EC6 /* flare_cg_gradient_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A2E222D839000981BD7 /* flare_cg_gradient_stroke.swift */; };
-		E4E98A162384014500371EC6 /* actor_transform_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592A22282EF000981BD7 /* actor_transform_constraint.swift */; };
-		E4E98A172384014500371EC6 /* actor_jelly_bone.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCA22230097C002C40A1 /* actor_jelly_bone.swift */; };
-		E4E98A182384014500371EC6 /* flare_cg_actor_paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1D2228370500981BD7 /* flare_cg_actor_paths.swift */; };
-		E4E98A192384014500371EC6 /* flare_sk_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535D225F42BA00CBD24A /* flare_sk_stroke.swift */; };
-		E4E98A1A2384014500371EC6 /* quadratic_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAA223116DB002C40A1 /* quadratic_bezier.swift */; };
-		E4E98A1B2384014500371EC6 /* actor_scale_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592B22282EF000981BD7 /* actor_scale_constraint.swift */; };
-		E4E98A1C2384014500371EC6 /* flare_cg_artboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1B2228370500981BD7 /* flare_cg_artboard.swift */; };
-		E4E98A1D2384014500371EC6 /* bezier_tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAC22312C14002C40A1 /* bezier_tools.swift */; };
-		E4E98A1E2384014500371EC6 /* keyframe_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595222282EF200981BD7 /* keyframe_stroke.swift */; };
-		E4E98A1F2384014500371EC6 /* flare_cg_shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A202228370600981BD7 /* flare_cg_shape.swift */; };
-		E4E98A202384014500371EC6 /* flare_sk_gradient_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5361225F42BB00CBD24A /* flare_sk_gradient_fill.swift */; };
-		E4E98A212384014500371EC6 /* flare_cg_gradient_radial_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A6489222E778D00726F7D /* flare_cg_gradient_radial_fill.swift */; };
-		E4E98A222384014500371EC6 /* actor_node.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593622282EF100981BD7 /* actor_node.swift */; };
-		E4E98A232384014500371EC6 /* path_point.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593D22282EF100981BD7 /* path_point.swift */; };
-		E4E98A242384014500371EC6 /* flare_cg_color_fill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1F2228370600981BD7 /* flare_cg_color_fill.swift */; };
-		E4E98A252384014500371EC6 /* bezier_slice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCAE2231376F002C40A1 /* bezier_slice.swift */; };
-		E4E98A262384014500371EC6 /* actor_bone_base.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDC99222FE031002C40A1 /* actor_bone_base.swift */; };
-		E4E98A272384014500371EC6 /* Skia+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46185602255056500551DBD /* Skia+Swift.swift */; };
-		E4E98A282384014500371EC6 /* keyframe_int.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595622282EF200981BD7 /* keyframe_int.swift */; };
-		E4E98A292384014500371EC6 /* mat2d.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596222282EF200981BD7 /* mat2d.swift */; };
-		E4E98A2A2384014500371EC6 /* interpolator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595C22282EF200981BD7 /* interpolator.swift */; };
-		E4E98A2B2384014500371EC6 /* sk_cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3BCF323507A49004EC76B /* sk_cache.swift */; };
-		E4E98A2C2384014500371EC6 /* cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45AF96623548A34008F1AD7 /* cache.swift */; };
-		E4E98A2D2384014500371EC6 /* keyframe_numeric.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594A22282EF200981BD7 /* keyframe_numeric.swift */; };
-		E4E98A2E2384014500371EC6 /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
-		E4E98A2F2384014500371EC6 /* flare_sk_drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D5367225F42BC00CBD24A /* flare_sk_drawable.swift */; };
-		E4E98A302384014500371EC6 /* keyframe_active_child.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595722282EF200981BD7 /* keyframe_active_child.swift */; };
-		E4E98A312384014500371EC6 /* actor_skinnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593822282EF100981BD7 /* actor_skinnable.swift */; };
-		E4E98A322384014500371EC6 /* actor_ellipse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593B22282EF100981BD7 /* actor_ellipse.swift */; };
-		E4E98A332384014500371EC6 /* actor_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592D22282EF000981BD7 /* actor_constraint.swift */; };
-		E4E98A342384014500371EC6 /* keyframe_shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453594D22282EF200981BD7 /* keyframe_shape.swift */; };
-		E4E98A352384014500371EC6 /* flare_cg_path.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4535A1E2228370500981BD7 /* flare_cg_path.swift */; };
-		E4E98A362384014500371EC6 /* actor_triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593522282EF100981BD7 /* actor_triangle.swift */; };
-		E4E98A372384014500371EC6 /* actor_event.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593A22282EF100981BD7 /* actor_event.swift */; };
-		E4E98A382384014500371EC6 /* actor_rotation_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592722282EF000981BD7 /* actor_rotation_constraint.swift */; };
-		E4E98A392384014500371EC6 /* FlareCGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBA0F56223BCD7700B93465 /* FlareCGView.swift */; };
-		E4E98A3A2384014500371EC6 /* cubic_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46CDCB222316FB6002C40A1 /* cubic_bezier.swift */; };
-		E4E98A3B2384014500371EC6 /* FlareSkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E488354A225247B3000940FB /* FlareSkView.swift */; };
-		E4E98A3C2384014500371EC6 /* actor_shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596B22282EF200981BD7 /* actor_shape.swift */; };
-		E4E98A3D2384014500371EC6 /* hold.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595E22282EF200981BD7 /* hold.swift */; };
-		E4E98A3E2384014500371EC6 /* piecewise_bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D53902260C70000CBD24A /* piecewise_bezier.swift */; };
-		E4E98A3F2384014500371EC6 /* keyframe_radius.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595022282EF200981BD7 /* keyframe_radius.swift */; };
-		E4E98A402384014500371EC6 /* flare_sk_shape_with_transformed_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E434518E236F84A3009711AA /* flare_sk_shape_with_transformed_stroke.swift */; };
-		E4E98A412384014500371EC6 /* flare_cg_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41D08AD222E8E6600AC8687 /* flare_cg_gradient_radial_stroke.swift */; };
-		E4E98A422384014500371EC6 /* binary_reader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596A22282EF200981BD7 /* binary_reader.swift */; };
-		E4E98A432384014500371EC6 /* transform_components.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596522282EF200981BD7 /* transform_components.swift */; };
-		E4E98A442384014500371EC6 /* actor_rectangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593422282EF000981BD7 /* actor_rectangle.swift */; };
-		E4E98A452384014500371EC6 /* flare_cg_drawable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E491724922422E25002EA96E /* flare_cg_drawable.swift */; };
-		E4E98A462384014500371EC6 /* actor_polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593222282EF000981BD7 /* actor_polygon.swift */; };
-		E4E98A472384014500371EC6 /* actor_axis_constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453592C22282EF000981BD7 /* actor_axis_constraint.swift */; };
-		E4E98A482384014500371EC6 /* flare_sk_gradient_radial_stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44D535B225F42BA00CBD24A /* flare_sk_gradient_radial_stroke.swift */; };
-		E4E98A492384014500371EC6 /* keyframe_sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453595122282EF200981BD7 /* keyframe_sequence.swift */; };
-		E4E98A4A2384014500371EC6 /* vec2d.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596322282EF200981BD7 /* vec2d.swift */; };
-		E4E98A4B2384014500371EC6 /* actor_component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593922282EF100981BD7 /* actor_component.swift */; };
+		E4F7F5F0237C91B800F22466 /* custom_property.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7F5EF237C91B800F22466 /* custom_property.swift */; };
 		E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
 		E4FE894F23745D3800CFB68D /* FlareSkControlsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */; };
 		E4FE8951237462D700CFB68D /* Flare+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE8950237462D700CFB68D /* Flare+Swift.swift */; };
@@ -389,7 +269,7 @@
 		E4B3BCF1234D2FD6004EC76B /* FlareSkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkViewController.swift; sourceTree = "<group>"; };
 		E4B3BCF323507A49004EC76B /* sk_cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sk_cache.swift; sourceTree = "<group>"; };
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		E4E98A512384014500371EC6 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4F7F5EF237C91B800F22466 /* custom_property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = custom_property.swift; sourceTree = "<group>"; };
 		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
 		E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControlsBuilder.swift; sourceTree = "<group>"; };
 		E4FE8950237462D700CFB68D /* Flare+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Flare+Swift.swift"; sourceTree = "<group>"; };
@@ -409,13 +289,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E453591622282EC900981BD7 /* FlareSwift.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4E98A4C2384014500371EC6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,7 +347,6 @@
 			children = (
 				E453590C22282EC900981BD7 /* FlareSwift.framework */,
 				E453591522282EC900981BD7 /* FlareSwiftTests.xctest */,
-				E4E98A512384014500371EC6 /* FlareSwift.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -503,6 +375,7 @@
 				E453593522282EF100981BD7 /* actor_triangle.swift */,
 				E453593322282EF000981BD7 /* actor.swift */,
 				E453594022282EF100981BD7 /* block_types.swift */,
+				E4F7F5EF237C91B800F22466 /* custom_property.swift */,
 				E45AF96623548A34008F1AD7 /* cache.swift */,
 				E453593E22282EF100981BD7 /* dependency_sorter.swift */,
 				E453593D22282EF100981BD7 /* path_point.swift */,
@@ -722,15 +595,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4E989D12384014500371EC6 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4E989D22384014500371EC6 /* FlareSwift.h in Headers */,
-				E4E989D32384014500371EC6 /* Skia.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -771,25 +635,6 @@
 			productReference = E453591522282EC900981BD7 /* FlareSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E4E989CF2384014500371EC6 /* FlareSwiftSimulator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E4E98A4E2384014500371EC6 /* Build configuration list for PBXNativeTarget "FlareSwiftSimulator" */;
-			buildPhases = (
-				E4E989D02384014500371EC6 /* ShellScript */,
-				E4E989D12384014500371EC6 /* Headers */,
-				E4E989D42384014500371EC6 /* Sources */,
-				E4E98A4C2384014500371EC6 /* Frameworks */,
-				E4E98A4D2384014500371EC6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FlareSwiftSimulator;
-			productName = FlareSwift;
-			productReference = E4E98A512384014500371EC6 /* FlareSwift.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -824,7 +669,6 @@
 			projectRoot = "";
 			targets = (
 				E453590B22282EC900981BD7 /* FlareSwift */,
-				E4E989CF2384014500371EC6 /* FlareSwiftSimulator */,
 				E453591422282EC900981BD7 /* FlareSwiftTests */,
 			);
 		};
@@ -845,34 +689,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4E98A4D2384014500371EC6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		E4E98948237EF98A00371EC6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd ../dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\n# echo $PWD\n./make_dependency.sh\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
-		};
-		E4E989D02384014500371EC6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -935,6 +755,7 @@
 				E4535A2B2228370600981BD7 /* flare_cg_gradient_fill.swift in Sources */,
 				E453598222282EF200981BD7 /* actor_color.swift in Sources */,
 				E45359A822282EF200981BD7 /* actor_image.swift in Sources */,
+				E4F7F5F0237C91B800F22466 /* custom_property.swift in Sources */,
 				E453599922282EF200981BD7 /* keyframe_path_vertices.swift in Sources */,
 				E45359A322282EF200981BD7 /* actor_flags.swift in Sources */,
 				E45359A622282EF200981BD7 /* aabb.swift in Sources */,
@@ -1023,132 +844,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E453591B22282EC900981BD7 /* FlareSwiftTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4E989D42384014500371EC6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4E989D52384014500371EC6 /* json_reader.swift in Sources */,
-				E4E989D62384014500371EC6 /* linear.swift in Sources */,
-				E4E989D72384014500371EC6 /* CoreGraphics+Flare.swift in Sources */,
-				E4E989D82384014500371EC6 /* keyframe_fill.swift in Sources */,
-				E4E989D92384014500371EC6 /* actor_path.swift in Sources */,
-				E4E989DA2384014500371EC6 /* flare_sk_color_fill.swift in Sources */,
-				E4E989DB2384014500371EC6 /* cubic_ease.swift in Sources */,
-				E4E989DC2384014500371EC6 /* keyframe_trigger.swift in Sources */,
-				E4E989DD2384014500371EC6 /* flare_sk_gradient_radial_fill.swift in Sources */,
-				E4E989DE2384014500371EC6 /* jelly_component.swift in Sources */,
-				E4E989DF2384014500371EC6 /* flare_cg_actor.swift in Sources */,
-				E4E989E02384014500371EC6 /* actor_translation_constraint.swift in Sources */,
-				E4E989E12384014500371EC6 /* keyframe_imagevertices.swift in Sources */,
-				E4E989E22384014500371EC6 /* flare_sk_actor_paths.swift in Sources */,
-				E4E989E32384014500371EC6 /* actor_animation.swift in Sources */,
-				E4E989E42384014500371EC6 /* actor_root_bone.swift in Sources */,
-				E4E989E52384014500371EC6 /* actor_bone.swift in Sources */,
-				E4E989E62384014500371EC6 /* keyframe_opacity.swift in Sources */,
-				E4E989E72384014500371EC6 /* actor_node_solo.swift in Sources */,
-				E4E989E82384014500371EC6 /* actor_drawable.swift in Sources */,
-				E4E989E92384014500371EC6 /* flare_cg_stroke.swift in Sources */,
-				E4E989EA2384014500371EC6 /* actor.swift in Sources */,
-				E4E989EB2384014500371EC6 /* intersection.swift in Sources */,
-				E4E989EC2384014500371EC6 /* actor_targeted_constraint.swift in Sources */,
-				E4E989ED2384014500371EC6 /* actor_distance_constraint.swift in Sources */,
-				E4E989EE2384014500371EC6 /* flare_sk_actor.swift in Sources */,
-				E4E989EF2384014500371EC6 /* flare_sk_artboard.swift in Sources */,
-				E4E989F02384014500371EC6 /* flare_cg_fill.swift in Sources */,
-				E4E989F12384014500371EC6 /* keyframe_constraint.swift in Sources */,
-				E4E989F22384014500371EC6 /* keyframe_property.swift in Sources */,
-				E4E989F32384014500371EC6 /* property_types.swift in Sources */,
-				E4E989F42384014500371EC6 /* flare_sk_path.swift in Sources */,
-				E4E989F52384014500371EC6 /* block_types.swift in Sources */,
-				E4E989F62384014500371EC6 /* actor_skin.swift in Sources */,
-				E4E989F72384014500371EC6 /* stream_reader.swift in Sources */,
-				E4E989F82384014500371EC6 /* flare_sk_shape.swift in Sources */,
-				E4E989F92384014500371EC6 /* flare_cg_gradient_fill.swift in Sources */,
-				E4E989FA2384014500371EC6 /* actor_color.swift in Sources */,
-				E4E989FB2384014500371EC6 /* actor_image.swift in Sources */,
-				E4E989FC2384014500371EC6 /* keyframe_path_vertices.swift in Sources */,
-				E4E989FD2384014500371EC6 /* actor_flags.swift in Sources */,
-				E4E989FE2384014500371EC6 /* aabb.swift in Sources */,
-				E4E989FF2384014500371EC6 /* keyframe_draworder.swift in Sources */,
-				E4E98A002384014500371EC6 /* flare_sk_fill.swift in Sources */,
-				E4E98A012384014500371EC6 /* actor_ik_constraint.swift in Sources */,
-				E4E98A022384014500371EC6 /* keyframe_length.swift in Sources */,
-				E4E98A032384014500371EC6 /* trim_path.swift in Sources */,
-				E4E98A042384014500371EC6 /* Flare+Swift.swift in Sources */,
-				E4E98A052384014500371EC6 /* flare_sk_color_stroke.swift in Sources */,
-				E4E98A062384014500371EC6 /* dependency_sorter.swift in Sources */,
-				E4E98A072384014500371EC6 /* transform_space.swift in Sources */,
-				E4E98A082384014500371EC6 /* keyframe.swift in Sources */,
-				E4E98A092384014500371EC6 /* keyframe_transformations.swift in Sources */,
-				E4E98A0A2384014500371EC6 /* actor_star.swift in Sources */,
-				E4E98A0B2384014500371EC6 /* bezier.swift in Sources */,
-				E4E98A0C2384014500371EC6 /* keyframe_gradient.swift in Sources */,
-				E4E98A0D2384014500371EC6 /* actor_artboard.swift in Sources */,
-				E4E98A0E2384014500371EC6 /* FlareSkControlsBuilder.swift in Sources */,
-				E4E98A0F2384014500371EC6 /* flare_sk_gradient_stroke.swift in Sources */,
-				E4E98A102384014500371EC6 /* FlareSkViewController.swift in Sources */,
-				E4E98A112384014500371EC6 /* segment_bezier.swift in Sources */,
-				E4E98A122384014500371EC6 /* flare_sk_image.swift in Sources */,
-				E4E98A132384014500371EC6 /* cubic.swift in Sources */,
-				E4E98A142384014500371EC6 /* flare_cg_color_stroke.swift in Sources */,
-				E4E98A152384014500371EC6 /* flare_cg_gradient_stroke.swift in Sources */,
-				E4E98A162384014500371EC6 /* actor_transform_constraint.swift in Sources */,
-				E4E98A172384014500371EC6 /* actor_jelly_bone.swift in Sources */,
-				E4E98A182384014500371EC6 /* flare_cg_actor_paths.swift in Sources */,
-				E4E98A192384014500371EC6 /* flare_sk_stroke.swift in Sources */,
-				E4E98A1A2384014500371EC6 /* quadratic_bezier.swift in Sources */,
-				E4E98A1B2384014500371EC6 /* actor_scale_constraint.swift in Sources */,
-				E4E98A1C2384014500371EC6 /* flare_cg_artboard.swift in Sources */,
-				E4E98A1D2384014500371EC6 /* bezier_tools.swift in Sources */,
-				E4E98A1E2384014500371EC6 /* keyframe_stroke.swift in Sources */,
-				E4E98A1F2384014500371EC6 /* flare_cg_shape.swift in Sources */,
-				E4E98A202384014500371EC6 /* flare_sk_gradient_fill.swift in Sources */,
-				E4E98A212384014500371EC6 /* flare_cg_gradient_radial_fill.swift in Sources */,
-				E4E98A222384014500371EC6 /* actor_node.swift in Sources */,
-				E4E98A232384014500371EC6 /* path_point.swift in Sources */,
-				E4E98A242384014500371EC6 /* flare_cg_color_fill.swift in Sources */,
-				E4E98A252384014500371EC6 /* bezier_slice.swift in Sources */,
-				E4E98A262384014500371EC6 /* actor_bone_base.swift in Sources */,
-				E4E98A272384014500371EC6 /* Skia+Swift.swift in Sources */,
-				E4E98A282384014500371EC6 /* keyframe_int.swift in Sources */,
-				E4E98A292384014500371EC6 /* mat2d.swift in Sources */,
-				E4E98A2A2384014500371EC6 /* interpolator.swift in Sources */,
-				E4E98A2B2384014500371EC6 /* sk_cache.swift in Sources */,
-				E4E98A2C2384014500371EC6 /* cache.swift in Sources */,
-				E4E98A2D2384014500371EC6 /* keyframe_numeric.swift in Sources */,
-				E4E98A2E2384014500371EC6 /* FlareSkControls.swift in Sources */,
-				E4E98A2F2384014500371EC6 /* flare_sk_drawable.swift in Sources */,
-				E4E98A302384014500371EC6 /* keyframe_active_child.swift in Sources */,
-				E4E98A312384014500371EC6 /* actor_skinnable.swift in Sources */,
-				E4E98A322384014500371EC6 /* actor_ellipse.swift in Sources */,
-				E4E98A332384014500371EC6 /* actor_constraint.swift in Sources */,
-				E4E98A342384014500371EC6 /* keyframe_shape.swift in Sources */,
-				E4E98A352384014500371EC6 /* flare_cg_path.swift in Sources */,
-				E4E98A362384014500371EC6 /* actor_triangle.swift in Sources */,
-				E4E98A372384014500371EC6 /* actor_event.swift in Sources */,
-				E4E98A382384014500371EC6 /* actor_rotation_constraint.swift in Sources */,
-				E4E98A392384014500371EC6 /* FlareCGView.swift in Sources */,
-				E4E98A3A2384014500371EC6 /* cubic_bezier.swift in Sources */,
-				E4E98A3B2384014500371EC6 /* FlareSkView.swift in Sources */,
-				E4E98A3C2384014500371EC6 /* actor_shape.swift in Sources */,
-				E4E98A3D2384014500371EC6 /* hold.swift in Sources */,
-				E4E98A3E2384014500371EC6 /* piecewise_bezier.swift in Sources */,
-				E4E98A3F2384014500371EC6 /* keyframe_radius.swift in Sources */,
-				E4E98A402384014500371EC6 /* flare_sk_shape_with_transformed_stroke.swift in Sources */,
-				E4E98A412384014500371EC6 /* flare_cg_gradient_radial_stroke.swift in Sources */,
-				E4E98A422384014500371EC6 /* binary_reader.swift in Sources */,
-				E4E98A432384014500371EC6 /* transform_components.swift in Sources */,
-				E4E98A442384014500371EC6 /* actor_rectangle.swift in Sources */,
-				E4E98A452384014500371EC6 /* flare_cg_drawable.swift in Sources */,
-				E4E98A462384014500371EC6 /* actor_polygon.swift in Sources */,
-				E4E98A472384014500371EC6 /* actor_axis_constraint.swift in Sources */,
-				E4E98A482384014500371EC6 /* flare_sk_gradient_radial_stroke.swift in Sources */,
-				E4E98A492384014500371EC6 /* keyframe_sequence.swift in Sources */,
-				E4E98A4A2384014500371EC6 /* vec2d.swift in Sources */,
-				E4E98A4B2384014500371EC6 /* actor_component.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,7 +1005,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_device",
+					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
@@ -1350,7 +1045,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_device",
+					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
@@ -1406,85 +1101,6 @@
 			};
 			name = Release;
 		};
-		E4E98A4F2384014500371EC6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NJ3JMFUNS9;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
-				);
-				MTL_PREPROCESSOR_DEFINITIONS = "";
-				OTHER_LDFLAGS = (
-					"-lc++",
-					"-lskia",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.FlareSwift;
-				PRODUCT_NAME = FlareSwift;
-				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/FlareSkia/Skia";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		E4E98A502384014500371EC6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = NJ3JMFUNS9;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "GLES_SILENCE_DEPRECATION=1";
-				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
-				);
-				MTL_PREPROCESSOR_DEFINITIONS = "";
-				OTHER_LDFLAGS = (
-					"-lc++",
-					"-lskia",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = twoDimensions.FlareSwift;
-				PRODUCT_NAME = FlareSwift;
-				SKIP_INSTALL = YES;
-				SWIFT_INCLUDE_PATHS = "$(SRCROOT)/FlareSkia/Skia";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1511,15 +1127,6 @@
 			buildConfigurations = (
 				E453592422282EC900981BD7 /* Debug */,
 				E453592522282EC900981BD7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E4E98A4E2384014500371EC6 /* Build configuration list for PBXNativeTarget "FlareSwiftSimulator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E4E98A4F2384014500371EC6 /* Debug */,
-				E4E98A502384014500371EC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
