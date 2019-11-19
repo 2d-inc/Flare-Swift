@@ -9,7 +9,7 @@
 import Foundation
 import FlareSwift
 
-open class CustomController: FlareSkViewController {
+class CustomController: FlareSkViewController {
     
     internal let mixSeconds: Double = 0.1
     internal var controlLayers = [FlareAnimationLayer]()
@@ -19,6 +19,11 @@ open class CustomController: FlareSkViewController {
     var animTime: Double = 0.00;
     var currentAnimTime: Double  = 0;
     
+    override open var isPlaying: Bool {
+        return !isPaused &&
+            (!controlLayers.isEmpty || super.isPlaying)
+    }
+    
     open func onCompleted(name: String) {
         if(name == "Mustache_New"){
             play(name: "Idle")
@@ -27,12 +32,11 @@ open class CustomController: FlareSkViewController {
     
     public func play(name: String?, mix: Double = 1.0, mixSeconds: Double = 0.2) {
         animationName = name
-        
         guard
             let aName = animationName,
             let fView = view as? FlareSkView,
             let artboard = fView.artboard
-        else { return }
+            else { return }
         
         if let animation = artboard.getAnimation(name: aName) {
             controlLayers.append(
@@ -52,22 +56,24 @@ open class CustomController: FlareSkViewController {
         guard
             let fView = view as? FlareSkView,
             let artboard = fView.artboard
-        else { return false }
+            else { return false }
         
-       /* Stubbed for when CustomProperties are supported:
+        /** CustomProperties:
          let myNode = artboard.getNode(name: "Scale Node_Special Property")
-        for cpNodes in myNode.CustomProperties {
-            print(cpNodes)
-        }*/
-       
- 
-         
-        /*let animation = artboard.getAnimation(name: "Idle")
-        currentAnimTime +=
-            (animTime - currentAnimTime) * min(1, elapsed * 5);
-
-        animation?.apply(
-            time: currentAnimTime * animation!.duration, artboard: artboard, mix: 1);*/
+         for cpNodes in myNode.CustomProperties {
+         print(cpNodes)
+         }
+         */
+        
+        /**
+         let animation = artboard.getAnimation(name: "Idle")
+         currentAnimTime += (animTime - currentAnimTime) * min(1, elapsed * 5)
+         animation?.apply(
+         time: currentAnimTime * animation!.duration,
+         artboard: artboard,
+         mix: 1
+         )
+         */
         
         var lastFullyMixed = -1
         var lastMix = 0.0
@@ -103,14 +109,14 @@ open class CustomController: FlareSkViewController {
                 completed.append(layer)
             }
             
-            // EVENT TEST:
-            if(animation == nil)
-            {
-                animation = artboard.getAnimation(name: "Mustache_New")
-            }
-                   
+            //            // EVENT TEST:
+            //            if(animation == nil)
+            //            {
+            //                animation = artboard.getAnimation(name: "Mustache_New")
+            //            }
+            
             animation?.triggerEvents(components: artboard.components! as! Array<ActorComponent>, fromTime: currentAnimTime, toTime: layer.time, triggerEvents: &arrayEvent)
-                  
+            
             for i in 0 ..< arrayEvent.count {
                 print(arrayEvent[i].name)
                 if(arrayEvent[i].name == "Event"){
@@ -140,5 +146,5 @@ open class CustomController: FlareSkViewController {
     }
     
     override open func setViewTransform(viewTransform: Mat2D) {}
-
+    
 }

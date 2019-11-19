@@ -173,8 +173,8 @@ public class FlareSkView: UIView {
                 let contentWidth = bounds.width
                 let contentHeight = bounds.height
                 
-                let tx = contentWidth * artboard.origin.x
-                let ty = contentHeight * artboard.origin.y
+//                let tx = contentWidth * artboard.origin.x
+//                let ty = contentHeight * artboard.origin.y
                 
                 let size = frame.size
                 

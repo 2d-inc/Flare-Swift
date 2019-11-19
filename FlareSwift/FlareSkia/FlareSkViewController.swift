@@ -31,7 +31,7 @@ open class FlareSkViewController: UIViewController, FlareController {
     internal var boundsNodeName: String?
     internal var artboardIndex = 0
     internal var snapToEnd = false
-    internal var isPaused = false
+    internal var _isPaused = false
     internal var completedCallback: CompletedAnimationCallback?
     
     public var setupAABB: AABB?
@@ -39,6 +39,16 @@ open class FlareSkViewController: UIViewController, FlareController {
     internal var animationLayers: [FlareAnimationLayer] = []
     private var lastTime = 0.0
     private var _isLoading = false
+    
+    public var isPaused: Bool {
+        get { return _isPaused }
+        set {
+            if _isPaused != newValue {
+                _isPaused = newValue
+                updatePlayState()
+            }
+        }
+    }
     
     open var isPlaying: Bool {
         return !isPaused && !animationLayers.isEmpty
@@ -90,7 +100,6 @@ open class FlareSkViewController: UIViewController, FlareController {
     /** TODO:
      - alignment
      - fit
-     - on resize
      */
     
     override public func loadView() {
@@ -113,7 +122,6 @@ open class FlareSkViewController: UIViewController, FlareController {
         super.viewWillLayoutSubviews()
         flareViewFrame = self.view.bounds
         updateAnimation(onlyWhenMissing: true)
-//        print("Change Bounds: \(self.view.bounds)")
     }
     
     override public func viewDidLayoutSubviews() {

@@ -19,7 +19,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = UIColor.lightGray
         button = UIButton(frame: CGRect(x: 50, y: 50, width: 150, height: 50))
         button.backgroundColor = UIColor.red
@@ -27,35 +26,34 @@ class ViewController: UIViewController {
         button.setTitle(addLabel, for: .normal)
         button.addTarget(self, action: #selector(onTap), for: .touchUpInside)
         view.addSubview(button)
-
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {
-            timer in
-                self.button.sendActions(for: .touchUpInside)
-        })
-        
-        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false, block: {
-            timer in
-                self.flareController?.play(name: "On")
-        })
     }
 
+    /// Callback for the button on screen: Add a FlareSkViewController if not present,
+    /// otherwise remove it.
     @objc func onTap() {
-//        print("TAP!")
         if flareController == nil {
+            let currentFrame = self.view.frame
+            let x = CGFloat(50)
+            let y = CGFloat(100)
+            let w = min(currentFrame.width - (x*2), 800)
+            let h = min(currentFrame.height - (y*2), 600)
             let fBuilder = FlareSkControlsBuilder(
                 for: "Switch.flr",
-                frame: CGRect(x: 50, y: 100, width: 800, height: 600)
+                frame: CGRect(x: x, y: y, width: w, height: h)
             )
 
+            /// Use `FlareSkControlsBuilder` to instantiate a FlareController
+            /// chaining together multiple `with()` calls for adding parameters.
+            /// Look at the `FlareSkControlsBuilder` class for more insights.
             flareController =
                 fBuilder
-//                    .with(animationName: "walk")
+                    .with(animationName: "Full Loop")
                     .with(shouldClip: true)
                     .build()
 
-            addChild(flareController!)
-            
+            self.addChild(flareController!)
 
+            // Sanity check.
             if let fView = flareController!.view {
                 view.addSubview(fView)
                 fView.translatesAutoresizingMaskIntoConstraints = false
