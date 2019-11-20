@@ -7,7 +7,10 @@
 //
 
 import UIKit
-import FlareSwift
+/// To use on a physical device.
+//import FlareSwift
+/// To use on a Simulator.
+import FlareSwiftDev
 
 class ViewController: UIViewController {
 

@@ -31,27 +31,37 @@ git clone git@github.com:2d-inc/Flare-Swift.git
 ```
 - Open `Flare-Swift.xcworkspace`
 - In the XCode window, select the scheme for the device you want to run on:
-    - Use **`FlareSwift Device`** to use the Framework on a **physical device**
-    - Use **`FlareSwift Simulator`** to use the Framework on a **Simulator**
-<img src="https://i.imgur.com/RhmcrmC.png" />
+    - Use **`FlareSwift`** to build the Framework for a **physical device**
+    - Use **`FlareSwiftDev`** to build the Framework for a **Simulator**
 
-*N.B: first time building the Framework takes a while, as it is initializing and building all the dependencies. Use the Report Navigator to check the ongoing build.*
+*N.B: first time building the Framework takes a while, as it is initializing and building all the dependencies. Use the Report Navigator to look at what's happening.*
 
 - Build the Framework (⌘ + B)
 
 The Framework can be found in the `Products` folder. <br/>
-Access the `Products` folder from XCode by right clicking on it > `Show in Finder`:
+Access the `Products` folder from XCode by right clicking on it > `Show in Finder`.
 
-<img src="https://i.imgur.com/jMr5Cv5.png" />
-
-Lastly, to use the Framework in your Project:
-- Drag-and-drop it into the XCode window.
+### In Your Project:
+- Drag-and-drop the `.framework` file into the XCode window.
     - In the import dialog, select __"Copy items if needed"__ and the target in __"Add to Targets"__
 - Add the Framework to the Build Phases: 
     - Select the Project in the Project Navigator 
     - Select your Target
     - __Build Phases__ 
     - Add the Framework to the __Embed Frameworks__ phase.
+
+### Running the Examples
+
+The examples are configured to be run on a **Simulator**. 
+
+If you want to run them on a physical device, follow these steps:
+- Select the example project in the Project Navigator
+- Select the project target from the target list
+- Under the `Framework, Libraries and Embedded Content` menu:
+    - Select `FlareSwiftDev.framework` and press the minus (`-`) button to remove it
+    - Use the plus (`+`) button to add `FlareSwift.framework`
+- Run the example
+*N.B. if the Framework needs to run a clean build for the device, this process might take a while. Use the Report Navigator to look at what's happening.*
 
 ## License
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).

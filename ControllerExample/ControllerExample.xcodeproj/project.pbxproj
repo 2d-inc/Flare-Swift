@@ -15,18 +15,18 @@
 		E4E98A9223842C0600371EC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4E98A9023842C0600371EC6 /* LaunchScreen.storyboard */; };
 		E4E98A9F2384301100371EC6 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98A9E2384301100371EC6 /* CustomController.swift */; };
 		E4E98AA22384368100371EC6 /* Cactus.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4E98AA12384368100371EC6 /* Cactus.flr */; };
-		E4E98B3E2384A54F00371EC6 /* FlareSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98B3D2384A54F00371EC6 /* FlareSwift.framework */; };
-		E4E98B3F2384A54F00371EC6 /* FlareSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98B3D2384A54F00371EC6 /* FlareSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4E98BD52385584800371EC6 /* FlareSwiftDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BD42385584800371EC6 /* FlareSwiftDev.framework */; };
+		E4E98BD62385584800371EC6 /* FlareSwiftDev.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BD42385584800371EC6 /* FlareSwiftDev.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E4E98AB723849B7F00371EC6 /* Embed Frameworks */ = {
+		E4E98BD72385584800371EC6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E4E98B3F2384A54F00371EC6 /* FlareSwift.framework in Embed Frameworks */,
+				E4E98BD62385584800371EC6 /* FlareSwiftDev.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,7 +44,7 @@
 		E4E98A9323842C0600371EC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4E98A9E2384301100371EC6 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		E4E98AA12384368100371EC6 /* Cactus.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus.flr; sourceTree = "<group>"; };
-		E4E98B3D2384A54F00371EC6 /* FlareSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4E98BD42385584800371EC6 /* FlareSwiftDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FlareSwiftDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4E98B3E2384A54F00371EC6 /* FlareSwift.framework in Frameworks */,
+				E4E98BD52385584800371EC6 /* FlareSwiftDev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +95,7 @@
 		E4E98A9923842CD300371EC6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E4E98B3D2384A54F00371EC6 /* FlareSwift.framework */,
+				E4E98BD42385584800371EC6 /* FlareSwiftDev.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -110,7 +110,7 @@
 				E4E98A7E23842C0500371EC6 /* Sources */,
 				E4E98A7F23842C0500371EC6 /* Frameworks */,
 				E4E98A8023842C0500371EC6 /* Resources */,
-				E4E98AB723849B7F00371EC6 /* Embed Frameworks */,
+				E4E98BD72385584800371EC6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
