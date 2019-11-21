@@ -304,8 +304,13 @@ public class GradientColor: ActorPaint {
     override func update(dirt: UInt8) {
         let shape = self.parent as! ActorShape
         let world = shape.worldTransform
-        _ = Vec2D.transformMat2D(renderStart, start, world)
-        _ = Vec2D.transformMat2D(renderEnd, end, world)
+        if shape.transformAffectsStroke {
+            Vec2D.copy(renderStart, start)
+            Vec2D.copy(renderEnd, end)
+        } else {
+            _ = Vec2D.transformMat2D(renderStart, start, world)
+            _ = Vec2D.transformMat2D(renderEnd, end, world)
+        }
     }
     
     func readGradientColor(_ artboard: ActorArtboard, _ reader: StreamReader) {
