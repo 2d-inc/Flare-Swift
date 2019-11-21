@@ -52,7 +52,6 @@ open class FlareSkControls: FlareSkViewController {
         else { return false }
 
         var lastFullyMixed = -1
-        var lastMix = 0.0
         
         var completed = [FlareAnimationLayer]()
         
@@ -61,7 +60,7 @@ open class FlareSkControls: FlareSkViewController {
             layer.mix += elapsed
             layer.time += elapsed
             
-            lastMix = mixSeconds == 0.0
+            let mix = mixSeconds == 0.0
                 ? 1.0
                 : min(1.0, layer.mix / mixSeconds)
             
@@ -69,27 +68,11 @@ open class FlareSkControls: FlareSkViewController {
                 layer.time = layer.time.truncatingRemainder(dividingBy: layer.duration)
             }
             
-            layer.animation.apply(time: layer.time, artboard: artboard, mix: Float(lastMix))
-            
-            if lastMix == 1.0 {
-                lastFullyMixed = i
-            }
+            layer.animation.apply(time: layer.time, artboard: artboard, mix: Float(mix))
             
             if layer.time > layer.animation.duration {
                 completed.append(layer)
             }
-        }
-        
-        if lastFullyMixed != -1 {
-            controlLayers.removeSubrange(0..<lastFullyMixed)
-        }
-        
-        if
-            animationName == nil,
-            controlLayers.count == 1,
-            lastMix == 1.0
-        {
-            controlLayers.remove(at: 0)
         }
         
         for completedAnimation in completed {
