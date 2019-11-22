@@ -556,10 +556,10 @@
 			isa = PBXGroup;
 			children = (
 				E453591022282EC900981BD7 /* Info.plist */,
-				E488330C2252464B000940FB /* FlareSkia */,
 				E46CDCA9223116C6002C40A1 /* Bezier */,
 				E4FE895A237AC5F900CFB68D /* Experiments */,
 				E453590E22282EC900981BD7 /* Flare */,
+				E488330C2252464B000940FB /* FlareSkia */,
 				E453591922282EC900981BD7 /* FlareSwiftTests */,
 				E4E98C39238732CF00371EC6 /* Example */,
 				E4E98C582387336A00371EC6 /* ExampleController */,
@@ -1580,7 +1580,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_device",
+					"$(PROJECT_DIR)/dep/lib/build_device",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
@@ -1620,7 +1620,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_device",
+					"$(PROJECT_DIR)/dep/lib/build_device",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
@@ -1699,7 +1699,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
+					"$(PROJECT_DIR)/dep/lib/build_simulator",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (
@@ -1739,7 +1739,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlareSkia/Skia/src/build_simulator",
+					"$(PROJECT_DIR)/dep/lib/build_simulator",
 				);
 				MTL_PREPROCESSOR_DEFINITIONS = "";
 				OTHER_LDFLAGS = (

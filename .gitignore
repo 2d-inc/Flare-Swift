@@ -5,3 +5,4 @@ Index/
 *.a
 FlareSwift/FlareSkia/Skia/include/*
 !FlareSwift/FlareSkia/Skia/include/Skia.h
+lib/*

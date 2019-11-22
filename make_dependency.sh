@@ -5,15 +5,18 @@
 # Build notes:
 #   https://skia.org/user/build
 
+# Default builds for arm64 devices and outputs in build_device.
 ARCH="arm64"
-BUILD_DIR="build_device"
+BUILD_DIR="../../../lib/build_device"
 
+# Reads flags.
+# Currently on -s is supported, and builds for a Simulator.
 while getopts ":s" opt; do 
   case $opt in
   s)
     echo "Build for Simulator." >&2
     ARCH="x64" # Build for simulator.
-    BUILD_DIR="build_simulator"
+    BUILD_DIR="../../../lib/build_simulator"
     ;;
   \?)
     echo "invalid option: -$OPTARG" >&2
@@ -47,7 +50,7 @@ python tools/git-sync-deps
   skia_use_lua=false \
   skia_use_piex=false \
   skia_use_vulkan=false \
-  skia_use_metal=true \
+  skia_use_metal=false \
   skia_use_zlib=true \
   skia_use_system_zlib=false \
   skia_enable_ccpr=false \
