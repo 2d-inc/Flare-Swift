@@ -249,6 +249,25 @@
 		E4E98BC023854D4C00371EC6 /* vec2d.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453596322282EF200981BD7 /* vec2d.swift */; };
 		E4E98BC123854D4C00371EC6 /* actor_component.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453593922282EF100981BD7 /* actor_component.swift */; };
 		E4E98BCA23854FE000371EC6 /* FlareSwiftDev.h in Headers */ = {isa = PBXBuildFile; fileRef = E4E98BC923854FE000371EC6 /* FlareSwiftDev.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E4E98C3B238732CF00371EC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C3A238732CF00371EC6 /* AppDelegate.swift */; };
+		E4E98C3D238732CF00371EC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C3C238732CF00371EC6 /* SceneDelegate.swift */; };
+		E4E98C3F238732CF00371EC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C3E238732CF00371EC6 /* ViewController.swift */; };
+		E4E98C42238732CF00371EC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C40238732CF00371EC6 /* Main.storyboard */; };
+		E4E98C44238732D000371EC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C43238732D000371EC6 /* Assets.xcassets */; };
+		E4E98C47238732D000371EC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C45238732D000371EC6 /* LaunchScreen.storyboard */; };
+		E4E98C4C238732F900371EC6 /* FlareSwiftDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */; };
+		E4E98C4D238732F900371EC6 /* FlareSwiftDev.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4E98C522387334000371EC6 /* Switch.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C512387334000371EC6 /* Switch.flr */; };
+		E4E98C5A2387336A00371EC6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C592387336A00371EC6 /* AppDelegate.swift */; };
+		E4E98C5C2387336A00371EC6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C5B2387336A00371EC6 /* SceneDelegate.swift */; };
+		E4E98C5E2387336A00371EC6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C5D2387336A00371EC6 /* ViewController.swift */; };
+		E4E98C612387336A00371EC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C5F2387336A00371EC6 /* Main.storyboard */; };
+		E4E98C632387336B00371EC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C622387336B00371EC6 /* Assets.xcassets */; };
+		E4E98C662387336B00371EC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C642387336B00371EC6 /* LaunchScreen.storyboard */; };
+		E4E98C6E2387339F00371EC6 /* Cactus.flr in Resources */ = {isa = PBXBuildFile; fileRef = E4E98C6D2387339F00371EC6 /* Cactus.flr */; };
+		E4E98C6F238733B500371EC6 /* FlareSwiftDev.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */; };
+		E4E98C70238733B500371EC6 /* FlareSwiftDev.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E4E98C772387340800371EC6 /* CustomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E98C762387340800371EC6 /* CustomController.swift */; };
 		E4F7F5F0237C91B800F22466 /* custom_property.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F7F5EF237C91B800F22466 /* custom_property.swift */; };
 		E4FE894B23741AA100CFB68D /* FlareSkControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894A23741AA100CFB68D /* FlareSkControls.swift */; };
 		E4FE894F23745D3800CFB68D /* FlareSkControlsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */; };
@@ -263,7 +282,46 @@
 			remoteGlobalIDString = E453590B22282EC900981BD7;
 			remoteInfo = FlareSwift;
 		};
+		E4E98C4E238732F900371EC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E453590322282EC900981BD7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4E98B4423854D4C00371EC6;
+			remoteInfo = FlareSwiftDev;
+		};
+		E4E98C71238733B500371EC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E453590322282EC900981BD7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4E98B4423854D4C00371EC6;
+			remoteInfo = FlareSwiftDev;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4E98C50238732F900371EC6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E4E98C4D238732F900371EC6 /* FlareSwiftDev.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4E98C73238733B500371EC6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E4E98C70238733B500371EC6 /* FlareSwiftDev.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0BBA0F56223BCD7700B93465 /* FlareCGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareCGView.swift; sourceTree = "<group>"; };
@@ -393,6 +451,25 @@
 		E4C7F5C52237CA9F004F62F4 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlareSwiftDev.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E98BC923854FE000371EC6 /* FlareSwiftDev.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlareSwiftDev.h; sourceTree = "<group>"; };
+		E4E98C38238732CF00371EC6 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4E98C3A238732CF00371EC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E4E98C3C238732CF00371EC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E4E98C3E238732CF00371EC6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E4E98C41238732CF00371EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E4E98C43238732D000371EC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E4E98C46238732D000371EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E4E98C48238732D000371EC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4E98C512387334000371EC6 /* Switch.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Switch.flr; sourceTree = "<group>"; };
+		E4E98C572387336A00371EC6 /* ExampleController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4E98C592387336A00371EC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E4E98C5B2387336A00371EC6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		E4E98C5D2387336A00371EC6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E4E98C602387336A00371EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E4E98C622387336B00371EC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E4E98C652387336B00371EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E4E98C672387336B00371EC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E4E98C6D2387339F00371EC6 /* Cactus.flr */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cactus.flr; sourceTree = "<group>"; };
+		E4E98C762387340800371EC6 /* CustomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomController.swift; sourceTree = "<group>"; };
 		E4F7F5EF237C91B800F22466 /* custom_property.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = custom_property.swift; sourceTree = "<group>"; };
 		E4FE894A23741AA100CFB68D /* FlareSkControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControls.swift; sourceTree = "<group>"; };
 		E4FE894E23745D3800CFB68D /* FlareSkControlsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlareSkControlsBuilder.swift; sourceTree = "<group>"; };
@@ -420,6 +497,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4E98C35238732CF00371EC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C4C238732F900371EC6 /* FlareSwiftDev.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4E98C542387336A00371EC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C6F238733B500371EC6 /* FlareSwiftDev.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,9 +558,11 @@
 				E453591022282EC900981BD7 /* Info.plist */,
 				E488330C2252464B000940FB /* FlareSkia */,
 				E46CDCA9223116C6002C40A1 /* Bezier */,
-				E453590E22282EC900981BD7 /* Flare */,
 				E4FE895A237AC5F900CFB68D /* Experiments */,
+				E453590E22282EC900981BD7 /* Flare */,
 				E453591922282EC900981BD7 /* FlareSwiftTests */,
+				E4E98C39238732CF00371EC6 /* Example */,
+				E4E98C582387336A00371EC6 /* ExampleController */,
 				E453590D22282EC900981BD7 /* Products */,
 				E461855E2254B29C00551DBD /* Frameworks */,
 			);
@@ -479,6 +574,8 @@
 				E453590C22282EC900981BD7 /* FlareSwift.framework */,
 				E453591522282EC900981BD7 /* FlareSwiftTests.xctest */,
 				E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */,
+				E4E98C38238732CF00371EC6 /* Example.app */,
+				E4E98C572387336A00371EC6 /* ExampleController.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -708,6 +805,37 @@
 			path = Skia;
 			sourceTree = "<group>";
 		};
+		E4E98C39238732CF00371EC6 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				E4E98C512387334000371EC6 /* Switch.flr */,
+				E4E98C3A238732CF00371EC6 /* AppDelegate.swift */,
+				E4E98C3C238732CF00371EC6 /* SceneDelegate.swift */,
+				E4E98C3E238732CF00371EC6 /* ViewController.swift */,
+				E4E98C40238732CF00371EC6 /* Main.storyboard */,
+				E4E98C43238732D000371EC6 /* Assets.xcassets */,
+				E4E98C45238732D000371EC6 /* LaunchScreen.storyboard */,
+				E4E98C48238732D000371EC6 /* Info.plist */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
+		E4E98C582387336A00371EC6 /* ExampleController */ = {
+			isa = PBXGroup;
+			children = (
+				E4E98C6D2387339F00371EC6 /* Cactus.flr */,
+				E4E98C592387336A00371EC6 /* AppDelegate.swift */,
+				E4E98C5B2387336A00371EC6 /* SceneDelegate.swift */,
+				E4E98C5D2387336A00371EC6 /* ViewController.swift */,
+				E4E98C762387340800371EC6 /* CustomController.swift */,
+				E4E98C5F2387336A00371EC6 /* Main.storyboard */,
+				E4E98C622387336B00371EC6 /* Assets.xcassets */,
+				E4E98C642387336B00371EC6 /* LaunchScreen.storyboard */,
+				E4E98C672387336B00371EC6 /* Info.plist */,
+			);
+			path = ExampleController;
+			sourceTree = "<group>";
+		};
 		E4FE895A237AC5F900CFB68D /* Experiments */ = {
 			isa = PBXGroup;
 			children = (
@@ -796,13 +924,51 @@
 			productReference = E4E98BC723854D4C00371EC6 /* FlareSwiftDev.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		E4E98C37238732CF00371EC6 /* Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4E98C49238732D000371EC6 /* Build configuration list for PBXNativeTarget "Example" */;
+			buildPhases = (
+				E4E98C34238732CF00371EC6 /* Sources */,
+				E4E98C35238732CF00371EC6 /* Frameworks */,
+				E4E98C36238732CF00371EC6 /* Resources */,
+				E4E98C50238732F900371EC6 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4E98C4F238732F900371EC6 /* PBXTargetDependency */,
+			);
+			name = Example;
+			productName = Example;
+			productReference = E4E98C38238732CF00371EC6 /* Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E4E98C562387336A00371EC6 /* ExampleController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4E98C682387336B00371EC6 /* Build configuration list for PBXNativeTarget "ExampleController" */;
+			buildPhases = (
+				E4E98C532387336A00371EC6 /* Sources */,
+				E4E98C542387336A00371EC6 /* Frameworks */,
+				E4E98C552387336A00371EC6 /* Resources */,
+				E4E98C73238733B500371EC6 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4E98C72238733B500371EC6 /* PBXTargetDependency */,
+			);
+			name = ExampleController;
+			productName = ExampleController;
+			productReference = E4E98C572387336A00371EC6 /* ExampleController.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		E453590322282EC900981BD7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1120;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = 2Dimensions;
 				TargetAttributes = {
@@ -813,6 +979,12 @@
 					E453591422282EC900981BD7 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1110;
+					};
+					E4E98C37238732CF00371EC6 = {
+						CreatedOnToolsVersion = 11.2.1;
+					};
+					E4E98C562387336A00371EC6 = {
+						CreatedOnToolsVersion = 11.2.1;
 					};
 				};
 			};
@@ -832,6 +1004,8 @@
 				E453590B22282EC900981BD7 /* FlareSwift */,
 				E4E98B4423854D4C00371EC6 /* FlareSwiftDev */,
 				E453591422282EC900981BD7 /* FlareSwiftTests */,
+				E4E98C37238732CF00371EC6 /* Example */,
+				E4E98C562387336A00371EC6 /* ExampleController */,
 			);
 		};
 /* End PBXProject section */
@@ -858,6 +1032,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4E98C36238732CF00371EC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C47238732D000371EC6 /* LaunchScreen.storyboard in Resources */,
+				E4E98C44238732D000371EC6 /* Assets.xcassets in Resources */,
+				E4E98C522387334000371EC6 /* Switch.flr in Resources */,
+				E4E98C42238732CF00371EC6 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4E98C552387336A00371EC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C662387336B00371EC6 /* LaunchScreen.storyboard in Resources */,
+				E4E98C632387336B00371EC6 /* Assets.xcassets in Resources */,
+				E4E98C612387336A00371EC6 /* Main.storyboard in Resources */,
+				E4E98C6E2387339F00371EC6 /* Cactus.flr in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -876,7 +1072,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd ../dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\n# echo $PWD\n./make_dependency.sh\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
+			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR\n# echo $PWD\n./make_dependency.sh\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
 		};
 		E4E98B4523854D4C00371EC6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -893,7 +1089,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd ../dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR/..\n# echo $PWD\n./make_dependency.sh -s\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
+			shellScript = "# Save starting location.\nSTART_DIR=$PWD\n\n# Make sure all submodules are initialized.\ngit submodule update --init --recursive\n\n# Move pwd to `depot_tools` dependency folder.\ncd dep/depot_tools\n# Add depot_tools to PATH for `ninja`.\nPATH=${PATH}:$PWD\n# echo $PATH\n\n# Go back to Project Directory\ncd $START_DIR\n# echo $PWD\n./make_dependency.sh -s\n\n# Back to starting directory.\ncd $START_DIR\n# echo $PWD\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1160,6 +1356,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E4E98C34238732CF00371EC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C3F238732CF00371EC6 /* ViewController.swift in Sources */,
+				E4E98C3B238732CF00371EC6 /* AppDelegate.swift in Sources */,
+				E4E98C3D238732CF00371EC6 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4E98C532387336A00371EC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4E98C772387340800371EC6 /* CustomController.swift in Sources */,
+				E4E98C5E2387336A00371EC6 /* ViewController.swift in Sources */,
+				E4E98C5A2387336A00371EC6 /* AppDelegate.swift in Sources */,
+				E4E98C5C2387336A00371EC6 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1168,7 +1385,52 @@
 			target = E453590B22282EC900981BD7 /* FlareSwift */;
 			targetProxy = E453591722282EC900981BD7 /* PBXContainerItemProxy */;
 		};
+		E4E98C4F238732F900371EC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4E98B4423854D4C00371EC6 /* FlareSwiftDev */;
+			targetProxy = E4E98C4E238732F900371EC6 /* PBXContainerItemProxy */;
+		};
+		E4E98C72238733B500371EC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4E98B4423854D4C00371EC6 /* FlareSwiftDev */;
+			targetProxy = E4E98C71238733B500371EC6 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E4E98C40238732CF00371EC6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4E98C41238732CF00371EC6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E4E98C45238732D000371EC6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4E98C46238732D000371EC6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E4E98C5F2387336A00371EC6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4E98C602387336A00371EC6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E4E98C642387336B00371EC6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4E98C652387336B00371EC6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E453591E22282EC900981BD7 /* Debug */ = {
@@ -1493,6 +1755,82 @@
 			};
 			name = Release;
 		};
+		E4E98C4A238732D000371EC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = betto.Example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E4E98C4B238732D000371EC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = betto.Example;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E4E98C692387336B00371EC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				INFOPLIST_FILE = ExampleController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = betto.ExampleController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E4E98C6A2387336B00371EC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = NJ3JMFUNS9;
+				INFOPLIST_FILE = ExampleController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = betto.ExampleController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1528,6 +1866,24 @@
 			buildConfigurations = (
 				E4E98BC523854D4C00371EC6 /* Debug */,
 				E4E98BC623854D4C00371EC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4E98C49238732D000371EC6 /* Build configuration list for PBXNativeTarget "Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4E98C4A238732D000371EC6 /* Debug */,
+				E4E98C4B238732D000371EC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4E98C682387336B00371EC6 /* Build configuration list for PBXNativeTarget "ExampleController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4E98C692387336B00371EC6 /* Debug */,
+				E4E98C6A2387336B00371EC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

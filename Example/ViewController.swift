@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  BasicExample
+//  Example
 //
-//  Created by Umberto Sonnino on 2/28/19.
+//  Created by Umberto Sonnino on 11/21/19.
 //  Copyright © 2019 2Dimensions. All rights reserved.
 //
 

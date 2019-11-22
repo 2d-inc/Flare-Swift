@@ -22,7 +22,7 @@ while getopts ":s" opt; do
   esac
 done
 
-cd FlareSwift/FlareSkia/Skia/src
+cd FlareSkia/Skia/src
 
 python tools/git-sync-deps
 
