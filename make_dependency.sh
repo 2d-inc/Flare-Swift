@@ -5,15 +5,32 @@
 # Build notes:
 #   https://skia.org/user/build
 
-cd FlareSwift/FlareSkia/Skia/src
+ARCH="arm64"
+BUILD_DIR="build_device"
+
+while getopts ":s" opt; do 
+  case $opt in
+  s)
+    echo "Build for Simulator." >&2
+    ARCH="x64" # Build for simulator.
+    BUILD_DIR="build_simulator"
+    ;;
+  \?)
+    echo "invalid option: -$OPTARG" >&2
+    exit 1
+    ;;
+  esac
+done
+
+cd FlareSkia/Skia/src
 
 python tools/git-sync-deps
 
-./bin/gn gen build \
+./bin/gn gen $BUILD_DIR \
   --args="extra_cflags_cc=[\"-frtti\", \"-fembed-bitcode\"] \
   is_official_build=true \
   target_os=\"ios\" \
-  skia_use_bitcode = true \
+  skia_use_bitcode=true \
   skia_use_angle=false \
   skia_use_dng_sdk=false \
   skia_use_egl=false \
@@ -39,6 +56,14 @@ python tools/git-sync-deps
   skia_enable_gpu=true \
   skia_enable_fontmgr_empty=false \
   skia_enable_spirv_validation=false \
-  skia_enable_pdf=false"
+  skia_enable_pdf=false
+  \
+  is_debug=false \
+  skia_enable_flutter_defines=true \
+  skia_gl_standard=\"gles\"
+  skia_use_sfntly=false \
+  skia_use_wuffs=true \
+  skia_use_x11=false \
+  target_cpu=\"$ARCH\""
 
-ninja -C build
+ninja -C $BUILD_DIR
