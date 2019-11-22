@@ -15,26 +15,29 @@ If you encounter any problems [report them in the issue tracker](https://github.
 
 ## Contents
 
-The repository contains an XCode Workspace with two Projects:
-- [FlareSwift](FlareSwift/FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files. <br/> 
-The Framework is further subdivided into: 
-    - [FlareCore](FlareSwift/FlareCore) is the bottommost layer of the Framework: this is where Flare file contents are read, loaded and built in-memory.
-    - [FlareSkia](FlareSwift/FlareSkia) handles the drawing operations in an OpenGL context. It relies on `libskia`, which is built with a custom script (see [Usage](#Usage)).
-- [BasicExample](BasicExample/BasicExample) <br/>
-An iOS-based example that demonstrates how to use a `ViewController` to load a `FlareSkView` that loads and animates a test Flare file.
+The repository contains an XCode Project structured as follows:
+- [FlareSwift](FlareSwift.xcodeproj) - Swift Framework for loading and drawing Flare files
+    - [FlareCore](FlareCore) is the bottommost layer of the Framework: this is where Flare file contents are read, loaded and built in-memory
+    - [FlareSkia](FlareSkia) handles the drawing operations in an OpenGL context. It relies on `libskia`, which is built with a custom script (see [Usage](#Usage))
 
-## Usage
+This project contains multiple targets:
+- `FlareSwift` - builds the Framework that runs on physical devices.
+- `FlareSwiftDev` - builds the Framework that runs on Simulators.
+- [Example](Example) - A simple example demonstrating how to add a [FlareSkViewController](FlareSkia/FlareSkViewController.swift) in a Single View App [ViewController](Example/ViewController.swift). It draws inside the [FlareSkView](FlareSkia/FlareSkView.swift) associated with the `FlareSkViewController`.
+- [ExampleController](ExampleController) - Demonstrates how to create a [CustomController](ExampleController/CustomController.swift) that is an extension of [FlareSkViewController](FlareSkia/FlareSkViewController.swift). This class takes advantage of the available APIs by overriding `advanceControls()`, using a custom callback for swapping animations on completed (i.e. `onCompleted()`), and adding a `play()` function that plays a new animation allowing the user to specify the interpolation mix and time.
+
+## Using the Framework
 
 - Clone the repository:
 ```
 git clone git@github.com:2d-inc/Flare-Swift.git
 ```
-- Open `Flare-Swift.xcworkspace`
+- Open `FlareSwift.xcodeproj`
 - In the XCode window, select the scheme for the device you want to run on:
     - Use **`FlareSwift`** to build the Framework for a **physical device**
     - Use **`FlareSwiftDev`** to build the Framework for a **Simulator**
 
-*N.B: first time building the Framework takes a while, as it is initializing and building all the dependencies. Use the Report Navigator to look at what's happening.*
+*N.B: first time building the Framework takes a while, as it is initializing and building all the dependencies. Use the Report Navigator to have an overview of what's happening.*
 
 - Build the Framework (⌘ + B)
 
@@ -66,4 +69,4 @@ If you want to run them on a physical device, follow these steps:
 ## License
 See the [LICENSE](LICENSE) file for license rights and limitations (MIT).
 
-The [`Bezier`](FlareSwift/Bezier) folder is a port of [bezier.dart](https://github.com/aab29/bezier.dart), and is complying with their [LICENSE.txt](FlareSwift/FlareCoreGraphics/Bezier/LICENSE.txt) (BSD 2-Clause License).
+The [`Bezier`](Bezier) folder is a port of [bezier.dart](https://github.com/aab29/bezier.dart), and is complying with their [LICENSE.txt](Bezier/LICENSE.txt) (BSD 2-Clause License).
